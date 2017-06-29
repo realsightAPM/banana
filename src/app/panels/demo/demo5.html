@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ECharts</title>
+  <!-- 引入 echarts.js -->
+  <script src="../../../../node_modules/echarts/dist/echarts.min.js"></script>
+  <script src="../../../../node_modules/echarts/dist/extension/bmap.min.js"></script>
+  <script src="../../../../node_modules/echarts/map/js/china.js"></script>
+  <script src="./theme.js"></script>
+
+
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 1200px;height:600px;"></div>
+<script type="text/javascript">
+  // 基于准备好的dom，初始化echarts实例
+  var myChart = echarts.init(document.getElementById('main'), 'dark');
+
+
+  var builderJson = {
+    "all": 100,
+    "charts": {
+      "公务卡系统":89,
+      "存折补登系统":92,
+      "VTM远程视频银行系统":78,
+      "ATM统一监控系统":87,
+      "个人客户关系管理系统":95,
+      "移动营销服务系统":93,
+      "叫号机排队系统":99,
+      "ECIF客户信息管理系统":91,
+      "体感金融系统":81
+    },
+    "components": {
+
+      "机房环境监控系统":99,
+      "运维审计系统":82,
+      "日志审计系统":81,
+      "数据库审计系统":84,
+      "一体化运维系统":89,
+      "银行风险指标动态监控系统":78,
+      "网络和交易监控":91,
+      "IP电话系统":93
+    },
+    "ie": 9743
+  };
+
+  var downloadJson = {
+    "正常响应": 17365,
+    "缓慢响应": 4079,
+    "系统错误": 929
+  };
+
+  var themeJson = {
+    "系统错误": 1929,
+    "缓慢响应": 4079,
+    "正常响应": 17365,
+
+  };
+
+
+
+  var waterMarkText = '';
+
+  var canvas = document.createElement('canvas');
+  var ctx = canvas.getContext('2d');
+  canvas.width = canvas.height = 100;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.globalAlpha = 0.08;
+  ctx.font = '20px Microsoft Yahei';
+  ctx.translate(50, 50);
+  ctx.rotate(-Math.PI / 4);
+  ctx.fillText(waterMarkText, 0, 0);
+
+  var option = {
+    backgroundColor: '#1f2227',
+    color: [
+      "#1F78C1","#7EB26D","#EAB839","#6ED0E0","#EF843C","#E24D42","#BA43A9","#705DA0", //1
+      "#508642","#CCA300","#447EBC","#C15C17","#890F02","#0A437C","#6D1F62","#584477", //2
+      "#B7DBAB","#F4D598","#70DBED","#F9BA8F","#F29191","#82B5D8","#E5A8E2","#AEA2E0", //3
+      "#629E51","#E5AC0E","#64B0C8","#E0752D","#BF1B00","#0A50A1","#962D82","#614D93", //4
+      "#9AC48A","#F2C96D","#65C5DB","#F9934E","#EA6460","#5195CE","#D683CE","#806EB7", //5
+      "#3F6833","#967302","#2F575E","#99440A","#58140C","#052B51","#511749","#3F2B5B", //6
+      "#E0F9D7","#FCEACA","#CFFAFF","#F9E2D2","#FCE2DE","#BADFF4","#F9D9F9","#DEDAF7"  //7
+    ],
+    tooltip: {},
+    title: [{
+      top: '2%',
+      text: '应用健康度',
+      x: '15%',
+      textAlign: 'center'
+    }, {
+      top: '2%',
+
+      text: '零售线条',
+      x: '85%',
+      textAlign: 'center'
+    }, {
+      top: '52%',
+
+      text: '技术部子系统',
+      x: '85%',
+      y: '50%',
+      textAlign: 'center'
+    }],
+    grid: [{
+      top: 40,
+      width: '65%',
+      bottom: '45%',
+      left: 10,
+      containLabel: true
+    }, {
+      top: '55%',
+      width: '65%',
+      bottom: 30,
+      left: 10,
+      containLabel: true
+    }],
+    xAxis: [{
+      type: 'value',
+      max: builderJson.all,
+      splitLine: {
+        show: false
+      }
+    }, {
+      type: 'value',
+      max: builderJson.all,
+      gridIndex: 1,
+      splitLine: {
+        show: false
+      }
+    }],
+    yAxis: [{
+      type: 'category',
+      data: Object.keys(builderJson.charts),
+      axisLabel: {
+        interval: 0,
+        rotate: 30
+      },
+      splitLine: {
+        show: false
+      }
+    }, {
+      gridIndex: 1,
+      type: 'category',
+      data: Object.keys(builderJson.components),
+      axisLabel: {
+        interval: 0,
+        rotate: 30
+      },
+      splitLine: {
+        show: false
+      }
+    }],
+    series: [{
+      type: 'bar',
+      stack: 'chart',
+      z: 3,
+      label: {
+        normal: {
+          position: 'right',
+          show: true
+        }
+      },
+      data: Object.keys(builderJson.charts).map(function (key) {
+        return builderJson.charts[key];
+      }),
+    }, {
+      type: 'bar',
+      stack: 'chart',
+      silent: true,
+      itemStyle: {
+        normal: {
+          color: '#eee'
+        }
+      },
+      data: Object.keys(builderJson.charts).map(function (key) {
+        return builderJson.all - builderJson.charts[key];
+      })
+    }, {
+      type: 'bar',
+      stack: 'component',
+      xAxisIndex: 1,
+      yAxisIndex: 1,
+      z: 3,
+      label: {
+        normal: {
+          position: 'right',
+          show: true
+        }
+      },
+      data: Object.keys(builderJson.components).map(function (key) {
+        return builderJson.components[key];
+      })
+    }, {
+      type: 'bar',
+      stack: 'component',
+      silent: true,
+      xAxisIndex: 1,
+      yAxisIndex: 1,
+      itemStyle: {
+        normal: {
+          color: '#eee'
+        }
+      },
+      data: Object.keys(builderJson.components).map(function (key) {
+        return builderJson.all - builderJson.components[key];
+      })
+    },
+      {
+      type: 'pie',
+      radius: [0, '30%'],
+      center: ['85%', '25%'],
+      data: Object.keys(downloadJson).map(function (key) {
+        return {
+          name: key.replace('.js', ''),
+          value: downloadJson[key]
+        }
+      })
+    },
+      {
+      type: 'pie',
+      radius: [0, '30%'],
+      center: ['85%', '75%'],
+      data: Object.keys(themeJson).map(function (key) {
+        return {
+          name: key.replace('.js', ''),
+          value: themeJson[key]
+        }
+      })
+    }]
+  }
+
+
+  // 使用刚指定的配置项和数据显示图表。
+  myChart.setOption(option);
+</script>
+</body>
+</html>
