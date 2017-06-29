@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ECharts</title>
+  <!-- 引入 echarts.js -->
+  <script src="../../../../node_modules/echarts/dist/echarts.min.js"></script>
+  <script src="../../../../node_modules/echarts/dist/extension/bmap.min.js"></script>
+  <script src="../../../../node_modules/echarts/map/js/china.js"></script>
+
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main1" style="width: 400px;height:280px;"></div>
+<div id="main2" style="width: 400px;height:280px;"></div>
+<script type="text/javascript">
+  // 基于准备好的dom，初始化echarts实例
+  var myChart1 = echarts.init(document.getElementById('main1'));
+  var myChart2 = echarts.init(document.getElementById('main2'));
+
+  // 指定图表的配置项和数据
+  var option1 = {
+    backgroundColor: "#1f2227",
+    color: ['#ffd285', '#ff733f', '#ec4863'],
+
+    title: [{
+      left: '5%',
+      top: '6%',
+      textStyle: {
+        color: '#ffd285'
+      }
+    }
+      // , {
+      //     text: '周用户活跃度（5月）',
+      //     left: '73%',
+      //     top: '3%',
+      //     textAlign: 'center',
+      //     textStyle: {
+      //         color: '#ffd285'
+      //     }
+      // }
+    ],
+    tooltip: {
+      trigger: 'axis'
+    },
+    legend: {
+      x: 200,
+      top: '6%',
+      left: '8%',
+      textStyle: {
+        color: '#ffd285',
+      },
+      data: ['每周新增存款量 (万元)']
+    },
+    grid: {
+      left: '1%',
+      right: '25%',
+      top: '16%',
+      bottom: '6%',
+      containLabel: true
+    },
+    toolbox: {
+      "show": false,
+      feature: {
+        saveAsImage: {}
+      }
+    },
+    xAxis: {
+      type: 'category',
+      "axisLine": {
+        lineStyle: {
+          color: '#fe8b53'
+        }
+      },
+      "axisTick": {
+        "show": false
+      },
+      axisLabel: {
+        textStyle: {
+          color: '#ffd285'
+        }
+      },
+      boundaryGap: false,
+      data: ['4月第1周', '4月第2周', '4月第3周', '4月第4周', '5月第1周', '5月第2周', '5月第3周', '5月第4周', '6月第1周', '6月第2周', '6月第3周', '6月第4周']
+    },
+    yAxis: {
+      "axisLine": {
+        lineStyle: {
+          color: '#fe8b53'
+        }
+      },
+      splitLine: {
+        show: true,
+        lineStyle: {
+          type: 'dotted',
+          color: '#0d394a'
+        }
+      },
+      "axisTick": {
+        "show": false
+      },
+      axisLabel: {
+        textStyle: {
+          color: '#ffd285'
+        }
+      },
+      type: 'value'
+    },
+    series: [{
+      name: '每周新增存款量 (万元)',
+      smooth: true,
+      type: 'line',
+      symbolSize: 8,
+      symbol: 'circle',
+      data: [5100, 5500, 6200, 5000, 5300, 5400, 5800, 6000, 5700, 5900, 6200, 6500]
+    },
+      {
+        name: '',
+        type: 'pie',
+        center: ['90%', '18%'],
+        clockWise: true,
+        hoverAnimation: false,
+        radius: [200, 200],
+        label: {
+          normal: {
+            position: 'center'
+          }
+        },
+        data: [{
+          value: 0,
+          label: {
+            normal: {
+              formatter: '6200',
+              textStyle: {
+                color: '#fe8b53',
+                fontSize: 10,
+                fontWeight: 'bold'
+              }
+            }
+          }
+        }, {
+          tooltip: {
+            show: false
+          },
+          label: {
+            normal: {
+              formatter: '\n本周新增存款',
+              textStyle: {
+                color: '#fe8b53',
+                fontSize: 8
+              }
+            }
+          }
+        }]
+      },
+      {
+        name: '',
+        type: 'pie',
+        center: ['90%', '47%'],
+        clockWise: true,
+        hoverAnimation: false,
+        radius: [200, 200],
+        label: {
+          normal: {
+            position: 'center'
+          }
+        },
+        data: [{
+          value: 0,
+          label: {
+            normal: {
+              formatter: '6500',
+              textStyle: {
+                color: '#ffd285',
+                fontSize: 10,
+                fontWeight: 'bold'
+              }
+            }
+          }
+        }, {
+          tooltip: {
+            show: false
+          },
+          label: {
+            normal: {
+              formatter: '\n上周新增存款',
+              textStyle: {
+                color: '#ffd285',
+                fontSize: 8
+              }
+            }
+          }
+        }]
+      },
+
+
+      {
+        type: 'pie',
+        center: ['88%', '82%'],
+        radius: ['24%', '26%'],
+        label: {
+          normal: {
+            position: 'center'
+          }
+        },
+        data: [{
+          value: 120,
+          itemStyle: {
+            normal: {
+              color: '#ff733f'
+            }
+          },
+          label: {
+            normal: {
+              formatter: '{d} %',
+              textStyle: {
+                color: '#ff733f',
+                fontSize: 14
+
+              }
+            }
+          }
+        }, {
+          value: 700,
+
+          tooltip: {
+            show: false
+          },
+          itemStyle: {
+            normal: {
+              color: '#ff733f'
+
+
+            }
+          },
+          label: {
+            normal: {
+              textStyle: {
+                color: '#ff733f',
+              },
+              formatter: '\n环比上升'
+            }
+          }
+        }]
+      }]
+  };
+
+  var option2 = {
+    backgroundColor: "#1f2227",
+    color: ['#ffd285', '#ff733f', '#ec4863'],
+
+    title: [{
+      left: '5%',
+      top: '6%',
+      textStyle: {
+        color: '#ffd285'
+      }
+    }
+      // , {
+      //     text: '周用户活跃度（5月）',
+      //     left: '73%',
+      //     top: '3%',
+      //     textAlign: 'center',
+      //     textStyle: {
+      //         color: '#ffd285'
+      //     }
+      // }
+    ],
+    tooltip: {
+      trigger: 'axis'
+    },
+    legend: {
+      x: 200,
+      top: '6%',
+      left: '8%',
+      textStyle: {
+        color: '#ffd285',
+      },
+      data: ['每周收益 (万元)']
+    },
+    grid: {
+      left: '1%',
+      right: '25%',
+      top: '16%',
+      bottom: '6%',
+      containLabel: true
+    },
+    toolbox: {
+      "show": false,
+      feature: {
+        saveAsImage: {}
+      }
+    },
+    xAxis: {
+      type: 'category',
+      "axisLine": {
+        lineStyle: {
+          color: '#fe8b53'
+        }
+      },
+      "axisTick": {
+        "show": false
+      },
+      axisLabel: {
+        textStyle: {
+          color: '#ffd285'
+        }
+      },
+      boundaryGap: false,
+      data: ['4月第1周', '4月第2周', '4月第3周', '4月第4周', '5月第1周', '5月第2周', '5月第3周', '5月第4周', '6月第1周', '6月第2周', '6月第3周', '6月第4周']
+    },
+    yAxis: {
+      "axisLine": {
+        lineStyle: {
+          color: '#fe8b53'
+        }
+      },
+      splitLine: {
+        show: true,
+        lineStyle: {
+          type: 'dotted',
+          color: '#0d394a'
+        }
+      },
+      "axisTick": {
+        "show": false
+      },
+      axisLabel: {
+        textStyle: {
+          color: '#ffd285'
+        }
+      },
+      type: 'value'
+    },
+    series: [{
+      name: '每周收益 (万元)',
+      smooth: true,
+      type: 'line',
+      symbolSize: 8,
+      symbol: 'circle',
+      data: [500, 470, 600, 510, 530, 430, 590, 600, 410, 480, 600, 570]
+    },
+      {
+        name: '',
+        type: 'pie',
+        center: ['88%', '18%'],
+        clockWise: true,
+        hoverAnimation: false,
+        radius: [200, 200],
+        label: {
+          normal: {
+            position: 'center'
+          }
+        },
+        data: [{
+          value: 0,
+          label: {
+            normal: {
+              formatter: '570',
+              textStyle: {
+                color: '#fe8b53',
+                fontSize: 10,
+                fontWeight: 'bold'
+              }
+            }
+          }
+        }, {
+          tooltip: {
+            show: false
+          },
+          label: {
+            normal: {
+              formatter: '\n本周收益',
+              textStyle: {
+                color: '#fe8b53',
+                fontSize: 8
+              }
+            }
+          }
+        }]
+      },
+      {
+        name: '',
+        type: 'pie',
+        center: ['88%', '47%'],
+        clockWise: true,
+        hoverAnimation: false,
+        radius: [200, 200],
+        label: {
+          normal: {
+            position: 'center'
+          }
+        },
+        data: [{
+          value: 0,
+          label: {
+            normal: {
+              formatter: '600',
+              textStyle: {
+                color: '#ffd285',
+                fontSize: 10,
+                fontWeight: 'bold'
+              }
+            }
+          }
+        }, {
+          tooltip: {
+            show: false
+          },
+          label: {
+            normal: {
+              formatter: '\n上周收益',
+              textStyle: {
+                color: '#ffd285',
+                fontSize: 8
+              }
+            }
+          }
+        }]
+      },
+
+
+      {
+        type: 'pie',
+        center: ['88%', '82%'],
+        radius: ['24%', '26%'],
+        label: {
+          normal: {
+            position: 'center'
+          }
+        },
+        data: [{
+          value: 20,
+          itemStyle: {
+            normal: {
+              color: '#ff733f'
+            }
+          },
+          label: {
+            normal: {
+              formatter: '{d} %',
+              textStyle: {
+                color: '#ff733f',
+                fontSize: 14
+
+              }
+            }
+          }
+        }, {
+          value: 700,
+
+          tooltip: {
+            show: false
+          },
+          itemStyle: {
+            normal: {
+              color: '#ff733f'
+
+
+            }
+          },
+          label: {
+            normal: {
+              textStyle: {
+                color: '#ff733f',
+              },
+              formatter: '\n环比上升'
+            }
+          }
+        }]
+      }]
+  };
+
+  // 使用刚指定的配置项和数据显示图表。
+  myChart1.setOption(option1);
+  myChart2.setOption(option2);
+
+</script>
+</body>
+</html>
