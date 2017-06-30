@@ -125,6 +125,8 @@ function (Settings) {
       'multiseries',
       'sunburst',
       'docviewer',
+        'statistics',
+      'demo',
       'statistics',
       'ad',
       'adTable',
