@@ -126,7 +126,6 @@ function (Settings) {
       'sunburst',
       'docviewer',
         'statistics',
-      'demo',
       'statistics',
       'ad',
       'adTable',
