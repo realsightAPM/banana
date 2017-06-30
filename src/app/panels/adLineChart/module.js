@@ -19,7 +19,7 @@ define([
     ],
     function (angular, app, _, $, kbn) {
         'use strict';
-        var DEBUG = true;
+        var DEBUG = false;
         console.log('adLineChart DEBUG : ' + DEBUG);
 
         var module = angular.module('kibana.panels.adLineChart', []);
@@ -122,17 +122,6 @@ define([
                     $scope.panel.icon="icon-caret-up";
                 }
             };
-            $scope.build_search = function(term) {
-                _.defaults(dashboard.current,{main_bn_node_name:''});
-                _.defaults(dashboard.current,{line_chart_fq:''});
-                dashboard.current.main_bn_node_name = term.term;
-                if (dashboard.current.fq) {
-                  dashboard.current.line_chart_fq = dashboard.current.fq + '&fq=' + panel.metric_field + ':' + term.term;
-                } else {
-                  dashboard.current.line_chart_fq = 'fq=' + panel.metric_field + ':' + term.term;
-                }
-                dashboard.refresh();
-            };
             /**
              *
              *
@@ -227,30 +216,68 @@ define([
                     request.setQuery(total_query);
                     results = request.doSearch();
                     // Populate scope when we have results
+
                     results.then(function (results) {
+                      // Check for error and abort if found
+                      if (!(_.isUndefined(results.error))) {
+                          $scope.panel.error = $scope.parse_error(results.error.msg);
+                          $scope.data = [];
+                          $scope.panelMeta.loading = false;
+                          $scope.$emit('render');
+                          return;
+                      }
+                      $scope.data = [];
+                      $scope.panelMeta.loading = false;
+                      {
+                        // In stats mode, set y-axis min to null so jquery.flot will set the scale automatically.
+                        $scope.yaxis_min = null;
+                        if (DEBUG) { console.log(results);}
+                        var total = [];
+                        for (var index in results.response.docs) {
+                          var doc = results.response.docs[index];
+                          var slice = {value: doc.value_f, timestamp: doc.start_timestamp_l, l: doc.down_margin_f, u:doc.up_margin_f};
+                          if (doc.value_f === NaN) {continue;}
+                          //var slice = {label: facet_field, data: [[k, stats_obj['mean'], stats_obj['count'], stats_obj['max'], stats_obj['min'], stats_obj['stddev'], facet_field]], actions: true};
+                          total.push(slice);
+                        }
+                        $scope.data.push(total);
+                      }
+                      if (DEBUG) console.log($scope.data);
+                      $scope.panelMeta.loading = true;
+                      request.setQuery(anomaly_query);
+                      results = request.doSearch();
+                      // Populate scope when we have results
+                      results.then(function (results) {
                         // Check for error and abort if found
                         if (!(_.isUndefined(results.error))) {
-                            $scope.panel.error = $scope.parse_error(results.error.msg);
-                            $scope.data = [];
-                            $scope.panelMeta.loading = false;
-                            $scope.$emit('render');
-                            return;
+                          $scope.panel.error = $scope.parse_error(results.error.msg);
+                          $scope.data = [];
+                          $scope.panelMeta.loading = false;
+                          $scope.$emit('render');
+                          return;
                         }
 
                         $scope.panelMeta.loading = false;
-                        $scope.data = [];
                         {
-                            // In stats mode, set y-axis min to null so jquery.flot will set the scale automatically.
-                            $scope.yaxis_min = null;
-                            if (DEBUG) { console.log(results); }
-                            _.each(results.response.docs, function (doc) {
-                                //var slice = {label: facet_field, data: [[k, stats_obj['mean'], stats_obj['count'], stats_obj['max'], stats_obj['min'], stats_obj['stddev'], facet_field]], actions: true};
-                                var slice = {value: doc.value_f, timestamp: doc.start_timestamp_l, l: doc.down_margin_f, u:doc.up_margin_f};
-                                $scope.data.push(slice);
-                            });
+                          // In stats mode, set y-axis min to null so jquery.flot will set the scale automatically.
+                          $scope.yaxis_min = null;
+                          if (DEBUG) { console.log(results); }
+                          var anomaly = [];
+                          for (var index in results.response.docs) {
+                            var doc = results.response.docs[index];
+                            if (doc.value_f === NaN) {continue;}
+                            //var slice = {label: facet_field, data: [[k, stats_obj['mean'], stats_obj['count'], stats_obj['max'], stats_obj['min'], stats_obj['stddev'], facet_field]], actions: true};
+                            var slice = {name:"sb", value:doc.value_f ,yAxis: doc.value_f, xAxis: doc.start_timestamp_l};
+                            anomaly.push(slice);
+                          }
+                          $scope.data.push(anomaly);
                         }
+                        if (DEBUG) console.log($scope.data);
+                        $scope.$emit('render');
+                      });
                     });
-                  $scope.$emit('render');
+
+
                 }
             };
 
@@ -331,10 +358,15 @@ define([
                 myChart = echarts.init(document.getElementById(line_id));
                 myChart.showLoading();
                 if (chartData === []) return ;
+                var totalData = chartData[0];
+                var anomalyData = chartData[1];
+                if (totalData === []) return ;
+                if (anomalyData === []) return ;
                 myChart.hideLoading();
-                var base = -chartData.reduce(function (min, val) {
+                var base = -totalData.reduce(function (min, val) {
                   return Math.floor(Math.min(min, val.l));
                 }, Infinity);
+                base = 0;
                 var option = {
                   title: {
                     text: dashboard.current.line_chart_name,
@@ -343,8 +375,9 @@ define([
                   tooltip: {
                     trigger: 'axis',
                     formatter: function (params) {
-                      return params[2].name + '<br />' + params[2].value;
-                    }
+                      return params[2].name;
+                    },
+                    show:false
                   },
                   grid: {
                     left: '3%',
@@ -354,7 +387,7 @@ define([
                   },
                   xAxis: {
                     type: 'category',
-                    data: chartData.map(function (item) {
+                    data: totalData.map(function (item) {
                       var date = echarts.format.formatTime('yyyy/MM/dd hh:mm:ss', item.timestamp);
                       return date;
                     }),
@@ -378,7 +411,6 @@ define([
                     axisPointer: {
                       label: {
                         formatter: function (params) {
-                          console.log(params);
                           return (params.value - base).toFixed(1);
                         }
                       }
@@ -394,10 +426,10 @@ define([
                       }
                     }
                   },
-                  series: [{
+                  series: [ {
                     name: 'L',
                     type: 'line',
-                    data: chartData.map(function (item) {
+                    data: totalData.map(function (item) {
                       return item.l + base;
                     }),
                     lineStyle: {
@@ -410,7 +442,7 @@ define([
                   }, {
                     name: 'U',
                     type: 'line',
-                    data: chartData.map(function (item) {
+                    data: totalData.map(function (item) {
                       return item.u - item.l;
                     }),
                     lineStyle: {
@@ -427,7 +459,7 @@ define([
                     symbol: 'none'
                   }, {
                     type: 'line',
-                    data: chartData.map(function (item) {
+                    data: totalData.map(function (item) {
                       return item.value + base;
                     }),
                     hoverAnimation: false,
@@ -437,7 +469,14 @@ define([
                         color: '#c23531'
                       }
                     },
-                    showSymbol: false
+                    showSymbol: false,
+                    markPoint: {
+                      data: anomalyData.map(function (item) {
+                        item.xAxis = echarts.format.formatTime('yyyy/MM/dd hh:mm:ss', item.xAxis);
+                        item.value += base;
+                        return item;
+                      })
+                    }
                   }]
                 };
                 myChart.setOption(option);
