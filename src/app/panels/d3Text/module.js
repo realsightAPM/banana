@@ -16,15 +16,15 @@ define([
   'underscore',
   'jquery',
   'kbn',
-   'd3',
-   'd3transform',
-    'extarray',
-   'misc',
-   'microobserver',
-   'microplugin',
-    'bubble',
-   'centralclick',
-    'lines'
+   'd3'
+   // 'd3transform',
+   //  'extarray',
+   // 'misc',
+   // 'microobserver',
+   // 'microplugin',
+   //  'bubble',
+   // 'centralclick',
+   //  'lines'
 
 
 
