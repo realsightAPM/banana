@@ -19,7 +19,7 @@ define([
     ],
     function (angular, app, _, $, kbn) {
         'use strict';
-        var DEBUG = false;
+        var DEBUG = true;
         console.log('adStatistics DEBUG : ' + DEBUG);
 
         var module = angular.module('kibana.panels.adStatistics', []);
@@ -125,14 +125,14 @@ define([
             $scope.build_search = function(term) {
               dashboard.current.main_bn_node_name = term.term;
               if (dashboard.current.fq) {
-                dashboard.current.line_chart_fq = dashboard.current.fq + '&fq=' + $scope.panel.stats_field + ':' + term.term;
+                dashboard.current.line_chart_fq = dashboard.current.fq + '&fq=' + $scope.panel.stats_field + ':"' + term.term + '"';
               } else {
-                dashboard.current.line_chart_fq = 'fq=' + $scope.panel.stats_field + ':' + term.term;
+                dashboard.current.line_chart_fq = 'fq=' + $scope.panel.stats_field + ':"' + term.term + '"';
               }
               if (dashboard.current.anomaly_fq) {
-                dashboard.current.line_chart_anomaly_fq = dashboard.current.anomaly_fq + '&fq=' + $scope.panel.stats_field + ':' + term.term;
+                dashboard.current.line_chart_anomaly_fq = dashboard.current.anomaly_fq + '&fq=' + $scope.panel.stats_field + ':"' + term.term + '"';
               } else {
-                dashboard.current.line_chart_anomaly_fq = 'fq=' + $scope.panel.stats_field + ':' + term.term;
+                dashboard.current.line_chart_anomaly_fq = 'fq=' + $scope.panel.stats_field + ':"' + term.term + '"';
               }
               dashboard.current.line_chart_name = term.term;
               if (DEBUG) console.log(dashboard.current.line_chart_fq);
@@ -148,10 +148,14 @@ define([
                 // Build Solr query
                 var fq = '';
                 if (filterSrv.getSolrFq()) {
-                    fq = '&' + filterSrv.getSolrFq();
+                  fq = '&' + filterSrv.getSolrFq();
                 }
                 if (dashboard.current.anomaly_fq) {
-                    fq = fq + '&' + dashboard.current.anomaly_fq;
+                  fq = fq + '&' + dashboard.current.anomaly_fq;
+                }
+                if (DEBUG) console.log(dashboard.current.metric_field);
+                if (dashboard.current.metric_field) {
+                  fq = fq + '&fq=facet_name_s:"' + dashboard.current.metric_field + '"';
                 }
                 var wt_json = '&wt=' + filetype;
                 var rows_limit = isForExport ? '&rows=0' : ''; // for terms, we do not need the actual response doc, so set rows=0
