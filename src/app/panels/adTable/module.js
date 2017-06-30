@@ -257,10 +257,13 @@ function (angular, app, _, kbn, moment) {
 
         var fq = '';
         if (filterSrv.getSolrFq()) {
-            fq = '&' + filterSrv.getSolrFq();
+          fq = '&' + filterSrv.getSolrFq();
         }
         if (dashboard.current.anomaly_fq) {
-            fq = fq + '&' + dashboard.current.anomaly_fq;
+          fq = fq + '&' + dashboard.current.anomaly_fq;
+        }
+        if (dashboard.current.metric_field) {
+          fq = fq + '&fq=facet_name_s:"' + dashboard.current.metric_field + '"';
         }
         var query_size = $scope.panel.size * $scope.panel.pages;
         var wt_json = '&wt=json';

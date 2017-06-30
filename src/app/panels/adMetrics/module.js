@@ -525,15 +525,10 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                 var facet_name = data[x][y][0].facet_name;
                 if (DEBUG) { console.log(from_timestamp + " " + to_timestamp + ' ' + facet_name);}
                 var fq = 'fq=start_timestamp_l:[' + Math.floor(from_timestamp) + '%20TO%20' + Math.floor(to_timestamp)+']';
-                fq = fq + '&fq=ad_name_s:' + ad_name + '&fq='+metric_field+':'+facet_name;
+                fq = fq + '&fq=ad_name_s:' + ad_name;
                 var anomaly_fq = fq + '&fq=anomaly_f:[' + anomaly_th + '%20TO%20*]';
                 if (DEBUG) { console.log(fq); }
-                _.defaults(dashboard.current,{anomaly_fq:''});
-                _.defaults(dashboard.current,{anomaly_name:''});
-                _.defaults(dashboard.current,{anomaly_solr_reader_url:''});
-                _.defaults(dashboard.current,{anomaly_stats_facet:''});
-                _.defaults(dashboard.current,{anomaly_facet_name:''});
-                _.defaults(dashboard.current,{fq:''});
+                dashboard.current.metric_field = facet_name;
                 dashboard.current.anomaly_fq = anomaly_fq;
                 dashboard.current.fq = fq;
                 dashboard.current.anomaly_name = ad_name;

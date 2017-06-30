@@ -131,7 +131,6 @@ function (Settings) {
       'adTable',
       'adStatistics',
       'adDistribution',
-      'adIPStatistics',
       'adFactor',
       'adMetrics',
       'adLineChart',
