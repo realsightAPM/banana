@@ -10,12 +10,12 @@
     <table st-table="displayedCollection" st-safe-src="data" class="table table-striped">
       <thead>
       <tr>
-        <th st-sort="term">Iterm</th>
-        <th st-sort="count">Count</th>
-        <th ng-if="panel.mode === 'statistic'" st-sort="mean" st-sort-default="reverse">Mean</th>
-        <th ng-if="panel.mode === 'statistic'" st-sort="max">Max</th>
-        <th ng-if="panel.mode === 'statistic'" st-sort="min">Min</th>
-        <th ng-if="panel.mode === 'statistic'" st-sort="stddev">Stddev</th>
+        <th st-sort="term">{{'Iterm'|translate}}</th>
+        <th st-sort="count">{{'Count'|translate}}</th>
+        <th ng-if="panel.mode === 'statistic'" st-sort="mean" st-sort-default="reverse">{{'Mean'|translate}}</th>
+        <th ng-if="panel.mode === 'statistic'" st-sort="max">{{'Max'|translate}}</th>
+        <th ng-if="panel.mode === 'statistic'" st-sort="min">{{'Min'|translate}}</th>
+        <th ng-if="panel.mode === 'statistic'" st-sort="stddev">{{'Stddev'|translate}}</th>
       </tr>
       <tr>
         <th colspan="12">
