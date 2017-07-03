@@ -332,9 +332,9 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
             myChart = echarts.init(document.getElementById(factor_id));
 
             var option = {
-              backgroundColor: '#1b1b1b',
               tooltip: {
-                formatter: "{a} <br/>{c} {b}"
+                formatter: "{a} <br/>{c} {b}",
+                show:false
               },
               toolbox: {
                 show: true,
@@ -356,15 +356,15 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                     lineStyle: {       // 属性lineStyle控制线条样式
                       color: [[1.0, '#1e90ff']],
                       width: 3,
-                      shadowColor: '#fff', //默认透明
+                      shadowColor: '#888', //默认透明
                       shadowBlur: 10
                     }
                   },
                   axisLabel: {            // 坐标轴小标记
                     textStyle: {       // 属性lineStyle控制线条样式
                       fontWeight: 'bolder',
-                      color: '#fff',
-                      shadowColor: '#fff', //默认透明
+                      color: '#888',
+                      shadowColor: '#888', //默认透明
                       shadowBlur: 10
                     }
                   },
@@ -372,7 +372,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                     length: 15,        // 属性length控制线长
                     lineStyle: {       // 属性lineStyle控制线条样式
                       color: 'auto',
-                      shadowColor: '#fff', //默认透明
+                      shadowColor: '#888', //默认透明
                       shadowBlur: 10
                     }
                   },
@@ -380,13 +380,13 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                     length: 25,         // 属性length控制线长
                     lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
                       width: 3,
-                      color: '#fff',
-                      shadowColor: '#fff', //默认透明
+                      color: '#888',
+                      shadowColor: '#888', //默认透明
                       shadowBlur: 10
                     }
                   },
                   pointer: {           // 分隔线
-                    shadowColor: '#fff', //默认透明
+                    shadowColor: '#888', //默认透明
                     shadowBlur: 5
                   },
                   title: {
@@ -394,24 +394,22 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                       fontWeight: 'bolder',
                       fontSize: 20,
                       fontStyle: 'italic',
-                      color: '#fff',
-                      shadowColor: '#fff', //默认透明
+                      color: '#888',
                       shadowBlur: 10
                     }
                   },
                   detail: {
                     backgroundColor: 'rgba(30,144,255,0.8)',
                     borderWidth: 1,
-                    borderColor: '#fff',
-                    shadowColor: '#fff', //默认透明
+                    borderColor: '#888',
                     shadowBlur: 5,
                     offsetCenter: [0, '50%'],       // x, y，单位px
                     textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                       fontWeight: 'bolder',
-                      color: '#fff'
+                      color: '#888'
                     }
                   },
-                  data: [{value: scope.data[1], name: 'Strange Fluctuation'}]
+                  data: [{value: scope.data[1], name: '陌生波动导致异常数量'}]
                 },
                 {
                   name: '过小数量',
@@ -426,15 +424,13 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                     lineStyle: {       // 属性lineStyle控制线条样式
                       color: [[1.0, 'lime']],
                       width: 2,
-                      shadowColor: '#fff', //默认透明
                       shadowBlur: 10
                     }
                   },
                   axisLabel: {            // 坐标轴小标记
                     textStyle: {       // 属性lineStyle控制线条样式
                       fontWeight: 'bolder',
-                      color: '#fff',
-                      shadowColor: '#fff', //默认透明
+                      color: '#888',
                       shadowBlur: 10
                     }
                   },
@@ -442,7 +438,6 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                     length: 12,        // 属性length控制线长
                     lineStyle: {       // 属性lineStyle控制线条样式
                       color: 'auto',
-                      shadowColor: '#fff', //默认透明
                       shadowBlur: 10
                     }
                   },
@@ -450,14 +445,14 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                     length: 20,         // 属性length控制线长
                     lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
                       width: 3,
-                      color: '#fff',
-                      shadowColor: '#fff', //默认透明
+                      color: '#888',
+                      shadowColor: '#888', //默认透明
                       shadowBlur: 10
                     }
                   },
                   pointer: {
                     width: 5,
-                    shadowColor: '#fff', //默认透明
+                    shadowColor: '#888', //默认透明
                     shadowBlur: 5
                   },
                   title: {
@@ -465,26 +460,24 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                     textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                       fontWeight: 'bolder',
                       fontStyle: 'italic',
-                      color: '#fff',
-                      shadowColor: '#fff', //默认透明
+                      color: '#888',
                       shadowBlur: 10
                     }
                   },
                   detail: {
                     //backgroundColor: 'rgba(30,144,255,0.8)',
                     // borderWidth: 1,
-                    borderColor: '#fff',
-                    shadowColor: '#fff', //默认透明
+                    borderColor: '#888',
                     shadowBlur: 5,
                     width: 80,
                     height: 30,
                     offsetCenter: [0, '20%'],       // x, y，单位px
                     textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                       fontWeight: 'bolder',
-                      color: '#fff'
+                      color: '#888'
                     }
                   },
-                  data: [{value: scope.data[0], name: 'Small Value'}]
+                  data: [{value: scope.data[0], name: '数值过小导致异常数量'}]
                 },
                 {
                   name: '过大数量',
@@ -500,15 +493,13 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                     lineStyle: {       // 属性lineStyle控制线条样式
                       color: [[1, '#ff4500']],
                       width: 2,
-                      shadowColor: '#fff', //默认透明
                       shadowBlur: 10
                     }
                   },
                   axisLabel: {            // 坐标轴小标记
                     textStyle: {       // 属性lineStyle控制线条样式
                       fontWeight: 'bolder',
-                      color: '#fff',
-                      shadowColor: '#fff', //默认透明
+                      color: '#888',
                       shadowBlur: 10
                     }
                   },
@@ -516,7 +507,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                     length: 12,        // 属性length控制线长
                     lineStyle: {       // 属性lineStyle控制线条样式
                       color: 'auto',
-                      shadowColor: '#fff', //默认透明
+                      shadowColor: '#888', //默认透明
                       shadowBlur: 10
                     }
                   },
@@ -524,14 +515,13 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                     length: 20,         // 属性length控制线长
                     lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
                       width: 3,
-                      color: '#fff',
-                      shadowColor: '#fff', //默认透明
+                      color: '#888',
                       shadowBlur: 10
                     }
                   },
                   pointer: {
                     width: 5,
-                    shadowColor: '#fff', //默认透明
+                    shadowColor: '#888', //默认透明
                     shadowBlur: 5
                   },
                   title: {
@@ -539,26 +529,24 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                     textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                       fontWeight: 'bolder',
                       fontStyle: 'italic',
-                      color: '#fff',
-                      shadowColor: '#fff', //默认透明
+                      color: '#888',
                       shadowBlur: 10
                     }
                   },
                   detail: {
                     //backgroundColor: 'rgba(30,144,255,0.8)',
                     // borderWidth: 1,
-                    borderColor: '#fff',
-                    shadowColor: '#fff', //默认透明
+                    borderColor: '#888',
                     shadowBlur: 5,
                     width: 80,
                     height: 30,
                     offsetCenter: [0, '20%'],       // x, y，单位px
                     textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                       fontWeight: 'bolder',
-                      color: '#fff'
+                      color: '#888'
                     }
                   },
-                  data: [{value: scope.data[2], name: 'Large Value'}]
+                  data: [{value: scope.data[2], name: '值过大导致的异常数量'}]
                 }
               ]
             };

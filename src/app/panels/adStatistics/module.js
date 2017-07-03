@@ -19,7 +19,7 @@ define([
     ],
     function (angular, app, _, $, kbn) {
         'use strict';
-        var DEBUG = true;
+        var DEBUG = false;
         console.log('adStatistics DEBUG : ' + DEBUG);
 
         var module = angular.module('kibana.panels.adStatistics', []);
@@ -124,18 +124,13 @@ define([
             };
             $scope.build_search = function(term) {
               dashboard.current.main_bn_node_name = term.term;
-              if (dashboard.current.fq) {
-                dashboard.current.line_chart_fq = dashboard.current.fq + '&fq=' + $scope.panel.stats_field + ':"' + term.term + '"';
-              } else {
-                dashboard.current.line_chart_fq = 'fq=' + $scope.panel.stats_field + ':"' + term.term + '"';
-              }
+              dashboard.current.line_chart_fq = 'fq=' + $scope.panel.stats_field + ':"' + term.term + '"';
               if (dashboard.current.anomaly_fq) {
                 dashboard.current.line_chart_anomaly_fq = dashboard.current.anomaly_fq + '&fq=' + $scope.panel.stats_field + ':"' + term.term + '"';
               } else {
                 dashboard.current.line_chart_anomaly_fq = 'fq=' + $scope.panel.stats_field + ':"' + term.term + '"';
               }
               dashboard.current.line_chart_name = term.term;
-              if (DEBUG) console.log(dashboard.current.line_chart_fq);
               if (DEBUG) console.log(dashboard.current.line_chart_anomaly_fq);
               dashboard.refresh();
             };
@@ -222,16 +217,15 @@ define([
             $scope.get_data = function() {
                 $scope.panel.mode = 'all';
                 if(($scope.panel.linkage_id===dashboard.current.linkage_id)||dashboard.current.enable_linkage){
-                    // Make sure we have everything for the request to complete
-                    if (dashboard.indices.length === 0) {
-                        return;
-                    }
+                  // Make sure we have everything for the request to complete
+                  if (dashboard.indices.length === 0) {
+                      return;
+                  }
 
-                    delete $scope.panel.error;
-                    $scope.panelMeta.loading = true;
-                    var request, results;
-
-                    $scope.sjs.client.server(dashboard.current.solr.server + dashboard.current.solr.core_name);
+                  delete $scope.panel.error;
+                  $scope.panelMeta.loading = true;
+                  var request, results;
+                  $scope.sjs.client.server(dashboard.current.solr.server + dashboard.current.solr.core_name);
 
                     request = $scope.sjs.Request().indices(dashboard.indices);
                     $scope.panel.queries.ids = querySrv.idsByMode($scope.panel.queries);
@@ -318,7 +312,7 @@ define([
                         $scope.reverse = false;
                         $scope.filteredItems = [];
                         $scope.groupedItems = [];
-                        $scope.itemsPerPage = 10;
+                        $scope.itemsPerPage = 5;
                         $scope.pagedItems = [];
                         $scope.currentPage = 0;
 
