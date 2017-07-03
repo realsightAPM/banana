@@ -41,8 +41,8 @@ define([
     var module = angular.module('kibana.panels.bn', []);
     app.useModule(module);
 
-    var DEBUG = true;
-    console.log('DEBUG : ' + DEBUG);
+    var DEBUG = false;
+    console.log('bn DEBUG : ' + DEBUG);
     module.controller('bn', function($scope, $q, $http, querySrv, dashboard, filterSrv, alertSrv) {
       $scope.panelMeta = {
         modals : [
@@ -334,6 +334,7 @@ define([
         link: function(scope, elem) {
 
           // Receive render events
+          var myDiagram = null;
           scope.$on('render',function(){
             render_panel();
           });
@@ -464,8 +465,10 @@ define([
 
             function drawGraph(nodeDataArray, linkDataArray, graph_id) {
               var $ = go.GraphObject.make;  // for conciseness in defining templates
-
-              var myDiagram =
+              if (myDiagram) {
+                return ;
+              }
+              myDiagram =
                 $(go.Diagram, graph_id+"",  // create a Diagram for the DIV HTML
                   // element
                   {
@@ -489,8 +492,7 @@ define([
                 //str += "Born: " + person.birthYear;
                 //if (person.deathYear !== undefined) str += "\nDied: " + person.deathYear;
                 //if (person.reign !== undefined) str += "\nReign: " + person.reign;
-                var x = node.key.substr(1);
-                return query_list[parseInt(x)];
+                return query_list[parseInt(node.key)];
               }
 
               // define tooltips for nodes
@@ -522,7 +524,7 @@ define([
                     new go.Binding("fill", "color")
                   ),
                   $(go.TextBlock,
-                    { font: "bold 10pt helvetica, bold arial, sans-serif", textAlign: "center", maxSize: new go.Size(100, NaN) },
+                    { font: "bold 40pt helvetica, bold arial, sans-serif", textAlign: "center", maxSize: new go.Size(100, NaN) },
                     new go.Binding("text", "key")),
                   {
                     click: function(e, obj) { window.selected_var=obj.part.data.key;showMessage(obj.part.data.key); },
@@ -548,6 +550,7 @@ define([
               // bound to the "color" property
               myDiagram.linkTemplate =
                 $(go.Link,  // the whole link panel
+                  {curve:go.Link.Bezier},
                   $(go.Shape,  // the link shape
                     { stroke: "black" }),
                   $(go.Shape,  // the arrowhead
@@ -575,6 +578,8 @@ define([
 
             function showMessage(s) {
               //alert("klick: "+s+".");
+              dashboard.current.bn_main_node = s;
+              dashboard.refresh();
             }
             drawGraph(nodeList, linkList, graph_id);
           }

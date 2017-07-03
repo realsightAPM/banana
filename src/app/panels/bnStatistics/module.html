@@ -1,4 +1,4 @@
-<div ng-controller='adStatistics' ng-init="init()">
+<div ng-controller='bnStatistics' ng-init="init()">
   <style type="text/css">
     table td {
       word-break: break-all;
@@ -13,7 +13,7 @@
     <thead>
       <!-- <th class="name">检测<big>名称</big>&nbsp;</th> -->
       <th class="term">指标/事务名&nbsp;<a ng-click="sort_by('term')"><i class="icon-sort"></i></a></th>
-      <th class="count">数量&nbsp;<a ng-click="sort_by('count')"><i class="icon-sort"></i></a></th>
+      <th class="count">相关性&nbsp;<a ng-click="sort_by('count')"><i class="icon-sort"></i></a></th>
       <!-- <th class="find"> 查看<big>相关</big>事务/指标</th> -->
       <!--
       <th class="stddev">Std&nbsp;<a ng-click="sort_by('stddev')"><i class="icon-sort"></i></a></th>
@@ -42,14 +42,11 @@
     <tr ng-repeat="term in pagedItems[currentPage]">
       <!-- <td>{{term.name}}</td> -->
       <td>{{term.term}}</td>
-      <td>{{term.count}}</td>
+      <td>{{term.value}}</td>
       <!--
       <td>{{term.min}}</td>
       <td>{{term.stddev.toFixed(panel.decimal_points)}}</td>
       -->
-      <td>
-        <i class='icon-search pointer' ng-click="build_search(term)"></i>
-      </td>
 
     </tr>
     </tbody>

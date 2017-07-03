@@ -378,6 +378,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
             var end_time = Date.parse(new Date(scope.get_time_range()['to']));
             var step = (end_time-start_time)/cut_number+1;
             var ad_name = scope.panel.ad_name;
+            var show_name = undefined;
             var dates = [];
             var timestamps = [];
             if (DEBUG) {console.log(scope.get_time_range());}
@@ -406,6 +407,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                   var solr_writer_url = anomaly.solr_writer_url_s;
                   var stats_facet = anomaly.stats_facet_s;
                   var facet_name = anomaly.facet_name_s;
+                  show_name = anomaly.show_name_s;
                   data[date_index].push({
                     date_index: date_index,
                     anomaly_date: dates[date_index],
@@ -416,7 +418,8 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                     solr_reader_url : solr_reader_url,
                     solr_writer_url :　solr_writer_url,
                     stats_facet : stats_facet,
-                    facet_name : facet_name
+                    facet_name : facet_name,
+                    show_name : show_name
                   });
                 }
               });
@@ -457,7 +460,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                 },
                 yAxis: {
                     type: 'category',
-                    data: [ad_name],
+                    data: [show_name],
                     splitArea: {
                         show: true
                     },
@@ -503,12 +506,13 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
               fq = fq + '&fq=ad_name_s:"' + ad_name+'"';
               var anomaly_fq = fq + '&fq=anomaly_f:[' + anomaly_th + '%20TO%20*]';
               if (DEBUG) { console.log(fq); }
+              dashboard.current.ad_start_timestamp = Math.floor(from_timestamp);
+              dashboard.current.ad_end_timestamp = Math.floor(to_timestamp);
               dashboard.current.anomaly_fq = anomaly_fq;
               dashboard.current.fq = fq;
               dashboard.current.anomaly_name = ad_name;
-              dashboard.current.anomaly_solr_reader_url = data[x][0].anomaly_solr_reader_url;
-              dashboard.current.anomaly_stats_facet = data[x][0].anomaly_stats_facet;
-              dashboard.current.anomaly_facet_name = data[x][0].anomaly_facet_name;
+              dashboard.current.anomaly_stats_facet = data[x][0].stats_facet;
+              dashboard.current.anomaly_facet_name = data[x][0].facet_name;
               dashboard.current.metric_field = undefined;
                 /* filterSrv.set({
                     type  : 'time',

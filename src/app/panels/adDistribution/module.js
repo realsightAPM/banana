@@ -42,7 +42,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
   app.useModule(module);
 
   var DEBUG = false;
-  console.log('DEBUG : ' + DEBUG);
+  console.log('adDistribution DEBUG : ' + DEBUG);
   module.controller('adDistribution', function($scope, $q, $http, querySrv, dashboard, filterSrv, alertSrv) {
     $scope.panelMeta = {
       modals : [

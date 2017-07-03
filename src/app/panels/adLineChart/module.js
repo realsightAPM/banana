@@ -130,9 +130,9 @@ define([
             $scope.build_query = function(filetype, ex_fq) {
                 // Build Solr query
                 var fq = '';
-                if (filterSrv.getSolrFq()) {
+                /*if (filterSrv.getSolrFq()) {
                     fq = '&' + filterSrv.getSolrFq();
-                }
+                }*/
                 fq = fq + '&' + ex_fq;
                 var wt_json = '&wt=' + filetype;
                 var rows_limit = '&rows=' + $scope.panel.max_rows; // for terms, we do not need the actual response doc, so set rows=0
@@ -184,101 +184,111 @@ define([
             };
 
             $scope.get_data = function() {
-                $scope.panel.mode = 'all';
-                if(($scope.panel.linkage_id===dashboard.current.linkage_id)||dashboard.current.enable_linkage){
-                    // Make sure we have everything for the request to complete
-                    if (dashboard.indices.length === 0) {
-                        return;
-                    }
+              $scope.panel.mode = 'all';
+              if(($scope.panel.linkage_id===dashboard.current.linkage_id)||dashboard.current.enable_linkage){
+                // Make sure we have everything for the request to complete
+                if (dashboard.indices.length === 0) {
+                    return;
+                }
 
-                    delete $scope.panel.error;
-                    $scope.panelMeta.loading = true;
-                    var request, results;
+                delete $scope.panel.error;
+                $scope.panelMeta.loading = true;
+                var request, results;
+                $scope.sjs.client.server(dashboard.current.solr.server + dashboard.current.solr.core_name);
 
-                    $scope.sjs.client.server(dashboard.current.solr.server + dashboard.current.solr.core_name);
+                request = $scope.sjs.Request().indices(dashboard.indices);
+                $scope.panel.queries.ids = querySrv.idsByMode($scope.panel.queries);
 
-                    request = $scope.sjs.Request().indices(dashboard.indices);
-                    $scope.panel.queries.ids = querySrv.idsByMode($scope.panel.queries);
+                // Populate the inspector panel
+                $scope.inspector = angular.toJson(JSON.parse(request.toString()), true);
 
-                    // Populate the inspector panel
-                    $scope.inspector = angular.toJson(JSON.parse(request.toString()), true);
+                if (dashboard.current.line_chart_anomaly_fq === undefined) {return ;}
+                var line_chart_fq = '';
+                if (dashboard.current.ad_end_timestamp) {
+                  var start_timestamp = dashboard.current.ad_end_timestamp-1000*60*60*24;
+                  var end_timestamp = dashboard.current.ad_end_timestamp;
+                  line_chart_fq += '&fq=start_timestamp_l:[' + start_timestamp + '%20TO%20' + end_timestamp + ']';
+                }
+                if (dashboard.current.anomaly_name) {
+                  line_chart_fq += '&fq=ad_name_s:' + dashboard.current.anomaly_name;
+                }
+                if (dashboard.current.line_chart_fq) {
+                  line_chart_fq += '&' + dashboard.current.line_chart_fq;
+                }
 
-                    if (dashboard.current.line_chart_fq === undefined) {return ;}
-                    if (dashboard.current.line_chart_anomaly_fq === undefined) {return ;}
-                    var total_query = this.build_query('json', dashboard.current.line_chart_fq);
-                    var anomaly_query = this.build_query('json', dashboard.current.line_chart_anomaly_fq);
+                var total_query = this.build_query('json', line_chart_fq);
+                var anomaly_query = this.build_query('json', dashboard.current.line_chart_anomaly_fq);
 
-                    if (DEBUG) {console.log(total_query);}
-                    if (DEBUG) {console.log(anomaly_query);}
-                    // Set the panel's query
-                    $scope.panel.queries.query = total_query + '\n' + anomaly_query;
+                if (DEBUG) {console.log(total_query);}
+                if (DEBUG) {console.log(anomaly_query);}
+                // Set the panel's query
+                $scope.panel.queries.query = total_query + '\n' + anomaly_query;
 
-                    request.setQuery(total_query);
-                    results = request.doSearch();
-                    // Populate scope when we have results
+                request.setQuery(total_query);
+                results = request.doSearch();
+                // Populate scope when we have results
 
-                    results.then(function (results) {
-                      // Check for error and abort if found
-                      if (!(_.isUndefined(results.error))) {
-                          $scope.panel.error = $scope.parse_error(results.error.msg);
-                          $scope.data = [];
-                          $scope.panelMeta.loading = false;
-                          $scope.$emit('render');
-                          return;
-                      }
+                results.then(function (results) {
+                  // Check for error and abort if found
+                  if (!(_.isUndefined(results.error))) {
+                      $scope.panel.error = $scope.parse_error(results.error.msg);
                       $scope.data = [];
                       $scope.panelMeta.loading = false;
-                      {
-                        // In stats mode, set y-axis min to null so jquery.flot will set the scale automatically.
-                        $scope.yaxis_min = null;
-                        if (DEBUG) { console.log(results);}
-                        var total = [];
-                        for (var index in results.response.docs) {
-                          var doc = results.response.docs[index];
-                          var slice = {value: doc.value_f, timestamp: doc.start_timestamp_l, l: doc.down_margin_f, u:doc.up_margin_f};
-                          if (doc.value_f === NaN) {continue;}
-                          //var slice = {label: facet_field, data: [[k, stats_obj['mean'], stats_obj['count'], stats_obj['max'], stats_obj['min'], stats_obj['stddev'], facet_field]], actions: true};
-                          total.push(slice);
-                        }
-                        $scope.data.push(total);
+                      $scope.$emit('render');
+                      return;
+                  }
+                  $scope.data = [];
+                  $scope.panelMeta.loading = false;
+                  {
+                    // In stats mode, set y-axis min to null so jquery.flot will set the scale automatically.
+                    $scope.yaxis_min = null;
+                    if (DEBUG) { console.log(results);}
+                    var total = [];
+                    for (var index in results.response.docs) {
+                      var doc = results.response.docs[index];
+                      var slice = {value: doc.value_f, timestamp: doc.start_timestamp_l, l: doc.down_margin_f, u:doc.up_margin_f};
+                      if (doc.value_f === NaN) {continue;}
+                      //var slice = {label: facet_field, data: [[k, stats_obj['mean'], stats_obj['count'], stats_obj['max'], stats_obj['min'], stats_obj['stddev'], facet_field]], actions: true};
+                      total.push(slice);
+                    }
+                    $scope.data.push(total);
+                  }
+                  if (DEBUG) console.log($scope.data);
+                  $scope.panelMeta.loading = true;
+                  $scope.sjs.client.server(dashboard.current.solr.server + dashboard.current.solr.core_name);
+                  request.setQuery(anomaly_query);
+                  results = request.doSearch();
+                  // Populate scope when we have results
+                  results.then(function (results) {
+                    // Check for error and abort if found
+                    if (!(_.isUndefined(results.error))) {
+                      $scope.panel.error = $scope.parse_error(results.error.msg);
+                      $scope.data = [];
+                      $scope.panelMeta.loading = false;
+                      $scope.$emit('render');
+                      return;
+                    }
+
+                    $scope.panelMeta.loading = false;
+                    {
+                      // In stats mode, set y-axis min to null so jquery.flot will set the scale automatically.
+                      $scope.yaxis_min = null;
+                      if (DEBUG) { console.log(results); }
+                      var anomaly = [];
+                      for (var index in results.response.docs) {
+                        var doc = results.response.docs[index];
+                        if (doc.value_f === NaN) {continue;}
+                        //var slice = {label: facet_field, data: [[k, stats_obj['mean'], stats_obj['count'], stats_obj['max'], stats_obj['min'], stats_obj['stddev'], facet_field]], actions: true};
+                        var slice = {name:"sb", value:doc.value_f ,yAxis: doc.value_f, xAxis: doc.start_timestamp_l};
+                        anomaly.push(slice);
                       }
-                      if (DEBUG) console.log($scope.data);
-                      $scope.panelMeta.loading = true;
-                      request.setQuery(anomaly_query);
-                      results = request.doSearch();
-                      // Populate scope when we have results
-                      results.then(function (results) {
-                        // Check for error and abort if found
-                        if (!(_.isUndefined(results.error))) {
-                          $scope.panel.error = $scope.parse_error(results.error.msg);
-                          $scope.data = [];
-                          $scope.panelMeta.loading = false;
-                          $scope.$emit('render');
-                          return;
-                        }
-
-                        $scope.panelMeta.loading = false;
-                        {
-                          // In stats mode, set y-axis min to null so jquery.flot will set the scale automatically.
-                          $scope.yaxis_min = null;
-                          if (DEBUG) { console.log(results); }
-                          var anomaly = [];
-                          for (var index in results.response.docs) {
-                            var doc = results.response.docs[index];
-                            if (doc.value_f === NaN) {continue;}
-                            //var slice = {label: facet_field, data: [[k, stats_obj['mean'], stats_obj['count'], stats_obj['max'], stats_obj['min'], stats_obj['stddev'], facet_field]], actions: true};
-                            var slice = {name:"sb", value:doc.value_f ,yAxis: doc.value_f, xAxis: doc.start_timestamp_l};
-                            anomaly.push(slice);
-                          }
-                          $scope.data.push(anomaly);
-                        }
-                        if (DEBUG) console.log($scope.data);
-                        $scope.$emit('render');
-                      });
-                    });
-
-
-                }
+                      $scope.data.push(anomaly);
+                    }
+                    if (DEBUG) console.log($scope.data);
+                    $scope.$emit('render');
+                  });
+                });
+              }
             };
 
             $scope.set_refresh = function (state) {
@@ -382,7 +392,7 @@ define([
                   grid: {
                     left: '3%',
                     right: '4%',
-                    bottom: '3%',
+                    bottom: '20%',
                     containLabel: false
                   },
                   xAxis: {
@@ -473,7 +483,8 @@ define([
                     markPoint: {
                       data: anomalyData.map(function (item) {
                         item.xAxis = echarts.format.formatTime('yyyy/MM/dd hh:mm:ss', item.xAxis);
-                        item.value += base;
+                        item.yAxis += base;
+                        item.value -= base;
                         return item;
                       })
                     }
