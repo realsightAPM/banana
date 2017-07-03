@@ -291,7 +291,12 @@
   "Calculate Top Field Values From All Data ":"从所有数据计算顶部字段值",
   "Anomaly detection":"异常检测",
   "Transaction link":"事务链接",
-  "Y-Name":"Y轴名称"
+  "Y-Name":"Y轴名称",
+  "Anomaly Detection Name":"异常检测名称",
+  "Metrics Field Name":"指标名",
+  "Prev":"上一个",
+  "Solr Collection":"Solr 存储模块"
+
 
 
 
