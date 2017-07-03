@@ -273,6 +273,8 @@ define([
           field: field,
           value: value
         });
+        dashboard.current.linkage_id = $scope.panel.linkage_id;
+        dashboard.current.enable_linkage = false;
         dashboard.refresh();
       };
 
@@ -285,6 +287,8 @@ define([
       // call close filter when click in close icon
       $scope.delete_filter = function(type, field) {
         filterSrv.removeByTypeAndField(type, field);
+        dashboard.current.linkage_id = $scope.panel.linkage_id;
+        dashboard.current.enable_linkage = false;
         dashboard.refresh();
       };
 
