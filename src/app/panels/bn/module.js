@@ -33,8 +33,7 @@ define([
     'jquery',
     'underscore',
     'kbn',
-    'moment',
-    'gojs'
+    'moment'
   ],
   function (angular, app, $, _, kbn, moment, timeSeries) {
     'use strict';
@@ -269,7 +268,7 @@ define([
         var wt_json = '&wt=json';
         // var metric_field = $scope.panel.metric_field;
         //var anomaly_th = $scope.panel.anomaly_th;
-        var sort_field = '&sort='+'timestamp_l'+'%20asc';
+        var sort_field = '&sort='+'timestamp_l'+'%20desc';
         //var rows_limit = '&rows='+$scope.panel.max_rows;
         // var facet = '';
         //var fl = '&fl=' + 'timestamp_l%20anomaly_value_d%20value_d';
@@ -285,8 +284,7 @@ define([
         var mypromises = [];
         //var temp_q = 'q=' + metric_field + ':' + metric + wt_json + rows_limit + fq + facet + fl + sort_field;
         var querys = [];
-
-        var temp_q = 'q=' + 'result_s:bn' +  wt_json + fq;
+        var temp_q = 'q=' + 'result_s:bn' +  wt_json + fq + sort_field;
         var temp_q2 =  $scope.build_anomaly_query('json', false);
         querys.push(temp_q);
         querys.push(temp_q2);
@@ -401,7 +399,7 @@ define([
             //        begin to drow chart
 
             var graph_id = scope.$id;
-            var go = require('gojs');
+            //var go = require('gojs');
             // var metric = scope.panel.metric_field;
             // var labelcolor = false;
 

@@ -134,8 +134,7 @@ define([
                 dashboard.current.line_chart_anomaly_fq = 'fq=' + $scope.panel.stats_field + ':"' + term.term + '"';
               }
               dashboard.current.line_chart_name = term.term;
-              if (DEBUG) console.log(dashboard.current.line_chart_fq);
-              if (DEBUG) console.log(dashboard.current.line_chart_anomaly_fq);
+
               dashboard.refresh();
             };
             /**
@@ -143,7 +142,7 @@ define([
              *
              * @param {String} filetype -'json', 'xml', 'csv'
              */
-            $scope.build_query = function(filetype, isForExport) {
+            $scope.build_query = function(filetype) {
               // Build Solr query
               var wt_json = '&wt=' + filetype;
               var fq = 'q=' + 'result_s:bn' +  wt_json ;
