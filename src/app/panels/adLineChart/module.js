@@ -130,9 +130,9 @@ define([
             $scope.build_query = function(filetype, ex_fq) {
                 // Build Solr query
                 var fq = '';
-                /*if (filterSrv.getSolrFq()) {
+                if (filterSrv.getSolrFq()) {
                     fq = '&' + filterSrv.getSolrFq();
-                }*/
+                }
                 fq = fq + '&' + ex_fq;
                 var wt_json = '&wt=' + filetype;
                 var rows_limit = '&rows=' + $scope.panel.max_rows; // for terms, we do not need the actual response doc, so set rows=0
@@ -204,11 +204,6 @@ define([
 
                 if (dashboard.current.line_chart_anomaly_fq === undefined) {return ;}
                 var line_chart_fq = '';
-                if (dashboard.current.ad_end_timestamp) {
-                  var start_timestamp = dashboard.current.ad_end_timestamp-1000*60*60*24;
-                  var end_timestamp = dashboard.current.ad_end_timestamp;
-                  line_chart_fq += '&fq=start_timestamp_l:[' + start_timestamp + '%20TO%20' + end_timestamp + ']';
-                }
                 if (dashboard.current.anomaly_name) {
                   line_chart_fq += '&fq=ad_name_s:' + dashboard.current.anomaly_name;
                 }
