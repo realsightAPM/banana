@@ -375,7 +375,11 @@ define([
                 var option = {
                   title: {
                     text: dashboard.current.line_chart_name,
-                    left: 'center'
+                    left: 'center',
+                    textStyle: {
+                      fontWeight: 'bolder',
+                      color: '#aaa'          // 主标题文字颜色
+                    }
                   },
                   tooltip: {
                     trigger: 'axis',

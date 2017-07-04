@@ -240,6 +240,7 @@ define([
                         var root1 = rootlist[selected_node+"_s"];
                         var query_list=rootlist.query_list_s.split("^");
                         var root2 = root1.split(",");
+                        $scope.index_name=query_list[parseInt(selected_node)];
                         for (var i = 0; i < root2.length; i++) {
                           var tmp_str = root2[i].split(":");
                           var slice = {term: query_list[parseInt(tmp_str[0])], value: parseFloat(tmp_str[1]).toFixed(4)};

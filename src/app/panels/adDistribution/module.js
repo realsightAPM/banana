@@ -344,18 +344,22 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                         fontWeight: 'bolder',
                         color: '#aaa'          // 主标题文字颜色
                     },
-
+                    show:false
                 },
                 tooltip : {
                     trigger: 'item',
-                    formatter: "异常分值在<big>{b}</big>之间的数量为: <big>{c} ({d}%)</big>"
+                    formatter: "异常分值在<big>{b}</big>之间的数量为: <br\><big>{c} ({d}%)</big>"
                 },
                 legend: {
                     x : 'center',
                     y : 'bottom',
                     data:['[0.0 TO 0.1]','[0.1 TO 0.2]','[0.2 TO 0.3]','[0.3 TO 0.4]',
                     '[0.4 TO 0.5]','[0.5 TO 0.6]','[0.6 TO 0.7]','[0.7 TO 0.8]',
-                    '[0.8 TO 0.9]', '[0.9 TO 1.0]']
+                    '[0.8 TO 0.9]', '[0.9 TO 1.0]'],
+                    textStyle: {
+                      fontWeight: 'bolder',
+                      color: '#aaa'          // 主标题文字颜色
+                    }
                 },
                 toolbox: {
                     show : true,
