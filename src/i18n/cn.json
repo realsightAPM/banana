@@ -170,7 +170,7 @@
   "Select Type":"类型选择",
   "Query Mode":"查询模式",
   "Rest":"剩余部分",
-  "Exclude Terms(s) (comma seperated)":"排除条款",
+  "Exclude Terms(s) (comma seperated)":"条件排除设置",
   "CPU Field":"CPU指标",
   "Memory Field":"内存指标",
   "Add Facet Field":"增加分组字段",
@@ -299,7 +299,8 @@
   "Anomaly Detection Name":"异常检测名称",
   "Metrics Field Name":"指标名",
   "Prev":"上一个",
-  "Solr Collection":"Solr 存储模块"
+  "Solr Collection":"Solr 存储模块",
+  "Length of field":"字段显示长度"
 
 
 

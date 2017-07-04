@@ -140,7 +140,9 @@ function (Settings) {
       'multiseries',
       'sunburst',
       'docviewer',
-      'statistics'
+      'statistics',
+      'facet_default_show',
+      'statistics_only_count'
     ]
   });
 });
