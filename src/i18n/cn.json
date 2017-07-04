@@ -186,6 +186,8 @@
   "URL field":"URL指标",
   "SUM the group values":"求和组值",
   "Max":"最大",
+  "Min":"最小",
+  "Stddev":"标准差",
   "Map":"地图",
   "Decimal Points":"小数点",
   "Country Names":"国家名称",
