@@ -1212,8 +1212,8 @@
     "save_as_public": false
   },
   "solr": {
-    "server": "http://101.201.82.138:6983/solr/",
-    "core_name": "apm_demo",
+    "server": "http://10.4.53.205/solr/",
+    "core_name": "mobile_terminal",
     "core_list": [
       "PHP_logs",
       "TV_test",

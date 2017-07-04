@@ -131,7 +131,7 @@
     },
     {
       "title": "WARNING",
-      "height": "600px",
+      "height": "0px",
       "editable": true,
       "collapse": false,
       "collapsable": true,
@@ -166,7 +166,7 @@
           "style": {
             "font-size": "10pt"
           },
-          "fontsize": 24,
+          "fontsize": 16,
           "title_defined": true,
           "donut": false,
           "tilt": false,
@@ -244,79 +244,9 @@
           "title": "API  - 整体健康度",
           "display": "block",
           "icon": "icon-caret-down",
-          "height": "680",
+          "height": "500",
           "linkage_id": "a",
           "clickEnable": false
-        },
-        {
-          "span": 6,
-          "editable": true,
-          "type": "apihistogram",
-          "loadingEditor": false,
-          "mode": "counts",
-          "queries": {
-            "mode": "all",
-            "ids": [
-              0,
-              1,
-              2
-            ],
-            "query": "q=value_l%3A%5B4%20TO%20*%5D&wt=json&rows=0&fq=rs_timestamp:[2017-05-19T10:45:30.000Z%20TO%202017-05-20T10:45:30.000Z]&facet=true&facet.range=rs_timestamp&facet.range.start=2017-05-19T10:45:30.000Z&facet.range.end=2017-05-20T10:45:30.000Z&facet.range.gap=%2B10MINUTE\nq=value_l%3A%5B2%20TO%203%5D&wt=json&rows=0&fq=rs_timestamp:[2017-05-19T10:45:30.000Z%20TO%202017-05-20T10:45:30.000Z]&facet=true&facet.range=rs_timestamp&facet.range.start=2017-05-19T10:45:30.000Z&facet.range.end=2017-05-20T10:45:30.000Z&facet.range.gap=%2B10MINUTE\nq=value_l%3A%5B0%20TO%201%5D&wt=json&rows=0&fq=rs_timestamp:[2017-05-19T10:45:30.000Z%20TO%202017-05-20T10:45:30.000Z]&facet=true&facet.range=rs_timestamp&facet.range.start=2017-05-19T10:45:30.000Z&facet.range.end=2017-05-20T10:45:30.000Z&facet.range.gap=%2B10MINUTE\n",
-            "custom": ""
-          },
-          "max_rows": 100000,
-          "reverse": 0,
-          "segment": 3,
-          "threshold_first": 2,
-          "threshold_second": 4,
-          "threshold_third": 3000,
-          "value_field": "value_l",
-          "group_field": null,
-          "auto_int": true,
-          "resolution": 100,
-          "interval": "10m",
-          "intervals": [
-            "auto",
-            "1s",
-            "1m",
-            "5m",
-            "10m",
-            "30m",
-            "1h",
-            "3h",
-            "12h",
-            "1d",
-            "1w",
-            "1M",
-            "1y"
-          ],
-          "fill": 2,
-          "linewidth": 2,
-          "timezone": "browser",
-          "spyable": true,
-          "zoomlinks": true,
-          "bars": false,
-          "stack": true,
-          "points": false,
-          "display": "block",
-          "icon": "icon-caret-down",
-          "lines": true,
-          "lines_smooth": false,
-          "legend": true,
-          "x-axis": false,
-          "y-axis": true,
-          "percentage": false,
-          "interactive": true,
-          "options": true,
-          "show_queries": true,
-          "tooltip": {
-            "value_type": "cumulative",
-            "query_as_alias": false
-          },
-          "height": "190",
-          "title": "API - 统计状态",
-          "linkage_enable": true,
-          "linkage_id": "a"
         },
         {
           "span": 6,
@@ -403,7 +333,7 @@
             "query_as_alias": false
           },
           "value_field": "value_l",
-          "height": "190",
+          "height": "227",
           "value_category": "api_s",
           "another": false,
           "title": "API - 详细的状态分布",
@@ -495,10 +425,89 @@
             "query_as_alias": false
           },
           "value_field": "duration_l",
-          "height": "190",
+          "height": "227",
           "value_category": "api_s",
           "another": true,
           "title": "API - 响应时间(ms)",
+          "linkage_enable": true,
+          "linkage_id": "a"
+        }
+      ]
+    },
+    {
+      "title": "",
+      "height": "0px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 12,
+          "editable": true,
+          "type": "apihistogram",
+          "loadingEditor": false,
+          "mode": "counts",
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0,
+              1,
+              2
+            ],
+            "query": "q=value_l%3A%5B4%20TO%20*%5D&wt=json&rows=0&fq=rs_timestamp:[2017-05-19T10:45:30.000Z%20TO%202017-05-20T10:45:30.000Z]&facet=true&facet.range=rs_timestamp&facet.range.start=2017-05-19T10:45:30.000Z&facet.range.end=2017-05-20T10:45:30.000Z&facet.range.gap=%2B10MINUTE\nq=value_l%3A%5B2%20TO%203%5D&wt=json&rows=0&fq=rs_timestamp:[2017-05-19T10:45:30.000Z%20TO%202017-05-20T10:45:30.000Z]&facet=true&facet.range=rs_timestamp&facet.range.start=2017-05-19T10:45:30.000Z&facet.range.end=2017-05-20T10:45:30.000Z&facet.range.gap=%2B10MINUTE\nq=value_l%3A%5B0%20TO%201%5D&wt=json&rows=0&fq=rs_timestamp:[2017-05-19T10:45:30.000Z%20TO%202017-05-20T10:45:30.000Z]&facet=true&facet.range=rs_timestamp&facet.range.start=2017-05-19T10:45:30.000Z&facet.range.end=2017-05-20T10:45:30.000Z&facet.range.gap=%2B10MINUTE\n",
+            "custom": ""
+          },
+          "max_rows": 100000,
+          "reverse": 0,
+          "segment": 3,
+          "threshold_first": 2,
+          "threshold_second": 4,
+          "threshold_third": 3000,
+          "value_field": "value_l",
+          "group_field": null,
+          "auto_int": true,
+          "resolution": 100,
+          "interval": "10m",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1M",
+            "1y"
+          ],
+          "fill": 2,
+          "linewidth": 2,
+          "timezone": "browser",
+          "spyable": true,
+          "zoomlinks": true,
+          "bars": false,
+          "stack": true,
+          "points": false,
+          "display": "block",
+          "icon": "icon-caret-down",
+          "lines": true,
+          "lines_smooth": false,
+          "legend": true,
+          "x-axis": false,
+          "y-axis": true,
+          "percentage": false,
+          "interactive": true,
+          "options": true,
+          "show_queries": true,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": false
+          },
+          "height": "150",
+          "title": "API - 统计状态",
           "linkage_enable": true,
           "linkage_id": "a"
         }
@@ -901,7 +910,7 @@
           "linewidth": 3,
           "chart": "sortbar",
           "chartColors": [
-            "#7EB26D",
+            "#1a93f9",
             "#EAB839",
             "#6ED0E0",
             "#EF843C",
@@ -1341,8 +1350,8 @@
     "save_as_public": false
   },
   "solr": {
-    "server": "http://101.201.82.138:19983/solr/",
-    "core_name": "bmw_els_api",
+    "server": "http://10.4.53.205:9983/solr/",
+    "core_name": "api_monitoring",
     "core_list": [
       "PHP_logs",
       "apm",

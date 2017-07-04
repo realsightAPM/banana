@@ -906,8 +906,8 @@
     "dropdown_collections": false
   },
   "solr": {
-    "server": "http://121.42.185.24:8983/solr/",
-    "core_name": "hislog_shard1_replica1",
+    "server": "http://10.4.53.205:9983/solr/",
+    "core_name": "hislog",
     "core_list": [
       "analysis_shard1_replica1",
       "hislog_shard1_replica1",

@@ -30,12 +30,10 @@
       ],
       "list": {
         "0": {
-          "from": "NOW/DAY-2DAY",
-          "to": "NOW/DAY%2B1DAY",
+          "from": "2017-06-26T21:30:03.000Z",
+          "to": "2017-06-29T02:18:20.000Z",
           "field": "rs_timestamp_tdt",
           "type": "time",
-          "fromDateObj": "2017-06-20T06:28:24.549Z",
-          "toDateObj": "2017-06-22T06:28:24.549Z",
           "mandate": "must",
           "active": true,
           "alias": "",
@@ -62,7 +60,7 @@
           "type": "timepicker",
           "loadingEditor": false,
           "status": "Stable",
-          "mode": "relative",
+          "mode": "absolute",
           "time_options": [
             "6h",
             "12h",
@@ -89,7 +87,11 @@
             "min": 3
           },
           "filter_id": 0,
-          "title": "时间轴"
+          "title": "时间轴",
+          "time": {
+            "from": "06/27/2017 05:30:03",
+            "to": "06/29/2017 10:18:20"
+          }
         },
         {
           "span": 3,
@@ -101,7 +103,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/DAY-2DAY%20TO%20NOW/DAY%2B1DAY]&facet=true&facet.field=user_ipaddress_s&facet.limit=10000&facet.missing=true&f.user_ipaddress_s.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-26T21:30:03.000Z%20TO%202017-06-29T02:18:20.000Z]&facet=true&facet.field=user_ipaddress_s&facet.limit=10000&facet.missing=true&f.user_ipaddress_s.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -290,7 +292,7 @@
                 "ids": [
                   0
                 ],
-                "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/DAY-2DAY%20TO%20NOW/DAY%2B1DAY]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
+                "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-26T21:30:03.000Z%20TO%202017-06-29T02:18:20.000Z]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
                 "custom": ""
               },
               "stats_field": "",
@@ -323,7 +325,7 @@
               "loading": false,
               "sizeable": false,
               "span": 12,
-              "height": "225",
+              "height": "205",
               "editable": true,
               "type": "piesdemo",
               "draggable": false,
@@ -341,7 +343,7 @@
                 "ids": [
                   0
                 ],
-                "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/DAY-2DAY%20TO%20NOW/DAY%2B1DAY]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
+                "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-26T21:30:03.000Z%20TO%202017-06-29T02:18:20.000Z]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
                 "custom": ""
               },
               "stats_field": "",
@@ -432,7 +434,7 @@
               "loading": false,
               "sizeable": false,
               "span": 12,
-              "height": "225",
+              "height": "200",
               "editable": true,
               "type": "piesdemo",
               "draggable": false,
@@ -451,7 +453,7 @@
                 "ids": [
                   0
                 ],
-                "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/DAY-2DAY%20TO%20NOW/DAY%2B1DAY]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
+                "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-26T21:30:03.000Z%20TO%202017-06-29T02:18:20.000Z]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
                 "custom": ""
               },
               "stats_field": "",
@@ -550,7 +552,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/DAY-2DAY%20TO%20NOW/DAY%2B1DAY]&facet=true&facet.field=memoryUsed_i&facet.limit=10000&facet.missing=true&f.memoryUsed_i.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-26T21:30:03.000Z%20TO%202017-06-29T02:18:20.000Z]&facet=true&facet.field=memoryUsed_i&facet.limit=10000&facet.missing=true&f.memoryUsed_i.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -660,7 +662,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/DAY-2DAY%20TO%20NOW/DAY%2B1DAY]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-26T21:30:03.000Z%20TO%202017-06-29T02:18:20.000Z]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -767,7 +769,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/DAY-2DAY%20TO%20NOW/DAY%2B1DAY]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-26T21:30:03.000Z%20TO%202017-06-29T02:18:20.000Z]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -853,7 +855,7 @@
           "display": "block",
           "isEN": false,
           "icon": "icon-caret-down",
-          "height": "535",
+          "height": "490",
           "clickEnable": true
         },
         {
@@ -866,7 +868,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/DAY-2DAY%20TO%20NOW/DAY%2B1DAY]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-26T21:30:03.000Z%20TO%202017-06-29T02:18:20.000Z]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -960,7 +962,7 @@
             "enable": false,
             "interval": 2
           },
-          "height": "225",
+          "height": "200",
           "title": "APP应用用户访问量（亿）"
         },
         {
@@ -973,7 +975,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/DAY-2DAY%20TO%20NOW/DAY%2B1DAY]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-26T21:30:03.000Z%20TO%202017-06-29T02:18:20.000Z]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -1067,7 +1069,7 @@
             "enable": false,
             "interval": 2
           },
-          "height": "220",
+          "height": "200",
           "title": "APP应用充值及购机业务量（万）"
         }
       ]
@@ -1090,7 +1092,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=0&fq=rs_timestamp_tdt:[NOW/DAY-2DAY%20TO%20NOW/DAY%2B1DAY]&facet=true&facet.range=rs_timestamp_tdt&facet.range.start=NOW/DAY-2DAY&facet.range.end=NOW/DAY%2B1DAY&facet.range.gap=%2B30MINUTE\n",
+            "query": "q=*%3A*&wt=json&rows=0&fq=rs_timestamp_tdt:[2017-06-26T21:30:03.000Z%20TO%202017-06-29T02:18:20.000Z]&facet=true&facet.range=rs_timestamp_tdt&facet.range.start=2017-06-26T21:30:03.000Z&facet.range.end=2017-06-29T02:18:20.000Z&facet.range.gap=%2B30MINUTE\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -1218,8 +1220,8 @@
     "save_as_public": false
   },
   "solr": {
-    "server": "http://101.201.82.138:6983/solr/",
-    "core_name": "apm_demo",
+    "server": "http://10.4.53.205:9983/solr/",
+    "core_name": "mobile_terminal",
     "core_list": [
       "PHP_logs",
       "TV_test",

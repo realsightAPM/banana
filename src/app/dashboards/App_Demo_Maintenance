@@ -30,12 +30,10 @@
       ],
       "list": {
         "0": {
-          "from": "NOW/HOUR-48HOUR",
-          "to": "NOW/HOUR%2B1HOUR",
+          "from": "2017-06-23T03:00:30.000Z",
+          "to": "2017-06-28T03:00:30.000Z",
           "field": "rs_timestamp_tdt",
           "type": "time",
-          "fromDateObj": "2017-06-20T06:24:48.782Z",
-          "toDateObj": "2017-06-22T06:24:48.783Z",
           "mandate": "must",
           "active": true,
           "alias": "",
@@ -62,7 +60,7 @@
           "type": "timepicker",
           "loadingEditor": false,
           "status": "Stable",
-          "mode": "relative",
+          "mode": "absolute",
           "time_options": [
             "6h",
             "12h",
@@ -89,7 +87,11 @@
           "spyable": true,
           "title": "时间轴",
           "display": "block",
-          "icon": "icon-caret-down"
+          "icon": "icon-caret-down",
+          "time": {
+            "from": "06/23/2017 11:00:30",
+            "to": "06/28/2017 11:00:30"
+          }
         },
         {
           "error": false,
@@ -180,7 +182,7 @@
                 "ids": [
                   0
                 ],
-                "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/HOUR-48HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
+                "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-23T03:00:30.000Z%20TO%202017-06-28T03:00:30.000Z]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
                 "custom": ""
               },
               "stats_field": "",
@@ -238,7 +240,7 @@
                 "ids": [
                   0
                 ],
-                "query": "q=caton_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=10000&fq=rs_timestamp_tdt:[NOW/HOUR-48HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp_tdt caton_i\n",
+                "query": "q=caton_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=10000&fq=rs_timestamp_tdt:[2017-06-23T03:00:30.000Z%20TO%202017-06-28T03:00:30.000Z]&fl=rs_timestamp_tdt caton_i\n",
                 "custom": ""
               },
               "reverse": 0,
@@ -251,7 +253,7 @@
               "total_first": "%",
               "isEN": false,
               "field_color": "#2ce41b",
-              "interval": "30m",
+              "interval": "1h",
               "intervals": [
                 "auto",
                 "1s",
@@ -326,7 +328,7 @@
                 "ids": [
                   0
                 ],
-                "query": "q=collapse_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=10000&fq=rs_timestamp_tdt:[NOW/HOUR-48HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp_tdt collapse_i\n",
+                "query": "q=collapse_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=10000&fq=rs_timestamp_tdt:[2017-06-23T03:00:30.000Z%20TO%202017-06-28T03:00:30.000Z]&fl=rs_timestamp_tdt collapse_i\n",
                 "custom": ""
               },
               "reverse": 0,
@@ -341,7 +343,7 @@
               "total_first": "%",
               "isEN": false,
               "field_color": "#2ce41b",
-              "interval": "30m",
+              "interval": "1h",
               "intervals": [
                 "auto",
                 "1s",
@@ -416,7 +418,7 @@
                 "ids": [
                   0
                 ],
-                "query": "q=network_s%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=10000&fq=rs_timestamp_tdt:[NOW/HOUR-48HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp_tdt network_s\n",
+                "query": "q=network_s%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=10000&fq=rs_timestamp_tdt:[2017-06-23T03:00:30.000Z%20TO%202017-06-28T03:00:30.000Z]&fl=rs_timestamp_tdt network_s\n",
                 "custom": ""
               },
               "reverse": 0,
@@ -431,7 +433,7 @@
               "fontsize": 12,
               "isEN": false,
               "field_color": "#2ce41b",
-              "interval": "30m",
+              "interval": "1h",
               "intervals": [
                 "auto",
                 "1s",
@@ -489,7 +491,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/HOUR-48HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=memoryUsed_i&facet.limit=10000&facet.missing=true&f.memoryUsed_i.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-23T03:00:30.000Z%20TO%202017-06-28T03:00:30.000Z]&facet=true&facet.field=memoryUsed_i&facet.limit=10000&facet.missing=true&f.memoryUsed_i.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -599,7 +601,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/HOUR-48HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=http_code_i&facet.limit=10000&facet.missing=true&f.http_code_i.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-23T03:00:30.000Z%20TO%202017-06-28T03:00:30.000Z]&facet=true&facet.field=http_code_i&facet.limit=10000&facet.missing=true&f.http_code_i.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -706,7 +708,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/HOUR-48HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-23T03:00:30.000Z%20TO%202017-06-28T03:00:30.000Z]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -805,7 +807,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/HOUR-48HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-23T03:00:30.000Z%20TO%202017-06-28T03:00:30.000Z]&facet=true&facet.field=City_s&facet.limit=10000&facet.missing=true&f.City_s.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -912,7 +914,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/HOUR-48HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=appStatus_s&facet.limit=10000&facet.missing=true&f.appStatus_s.facet.sort=count&fq = -appStatus_s:appBecomeInactive&fq = -appStatus_s:appLaunch&fq = -appStatus_s:appBecomeActive&fq = -appStatus_s:应用启动过程",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-23T03:00:30.000Z%20TO%202017-06-28T03:00:30.000Z]&facet=true&facet.field=appStatus_s&facet.limit=10000&facet.missing=true&f.appStatus_s.facet.sort=count&fq = -appStatus_s:appBecomeInactive&fq = -appStatus_s:appLaunch&fq = -appStatus_s:appBecomeActive&fq = -appStatus_s:应用启动过程",
             "custom": "&fq = -appStatus_s:appBecomeInactive&fq = -appStatus_s:appLaunch&fq = -appStatus_s:appBecomeActive&fq = -appStatus_s:应用启动过程"
           },
           "mode": "count",
@@ -1020,7 +1022,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/HOUR-48HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=http_code_i&facet.limit=10000&facet.missing=true&f.http_code_i.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-23T03:00:30.000Z%20TO%202017-06-28T03:00:30.000Z]&facet=true&facet.field=http_code_i&facet.limit=10000&facet.missing=true&f.http_code_i.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -1138,7 +1140,7 @@
             "ids": [
               0
             ],
-            "query": "q=pageResponse_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[NOW/HOUR-48HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp_tdt pageResponse_i\n",
+            "query": "q=pageResponse_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[2017-06-23T03:00:30.000Z%20TO%202017-06-28T03:00:30.000Z]&fl=rs_timestamp_tdt pageResponse_i\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -1155,7 +1157,7 @@
           "field_color": "#2ce41b",
           "resolution": 100,
           "value_sort": "rs_timestamp_tdt",
-          "interval": "30m",
+          "interval": "1h",
           "intervals": [
             "auto",
             "1s",
@@ -1237,8 +1239,8 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=rs_timestamp_tdt:[NOW/HOUR-48HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=http_code_i&facet.field=appStatus_s&facet.field=user_ipaddress_s&facet.field=City_s&facet.field=caton_i&facet.field=carrier_s&wt=json&rows=1500&hl=true&hl.fl=user_ipaddress_s",
-            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[NOW/HOUR-48HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=http_code_i&facet.field=appStatus_s&facet.field=user_ipaddress_s&facet.field=City_s&facet.field=caton_i&facet.field=carrier_s",
+            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2017-06-23T03:00:30.000Z%20TO%202017-06-28T03:00:30.000Z]&facet=true&facet.field=http_code_i&facet.field=appStatus_s&facet.field=user_ipaddress_s&facet.field=City_s&facet.field=caton_i&facet.field=carrier_s&wt=json&rows=1500&hl=true&hl.fl=user_ipaddress_s",
+            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2017-06-23T03:00:30.000Z%20TO%202017-06-28T03:00:30.000Z]&facet=true&facet.field=http_code_i&facet.field=appStatus_s&facet.field=user_ipaddress_s&facet.field=City_s&facet.field=caton_i&facet.field=carrier_s",
             "custom": ""
           },
           "size": 3,
@@ -1350,8 +1352,8 @@
     "save_as_public": false
   },
   "solr": {
-    "server": "http://101.201.82.138:6983/solr/",
-    "core_name": "apm_demo",
+    "server": "http://10.4.53.205:9983/solr/",
+    "core_name": "mobile_terminal",
     "core_list": [
       "PHP_logs",
       "TV_test",

@@ -44,12 +44,10 @@
       ],
       "list": {
         "0": {
-          "from": "NOW/HOUR-24HOUR",
-          "to": "NOW/HOUR%2B1HOUR",
+          "from": "2017-07-02T02:00:00.000Z",
+          "to": "2017-07-04T02:00:00.000Z",
           "field": "rs_timestamp",
           "type": "time",
-          "fromDateObj": "2017-06-18T07:25:24.506Z",
-          "toDateObj": "2017-06-19T07:25:24.506Z",
           "mandate": "must",
           "active": true,
           "alias": "",
@@ -76,7 +74,7 @@
           "type": "timepicker",
           "loadingEditor": false,
           "status": "Stable",
-          "mode": "relative",
+          "mode": "absolute",
           "time_options": [
             "1h",
             "2h",
@@ -96,7 +94,7 @@
             "3y",
             "5y"
           ],
-          "timespan": "24h",
+          "timespan": "48h",
           "timefield": "rs_timestamp",
           "timeformat": "",
           "refresh": {
@@ -108,7 +106,11 @@
           "spyable": true,
           "title": "时间轴",
           "display": "block",
-          "icon": "icon-caret-down"
+          "icon": "icon-caret-down",
+          "time": {
+            "from": "07/02/2017 10:00:00",
+            "to": "07/04/2017 10:00:00"
+          }
         },
         {
           "span": 4,
@@ -122,8 +124,8 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=user_ipaddress&facet.limit=100000&facet.missing=true&f.user_ipaddress.facet.sort=count&fq=app_id:Platform System",
-            "custom": "&fq=app_id:Platform System"
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.field=user_ipaddress&facet.limit=100000&facet.missing=true&f.user_ipaddress.facet.sort=count",
+            "custom": ""
           },
           "mode": "count",
           "field": "user_ipaddress",
@@ -241,8 +243,8 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&rows=0&facet=true&facet.field=ipcode&facet.limit=100000",
-            "custom": "&fq=app_id:Platform System"
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&rows=0&facet=true&facet.field=ipcode&facet.limit=100000",
+            "custom": ""
           },
           "mode": "count",
           "field": "ipcode",
@@ -277,8 +279,8 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=responseElapsed&facet.limit=10000&facet.missing=true&f.responseElapsed.facet.sort=count&fq=app_id:Platform System",
-            "custom": "&fq=app_id:Platform System"
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.field=responseElapsed&facet.limit=10000&facet.missing=true&f.responseElapsed.facet.sort=count",
+            "custom": ""
           },
           "mode": "count",
           "field": "responseElapsed",
@@ -374,7 +376,8 @@
           "display": "block",
           "icon": "icon-caret-down",
           "height": "320",
-          "linkage_id": "a"
+          "linkage_id": "a",
+          "clickEnable": false
         },
         {
           "span": 3,
@@ -388,8 +391,8 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=user_ipaddress&facet.limit=5&facet.missing=true&f.user_ipaddress.facet.sort=count&fq=app_id:Platform System",
-            "custom": "&fq=app_id:Platform System"
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.field=user_ipaddress&facet.limit=5&facet.missing=true&f.user_ipaddress.facet.sort=count",
+            "custom": ""
           },
           "mode": "count",
           "field": "user_ipaddress",
@@ -507,7 +510,7 @@
               1,
               2
             ],
-            "query": "q=redirectElapsed cacheElapsed dnsElapsed tcpElapsed requestElapsed responseElapsed domElapsed loadEventElapsed%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp redirectElapsed cacheElapsed dnsElapsed tcpElapsed requestElapsed responseElapsed domElapsed loadEventElapsed\n",
+            "query": "q=redirectElapsed cacheElapsed dnsElapsed tcpElapsed requestElapsed responseElapsed domElapsed loadEventElapsed%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp redirectElapsed cacheElapsed dnsElapsed tcpElapsed requestElapsed responseElapsed domElapsed loadEventElapsed\n",
             "custom": "&fq=domElapsed:[0 TO 10000000]&fq=responseElapsed :[0 TO 10000000]&fq=cacheElapsed :[0 TO 10000000]&fq=requestElapsed:[0 TO 10000000]&fq=dnsElapsed :[0 TO 10000000]&fq=redirectElapsed :[0 TO 10000000]&fq=tcpElapsed :[0 TO 10000000]&fq=loadEventElapsed:[0 TO 10000000]"
           },
           "max_rows": 100000,
@@ -523,7 +526,7 @@
           "fontsize": 20,
           "field_color": "#209bf8",
           "resolution": 100,
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -603,7 +606,7 @@
               1,
               2
             ],
-            "query": "q=redirectElapsed cacheElapsed dnsElapsed tcpElapsed requestElapsed responseElapsed domElapsed loadEventElapsed%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp redirectElapsed cacheElapsed dnsElapsed tcpElapsed requestElapsed responseElapsed domElapsed loadEventElapsed\n",
+            "query": "q=redirectElapsed cacheElapsed dnsElapsed tcpElapsed requestElapsed responseElapsed domElapsed loadEventElapsed%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp redirectElapsed cacheElapsed dnsElapsed tcpElapsed requestElapsed responseElapsed domElapsed loadEventElapsed\n",
             "custom": "&fq=domElapsed:[0 TO 10000000]&fq=responseElapsed :[0 TO 10000000]&fq=cacheElapsed :[0 TO 10000000]&fq=requestElapsed:[0 TO 10000000]&fq=dnsElapsed :[0 TO 10000000]&fq=redirectElapsed :[0 TO 10000000]&fq=tcpElapsed :[0 TO 10000000]&fq=loadEventElapsed:[0 TO 10000000]"
           },
           "max_rows": 100000,
@@ -620,7 +623,7 @@
           "field_color": "#209bf8",
           "resolution": 100,
           "value_sort": "rs_timestamp",
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -699,8 +702,8 @@
               1,
               2
             ],
-            "query": "q=connectElapsed%3A%5B10000%20TO%20*%5D&wt=json&rows=0&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.range=rs_timestamp&facet.range.start=NOW/HOUR-24HOUR&facet.range.end=NOW/HOUR%2B1HOUR&facet.range.gap=%2B10MINUTE\nq=connectElapsed%3A%5B5000%20TO%209999%5D&wt=json&rows=0&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.range=rs_timestamp&facet.range.start=NOW/HOUR-24HOUR&facet.range.end=NOW/HOUR%2B1HOUR&facet.range.gap=%2B10MINUTE\nq=connectElapsed%3A%5B0%20TO%204999%5D&wt=json&rows=0&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.range=rs_timestamp&facet.range.start=NOW/HOUR-24HOUR&facet.range.end=NOW/HOUR%2B1HOUR&facet.range.gap=%2B10MINUTE\n",
-            "custom": "&fq=app_id:Platform System"
+            "query": "q=connectElapsed%3A%5B10000%20TO%20*%5D&wt=json&rows=0&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.range=rs_timestamp&facet.range.start=2017-07-02T02:00:00.000Z&facet.range.end=2017-07-04T02:00:00.000Z&facet.range.gap=%2B30MINUTE\nq=connectElapsed%3A%5B5000%20TO%209999%5D&wt=json&rows=0&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.range=rs_timestamp&facet.range.start=2017-07-02T02:00:00.000Z&facet.range.end=2017-07-04T02:00:00.000Z&facet.range.gap=%2B30MINUTE\nq=connectElapsed%3A%5B0%20TO%204999%5D&wt=json&rows=0&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.range=rs_timestamp&facet.range.start=2017-07-02T02:00:00.000Z&facet.range.end=2017-07-04T02:00:00.000Z&facet.range.gap=%2B30MINUTE\n",
+            "custom": ""
           },
           "max_rows": 100000,
           "value_field": "connectElapsed",
@@ -708,7 +711,7 @@
           "sum_value": false,
           "auto_int": true,
           "resolution": 100,
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -783,8 +786,8 @@
               1,
               2
             ],
-            "query": "q=responseElapsed%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp responseElapsed\n",
-            "custom": "&fq=app_id:Platform System&fq=responseElapsed:[0  TO  1000000]"
+            "query": "q=responseElapsed%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp responseElapsed\n",
+            "custom": "&fq=responseElapsed:[0  TO  1000000]"
           },
           "max_rows": 100000,
           "reverse": 0,
@@ -800,7 +803,7 @@
           "field_color": "#2ce41b",
           "resolution": 100,
           "value_sort": "rs_timestamp",
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -873,8 +876,8 @@
               1,
               2
             ],
-            "query": "q=connectElapsed%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp connectElapsed\n",
-            "custom": "&fq=app_id:Platform System&fq=connectElapsed:[0 TO 100000]"
+            "query": "q=connectElapsed%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp connectElapsed\n",
+            "custom": "&fq=connectElapsed:[0 TO 100000]"
           },
           "max_rows": 100000,
           "reverse": 0,
@@ -890,7 +893,7 @@
           "field_color": "#2ce41b",
           "resolution": 100,
           "value_sort": "rs_timestamp",
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -972,8 +975,8 @@
               1,
               2
             ],
-            "query": "q=domElapsed%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp domElapsed\n",
-            "custom": "&fq=app_id:Platform System&fq=domElapsed:[0  TO  1000000]"
+            "query": "q=domElapsed%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp domElapsed\n",
+            "custom": "&fq=domElapsed:[0  TO  1000000]"
           },
           "max_rows": 100000,
           "reverse": 0,
@@ -989,7 +992,7 @@
           "field_color": "#2ce41b",
           "resolution": 100,
           "value_sort": "rs_timestamp",
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -1062,8 +1065,8 @@
               1,
               2
             ],
-            "query": "q=domContentLoadedElapsed%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp domContentLoadedElapsed\n",
-            "custom": "&fq=app_id:Platform System"
+            "query": "q=domContentLoadedElapsed%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp domContentLoadedElapsed\n",
+            "custom": ""
           },
           "max_rows": 100000,
           "reverse": 0,
@@ -1079,7 +1082,7 @@
           "field_color": "#2ce41b",
           "resolution": 100,
           "value_sort": "rs_timestamp",
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -1161,7 +1164,7 @@
               1,
               2
             ],
-            "query": "q=cpu%3A%5B80%20TO%20*%5D&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp cpu\nq=cpu%3A%5B60%20TO%2079%5D&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp cpu\nq=cpu%3A%5B0%20TO%2059%5D&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp cpu\n",
+            "query": "q=cpu%3A%5B80%20TO%20*%5D&wt=json&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp cpu\nq=cpu%3A%5B60%20TO%2079%5D&wt=json&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp cpu\nq=cpu%3A%5B0%20TO%2059%5D&wt=json&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp cpu\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -1175,7 +1178,7 @@
           "auto_int": true,
           "total_first": "%",
           "resolution": 100,
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -1231,7 +1234,7 @@
               1,
               2
             ],
-            "query": "q=UsedMemery%3A%5B4000%20TO%20*%5D&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp UsedMemery\nq=UsedMemery%3A%5B3000%20TO%203999%5D&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp UsedMemery\nq=UsedMemery%3A%5B0%20TO%202999%5D&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp UsedMemery\n",
+            "query": "q=UsedMemery%3A%5B4000%20TO%20*%5D&wt=json&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp UsedMemery\nq=UsedMemery%3A%5B3000%20TO%203999%5D&wt=json&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp UsedMemery\nq=UsedMemery%3A%5B0%20TO%202999%5D&wt=json&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp UsedMemery\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -1239,7 +1242,7 @@
           "group_field": null,
           "auto_int": true,
           "resolution": 100,
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -1301,7 +1304,7 @@
               1,
               2
             ],
-            "query": "q=FreeDiskSpace%3A%5B0%20TO%2099%5D&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp FreeDiskSpace\nq=FreeDiskSpace%3A%5B100%20TO%2019%5D&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp FreeDiskSpace\nq=FreeDiskSpace%3A%5B20%20TO%20*%5D&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp FreeDiskSpace\n",
+            "query": "q=FreeDiskSpace%3A%5B0%20TO%2019%5D&wt=json&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp FreeDiskSpace\nq=FreeDiskSpace%3A%5B20%20TO%2099%5D&wt=json&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp FreeDiskSpace\nq=FreeDiskSpace%3A%5B100%20TO%20*%5D&wt=json&rows=100000&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&fl=rs_timestamp FreeDiskSpace\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -1309,7 +1312,7 @@
           "group_field": null,
           "auto_int": true,
           "resolution": 100,
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -1349,8 +1352,8 @@
           "title": "平台产品－磁盘剩余(GB)",
           "reverse": 1,
           "segment": 3,
-          "threshold_first": 100,
-          "threshold_second": 20,
+          "threshold_first": 20,
+          "threshold_second": 100,
           "threshold_third": 3000,
           "total_first": "%",
           "display": "block",
@@ -1379,8 +1382,8 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=dvce_type&facet.limit=100000&facet.missing=true&f.dvce_type.facet.sort=count&fq=app_id:Platform System",
-            "custom": "&fq=app_id:Platform System"
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.field=dvce_type&facet.limit=100000&facet.missing=true&f.dvce_type.facet.sort=count",
+            "custom": ""
           },
           "mode": "count",
           "field": "dvce_type",
@@ -1489,8 +1492,8 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&rows=0&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=br_name&facet.limit=100000",
-            "custom": "&fq=app_id:Platform System"
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&rows=0&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.field=br_name&facet.limit=100000",
+            "custom": ""
           },
           "field": "br_name",
           "size": 100000,
@@ -1517,7 +1520,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=metric&facet.limit=10&facet.missing=true&f.metric.facet.sort=count",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.field=metric&facet.limit=10&facet.missing=true&f.metric.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -1635,8 +1638,8 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=os_name&facet.limit=10&facet.missing=true&f.os_name.facet.sort=count&fq=app_id:Platform System",
-            "custom": "&fq=app_id:Platform System"
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.field=os_name&facet.limit=10&facet.missing=true&f.os_name.facet.sort=count",
+            "custom": ""
           },
           "mode": "count",
           "field": "os_name",
@@ -1744,8 +1747,8 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=application&facet.limit=100000&facet.missing=true&f.application.facet.sort=count&fq=app_id:Platform System",
-            "custom": "&fq=app_id:Platform System"
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.field=application&facet.limit=100000&facet.missing=true&f.application.facet.sort=count",
+            "custom": ""
           },
           "mode": "count",
           "field": "application",
@@ -1863,7 +1866,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=Isp&facet.limit=10&facet.missing=true&f.Isp.facet.sort=count",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.field=Isp&facet.limit=10&facet.missing=true&f.Isp.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -1935,7 +1938,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=City&facet.limit=10000&facet.missing=true&f.City.facet.sort=count",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.field=City&facet.limit=10000&facet.missing=true&f.City.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -2032,7 +2035,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=City&facet.limit=10000&facet.missing=true&f.City.facet.sort=count",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.field=City&facet.limit=10000&facet.missing=true&f.City.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -2118,7 +2121,8 @@
           "icon": "icon-caret-down",
           "height": "500",
           "linkage_id": "a",
-          "isEN": false
+          "isEN": false,
+          "clickEnable": false
         }
       ]
     },
@@ -2142,9 +2146,9 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=os_name&facet.field=useragent&facet.field=page_url&facet.field=br_name&facet.field=UsedMemery&facet.field=user_ipaddress&facet.field=dvce_type&facet.field=app_id&wt=json&rows=1500&hl=true&hl.fl=useragent",
-            "basic_query": "q=*%3A* OR *%3A* OR *%3A*&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=os_name&facet.field=useragent&facet.field=page_url&facet.field=br_name&facet.field=UsedMemery&facet.field=user_ipaddress&facet.field=dvce_type&facet.field=app_id",
-            "custom": "&fq=app_id:Platform System"
+            "query": "q=*%3A* OR *%3A* OR *%3A*&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.field=os_name&facet.field=useragent&facet.field=page_url&facet.field=br_name&facet.field=UsedMemery&facet.field=user_ipaddress&facet.field=dvce_type&facet.field=app_id&wt=json&rows=1500&hl=true&hl.fl=useragent",
+            "basic_query": "q=*%3A* OR *%3A* OR *%3A*&fq=rs_timestamp:[2017-07-02T02:00:00.000Z%20TO%202017-07-04T02:00:00.000Z]&facet=true&facet.field=os_name&facet.field=useragent&facet.field=page_url&facet.field=br_name&facet.field=UsedMemery&facet.field=user_ipaddress&facet.field=dvce_type&facet.field=app_id",
+            "custom": ""
           },
           "size": 5,
           "pages": 300,
@@ -2262,7 +2266,7 @@
     "save_as_public": false
   },
   "solr": {
-    "server": "http://101.201.82.138:6983/solr/",
+    "server": "http://10.4.53.205:9983/solr/",
     "core_name": "apm3",
     "core_list": [
       "PHP_logs",
