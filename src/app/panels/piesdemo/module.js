@@ -16,7 +16,8 @@ define([
   'underscore',
   'jquery',
   'kbn',
-    'echarts-liquidfill'
+    'echarts-liquidfill',
+    'echarts-wordcloud'
 
 ],
 function (angular, app, _, $, kbn) {

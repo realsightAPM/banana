@@ -43,6 +43,7 @@ define([
     };
 
     $scope.refresh = function() {
+
       update_history(_.pluck($scope.querySrv.list,'query'));
       $rootScope.$broadcast('refresh');
     };

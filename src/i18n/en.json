@@ -290,10 +290,13 @@
   "Abnormal quantity":"Abnormal quantity",
   "Relevant":"Relevant",
   "see":"see",
-  "Calculate Top Field Values From All Data":"Calculate Top Field Values From All Data",
   "Anomaly detection":"Anomaly detection",
   "Transaction link":"Transaction link",
-  "Y-Name":"Y-Name"
+  "Y-Name":"Y-Name",
+  "Anomaly Detection Name":"Anomaly Detection Name",
+  "Metrics Field Name":"Metrics Field Name",
+  "Prev":"Prev",
+  "Solr Collection":"Solr Collection"
 
   
 }
