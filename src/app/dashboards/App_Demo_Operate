@@ -286,7 +286,7 @@
                 "#06e045",
                 "#347b93"
               ],
-              "height": "230",
+              "height": "235",
               "queries": {
                 "mode": "all",
                 "ids": [
@@ -325,7 +325,7 @@
               "loading": false,
               "sizeable": false,
               "span": 12,
-              "height": "205",
+              "height": "235",
               "editable": true,
               "type": "piesdemo",
               "draggable": false,
@@ -434,7 +434,7 @@
               "loading": false,
               "sizeable": false,
               "span": 12,
-              "height": "200",
+              "height": "235",
               "editable": true,
               "type": "piesdemo",
               "draggable": false,
@@ -756,7 +756,7 @@
             "enable": false,
             "interval": 2
           },
-          "height": "282",
+          "height": "305",
           "title": "APP应用业务办理量（亿）"
         },
         {
@@ -962,7 +962,7 @@
             "enable": false,
             "interval": 2
           },
-          "height": "200",
+          "height": "220",
           "title": "APP应用用户访问量（亿）"
         },
         {
@@ -1069,7 +1069,7 @@
             "enable": false,
             "interval": 2
           },
-          "height": "200",
+          "height": "225",
           "title": "APP应用充值及购机业务量（万）"
         }
       ]

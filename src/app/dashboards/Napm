@@ -35,8 +35,8 @@
           "to": "NOW/HOUR%2B1HOUR",
           "field": "rs_timestamp_tdt",
           "type": "time",
-          "fromDateObj": "2017-07-04T01:03:05.118Z",
-          "toDateObj": "2017-07-04T02:03:05.118Z",
+          "fromDateObj": "2017-07-04T08:00:59.665Z",
+          "toDateObj": "2017-07-04T09:00:59.665Z",
           "mandate": "must",
           "active": true,
           "alias": "",
@@ -1858,7 +1858,7 @@
       ]
     }
   ],
-  "editable": true,
+  "editable": false,
   "index": {
     "interval": "none",
     "pattern": "[logstash-]YYYY.MM.DD",
@@ -1900,7 +1900,7 @@
   "filterids": [
     0
   ],
-  "row_controller": true,
+  "row_controller": false,
   "mute": false,
   "linkage_id": "server_log",
   "searchEnable": false,
