@@ -274,7 +274,7 @@ define([
                         var doc = results.response.docs[index];
                         if (doc.value_f === NaN) {continue;}
                         //var slice = {label: facet_field, data: [[k, stats_obj['mean'], stats_obj['count'], stats_obj['max'], stats_obj['min'], stats_obj['stddev'], facet_field]], actions: true};
-                        var slice = {name:"sb", value:doc.value_f ,yAxis: doc.value_f, xAxis: doc.start_timestamp_l};
+                        var slice = {origin:doc.value_f.toFixed(2), value:doc.value_f.toFixed(2) ,yAxis: doc.value_f, xAxis: doc.start_timestamp_l};
                         anomaly.push(slice);
                       }
                       $scope.data.push(anomaly);
@@ -369,8 +369,8 @@ define([
                 if (anomalyData === []) return ;
                 myChart.hideLoading();
                 var base = -totalData.reduce(function (min, val) {
-                  return Math.floor(Math.min(min, val.l));
-                }, Infinity);
+                  return (Math.min(min, val.l));
+                }, Infinity).toFixed(2);
                 base = 0;
                 var option = {
                   title: {
@@ -483,7 +483,8 @@ define([
                       data: anomalyData.map(function (item) {
                         item.xAxis = echarts.format.formatTime('yyyy/MM/dd hh:mm:ss', item.xAxis);
                         item.yAxis += base;
-                        item.value -= base;
+                        //console.log(base+ " " + item.value);
+                        //item.value = item.origin-base;
                         return item;
                       })
                     }
