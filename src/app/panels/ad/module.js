@@ -73,7 +73,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
         custom      : ''
       },
       max_rows    : 1000,  // maximum number of rows returned from Solr (also use this for group.limit to simplify UI setting)
-      cut_number  : 100,
+      time_length  : 60,
       anomaly_th  : 0.70,
       reverse     : 0,
       group_field : null,
@@ -372,11 +372,11 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
             if (dashboard.current.style === 'dark'){
                 labelcolor = true;
             }
-            var cut_number = scope.panel.cut_number + 1;
+            var time_length = scope.panel.time_length + 1;
             myChart = echarts.init(document.getElementById(heatmap_id));
             var start_time = Date.parse(new Date(scope.get_time_range()['from']));
             var end_time = Date.parse(new Date(scope.get_time_range()['to']));
-            var step = (end_time-start_time)/cut_number+1;
+            var step = time_length * 1000 * 60;
             var ad_name = scope.panel.ad_name;
             var show_name = undefined;
             var dates = [];
@@ -434,6 +434,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                 max_num = data[date_index].length;
               }
             }
+            max_num = 20;
             if (DEBUG) { console.log(data); }
             if (DEBUG) { console.log(max_num); }
             var option = {

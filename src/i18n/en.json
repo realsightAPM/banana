@@ -186,6 +186,8 @@
   "URL field":"URL field",
   "SUM the group values":"SUM the group values",
   "Max":"Max",
+  "Min":"Min",
+  "Stddev":"Stddev",
   "Map":"Map",
   "Decimal Points":"Decimal Points",
   "Country Names":"Country Names",

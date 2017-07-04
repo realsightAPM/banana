@@ -237,6 +237,7 @@ define([
                         if (DEBUG) { console.log(results); }
                         var rootlist = results.response.docs[0];
                         var selected_node = dashboard.current.bn_main_node;
+
                         var root1 = rootlist[selected_node+"_s"];
                         var query_list=rootlist.query_list_s.split("^");
                         var root2 = root1.split(",");
