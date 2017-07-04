@@ -5,6 +5,7 @@
 
     }
   </style>
+  指标&nbsp;{{index_name}}&nbsp;的关联性：
   <div ng-style="{'display':panel.display}">
 
     <!-- START Table -->
@@ -12,8 +13,8 @@
     <table ng-table="data" class="table table-striped">
     <thead>
       <!-- <th class="name">检测<big>名称</big>&nbsp;</th> -->
-      <th class="term">{{'index'|translate}}&nbsp;<a ng-click="sort_by('term')"><i class="icon-sort"></i></a></th>
-      <th class="count">{{'Relevant'|translate}}&nbsp;<a ng-click="sort_by('count')"><i class="icon-sort"></i></a></th>
+      <th class="term">指标/事务名&nbsp;<a ng-click="sort_by('term')"><i class="icon-sort"></i></a></th>
+      <th class="count">关联性&nbsp;<a ng-click="sort_by('count')"><i class="icon-sort"></i></a></th>
       <!-- <th class="find"> 查看<big>相关</big>事务/指标</th> -->
       <!--
       <th class="stddev">Std&nbsp;<a ng-click="sort_by('stddev')"><i class="icon-sort"></i></a></th>
@@ -24,7 +25,7 @@
       <div class="pagination pull-right">
         <ul>
           <li ng-class="{disabled: currentPage == 0}">
-            <a href ng-click="prevPage()">« {{'Prev'|translate}}</a>
+            <a href ng-click="prevPage()">« Prev</a>
           </li>
           <li ng-repeat="n in range(pagedItems.length)"
               ng-class="{active: n == currentPage}"
@@ -32,7 +33,7 @@
             <a href ng-bind="n + 1">1</a>
           </li>
           <li ng-class="{disabled: currentPage == pagedItems.length - 1}">
-            <a href ng-click="nextPage()">{{'Next'|translate}} »</a>
+            <a href ng-click="nextPage()">Next »</a>
           </li>
         </ul>
       </div>
