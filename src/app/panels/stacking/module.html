@@ -90,25 +90,7 @@
   <!-- END Pie or Bar chart -->
 
   <!-- START Table -->
-  <table ng-style="panel.style" class="table tableSection table-striped table-condensed" ng-if="panel.chart == 'table'">
-    <thead>
-      <th>Term</th>
-      <th>{{panel.mode | capitalize}}</th>
-      <th>Action</th>
-    </thead>
-    <tbody ng-style="{height: row.height}">
-    <tr ng-repeat="term in data" ng-if="showMeta(term)">
-      <td>{{term.label}}</td>
-      <td>{{term.data[0][1].toFixed(panel.decimal_points)}}</td>
-      <td>
-        <span ng-hide="term.meta == 'other'">
-          <i class='icon-search pointer' ng-click="build_search(term)"></i>
-          <i class='icon-ban-circle pointer' ng-click="build_search(term,true)"></i>
-        </span>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+
   <!-- END Table -->
   <!-- Dummy div for testing color name -->
   <div id="colorTest"></div>
