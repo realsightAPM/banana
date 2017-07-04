@@ -33,8 +33,8 @@ define([
     'jquery',
     'underscore',
     'kbn',
-    'moment'
-    //,'gojs'
+    'moment',
+    'gojs'
   ],
   function (angular, app, $, _, kbn, moment, timeSeries) {
     'use strict';
@@ -43,7 +43,7 @@ define([
 
     var DEBUG = false;
     console.log('bn DEBUG : ' + DEBUG);
-    module.controller('bn', function($scope, $q, $http, querySrv, dashboard, filterSrv, alertSrv) {
+    module.controller('bn', function($scope, $q, $http, $routeParams, querySrv, dashboard, filterSrv, alertSrv) {
       $scope.panelMeta = {
         modals : [
           {
@@ -274,7 +274,11 @@ define([
         // var facet = '';
         //var fl = '&fl=' + 'timestamp_l%20anomaly_value_d%20value_d';
         var fl = '&fl=' + 'nodes_s%20edges_s%20query_list';
-        //fq = fq + '&fq=anomaly_value_d:[' + anomaly_th + '%20TO%20*]';
+        if (_.isUndefined($routeParams.adValue)) {
+        } else {
+          $scope.panel.bn_name = $routeParams.adValue;
+        }
+        fq = '&fq=bn_name_s:' + $scope.panel.bn_name;
 
         //*********************************** end *******************
 
@@ -282,11 +286,11 @@ define([
         //var temp_q = 'q=' + metric_field + ':' + metric + wt_json + rows_limit + fq + facet + fl + sort_field;
         var querys = [];
 
-        var temp_q = 'q=' + 'result_s:bn' +  wt_json ;
+        var temp_q = 'q=' + 'result_s:bn' +  wt_json + fq;
         var temp_q2 =  $scope.build_anomaly_query('json', false);
         querys.push(temp_q);
         querys.push(temp_q2);
-        if(DEBUG) console.log(temp_q2);
+        if(DEBUG) console.log(temp_q);
 
         for (var i = 0; i < querys.length; i++) {
 
@@ -359,7 +363,8 @@ define([
               _.without(chartData,_.findWhere(chartData,{meta:'missing'}));
             chartData = scope.panel.other ? chartData :
               _.without(chartData,_.findWhere(chartData,{meta:'other'}));
-
+            if(DEBUG) {console.log(chartData);}
+            if (chartData[0].length === 0) return;
             var nodeList = JSON.parse(chartData[0][0].nodes_s);
             var linkList = JSON.parse(chartData[0][0].edges_s);
             if (DEBUG) console.log(chartData[1][0]);
@@ -396,7 +401,7 @@ define([
             //        begin to drow chart
 
             var graph_id = scope.$id;
-            //var go = require('gojs');
+            var go = require('gojs');
             // var metric = scope.panel.metric_field;
             // var labelcolor = false;
 
@@ -498,10 +503,10 @@ define([
               // define tooltips for nodes
               var tooltiptemplate =
                 $(go.Adornment, "Auto",
-                  $(go.Shape, "Rectangle",
-                    { fill: "whitesmoke", stroke: "black" }),
+                  // $(go.Shape, "Rectangle",
+                  //   { fill: "whitesmoke", stroke: "black" }),
                   $(go.TextBlock,
-                    { font: "bold 16pt Helvetica, bold Arial, sans-serif",
+                    { font: "16pt Helvetica, Arial, sans-serif",
                       wrap: go.TextBlock.WrapFit,
                       margin: 5 },
                     new go.Binding("text", "", tooltipTextConverter))
