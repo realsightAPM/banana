@@ -64,24 +64,7 @@ require.config({
     Donut3D:                  '../vendor/d3/Donut3D',
     html2canvas:              '../../bower_components/html2canvas/build/html2canvas',
     jspdf:                    '../../bower_components/jspdf/dist/jspdf.min',
-    gojs:                     '../../src/vendor/go'
-    /*
-    d3:                       '../vendor/d3',
-      viz:                    '../vendor/viz.v1.0.0.min',
-      kagi:                    '../vendor/kagi',
-      bubble:                    '../vendor/d3/bubble-chart',
-      centralclick:                    '../vendor/d3/central-click',
-      d3transform:                    '../vendor/d3/d3-transform',
-      extarray:                     '../vendor/d3/extarray',
-      lines:                     '../vendor/d3/lines',
-      microobserver:                     '../vendor/d3/micro-observer',
-      microplugin:                     '../vendor/d3/microplugin',
-      misc:                     '../vendor/d3/misc',
-      d3min:                       '../vendor/d3/d3.min',
-      jquerymin:                    '../vendor/d3/jquery.min',
-      Donut3D:                  '../vendor/d3/Donut3D',
-      bullet:                   '../vendor/d3/bullet',
-      */
+    gojs:                     '../../node_modules/gojs/release/go',
   },
   shim: {
     underscore: {

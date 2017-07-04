@@ -34,7 +34,6 @@ define([
     'underscore',
     'kbn',
     'moment',
-    'gojs'
   ],
   function (angular, app, $, _, kbn, moment, timeSeries) {
     'use strict';
@@ -396,7 +395,7 @@ define([
             //        begin to drow chart
 
             var graph_id = scope.$id;
-            var go = require('gojs');
+            //var go = require('gojs');
             // var metric = scope.panel.metric_field;
             // var labelcolor = false;
 
