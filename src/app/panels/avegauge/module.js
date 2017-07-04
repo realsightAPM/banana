@@ -977,7 +977,7 @@ function (angular, app, _, $, kbn) {
                   },{
                     name: '',
                     type: 'pie',
-                    center: ['65%', '40%'],
+                    center: ['75%', '40%'],
                     clockWise: true,
                     hoverAnimation: false,
                     radius: [60, 60],

@@ -64,7 +64,7 @@ require.config({
     Donut3D:                  '../vendor/d3/Donut3D',
     html2canvas:              '../../bower_components/html2canvas/build/html2canvas',
     jspdf:                    '../../bower_components/jspdf/dist/jspdf.min',
-    gojs:                     '../../src/vendor/go'
+    //gojs:                     '../../src/vendor/go',
     // d3transform:                    '../vendor/d3/d3-transform',
     // extarray:                     '../vendor/d3/extarray',
     // lines:                     '../vendor/d3/lines',
