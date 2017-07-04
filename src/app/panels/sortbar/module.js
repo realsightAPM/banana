@@ -87,7 +87,7 @@ define([
         fill        : 0,
         linewidth   : 3,
         chart       :'sortbar',
-        chartColors :querySrv.colors,
+        chartColors :['#24f5ca','#24f5d6','#24f5ea','#24f0f5','#24e1f5','#24cef5','#24bdf5','#24abf5','#2493f5','#2476f5','#2455f5','#2433f5'],
         timezone    : 'browser', // browser, utc or a standard timezone
         spyable     : true,
         linkage     :false,
@@ -607,7 +607,7 @@ define([
                       {
                         name:scope.panel.title,
                         type:'bar',
-                        barWidth: '43%',
+                        barWidth: '70%',
                         data:barData,
                         itemStyle: {
                           normal: {
@@ -615,8 +615,9 @@ define([
                               var colorList = colors;
                               return colorList[params.dataIndex];
                             },
-                            shadowColor: '#fff',
-                            barBorderRadius: 5
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                            shadowBlur: 10,
+                            barBorderRadius: 10
 
                           }
                         },
