@@ -114,9 +114,9 @@
   <!-- START Table -->
   <table ng-style="panel.style" class="table tableSection table-striped table-condensed" ng-if="panel.chart == 'table'">
     <thead>
-      <th>Term</th>
-      <th>{{panel.mode | capitalize}}</th>
-      <th>Action</th>
+      <th>{{'Term'|translate}}</th>
+      <th>{{'Count'|translate}}</th>
+      <th>{{'Action'|translate}}</th>
     </thead>
     <tbody ng-style="{height: panel.height}">
     <tr ng-repeat="term in data" ng-if="showMeta(term)">

@@ -295,7 +295,11 @@
   "Anomaly Detection Name":"Anomaly Detection Name",
   "Metrics Field Name":"Metrics Field Name",
   "Prev":"Prev",
-  "Solr Collection":"Solr Collection"
+  "Solr Collection":"Solr Collection",
+  "Term":"Term",
+  "Other":"Other",
+  "Missing":"Missing"
+
 
   
 }
