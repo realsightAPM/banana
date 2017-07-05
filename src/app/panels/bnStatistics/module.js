@@ -19,13 +19,13 @@ define([
     ],
     function (angular, app, _, $, kbn) {
         'use strict';
-        var DEBUG = false;
+        var DEBUG = true;
         console.log('bnStatistics DEBUG : ' + DEBUG);
 
         var module = angular.module('kibana.panels.bnStatistics', []);
         app.useModule(module);
 
-        module.controller('bnStatistics', function($scope, $timeout, $filter, timer, querySrv, dashboard, filterSrv) {
+        module.controller('bnStatistics', function($scope, $timeout, $filter, $routeParams, timer, querySrv, dashboard, filterSrv) {
             $scope.panelMeta = {
                 exportfile: true,
                 editorTabs : [
@@ -146,6 +146,11 @@ define([
               // Build Solr query
               var wt_json = '&wt=' + filetype;
               var fq = 'q=' + 'result_s:bn' +  wt_json ;
+              if (_.isUndefined($routeParams.adValue)) {
+              } else {
+                $scope.panel.bn_name = $routeParams.adValue;
+              }
+              fq += '&fq=bn_name_s:' + $scope.panel.bn_name;
               return fq;
             };
 
@@ -236,7 +241,7 @@ define([
                         if (DEBUG) { console.log(results); }
                         var rootlist = results.response.docs[0];
                         var selected_node = dashboard.current.bn_main_node;
-
+                        if (DEBUG) {console.log(selected_node);}
                         var root1 = rootlist[selected_node+"_s"];
                         var query_list=rootlist.query_list_s.split("^");
                         var root2 = root1.split(",");

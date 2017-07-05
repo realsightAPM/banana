@@ -123,7 +123,6 @@ define([
 
             };
             $scope.build_search = function(term) {
-              dashboard.current.main_bn_node_name = term.term;
               dashboard.current.line_chart_fq = 'fq=' + $scope.panel.stats_field + ':"' + term.term + '"';
               if (dashboard.current.anomaly_fq) {
                 dashboard.current.line_chart_anomaly_fq = dashboard.current.anomaly_fq + '&fq=' + $scope.panel.stats_field + ':"' + term.term + '"';

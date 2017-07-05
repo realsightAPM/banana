@@ -250,7 +250,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
       if (end_time === '*') {
           end_time = 'NOW';
       }
-
+      dashboard.current.anomaly_th =  $scope.panel.anomaly_th;
       var wt_json = '&wt=json';
       var metric_field = $scope.panel.metric_field;
       var anomaly_th = $scope.panel.anomaly_th;

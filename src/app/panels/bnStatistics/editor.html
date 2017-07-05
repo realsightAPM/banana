@@ -1,4 +1,12 @@
 <div class="row-fluid">
+  <h5>Model Settings</h5>
+  <div class="span2" >
+    <label class="small">资源ID</label>
+    <input ng-change="set_refresh(true)" placeholder="Start typing" type="text" class="input" ng-model="panel.bn_name">
+  </div>
+</div>
+
+<div class="row-fluid">
   <div class="span2">
     <label class="small">{{'Max Rows'|translate}}</label>
     <input ng-change="set_refresh(true)" placeholder="100000" type="number" class="input-small" ng-model="panel.max_rows">
