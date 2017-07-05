@@ -855,6 +855,138 @@ function (angular, app, _, $, kbn) {
 
        }
 
+       if(scope.panel.chart === 'error') {
+	       var error_sum =0;
+        for(var i0=0;i0<scope.data.length;i0++){
+          error_sum+=scope.data[i0].value;
+        }
+                myChart = echarts.init(document.getElementById(idd));
+                var option8 = {
+
+                  series: [{
+                    center: ['28%', '40%'],
+                    radius: '50%',
+                    backgroundStyle: {
+                      color: 'none',
+                      borderColor: '#696969',
+                      borderWidth: 1
+                    },
+                    type: 'liquidFill',
+                    shape:"path://M512 0C229.23 0 0 229.23 0 512s229.23 512 512 512 512-229.23 512-512S794.77 0 512 0z m-30.071 184.783h67.863c16.763 0 29.157 5.693 27.734 30.813l-15.589 403.161c-0.642 11.319-9.893 20.282-20.68 20.282h-50.793c-10.787 0-20.038-8.965-20.678-20.282l-15.59-403.16c-1.424-25.123 10.97-30.814 27.733-30.814z m33.921 662.135c-38.27 0-69.294-31.024-69.294-69.294 0-38.27 31.024-69.294 69.294-69.294 38.27 0 69.294 31.024 69.294 69.294-0.001 38.268-31.025 69.294-69.294 69.294z",
+                    data:[0.8, 0.6, 0.3],
+                    outline: {
+                      show: false
+                    },
+                    label: {
+                      normal: {
+                        position: 'bottom',
+                        // formatter: '应用总数:'+scope.data.length+"个",
+                        formatter: "ERROR",
+                        textStyle: {
+                          color: '#178ad9',
+                          fontSize: scope.panel.fontsize
+                        }
+                      }
+                    }
+                  },{
+                    name: '',
+                    type: 'pie',
+                    center: ['70%', '30%'],
+                    clockWise: true,
+                    hoverAnimation: false,
+                    radius: [60, 60],
+                    label: {
+                      normal: {
+                        position: 'center'
+                      }
+                    },
+                    data: [{
+                      value: 10,
+                      label: {
+                        normal: {
+                          formatter: '',
+                          textStyle: {
+                            color: '#1a93f9',
+                            fontSize: scope.panel.fontsize
+                          }
+                        }
+                      },
+                      itemStyle:{
+                        normal:{
+                          color:'#1a93f9',
+                        }
+                      }
+                    }, {
+                      tooltip: {
+                        show: false
+                      },
+                      label: {
+                        normal: {
+                          formatter: '错误类型:'+scope.data.length+'种',
+                          textStyle: {
+                            color: '#1a93f9',
+                            fontSize: scope.panel.fontsize,
+                            fontWeight: 'bold'
+                          }
+                        }
+                      }
+                    }]
+                  },{
+                    name: '',
+                    type: 'pie',
+                    center: ['70%', '60%'],
+                    clockWise: true,
+                    hoverAnimation: false,
+                    radius: [60, 60],
+                    label: {
+                      normal: {
+                        position: 'center'
+                      }
+                    },
+                    data: [{
+                      value: 10,
+                      label: {
+                        normal: {
+                          formatter: '',
+                          textStyle: {
+                            color: '#1a93f9',
+                            fontSize: scope.panel.fontsize
+                          }
+                        }
+                      },
+                      itemStyle:{
+                        normal:{
+                          color:'#1a93f9',
+                        }
+                      }
+                    }, {
+                      tooltip: {
+                        show: false
+                      },
+                      label: {
+                        normal: {
+                          formatter: '错误总数:'+error_sum+'个',
+                          textStyle: {
+                            color: '#1a93f9',
+                            fontSize: scope.panel.fontsize,
+                            fontWeight: 'bold'
+                          }
+                        }
+                      }
+                    }]
+                  }
+
+                  ],
+                  tooltip: {
+                    show: false
+                  }
+                };
+
+                myChart.setOption(option8);
+
+
+
+              }
               // Populate legend
 
 

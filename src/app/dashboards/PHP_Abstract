@@ -44,12 +44,12 @@
       ],
       "list": {
         "0": {
-          "from": "NOW/HOUR-3HOUR",
+          "from": "NOW/HOUR-24HOUR",
           "to": "NOW/HOUR%2B1HOUR",
           "field": "rs_timestamp",
           "type": "time",
-          "fromDateObj": "2017-06-22T02:35:08.918Z",
-          "toDateObj": "2017-06-22T05:35:08.918Z",
+          "fromDateObj": "2017-07-04T02:15:54.079Z",
+          "toDateObj": "2017-07-05T02:15:54.079Z",
           "mandate": "must",
           "active": true,
           "alias": "",
@@ -93,7 +93,7 @@
             "60d",
             "90d"
           ],
-          "timespan": "3h",
+          "timespan": "24h",
           "timefield": "rs_timestamp",
           "timeformat": "",
           "refresh": {
@@ -146,7 +146,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:8a8a83a95cc9eba1015cc9ff60a00002.0e47e96277ef71f02e469e33e4cd0d5a&stats=true&stats.field=PHP_Health&fl=PHP_Health&sort=rs_timestamp%20desc&rows=10000",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d0cc5aa015d0ce02170001c.c31a3631eb03929ae660a01f2dd764fb&stats=true&stats.field=PHP_Health&fl=PHP_Health&sort=rs_timestamp%20desc&rows=10000",
             "custom": ""
           },
           "mode": "count",
@@ -259,7 +259,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:8a8a83a95cc9eba1015cc9ff60a00002.0e47e96277ef71f02e469e33e4cd0d5a&stats=true&stats.field=PHP_Apdex&fl=PHP_Apdex&sort=rs_timestamp%20desc&rows=10000",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d0cc5aa015d0ce02170001c.c31a3631eb03929ae660a01f2dd764fb&stats=true&stats.field=PHP_Apdex&fl=PHP_Apdex&sort=rs_timestamp%20desc&rows=10000",
             "custom": ""
           },
           "mode": "count",
@@ -372,7 +372,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:8a8a83a95cc9eba1015cc9ff60a00002.0e47e96277ef71f02e469e33e4cd0d5a&stats=true&stats.field=PHP_CPU_used&fl=PHP_CPU_used&sort=rs_timestamp%20desc&rows=10000",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d0cc5aa015d0ce02170001c.c31a3631eb03929ae660a01f2dd764fb&stats=true&stats.field=PHP_CPU_used&fl=PHP_CPU_used&sort=rs_timestamp%20desc&rows=10000",
             "custom": ""
           },
           "mode": "count",
@@ -495,7 +495,7 @@
               1,
               2
             ],
-            "query": "q=PHP_memory_realuse PHP_memory_bufferuse PHP_memory_cacheuse PHP_memory_idle PHP_User_cpu PHP_php_syscpu%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:8a8a83a95cc9eba1015cc9ff60a00002.0e47e96277ef71f02e469e33e4cd0d5a&fl=rs_timestamp PHP_memory_realuse PHP_memory_bufferuse PHP_memory_cacheuse PHP_memory_idle PHP_User_cpu PHP_php_syscpu\n",
+            "query": "q=PHP_memory_realuse PHP_memory_bufferuse PHP_memory_cacheuse PHP_memory_idle%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d0cc5aa015d0ce02170001c.c31a3631eb03929ae660a01f2dd764fb&fl=rs_timestamp PHP_memory_realuse PHP_memory_bufferuse PHP_memory_cacheuse PHP_memory_idle\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -504,7 +504,7 @@
           "threshold_first": 1000,
           "threshold_second": 2000,
           "threshold_third": 3000,
-          "value_field": "PHP_memory_realuse PHP_memory_bufferuse PHP_memory_cacheuse PHP_memory_idle PHP_User_cpu PHP_php_syscpu",
+          "value_field": "PHP_memory_realuse PHP_memory_bufferuse PHP_memory_cacheuse PHP_memory_idle",
           "group_field": null,
           "auto_int": true,
           "total_first": "%",
@@ -513,7 +513,7 @@
           "field_color": "#209bf8",
           "resolution": 100,
           "value_sort": "rs_timestamp",
-          "interval": "1m",
+          "interval": "10m",
           "intervals": [
             "auto",
             "1s",
@@ -591,7 +591,7 @@
               1,
               2
             ],
-            "query": "q=PHP_memory_realuse PHP_memory_bufferuse PHP_memory_cacheuse PHP_memory_idle PHP_User_cpu PHP_php_syscpu%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:8a8a83a95cc9eba1015cc9ff60a00002.0e47e96277ef71f02e469e33e4cd0d5a&fl=rs_timestamp PHP_memory_realuse PHP_memory_bufferuse PHP_memory_cacheuse PHP_memory_idle PHP_User_cpu PHP_php_syscpu\n",
+            "query": "q=PHP_memory_realuse PHP_memory_bufferuse PHP_memory_cacheuse PHP_memory_idle PHP_User_cpu PHP_php_syscpu%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d0cc5aa015d0ce02170001c.c31a3631eb03929ae660a01f2dd764fb&fl=rs_timestamp PHP_memory_realuse PHP_memory_bufferuse PHP_memory_cacheuse PHP_memory_idle PHP_User_cpu PHP_php_syscpu\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -609,7 +609,7 @@
           "field_color": "#209bf8",
           "resolution": 100,
           "value_sort": "rs_timestamp",
-          "interval": "1m",
+          "interval": "10m",
           "intervals": [
             "auto",
             "1s",

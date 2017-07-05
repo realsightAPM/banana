@@ -30,7 +30,7 @@
 <div class="row-fluid">
   <div class="span2">
     <label class="small">{{'Style'|translate}}</label>
-    <select class="input-small" ng-model="panel.chart" ng-options="f for f in ['rosepie','pie','table','dashboard','bar','horizontalBar','radar','java','ebar','php','donet']"></select></span>
+    <select class="input-small" ng-model="panel.chart" ng-options="f for f in ['java','error','php','donet']"></select></span>
   </div>
   <div class="span2" ng-if="((panel.chart == 'pie' ||panel.chart == 'ebar'||panel.chart == 'rosepie' ) && (panel.labels|| panel.eLegend))||panel.chart == 'bar'||panel.chart == 'dashboard'||panel.chart == 'radar'||panel.chart == 'java'||panel.chart == 'horizontalBar'">
     <label class="small">{{'Font Size'|translate}}</label>
