@@ -40,7 +40,7 @@ define([
     var module = angular.module('kibana.panels.bn', []);
     app.useModule(module);
 
-    var DEBUG = false;
+    var DEBUG = true;
     console.log('bn DEBUG : ' + DEBUG);
     module.controller('bn', function($scope, $q, $http, $routeParams, querySrv, dashboard, filterSrv, alertSrv) {
       $scope.panelMeta = {
@@ -470,6 +470,7 @@ define([
 
 
             function drawGraph(nodeDataArray, linkDataArray, graph_id) {
+              go.licenseKey = "73fe40e1ba1c28c702d95d76423d6cbc5cf07f21de8219a00b5011a7ee5c3f167699ed7057d78dd2c2ff4daf4f7d908a8d976b2b9e4c5133e735d2d546e68efeb43323b5440a44dda21136c5ccaa2ca1ae2870e0d2b676a2dc678eedebab";
               var $ = go.GraphObject.make;  // for conciseness in defining templates
               if (myDiagram) {
                 return ;
@@ -543,7 +544,7 @@ define([
                       else {
                         //alert(window.selected_var);
                         var x = window.selected_var;
-                        if (checkIn(query_list[parseInt(x.substr(1))],ad_list))
+                        if (checkIn(query_list[parseInt(x)],ad_list))
                           shape.fill = "#D24726";
                         else
                           shape.fill = "lightgreen";
