@@ -7,11 +7,16 @@
             </button>
         </form>
     </div>
-    <div class="span8">
+    <div class="span4">
         <h6>{{'Facet Fields'|translate}}
             <small>{{'Click to remove'|translate}}</small>
         </h6>
         <span style="margin-left:3px" ng-click="remove_facet_field(field)" ng-repeat="field in $parent.panel.fields" class="label pointer remove">{{field}}</span>
+    </div>
+
+    <div class="span4">
+      <label class="small">{{'Length of field'|translate}}</label>
+      <input ng-change="set_refresh(true)" placeholder="1000" type="number" class="input-small" ng-model="panel.field_max_length">
     </div>
 </div>
 

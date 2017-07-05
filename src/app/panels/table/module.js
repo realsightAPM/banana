@@ -36,11 +36,11 @@ function (angular, app, _, kbn, moment) {
 
       editorTabs : [
         {
-          title:'Fields',
+          title:$translate.instant('Fields'),
           src: 'app/panels/table/fields.html'
         },
         {
-          title:'Paging',
+          title:$translate.instant('Paging'),
           src: 'app/panels/table/pagination.html'
         },
         {
