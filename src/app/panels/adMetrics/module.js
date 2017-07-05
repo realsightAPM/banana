@@ -542,6 +542,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
               dashboard.current.anomaly_name = ad_name;
               dashboard.current.anomaly_stats_facet = data[x][y][0].anomaly_stats_facet;
               dashboard.current.anomaly_facet_name = data[x][y][0].anomaly_facet_name;
+
               /* filterSrv.set({
                   type  : 'time',
                   from  : moment.utc(Number(from_timestamp)).toDate(),
