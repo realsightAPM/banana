@@ -19,7 +19,7 @@ define([
     ],
     function (angular, app, _, $, kbn) {
         'use strict';
-        var DEBUG = true;
+        var DEBUG = false;
         console.log('bnStatistics DEBUG : ' + DEBUG);
 
         var module = angular.module('kibana.panels.bnStatistics', []);

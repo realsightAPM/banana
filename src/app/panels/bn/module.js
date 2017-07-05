@@ -382,10 +382,13 @@ define([
             //alert(nodeList[0].key);
             if (DEBUG) console.log(chartData[0][0]);
             var query_list = chartData[0][0].query_list_s.split("^");
-
             if(DEBUG) console.log(query_list);
+            if(DEBUG) console.log(ad_list);
             for (var i = 0; i < nodeList.length; i++) {
-              if (checkIn(query_list[parseInt(nodeList[i].key.substr(1))], ad_list)) {
+
+              if (DEBUG) { console.log(nodeList[i]); }
+              if (DEBUG) { console.log(nodeList[i].key); }
+              if (checkIn(query_list[parseInt(nodeList[i].key)], ad_list)) {
                 nodeList[i]["color"] = "#D24726";
               } else {
                 nodeList[i]["color"] = "lightgreen";
@@ -505,6 +508,7 @@ define([
                   //   { fill: "whitesmoke", stroke: "black" }),
                   $(go.TextBlock,
                     { font: "16pt Helvetica, Arial, sans-serif",
+                      stroke: "CornflowerBlue",
                       wrap: go.TextBlock.WrapFit,
                       margin: 5 },
                     new go.Binding("text", "", tooltipTextConverter))
@@ -563,8 +567,10 @@ define([
             }
 
             function checkIn(x, list) {
+              if (DEBUG) { console.log(x); }
+              if (DEBUG) { console.log(list); }
               for (var i = 0; i < list.length; i++) {
-                if (x == list[i])
+                if (x === list[i])
                   return true;
               }
               return false;
