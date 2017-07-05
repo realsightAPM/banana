@@ -48,8 +48,8 @@
           "to": "NOW/HOUR%2B1HOUR",
           "field": "rs_timestamp",
           "type": "time",
-          "fromDateObj": "2017-06-22T04:28:12.655Z",
-          "toDateObj": "2017-06-22T09:28:12.655Z",
+          "fromDateObj": "2017-07-04T22:15:10.573Z",
+          "toDateObj": "2017-07-05T03:15:10.574Z",
           "mandate": "must",
           "active": true,
           "alias": "",
@@ -146,7 +146,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-5HOUR%20TO%20NOW/HOUR%2B1HOUR]&stats=true&stats.field=DOTNET_User_Connections&fl=DOTNET_User_Connections&sort=rs_timestamp%20desc&rows=10000",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-5HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d0dac94015d10aa99520019.7ed159cb462eced8257a4d712a8e659c&stats=true&stats.field=DOTNET_User_Connections&fl=DOTNET_User_Connections&sort=rs_timestamp%20desc&rows=10000",
             "custom": ""
           },
           "mode": "count",
@@ -259,7 +259,7 @@
               1,
               2
             ],
-            "query": "q=DOTNET_User_Connections%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-5HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_User_Connections\n",
+            "query": "q=DOTNET_User_Connections%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-5HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d0dac94015d10aa99520019.7ed159cb462eced8257a4d712a8e659c&fl=rs_timestamp DOTNET_User_Connections\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -281,7 +281,7 @@
           "field_color": "#2ce41b",
           "resolution": 100,
           "value_sort": "rs_timestamp",
-          "interval": "1m",
+          "interval": "5m",
           "intervals": [
             "auto",
             "1s",
@@ -356,7 +356,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-5HOUR%20TO%20NOW/HOUR%2B1HOUR]&stats=true&stats.field=DOTNET_Apdex&fl=DOTNET_Apdex&sort=rs_timestamp%20desc&rows=10000",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-5HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d0dac94015d10aa99520019.7ed159cb462eced8257a4d712a8e659c&stats=true&stats.field=DOTNET_Apdex&fl=DOTNET_Apdex&sort=rs_timestamp%20desc&rows=10000",
             "custom": ""
           },
           "mode": "count",
@@ -378,7 +378,7 @@
           "style": {
             "font-size": "10pt"
           },
-          "fontsize": 20,
+          "fontsize": 9,
           "title_defined": true,
           "donut": false,
           "tilt": false,
@@ -469,7 +469,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-5HOUR%20TO%20NOW/HOUR%2B1HOUR]&stats=true&stats.field=DOTNET_CPU_used&fl=DOTNET_CPU_used&sort=rs_timestamp%20desc&rows=10000",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-5HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d0dac94015d10aa99520019.7ed159cb462eced8257a4d712a8e659c&stats=true&stats.field=DOTNET_CPU_used&fl=DOTNET_CPU_used&sort=rs_timestamp%20desc&rows=10000",
             "custom": ""
           },
           "mode": "count",
@@ -491,7 +491,7 @@
           "style": {
             "font-size": "10pt"
           },
-          "fontsize": 20,
+          "fontsize": 8,
           "title_defined": true,
           "donut": false,
           "tilt": false,
@@ -583,7 +583,7 @@
               1,
               2
             ],
-            "query": "q=DOTNET_Requests_Queued DOTNET_Requests_Rejected DOTNET_Errors_Total DOTNET_Gen_0_Collections DOTNET_Gen_1_Collections DOTNET_Gen_2_Collections%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-5HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Requests_Queued DOTNET_Requests_Rejected DOTNET_Errors_Total DOTNET_Gen_0_Collections DOTNET_Gen_1_Collections DOTNET_Gen_2_Collections\n",
+            "query": "q=DOTNET_Requests_Queued DOTNET_Requests_Rejected DOTNET_Errors_Total DOTNET_Gen_0_Collections DOTNET_Gen_1_Collections DOTNET_Gen_2_Collections%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-5HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d0dac94015d10aa99520019.7ed159cb462eced8257a4d712a8e659c&fl=rs_timestamp DOTNET_Requests_Queued DOTNET_Requests_Rejected DOTNET_Errors_Total DOTNET_Gen_0_Collections DOTNET_Gen_1_Collections DOTNET_Gen_2_Collections\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -601,7 +601,7 @@
           "field_color": "#209bf8",
           "resolution": 100,
           "value_sort": "rs_timestamp",
-          "interval": "1m",
+          "interval": "5m",
           "intervals": [
             "auto",
             "1s",
@@ -669,7 +669,7 @@
               1,
               2
             ],
-            "query": "q=DOTNET_Requests_Queued DOTNET_Requests_Rejected DOTNET_Errors_Total DOTNET_Gen_0_Collections DOTNET_Gen_1_Collections DOTNET_Gen_2_Collections%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-5HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Requests_Queued DOTNET_Requests_Rejected DOTNET_Errors_Total DOTNET_Gen_0_Collections DOTNET_Gen_1_Collections DOTNET_Gen_2_Collections\n",
+            "query": "q=DOTNET_Requests_Queued DOTNET_Requests_Rejected DOTNET_Errors_Total DOTNET_Gen_0_Collections DOTNET_Gen_1_Collections DOTNET_Gen_2_Collections%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-5HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d0dac94015d10aa99520019.7ed159cb462eced8257a4d712a8e659c&fl=rs_timestamp DOTNET_Requests_Queued DOTNET_Requests_Rejected DOTNET_Errors_Total DOTNET_Gen_0_Collections DOTNET_Gen_1_Collections DOTNET_Gen_2_Collections\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -687,7 +687,7 @@
           "field_color": "#209bf8",
           "resolution": 100,
           "value_sort": "rs_timestamp",
-          "interval": "1m",
+          "interval": "5m",
           "intervals": [
             "auto",
             "1s",

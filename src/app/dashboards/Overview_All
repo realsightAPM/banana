@@ -3,6 +3,8 @@
   "services": {
     "query": {
       "idQueue": [
+        1,
+        2,
         3,
         4
       ],
@@ -14,26 +16,10 @@
           "id": 0,
           "pin": false,
           "type": "lucene"
-        },
-        "1": {
-          "id": 1,
-          "color": "#E5AC0E",
-          "query": "*:*",
-          "alias": "Warning% ",
-          "pin": false
-        },
-        "2": {
-          "id": 2,
-          "color": "#1a93f9",
-          "query": "*:*",
-          "alias": "Normal% ",
-          "pin": false
         }
       },
       "ids": [
-        0,
-        1,
-        2
+        0
       ]
     },
     "filter": {
@@ -48,8 +34,8 @@
           "to": "NOW/HOUR%2B1HOUR",
           "field": "rs_timestamp",
           "type": "time",
-          "fromDateObj": "2017-07-03T11:09:10.405Z",
-          "toDateObj": "2017-07-04T11:09:10.405Z",
+          "fromDateObj": "2017-07-04T03:33:07.341Z",
+          "toDateObj": "2017-07-05T03:33:07.342Z",
           "mandate": "must",
           "active": true,
           "alias": "",
@@ -129,11 +115,9 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=res_id&facet.limit=10000&facet.missing=true&f.res_id.facet.sort=count&fq=res_type:JAVAEE_JAVAEE",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=res_id&facet.limit=10000&facet.missing=true&f.res_id.facet.sort=count&fq=res_type:JAVAEE_JAVAEE",
             "custom": "&fq=res_type:JAVAEE_JAVAEE"
           },
           "mode": "count",
@@ -238,11 +222,9 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=res_id&facet.limit=10000&facet.missing=true&f.res_id.facet.sort=count&fq=res_type:PHP_PHP",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=res_id&facet.limit=10000&facet.missing=true&f.res_id.facet.sort=count&fq=res_type:PHP_PHP",
             "custom": "&fq=res_type:PHP_PHP"
           },
           "mode": "count",
@@ -347,15 +329,13 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=res_id&facet.limit=10000&facet.missing=true&f.res_id.facet.sort=count&fq=res_type:DONET_DONET",
-            "custom": "&fq=res_type:DONET_DONET"
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=res_name&facet.limit=10000&facet.missing=true&f.res_name.facet.sort=count&fq=res_type:DOTNET_DOTNET",
+            "custom": "&fq=res_type:DOTNET_DOTNET"
           },
           "mode": "count",
-          "field": "res_id",
+          "field": "res_name",
           "stats_field": "",
           "decimal_points": 0,
           "exclude": [],
@@ -466,11 +446,9 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Health&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Health&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Health&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Health&group=true&group.field=res_name&group.limit=100000\n",
             "custom": "&fq=res_type:JAVAEE_JAVAEE"
           },
           "max_rows": 100000,
@@ -547,11 +525,9 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Health&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Health&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Health&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Health&group=true&group.field=res_name&group.limit=100000\n",
             "custom": "&fq=res_type:PHP_PHP"
           },
           "max_rows": 100000,
@@ -628,12 +604,10 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Availability&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Availability&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Availability&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:DONET_DONET"
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Availability&group=true&group.field=res_name&group.limit=100000\n",
+            "custom": "&fq=res_type:DOTNET_DOTNET"
           },
           "max_rows": 100000,
           "value_field": "DOTNET_Availability",
@@ -718,11 +692,9 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Apdex&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Apdex&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Apdex&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Apdex&group=true&group.field=res_name&group.limit=100000\n",
             "custom": "&fq=res_type:JAVAEE_JAVAEE"
           },
           "max_rows": 100000,
@@ -799,11 +771,9 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Apdex&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Apdex&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Apdex&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Apdex&group=true&group.field=res_name&group.limit=100000\n",
             "custom": "&fq=res_type:PHP_PHP"
           },
           "max_rows": 100000,
@@ -880,12 +850,10 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Apdex&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Apdex&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Apdex&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:DONET_DONET"
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Apdex&group=true&group.field=res_name&group.limit=100000\n",
+            "custom": "&fq=res_type:DOTNET_DOTNET"
           },
           "max_rows": 100000,
           "value_field": "DOTNET_Apdex",
@@ -970,11 +938,9 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Availability&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Availability&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Availability&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Availability&group=true&group.field=res_name&group.limit=100000\n",
             "custom": "&fq=res_type:JAVAEE_JAVAEE"
           },
           "max_rows": 100000,
@@ -1051,11 +1017,9 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Availability&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Availability&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Availability&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Availability&group=true&group.field=res_name&group.limit=100000\n",
             "custom": "&fq=res_type:PHP_PHP"
           },
           "max_rows": 100000,
@@ -1132,12 +1096,10 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_User_Connections&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_User_Connections&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_User_Connections&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:DONET_DONET"
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_User_Connections&group=true&group.field=res_name&group.limit=100000\n",
+            "custom": "&fq=res_type:DOTNET_DOTNET"
           },
           "max_rows": 100000,
           "value_field": "DOTNET_User_Connections",
@@ -1222,11 +1184,9 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_OnlineUserNum_total&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_OnlineUserNum_total&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_OnlineUserNum_total&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_OnlineUserNum_total&group=true&group.field=res_name&group.limit=100000\n",
             "custom": "&fq=res_type:JAVAEE_JAVAEE"
           },
           "max_rows": 100000,
@@ -1303,11 +1263,9 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_ThroughPut&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_ThroughPut&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_ThroughPut&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_ThroughPut&group=true&group.field=res_name&group.limit=100000\n",
             "custom": "&fq=res_type:PHP_PHP"
           },
           "max_rows": 100000,
@@ -1384,12 +1342,10 @@
           "queries": {
             "mode": "all",
             "ids": [
-              0,
-              1,
-              2
+              0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Sessions_Total&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Sessions_Total&group=true&group.field=res_name&group.limit=100000\nq=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Sessions_Total&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:DONET_DONET"
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Sessions_Total&group=true&group.field=res_name&group.limit=100000\n",
+            "custom": "&fq=res_type:DOTNET_DOTNET"
           },
           "max_rows": 100000,
           "value_field": "DOTNET_Sessions_Total",

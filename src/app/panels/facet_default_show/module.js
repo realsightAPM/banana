@@ -60,7 +60,8 @@ define([
         foundResults: true,
         header_title: "",
         toggle_element: null,
-        show_queries: true
+        show_queries: true,
+        field_max_length:200
       };
       _.defaults($scope.panel, _d);
 
@@ -222,10 +223,14 @@ define([
                   _.each($scope.panel.fields, function (field) {
                       facet_data[field] = [];
                       for (var i = 0; i < facet_results[field].length; i += 2) {
-                          facet_data[field].push({
-                              value: facet_results[field][i],
-                              count: facet_results[field][i + 1]
-                          });
+                        var field_value = facet_results[field][i];
+                        if(field_value!=null && field_value.length > $scope.panel.field_max_length){
+                          field_value = field_value.substr(0,$scope.panel.field_max_length);
+                        }
+                        facet_data[field].push({
+                          value: field_value,
+                          count: facet_results[field][i + 1]
+                        });
                       }
                   });
                   $scope.facet_data = facet_data;
