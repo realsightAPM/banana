@@ -221,6 +221,10 @@ define([
               var solr_url = dashboard.current.solr.server + dashboard.current.solr.core_name;
               if ($scope.panel.solr_server && $scope.panel.solr_core) {
                 solr_url = $scope.panel.solr_server + $scope.panel.solr_core;
+              } else if ($scope.panel.solr_core) {
+                solr_url = dashboard.current.solr.server + $scope.panel.solr_core;
+              } else if ($scope.panel.solr_server) {
+                solr_url = $scope.panel.solr_server + dashboard.current.solr.core_name;
               }
 
               $scope.sjs.client.server(solr_url);
