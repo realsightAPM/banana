@@ -298,8 +298,17 @@
   "Solr Collection":"Solr Collection",
   "Term":"Term",
   "Other":"Other",
-  "Missing":"Missing"
+  "Missing":"Missing",
+  "Length of field":"Length of field",
+  "Color threshold":"Color threshold",
+  "Label":"Label",
+  "Relevance":"Relevance",
+  "Indicator/Transaction":"Indicator/Transaction",
+  "Next":"Next",
+  "Figure Size":"Figure Size",
 
 
-  
+
+
+
 }

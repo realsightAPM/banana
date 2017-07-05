@@ -142,7 +142,8 @@ function (Settings) {
       'docviewer',
       'statistics',
       'facet_default_show',
-      'statistics_only_count'
+      'statistics_only_count',
+      'javastacking'
     ]
   });
 });
