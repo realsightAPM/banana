@@ -312,7 +312,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       this.color_change = function(){
         if(self.current.style === 'blue'){
             document.getElementById('setting').style.background='#f5f5f5';
-        }else if(self.current.style === 'dark'){
+        }else if(self.current.style === 'dark'||self.current.style === 'black'){
             document.getElementById('setting').style.background='#52575c';
         }else{
             document.getElementById('setting').style.background='#c1c1c1';

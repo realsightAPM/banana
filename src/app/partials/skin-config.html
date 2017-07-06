@@ -86,7 +86,7 @@
                 </a>
                 <div id="collapse1" class=" collapse in">
                     <!-- <div  style='text-decoration:none;cursor:pointer' ng-click="dashboard.is_refresh() "><i class="icon icon-picture"></i>&nbsp;&nbsp;Skins</div>-->
-                    <div class="setings-item default-skin" style="cursor:pointer" ng-click="dashboard.current.style='dark';dashboard.color_change()">
+                    <div class="setings-item defaultBlue-skin" style="cursor:pointer" ng-click="dashboard.current.style='dark';dashboard.color_change()">
                     <span class="skin-name ">
                          <a class="s-skin-0" style='text-decoration:none;'>
                             {{'Default'|translate}}   <i class="icon-ok-sign" style='float:right;' ng-click="dashboard.is_refresh()"></i>
@@ -94,6 +94,14 @@
 
                     </span>
                     </div>
+                  <div class="setings-item default-skin" style="cursor:pointer" ng-click="dashboard.current.style='black';dashboard.color_change()">
+                    <span class="skin-name ">
+                         <a class="s-skin-0" style='text-decoration:none;'>
+                            {{'Black'|translate}}   <i class="icon-ok-sign" style='float:right;' ng-click="dashboard.is_refresh()"></i>
+                         </a>
+
+                    </span>
+                  </div>
                     <div class="setings-item blue-skin"  style="cursor:pointer" ng-click="dashboard.current.style='blue';dashboard.color_change()">
                     <span class="skin-name " >
                         <a  class="s-skin-1" style='text-decoration:none;' >
