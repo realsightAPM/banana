@@ -905,6 +905,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
             dashboard.refresh();
 
         });
+
       }
     };
   });

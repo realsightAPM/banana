@@ -49,7 +49,7 @@ require.config({
     'showdown':               '../vendor/showdown',
 
     echarts:                  '../../node_modules/echarts/dist/echarts',
-    'echarts-gl':     '../../node_modules/echarts-gl/dist/echarts-gl',
+    'echarts-gl':     '../vendor/echarts-gl',
     'echarts-liquidfill':     '../../node_modules/echarts-liquidfill/dist/echarts-liquidfill',
     'echarts-wordcloud':     '../../node_modules/echarts-wordcloud/dist/echarts-wordcloud',
     'echarts-bmap':           '../../node_modules/echarts/dist/extension/bmap',
@@ -152,7 +152,8 @@ require.config({
     bubble:                 ['d3'],
     lines:                  ['d3','bubble'],
     centralclick:           ['d3','bubble'],
-      'echarts-liquidfill':   ['echarts'],
+    'echarts-liquidfill':   ['echarts'],
+    'echarts-gl':           ['echarts'],
     'viz':                  ['d3'],
   }
 });

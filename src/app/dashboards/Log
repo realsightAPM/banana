@@ -33,8 +33,8 @@
       ],
       "list": {
         "0": {
-          "from": "2014-05-30T09:30:15.000Z",
-          "to": "2017-06-13T09:30:15.000Z",
+          "from": "2014-05-30T11:30:45.000Z",
+          "to": "2017-06-13T11:30:45.000Z",
           "field": "rs_timestamp_tdt",
           "type": "time",
           "mandate": "must",
@@ -88,8 +88,8 @@
           "display": "block",
           "icon": "icon-caret-down",
           "time": {
-            "from": "05/30/2014 17:30:15",
-            "to": "06/13/2017 17:30:15"
+            "from": "05/30/2014 19:30:45",
+            "to": "06/13/2017 19:30:45"
           }
         },
         {
@@ -119,7 +119,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&wt=json&rows=0\n",
+            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&wt=json&rows=0\n",
             "basic_query": "",
             "custom": "&fq=type_s:exception"
           },
@@ -164,7 +164,7 @@
             "ids": [
               0
             ],
-            "query": "q=time_consuming_f%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&fl=rs_timestamp_tdt time_consuming_f\n",
+            "query": "q=time_consuming_f%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&fl=rs_timestamp_tdt time_consuming_f\n",
             "custom": "&fq=tags:performance_analysis"
           },
           "max_rows": 100000,
@@ -253,8 +253,8 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.field=task_s&wt=json",
-            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.field=task_s",
+            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&facet=true&facet.field=task_s&wt=json",
+            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&facet=true&facet.field=task_s",
             "custom": "&fq=tag_s:性能分析"
           },
           "group": "default",
@@ -299,8 +299,8 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&wt=json&rows=50",
-            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]",
+            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&wt=json&rows=50",
+            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]",
             "custom": "&fq=tags:performance_analysis"
           },
           "size": 10,
@@ -376,7 +376,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.field=error_info_s&facet.limit=10&facet.missing=true&f.error_info_s.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&facet=true&facet.field=error_info_s&facet.limit=10&facet.missing=true&f.error_info_s.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -449,8 +449,8 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&wt=json&rows=25",
-            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]",
+            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&wt=json&rows=25",
+            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]",
             "custom": "&fq=type_s:exception&sort=rs_timestamp_tdt desc"
           },
           "size": 5,
@@ -528,7 +528,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&stats=true&stats.facet=error_info_s&stats.field=error_info_s&facet.missing=true&f.error_info_s.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&stats=true&stats.facet=error_info_s&stats.field=error_info_s&facet.missing=true&f.error_info_s.facet.sort=count",
             "custom": ""
           },
           "mode": "all",
@@ -640,8 +640,8 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.field=error_info_s&wt=json",
-            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.field=error_info_s",
+            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&facet=true&facet.field=error_info_s&wt=json",
+            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&facet=true&facet.field=error_info_s",
             "custom": ""
           },
           "group": "default",
@@ -654,7 +654,7 @@
           ],
           "spyable": true,
           "linkage_id": "exception",
-          "facet_limit": 23,
+          "facet_limit": 25,
           "maxnum_facets": 12,
           "foundResults": true,
           "header_title": "",
@@ -686,7 +686,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=0&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.range=rs_timestamp_tdt&facet.range.start=2014-05-30T09:30:15.000Z&facet.range.end=2017-06-13T09:30:15.000Z&facet.range.gap=%2B7DAY\n",
+            "query": "q=*%3A*&wt=json&rows=0&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&facet=true&facet.range=rs_timestamp_tdt&facet.range.start=2014-05-30T11:30:45.000Z&facet.range.end=2017-06-13T11:30:45.000Z&facet.range.gap=%2B7DAY\n",
             "custom": "&fq=type_s:exception"
           },
           "max_rows": 100000,
@@ -697,7 +697,7 @@
           "threshold_third": 3000,
           "value_field": "error_info_s",
           "group_field": null,
-          "auto_int": true,
+          "auto_int": false,
           "resolution": 100,
           "interval": "7d",
           "intervals": [
@@ -761,17 +761,17 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&stats=true&stats.facet=sql_key_s&stats.field=sql_key_s&facet.missing=true&f.sql_key_s.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&stats=true&stats.facet=sql_txt_s&stats.field=sql_txt_s&facet.missing=true&f.sql_txt_s.facet.sort=count",
             "custom": ""
           },
           "mode": "all",
-          "field": "sql_key_s",
-          "stats_field": "sql_key_s",
+          "field": "sql_txt_s",
+          "stats_field": "sql_txt_s",
           "decimal_points": 4,
           "exclude": [],
           "missing": false,
           "other": false,
-          "size": 1000,
+          "size": 10,
           "display": "block",
           "icon": "icon-caret-down",
           "sortBy": "count",
@@ -852,12 +852,12 @@
             "#F9D9F9",
             "#DEDAF7"
           ],
-          "fieldmaxlength": 50,
+          "fieldmaxlength": 60,
           "refresh": {
             "enable": false,
             "interval": 2
           },
-          "title": "DAO类执行统计",
+          "title": "SQL执行统计",
           "height": "200"
         },
         {
@@ -873,8 +873,8 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.field=sql_key_s&wt=json",
-            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.field=sql_key_s",
+            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&facet=true&facet.field=sql_txt_s&wt=json",
+            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&facet=true&facet.field=sql_txt_s",
             "custom": ""
           },
           "group": "default",
@@ -883,7 +883,7 @@
           },
           "overflow": "min-height",
           "fields": [
-            "sql_key_s"
+            "sql_txt_s"
           ],
           "spyable": true,
           "linkage_id": "sql",
@@ -893,7 +893,7 @@
           "header_title": "",
           "toggle_element": null,
           "show_queries": true,
-          "title": "DAO类选择",
+          "title": "SQL语句选择",
           "exportSize": null,
           "offset": 0,
           "field_max_length": 40
@@ -918,7 +918,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=0&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.range=rs_timestamp_tdt&facet.range.start=2014-05-30T09:30:15.000Z&facet.range.end=2017-06-13T09:30:15.000Z&facet.range.gap=%2B14DAY\n",
+            "query": "q=*%3A*&wt=json&rows=0&fq=rs_timestamp_tdt:[2014-05-30T11:30:45.000Z%20TO%202017-06-13T11:30:45.000Z]&facet=true&facet.range=rs_timestamp_tdt&facet.range.start=2014-05-30T11:30:45.000Z&facet.range.end=2017-06-13T11:30:45.000Z&facet.range.gap=%2B14DAY\n",
             "custom": ""
           },
           "max_rows": 100000,
