@@ -146,9 +146,9 @@ define([
               // Build Solr query
               var wt_json = '&wt=' + filetype;
               var fq = 'q=' + 'result_s:bn' +  wt_json ;
-              if (_.isUndefined($routeParams.adValue)) {
+              if (_.isUndefined($routeParams.res_id)) {
               } else {
-                $scope.panel.bn_name = $routeParams.adValue;
+                $scope.panel.bn_name = $routeParams.res_id;
               }
               fq += '&fq=bn_name_s:' + $scope.panel.bn_name;
               return fq;
