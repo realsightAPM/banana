@@ -113,9 +113,9 @@ define([
 
             // Populate the inspector panel
             $scope.populate_modal(request);
-            if (_.isUndefined($routeParams.adValue)) {
+            if (_.isUndefined($routeParams.res_id)) {
             } else {
-              $scope.panel.ad_name = $routeParams.adValue;
+              $scope.panel.ad_name = $routeParams.res_id;
             }
             //Solr Search Query
             var fq = '';

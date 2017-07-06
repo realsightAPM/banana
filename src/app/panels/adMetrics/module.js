@@ -263,8 +263,8 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
       var mypromises = [];
       var arr_id = [];
       var index = 0;
-      if (!_.isUndefined($routeParams.adValue)) {
-        $scope.panel.ad_name = $routeParams.adValue;
+      if (!_.isUndefined($routeParams.res_id)) {
+        $scope.panel.ad_name = $routeParams.res_id;
       }
 
       _.defaults(dashboard.current,{anomaly_name:''});

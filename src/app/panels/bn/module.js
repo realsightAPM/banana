@@ -273,9 +273,9 @@ define([
         // var facet = '';
         //var fl = '&fl=' + 'timestamp_l%20anomaly_value_d%20value_d';
         var fl = '&fl=' + 'nodes_s%20edges_s%20query_list';
-        if (_.isUndefined($routeParams.adValue)) {
+        if (_.isUndefined($routeParams.res_id)) {
         } else {
-          $scope.panel.bn_name = $routeParams.adValue;
+          $scope.panel.bn_name = $routeParams.res_id;
         }
         fq = '&fq=bn_name_s:' + $scope.panel.bn_name;
 
