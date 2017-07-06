@@ -33,8 +33,8 @@
       ],
       "list": {
         "0": {
-          "from": "2014-05-13T07:45:00.000Z",
-          "to": "2017-06-13T07:45:00.000Z",
+          "from": "2014-05-30T09:30:15.000Z",
+          "to": "2017-06-13T09:30:15.000Z",
           "field": "rs_timestamp_tdt",
           "type": "time",
           "mandate": "must",
@@ -88,8 +88,8 @@
           "display": "block",
           "icon": "icon-caret-down",
           "time": {
-            "from": "05/13/2014 15:45:00",
-            "to": "06/13/2017 15:45:00"
+            "from": "05/30/2014 17:30:15",
+            "to": "06/13/2017 17:30:15"
           }
         },
         {
@@ -119,7 +119,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&wt=json&rows=0\n",
+            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&wt=json&rows=0\n",
             "basic_query": "",
             "custom": "&fq=type_s:exception"
           },
@@ -164,7 +164,7 @@
             "ids": [
               0
             ],
-            "query": "q=time_consuming_f%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&fl=rs_timestamp_tdt time_consuming_f\n",
+            "query": "q=time_consuming_f%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&fl=rs_timestamp_tdt time_consuming_f\n",
             "custom": "&fq=tags:performance_analysis"
           },
           "max_rows": 100000,
@@ -253,8 +253,8 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&facet=true&facet.field=task_s&wt=json",
-            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&facet=true&facet.field=task_s",
+            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.field=task_s&wt=json",
+            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.field=task_s",
             "custom": "&fq=tag_s:性能分析"
           },
           "group": "default",
@@ -299,8 +299,8 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&wt=json&rows=50",
-            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]",
+            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&wt=json&rows=50",
+            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]",
             "custom": "&fq=tags:performance_analysis"
           },
           "size": 10,
@@ -376,7 +376,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&facet=true&facet.field=error_info_s&facet.limit=10&facet.missing=true&f.error_info_s.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.field=error_info_s&facet.limit=10&facet.missing=true&f.error_info_s.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -449,8 +449,8 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&wt=json&rows=25",
-            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]",
+            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&wt=json&rows=25",
+            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]",
             "custom": "&fq=type_s:exception&sort=rs_timestamp_tdt desc"
           },
           "size": 5,
@@ -528,7 +528,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&stats=true&stats.facet=error_info_s&stats.field=error_info_s&facet.missing=true&f.error_info_s.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&stats=true&stats.facet=error_info_s&stats.field=error_info_s&facet.missing=true&f.error_info_s.facet.sort=count",
             "custom": ""
           },
           "mode": "all",
@@ -640,8 +640,8 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&facet=true&facet.field=error_info_s&wt=json",
-            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&facet=true&facet.field=error_info_s",
+            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.field=error_info_s&wt=json",
+            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.field=error_info_s",
             "custom": ""
           },
           "group": "default",
@@ -664,7 +664,7 @@
           "height": "350",
           "exportSize": null,
           "offset": 0,
-          "field_max_length": 50
+          "field_max_length": 45
         }
       ]
     },
@@ -686,7 +686,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=0&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&facet=true&facet.range=rs_timestamp_tdt&facet.range.start=2014-05-13T07:45:00.000Z&facet.range.end=2017-06-13T07:45:00.000Z&facet.range.gap=%2B7DAY\n",
+            "query": "q=*%3A*&wt=json&rows=0&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.range=rs_timestamp_tdt&facet.range.start=2014-05-30T09:30:15.000Z&facet.range.end=2017-06-13T09:30:15.000Z&facet.range.gap=%2B7DAY\n",
             "custom": "&fq=type_s:exception"
           },
           "max_rows": 100000,
@@ -722,7 +722,7 @@
           "zoomlinks": true,
           "bars": true,
           "stack": true,
-          "linkage_id": "error_info",
+          "linkage_id": "exception",
           "points": false,
           "display": "block",
           "icon": "icon-caret-down",
@@ -761,7 +761,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&stats=true&stats.facet=sql_key_s&stats.field=sql_key_s&facet.missing=true&f.sql_key_s.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&stats=true&stats.facet=sql_key_s&stats.field=sql_key_s&facet.missing=true&f.sql_key_s.facet.sort=count",
             "custom": ""
           },
           "mode": "all",
@@ -873,8 +873,8 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&facet=true&facet.field=sql_key_s&wt=json",
-            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&facet=true&facet.field=sql_key_s",
+            "query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.field=sql_key_s&wt=json",
+            "basic_query": "q=*%3A*&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.field=sql_key_s",
             "custom": ""
           },
           "group": "default",
@@ -896,7 +896,7 @@
           "title": "DAO类选择",
           "exportSize": null,
           "offset": 0,
-          "field_max_length": 200
+          "field_max_length": 40
         }
       ]
     },
@@ -918,7 +918,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=0&fq=rs_timestamp_tdt:[2014-05-13T07:45:00.000Z%20TO%202017-06-13T07:45:00.000Z]&facet=true&facet.range=rs_timestamp_tdt&facet.range.start=2014-05-13T07:45:00.000Z&facet.range.end=2017-06-13T07:45:00.000Z&facet.range.gap=%2B14DAY\n",
+            "query": "q=*%3A*&wt=json&rows=0&fq=rs_timestamp_tdt:[2014-05-30T09:30:15.000Z%20TO%202017-06-13T09:30:15.000Z]&facet=true&facet.range=rs_timestamp_tdt&facet.range.start=2014-05-30T09:30:15.000Z&facet.range.end=2017-06-13T09:30:15.000Z&facet.range.gap=%2B14DAY\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -1027,7 +1027,7 @@
   ],
   "row_controller": false,
   "mute": false,
-  "linkage_id": "sql",
+  "linkage_id": "exception",
   "searchEnable": false,
   "isSearch": false,
   "searchID": 0,
