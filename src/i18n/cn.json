@@ -308,7 +308,10 @@
   "Next":"下一个",
   "Figure Size":"图形大小",
   "yLabels":"Y轴标识",
-  "Black":"黑色皮肤"
+  "Black":"黑色皮肤",
+  "Node":"节点字段",
+  "Edge":"关系字段"
+
 
 
 

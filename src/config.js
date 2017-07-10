@@ -143,7 +143,8 @@ function (Settings) {
       'statistics',
       'facet_default_show',
       'statistics_only_count',
-      'javastacking'
+      'javastacking',
+      'network'
     ]
   });
 });

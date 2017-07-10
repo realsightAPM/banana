@@ -306,7 +306,9 @@
   "Indicator/Transaction":"Indicator/Transaction",
   "Next":"Next",
   "Figure Size":"Figure Size",
-  "Black":"Black"
+  "Black":"Black",
+  "Node":"Node",
+  "Edge":"Edge"
 
 
 
