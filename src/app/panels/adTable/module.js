@@ -31,7 +31,7 @@ function (angular, app, _, kbn, moment) {
 
   var module = angular.module('kibana.panels.adTable', []);
   app.useModule(module);
-  module.controller('adTable', function($rootScope, $scope, fields, querySrv, dashboard, filterSrv, solrSrv) {
+  module.controller('adTable', function($rootScope, $scope,$routeParams, fields, querySrv, dashboard, filterSrv, solrSrv) {
     $scope.panelMeta = {
 
       editorTabs : [
@@ -93,8 +93,9 @@ function (angular, app, _, kbn, moment) {
       imgFieldHeight: '85px', // height of <img> (if enabled)
       show_queries: true,
       maxNumCalcTopFields: 20, // Set the max number of fields for calculating top values
-      calcTopFieldValuesFromAllData: false // false: calculate top field values from $scope.data
+      calcTopFieldValuesFromAllData: false, // false: calculate top field values from $scope.data
                                            // true: calculate from all data using Solr facet
+      anomaly_th :0.8
     };
     _.defaults($scope.panel,_d);
 
@@ -259,11 +260,18 @@ function (angular, app, _, kbn, moment) {
         if (filterSrv.getSolrFq()) {
           fq = '&' + filterSrv.getSolrFq();
         }
-        if (dashboard.current.anomaly_fq) {
+        /*if (dashboard.current.anomaly_fq) {
           fq = fq + '&' + dashboard.current.anomaly_fq;
         }
         if (dashboard.current.metric_field) {
           fq = fq + '&fq=facet_name_s:"' + dashboard.current.metric_field + '"';
+        }*/
+        fq = fq + '&fq=anomaly_f:[' + $scope.panel.anomaly_th + '%20TO%20*]';
+        if (!_.isUndefined($routeParams.res_id)) {
+          fq = fq + '&fq=ad_name_s:'+$routeParams.res_id;
+        }
+        if (!_.isUndefined($routeParams.facet_name)) {
+          fq = fq + '&fq=facet_name_s:' + $routeParams.facet_name;
         }
         var query_size = $scope.panel.size * $scope.panel.pages;
         var wt_json = '&wt=json';

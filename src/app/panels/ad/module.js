@@ -496,6 +496,11 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
             myChart.setOption(option);
 
             myChart.on('click', function (params) {
+              //cuixilong
+              var resourceId = params.ad_name;
+//              window.locati .href("/acl_realtime_dashboard/pages/index.html/#!dashabord?kbnid= &kbnfile=&resid="resourceId);
+
+
               if (DEBUG) { console.log(params); }
               if (DEBUG) { console.log(data); }
               var anomaly_th = scope.panel.anomaly_th;
@@ -512,8 +517,8 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
               dashboard.current.anomaly_fq = anomaly_fq;
               dashboard.current.fq = fq;
               dashboard.current.anomaly_name = ad_name;
-              dashboard.current.anomaly_stats_facet = data[x][0].stats_facet;
-              dashboard.current.anomaly_facet_name = data[x][0].facet_name;
+              // dashboard.current.anomaly_stats_facet = data[x][0].stats_facet;
+              // dashboard.current.anomaly_facet_name = data[x][0].facet_name;
               dashboard.current.metric_field = undefined;
                 /* filterSrv.set({
                     type  : 'time',

@@ -113,6 +113,21 @@ define([
                 }
             };
 
+            $scope.toDateString = function(datetime) {
+              var year = datetime.getFullYear();
+              var month = datetime.getMonth() + 1;
+              if (month < 10) { month = '0' + month; }
+              var day = datetime.getDate();
+              if (day < 10) {day = '0' + day; }
+              var hour = datetime.getHours();
+              if (hour < 10) { hour = '0' + hour; }
+              var minute = datetime.getMinutes();
+              if (minute < 10) { minute = '0' + minute; }
+              var second = datetime.getSeconds();
+              if (second < 10) {second = '0' + second;}
+              return year + '-' + month + '-' + day + 'T' + hour + ':' + minute + ':' + second + 'Z';
+            };
+
             $scope.display=function() {
                 if($scope.panel.display === 'none'){
                     $scope.panel.display='block';
@@ -132,7 +147,10 @@ define([
                 fq = '&' + filterSrv.getSolrFq();
               }*/
               if (dashboard.current.ad_start_timestamp && dashboard.current.ad_end_timestamp) {
-                fq += '&fq=timestamp_l:[' + dashboard.current.ad_start_timestamp + '%20TO%20' + dashboard.current.ad_end_timestamp + ']';
+                var df = new Date(dashboard.current.ad_start_timestamp);
+                var dt = new Date(dashboard.current.ad_end_timestamp);
+                if (DEBUG) console.log($scope.toDateString(df));
+                fq += '&fq=rs_timestamp:[' + $scope.toDateString(df) + '%20TO%20' + $scope.toDateString(dt) + ']';
               }
               if (dashboard.current.ad_stats_facet && dashboard.current.ad_facet_name) {
                 fq += '&fq=' + dashboard.current.ad_stats_facet + ':"' + dashboard.current.ad_facet_name + '"';

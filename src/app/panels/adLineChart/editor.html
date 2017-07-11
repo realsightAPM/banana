@@ -1,5 +1,9 @@
 <div class="row-fluid">
-  <div class="span2">
+  <div class="span3" >
+    <label class="small">{{'Anomaly TH'|translate}}</label>
+    <input ng-change="set_refresh(true)" placeholder="0.70" type="number" step="0.01" min=0.0 max=1.0 class="input-small" ng-model="panel.anomaly_th">
+  </div>
+  <div class="span3">
     <label class="small">{{'Max Rows'|translate}}</label>
     <input ng-change="set_refresh(true)" placeholder="100000" type="number" class="input-small" ng-model="panel.max_rows">
   </div>

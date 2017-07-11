@@ -40,7 +40,7 @@ define([
     var module = angular.module('kibana.panels.bn', []);
     app.useModule(module);
 
-    var DEBUG = true;
+    var DEBUG = false;
     console.log('bn DEBUG : ' + DEBUG);
     module.controller('bn', function($scope, $q, $http, $routeParams, querySrv, dashboard, filterSrv, alertSrv) {
       $scope.panelMeta = {
