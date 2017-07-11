@@ -1,13 +1,15 @@
 define([
   'angular',
   'jquery',
+
   'kbn',
   'underscore',
   'config',
   'moment',
   'modernizr',
   'filesaver',
-  'html2canvas'
+  'html2canvas',
+    'cookies',
 ],
 function (angular, $, kbn, _, config, moment, Modernizr) {
   'use strict';
@@ -277,6 +279,14 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
             self.current.isstyle = self.current.style;
         }
     };
+
+    this.clear_cookie = function(){
+      $.cookie("rtd_username", null);
+      $.cookie("rtd_password", null);
+      location.reload();
+    };
+
+
       this.remove = function() {
           var ids = self.current.filterids;
           if(self.current.isSearch){

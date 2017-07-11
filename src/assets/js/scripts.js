@@ -39,9 +39,9 @@ jQuery(document).ready(function() {
         if(username ==realUsername&&password ==realPassword){
             //sessionStorage.setItem(username,password);
             var goalUrlName = sessionStorage.getItem("goalUrl");
-            $.cookie("rmbUser", "true", { expires: 3 });
-            $.cookie("rtd_username", username, { expires: 3 });
-            $.cookie("rtd_password", password, { expires: 3 });
+            $.cookie("rmbUser", "true");
+            $.cookie("rtd_username", username);
+            $.cookie("rtd_password", password);
             $(this).find('input[type="password"]').removeClass('input-error');
             var url =window.location.href;
             document.login.action="./"+goalUrlName;
