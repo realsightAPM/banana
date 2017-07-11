@@ -950,6 +950,13 @@ function (angular, app, _, $, kbn) {
                   //     }
                   // },
                   series: [{
+                    animation: true,
+                    waveAnimation: true,
+                    itemStyle: {
+                      normal: {
+                        shadowBlur: 0
+                      }
+                    },
                     center: ['25%', '40%'],
                     radius: '60%',
                     backgroundStyle: {

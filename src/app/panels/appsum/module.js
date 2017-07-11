@@ -456,6 +456,13 @@ function (angular, app, _, $, kbn) {
         //     }
         // },
         series: [{
+          animation: true,
+          waveAnimation: true,
+          itemStyle: {
+            normal: {
+              shadowBlur: 0
+            }
+          },
           center: ['25%', '40%'],
             radius: '60%',
             backgroundStyle: {
@@ -679,6 +686,13 @@ function (angular, app, _, $, kbn) {
            var option6 = {
 
              series: [{
+               animation: true,
+               waveAnimation: true,
+               itemStyle: {
+                 normal: {
+                   shadowBlur: 0
+                 }
+               },
                center: ['25%', '40%'],
                radius: '60%',
                backgroundStyle: {
@@ -771,6 +785,13 @@ function (angular, app, _, $, kbn) {
          var option7 = {
 
            series: [{
+             animation: true,
+             waveAnimation: true,
+             itemStyle: {
+               normal: {
+                 shadowBlur: 0
+               }
+             },
              center: ['25%', '40%'],
              radius: '60%',
              backgroundStyle: {
@@ -864,6 +885,13 @@ function (angular, app, _, $, kbn) {
                 var option8 = {
 
                   series: [{
+                    animation: true,
+                    waveAnimation: true,
+                    itemStyle: {
+                      normal: {
+                        shadowBlur: 0
+                      }
+                    },
                     center: ['28%', '40%'],
                     radius: '50%',
                     backgroundStyle: {
