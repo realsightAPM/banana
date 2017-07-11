@@ -34,8 +34,8 @@
           "to": "NOW/HOUR%2B1HOUR",
           "field": "rs_timestamp",
           "type": "time",
-          "fromDateObj": "2017-07-04T03:33:07.341Z",
-          "toDateObj": "2017-07-05T03:33:07.342Z",
+          "fromDateObj": "2017-07-10T07:49:00.159Z",
+          "toDateObj": "2017-07-11T07:49:00.160Z",
           "mandate": "must",
           "active": true,
           "alias": "",
@@ -449,7 +449,7 @@
               0
             ],
             "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Health&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:JAVAEE_JAVAEE"
+            "custom": "&fq=res_type:JAVAEE_JAVAEE&fq=JAVAEE_Health:*"
           },
           "max_rows": 100000,
           "value_field": "JAVAEE_Health",
@@ -528,7 +528,7 @@
               0
             ],
             "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Health&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:PHP_PHP"
+            "custom": "&fq=res_type:PHP_PHP&fq=PHP_Health:*"
           },
           "max_rows": 100000,
           "value_field": "PHP_Health",
@@ -607,7 +607,7 @@
               0
             ],
             "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Availability&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:DOTNET_DOTNET"
+            "custom": "&fq=res_type:DOTNET_DOTNET&fq=DOTNET_Availability:*"
           },
           "max_rows": 100000,
           "value_field": "DOTNET_Availability",
@@ -695,7 +695,7 @@
               0
             ],
             "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Apdex&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:JAVAEE_JAVAEE"
+            "custom": "&fq=res_type:JAVAEE_JAVAEE&fq=JAVAEE_Apdex:*"
           },
           "max_rows": 100000,
           "value_field": "JAVAEE_Apdex",
@@ -774,7 +774,7 @@
               0
             ],
             "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Apdex&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:PHP_PHP"
+            "custom": "&fq=res_type:PHP_PHP&fq=PHP_Apdex:*"
           },
           "max_rows": 100000,
           "value_field": "PHP_Apdex",
@@ -853,7 +853,7 @@
               0
             ],
             "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Apdex&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:DOTNET_DOTNET"
+            "custom": "&fq=res_type:DOTNET_DOTNET&fq=DOTNET_Apdex:*"
           },
           "max_rows": 100000,
           "value_field": "DOTNET_Apdex",
@@ -941,7 +941,7 @@
               0
             ],
             "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Availability&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:JAVAEE_JAVAEE"
+            "custom": "&fq=res_type:JAVAEE_JAVAEE&fq=JAVAEE_Availability:*"
           },
           "max_rows": 100000,
           "value_field": "JAVAEE_Availability",
@@ -1020,7 +1020,7 @@
               0
             ],
             "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Availability&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:PHP_PHP"
+            "custom": "&fq=res_type:PHP_PHP&fq=PHP_Availability:*"
           },
           "max_rows": 100000,
           "value_field": "PHP_Availability",
@@ -1099,7 +1099,7 @@
               0
             ],
             "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_User_Connections&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:DOTNET_DOTNET"
+            "custom": "&fq=res_type:DOTNET_DOTNET&fq=DOTNET_User_Connections:*"
           },
           "max_rows": 100000,
           "value_field": "DOTNET_User_Connections",
@@ -1187,7 +1187,7 @@
               0
             ],
             "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_OnlineUserNum_total&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:JAVAEE_JAVAEE"
+            "custom": "&fq=res_type:JAVAEE_JAVAEE&fq=JAVAEE_OnlineUserNum_total:*"
           },
           "max_rows": 100000,
           "value_field": "JAVAEE_OnlineUserNum_total",
@@ -1266,7 +1266,7 @@
               0
             ],
             "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_ThroughPut&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:PHP_PHP"
+            "custom": "&fq=res_type:PHP_PHP&fq=PHP_ThroughPut:*"
           },
           "max_rows": 100000,
           "value_field": "PHP_ThroughPut",
@@ -1345,7 +1345,7 @@
               0
             ],
             "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Sessions_Total&group=true&group.field=res_name&group.limit=100000\n",
-            "custom": "&fq=res_type:DOTNET_DOTNET"
+            "custom": "&fq=res_type:DOTNET_DOTNET&fq=DOTNET_Sessions_Total:*"
           },
           "max_rows": 100000,
           "value_field": "DOTNET_Sessions_Total",
@@ -1484,7 +1484,7 @@
     "save_as_public": false
   },
   "solr": {
-    "server": "http://10.4.53.205:9983/solr/",
+    "server": "http://10.4.53.205:8080/solr/",
     "core_name": "nifi",
     "core_list": [
       "PHP_logs",
