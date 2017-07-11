@@ -533,7 +533,6 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           var aaa= scope.data;
           var label=[];
           var timedata=[];
-          var y1 = 0;
           var y2=0;
           var y3=0;
           var dataAll=[];
@@ -542,17 +541,15 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
             label[i1] = aaa[i1].info.alias;
 
             for(var k in aaa[i1].time_series._data ){
-              if(y1%2!==0){
+
               timedata[y2]=new Date(parseInt(k)).toLocaleString();
               dataAll[y3]=[timedata[y2],aaa[i1].time_series._data[k]];
               y2++;
               y3++;
-              }
-              y1++;
 
             }
             data[i1]=dataAll.sort();
-            y1=0;
+
             y3=0;
           }
           timedata.sort();
