@@ -48,8 +48,8 @@
           "to": "NOW/DAY%2B1DAY",
           "field": "rs_timestamp",
           "type": "time",
-          "fromDateObj": "2017-07-07T03:18:56.952Z",
-          "toDateObj": "2017-07-12T03:18:56.952Z",
+          "fromDateObj": "2017-07-07T06:59:01.244Z",
+          "toDateObj": "2017-07-12T06:59:01.245Z",
           "mandate": "must",
           "active": true,
           "alias": "",
@@ -137,7 +137,43 @@
       "collapsable": true,
       "panels": [
         {
-          "span": 4,
+          "span": 6,
+          "editable": true,
+          "type": "map",
+          "loadingEditor": false,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0,
+              1,
+              2
+            ],
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/DAY-5DAY%20TO%20NOW/DAY%2B1DAY]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&rows=0&facet=true&facet.field=country&facet.limit=1000",
+            "custom": ""
+          },
+          "mode": "count",
+          "field": "country",
+          "stats_field": "",
+          "decimal_points": 0,
+          "map": "world",
+          "useNames": false,
+          "linkage_id": "a",
+          "display": "block",
+          "icon": "icon-caret-down",
+          "colors": [
+            "#fddda0",
+            "#cd8804"
+          ],
+          "size": 1000,
+          "exclude": [],
+          "spyable": true,
+          "index_limit": 0,
+          "show_queries": true,
+          "height": "300",
+          "title": "用户来源分布"
+        },
+        {
+          "span": 6,
           "editable": true,
           "type": "avegauge",
           "loadingEditor": false,
@@ -148,7 +184,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/DAY-5DAY%20TO%20NOW/DAY%2B1DAY]&stats=true&stats.field=JAVAEE_OnlineUserNum_total&fl=JAVAEE_OnlineUserNum_total&sort=rs_timestamp%20desc&rows=10000",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/DAY-5DAY%20TO%20NOW/DAY%2B1DAY]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&stats=true&stats.field=JAVAEE_OnlineUserNum_total&fl=JAVAEE_OnlineUserNum_total&sort=rs_timestamp%20desc&rows=10000",
             "custom": ""
           },
           "mode": "count",
@@ -246,47 +282,20 @@
             "enable": false,
             "interval": 2
           },
-          "height": "230",
+          "height": "300",
           "title": "当前在线用户"
-        },
+        }
+      ]
+    },
+    {
+      "title": "aa",
+      "height": "0px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
         {
-          "span": 4,
-          "editable": true,
-          "type": "map",
-          "loadingEditor": false,
-          "queries": {
-            "mode": "all",
-            "ids": [
-              0,
-              1,
-              2
-            ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/DAY-5DAY%20TO%20NOW/DAY%2B1DAY]&rows=0&facet=true&facet.field=country&facet.limit=1000",
-            "custom": ""
-          },
-          "mode": "count",
-          "field": "country",
-          "stats_field": "",
-          "decimal_points": 0,
-          "map": "world",
-          "useNames": false,
-          "linkage_id": "a",
-          "display": "block",
-          "icon": "icon-caret-down",
-          "colors": [
-            "#fddda0",
-            "#cd8804"
-          ],
-          "size": 1000,
-          "exclude": [],
-          "spyable": true,
-          "index_limit": 0,
-          "show_queries": true,
-          "height": "230",
-          "title": "用户来源分布"
-        },
-        {
-          "span": 4,
+          "span": 6,
           "editable": true,
           "type": "histobar",
           "loadingEditor": false,
@@ -298,7 +307,7 @@
               1,
               2
             ],
-            "query": "q=JAVAEE_OnlineUserNum_total%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/DAY-5DAY%20TO%20NOW/DAY%2B1DAY]&fl=rs_timestamp JAVAEE_OnlineUserNum_total\n",
+            "query": "q=JAVAEE_OnlineUserNum_total%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/DAY-5DAY%20TO%20NOW/DAY%2B1DAY]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp JAVAEE_OnlineUserNum_total\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -372,126 +381,7 @@
           },
           "title": "在线用户趋势",
           "value_field": "JAVAEE_OnlineUserNum_total",
-          "height": "230"
-        }
-      ]
-    },
-    {
-      "title": "aa",
-      "height": "0px",
-      "editable": true,
-      "collapse": false,
-      "collapsable": true,
-      "panels": [
-        {
-          "span": 6,
-          "editable": true,
-          "type": "pies",
-          "loadingEditor": false,
-          "queries": {
-            "mode": "all",
-            "ids": [
-              0,
-              1,
-              2
-            ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/DAY-5DAY%20TO%20NOW/DAY%2B1DAY]&facet=true&facet.field=remoteUser&facet.limit=10000&facet.missing=true&f.remoteUser.facet.sort=count",
-            "custom": ""
-          },
-          "mode": "count",
-          "field": "remoteUser",
-          "stats_field": "",
-          "decimal_points": 0,
-          "exclude": [],
-          "missing": false,
-          "other": false,
-          "size": 10000,
-          "sortBy": "count",
-          "order": "descending",
-          "fontsize": 12,
-          "donut": false,
-          "tilt": false,
-          "display": "block",
-          "icon": "icon-caret-down",
-          "labels": true,
-          "ylabels": true,
-          "logAxis": false,
-          "arrangement": "vertical",
-          "RoseType": "area",
-          "chart": "rosepie",
-          "solrFq": "fq=rs_timestamp:[NOW/DAY-5DAY%20TO%20NOW/DAY%2B1DAY]",
-          "exportSize": 10000,
-          "linkage_id": "a",
-          "value_sort": "rs_timestamp",
-          "defaulttimestamp": true,
-          "lastColor": "",
-          "spyable": true,
-          "show_queries": true,
-          "chartColors": [
-            "#1a93f9",
-            "#EAB839",
-            "#6ED0E0",
-            "#EF843C",
-            "#E24D42",
-            "#1F78C1",
-            "#BA43A9",
-            "#705DA0",
-            "#508642",
-            "#CCA300",
-            "#447EBC",
-            "#C15C17",
-            "#890F02",
-            "#0A437C",
-            "#6D1F62",
-            "#584477",
-            "#B7DBAB",
-            "#F4D598",
-            "#70DBED",
-            "#F9BA8F",
-            "#F29191",
-            "#82B5D8",
-            "#E5A8E2",
-            "#AEA2E0",
-            "#629E51",
-            "#E5AC0E",
-            "#64B0C8",
-            "#E0752D",
-            "#BF1B00",
-            "#0A50A1",
-            "#962D82",
-            "#614D93",
-            "#9AC48A",
-            "#F2C96D",
-            "#65C5DB",
-            "#F9934E",
-            "#EA6460",
-            "#5195CE",
-            "#D683CE",
-            "#806EB7",
-            "#3F6833",
-            "#967302",
-            "#2F575E",
-            "#99440A",
-            "#58140C",
-            "#052B51",
-            "#511749",
-            "#3F2B5B",
-            "#E0F9D7",
-            "#FCEACA",
-            "#CFFAFF",
-            "#F9E2D2",
-            "#FCE2DE",
-            "#BADFF4",
-            "#F9D9F9",
-            "#DEDAF7"
-          ],
-          "refresh": {
-            "enable": false,
-            "interval": 2
-          },
-          "height": "300",
-          "title": "访问用户统计",
-          "eLegend": true
+          "height": "250"
         },
         {
           "span": 6,
@@ -505,7 +395,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/DAY-5DAY%20TO%20NOW/DAY%2B1DAY]&facet=true&facet.field=remoteAddr&facet.limit=10000&facet.missing=true&f.remoteAddr.facet.sort=count",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/DAY-5DAY%20TO%20NOW/DAY%2B1DAY]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&facet=true&facet.field=remoteAddr&facet.limit=10000&facet.missing=true&f.remoteAddr.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -600,7 +490,7 @@
             "interval": 2
           },
           "title": "访问IP统计",
-          "height": "300",
+          "height": "250",
           "eLegend": true
         }
       ]
@@ -625,7 +515,7 @@
               1,
               2
             ],
-            "query": "q=JAVAEE_Http_global%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/DAY-5DAY%20TO%20NOW/DAY%2B1DAY]&fl=rs_timestamp JAVAEE_Http_global\n",
+            "query": "q=JAVAEE_Http_global%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/DAY-5DAY%20TO%20NOW/DAY%2B1DAY]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp JAVAEE_Http_global\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -715,7 +605,7 @@
               1,
               2
             ],
-            "query": "q=JAVAEE_Http_error%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/DAY-5DAY%20TO%20NOW/DAY%2B1DAY]&fl=rs_timestamp JAVAEE_Http_error\n",
+            "query": "q=JAVAEE_Http_error%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/DAY-5DAY%20TO%20NOW/DAY%2B1DAY]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp JAVAEE_Http_error\n",
             "custom": ""
           },
           "max_rows": 100000,
