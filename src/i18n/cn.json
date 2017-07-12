@@ -298,16 +298,17 @@
   "Y-Name":"Y轴名称",
   "Anomaly Detection Name":"异常检测名称",
   "Metrics Field Name":"指标名",
-  "Prev":"上一个",
+  "Prev":"上一页",
   "Solr Collection":"Solr 存储模块",
   "Length of field":"字段显示长度",
   "Color threshold":"颜色字段",
   "Label":"标签",
   "Relevance":"关联性",
   "Indicator/Transaction":"指标/事务名",
-  "Next":"下一个",
+  "Next":"下一页",
   "Figure Size":"图形大小",
-  "yLabels":"Y轴标识"
+  "yLabels":"Y轴标识",
+  "every":"每"
 
 
 
