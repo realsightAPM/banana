@@ -1212,7 +1212,7 @@
     "save_as_public": false
   },
   "solr": {
-    "server": "http://10.4.53.205/solr/",
+    "server": "/solr/",
     "core_name": "mobile_terminal",
     "core_list": [
       "PHP_logs",

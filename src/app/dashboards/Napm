@@ -1883,7 +1883,7 @@
     "dropdown_collections": false
   },
   "solr": {
-    "server": "http://10.4.53.205:9983/solr/",
+    "server": "/solr/",
     "core_name": "napm",
     "core_list": [
       "rsapm_shard1_replica1"

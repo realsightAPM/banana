@@ -1306,7 +1306,7 @@
     "save_as_public": false
   },
   "solr": {
-    "server": "http://10.4.53.205:9983/solr/",
+    "server": "/solr/",
     "core_name": "api_monitoring",
     "core_list": [
       "PHP_logs",

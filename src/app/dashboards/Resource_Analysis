@@ -1030,7 +1030,7 @@
     "dropdown_collections": false
   },
   "solr": {
-    "server": "http://10.4.53.205:9983/solr/",
+    "server": "/solr/",
     "core_name": "rca",
     "core_list": [],
     "global_params": ""
