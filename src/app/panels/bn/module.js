@@ -40,7 +40,7 @@ define([
     var module = angular.module('kibana.panels.bn', []);
     app.useModule(module);
 
-    var DEBUG = true;
+    var DEBUG = false;
     console.log('bn DEBUG : ' + DEBUG);
     module.controller('bn', function($scope, $q, $http, $routeParams, querySrv, dashboard, filterSrv, alertSrv) {
       $scope.panelMeta = {
@@ -176,11 +176,12 @@ define([
         if (filterSrv.getSolrFq()) {
           fq = '&' + filterSrv.getSolrFq();
         }
-        if (dashboard.current.anomaly_fq) {
-          fq = fq + '&' + dashboard.current.anomaly_fq;
+        if ($scope.panel.bn_name) {
+          fq += fq + '&fq=ad_name_s:' + $scope.panel.bn_name;
+          fq += fq + '&fq=anomaly_f:[0.8%20TO%20*]';
         }
         var wt_json = '&wt=' + filetype;
-        var rows_limit = isForExport ? '&rows=0' : ''; // for terms, we do not need the actual response doc, so set rows=0
+        var rows_limit = '&rows=1000'; // for terms, we do not need the actual response doc, so set rows=0
         var facet = '';
         return querySrv.getORquery() + wt_json + rows_limit + fq + facet + ($scope.panel.queries.custom !== null ? $scope.panel.queries.custom : '');
       };
@@ -401,6 +402,15 @@ define([
 
             //        begin to drow chart
 
+            for (var i in nodeList) {
+              nodeList[i]["name"] = query_list[parseInt(nodeList[i].key)];
+              if (checkIn(query_list[i], ad_list)) {
+                nodeList[i]["strokeColor"] = "#D24726";
+              } else {
+                nodeList[i]["strokeColor"] = "CornflowerBlue";
+              }
+            }
+
             var graph_id = scope.$id;
             //var go = require('gojs');
             // var metric = scope.panel.metric_field;
@@ -508,8 +518,8 @@ define([
                   // $(go.Shape, "Rectangle",
                   //   { fill: "whitesmoke", stroke: "black" }),
                   $(go.TextBlock,
-                    { font: "16pt Helvetica, Arial, sans-serif",
-                      stroke: "CornflowerBlue",
+                    { font: "10pt helvetica, arial, sans-serif",
+                      stroke: "white",
                       wrap: go.TextBlock.WrapFit,
                       margin: 5 },
                     new go.Binding("text", "", tooltipTextConverter))
@@ -525,31 +535,23 @@ define([
               // The user can drag a node by dragging its TextBlock label.
               // Dragging from the Shape will start drawing a new link.
               myDiagram.nodeTemplate =
-                $(go.Node, "Auto",  // the whole node panel define the node's outer shape, which will surround the TextBlock
+                $(go.Node, "Vertical",  // the whole node panel define the node's outer shape, which will surround the TextBlock
                   { deletable: false, toolTip: tooltiptemplate },
-                  $(go.Shape, "Circle",
-                    { fill: "lightgreen", stroke: "black", spot1: new go.Spot(0, 0, 5, 5), spot2: new go.Spot(1, 1, -5, -5) },  //"CornflowerBlue"
-                    new go.Binding("fill", "color")
-                  ),
-                  $(go.TextBlock,
-                    { font: "bold 40pt helvetica, bold arial, sans-serif", textAlign: "center", maxSize: new go.Size(100, NaN) },
-                    new go.Binding("text", "key")),
+                  $(go.Picture,  // the icon showing the logo
+                    // You should set the desiredSize (or width and height)
+                    // whenever you know what size the Picture should be.
+                    { desiredSize: new go.Size(75, 60) },
+                    new go.Binding("source", "key", convertKeyImage)),
+                  // $(go.TextBlock,
+                  //   { font: "bold 40pt helvetica, bold arial, sans-serif", textAlign: "center", maxSize: new go.Size(100, NaN) },
+                  //   new go.Binding("text", "key")),
+                  $(go.TextBlock,  // the text label
+                    { font: "bold 10pt helvetica, bold arial, sans-serif", textAlign: "center", maxSize: new go.Size(100, NaN), },
+                    new go.Binding("text", "name"),new go.Binding("stroke","strokeColor")),
                   {
                     click: function(e, obj) { window.selected_var=obj.part.data.key;showMessage(obj.part.data.key); },
                     selectionChanged: function(part) {
                       var shape = part.elt(0);
-                      if (part.isSelected) {
-                        shape.fill = "yellow";
-                      }
-                      else {
-                        //alert(window.selected_var);
-                        var x = window.selected_var;
-                        if (checkIn(query_list[parseInt(x)],ad_list))
-                          shape.fill = "#D24726";
-                        else
-                          shape.fill = "lightgreen";
-                      }
-                      //shape.fill = part.isSelected ? "yellow" : "CornflowerBlue";
                     }
                   }
                 );
@@ -558,11 +560,11 @@ define([
               // bound to the "color" property
               myDiagram.linkTemplate =
                 $(go.Link,  // the whole link panel
-                  {curve:go.Link.Bezier},
+                  { curve: go.Link.Bezier, toShortLength: 2 },
                   $(go.Shape,  // the link shape
-                    { stroke: "black" }),
+                    { strokeWidth: 1.5, stroke: "white" }),
                   $(go.Shape,  // the arrowhead
-                    { toArrow: "standard", stroke: null })
+                    { toArrow: "Standard", stroke: "white" })
                 );
               myDiagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
             }
@@ -591,6 +593,14 @@ define([
               dashboard.current.bn_main_node = s;
               dashboard.refresh();
             }
+
+            function convertKeyImage(key) {
+              if (!key) key = "dvi";
+              key = query_list[parseInt(key)];
+              var pic_str = key.split("_")[0];
+              return "./app/panels/bn/pic/" + pic_str  + ".png";
+            }
+
             drawGraph(nodeList, linkList, graph_id);
           }
         }

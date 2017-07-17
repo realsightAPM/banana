@@ -25,7 +25,7 @@ define([
         var module = angular.module('kibana.panels.adStatistics', []);
         app.useModule(module);
 
-        module.controller('adStatistics', function($scope, $timeout, $filter, timer, querySrv, dashboard, filterSrv) {
+        module.controller('adStatistics', function($scope, $timeout, $filter, $routeParams, timer, querySrv, dashboard, filterSrv) {
             $scope.panelMeta = {
                 exportfile: true,
                 editorTabs : [
@@ -37,46 +37,47 @@ define([
 
             // Set and populate defaults
             var _d = {
-                queries     : {
-                    mode        : 'all',
-                    ids         : [],
-                    query       : '*:*',
-                    custom      : ''
-                },
-                mode    : 'count', // mode to tell which number will be used to plot the chart.
-                field   : '',
-                stats_field : '',
-                decimal_points : 0, // The number of digits after the decimal point
-                exclude : [],
-                missing : false,
-                other   : false,
-                size    : 10000,
-                display:'block',
-                icon:"icon-caret-down",
-                sortBy  : 'count',
-                threshold_first:3000,
-                threshold_second:5000,
-                order   : 'descending',
-                style   : { "font-size": '10pt'},
-                fontsize:20,
-                linkage_id:'a',
-                donut   : false,
-                tilt    : false,
-                labels  : true,
-                logAxis : false,
-                arrangement : 'horizontal',
-                chart       : 'bar',
-                counter_pos : 'above',
-                exportSize : 10000,
-                lastColor : '',
-                spyable     : true,
-                show_queries:true,
-                error : '',
-                chartColors : querySrv.colors,
+              queries     : {
+                  mode        : 'all',
+                  ids         : [],
+                  query       : '*:*',
+                  custom      : ''
+              },
+              mode    : 'count', // mode to tell which number will be used to plot the chart.
+              field   : '',
+              stats_field : '',
+              decimal_points : 0, // The number of digits after the decimal point
+              exclude : [],
+              missing : false,
+              other   : false,
+              size    : 10000,
+              display:'block',
+              icon:"icon-caret-down",
+              sortBy  : 'count',
+              threshold_first:3000,
+              threshold_second:5000,
+              order   : 'descending',
+              style   : { "font-size": '10pt'},
+              fontsize:20,
+              linkage_id:'a',
+              donut   : false,
+              tilt    : false,
+              labels  : true,
+              logAxis : false,
+              arrangement : 'horizontal',
+              chart       : 'bar',
+              counter_pos : 'above',
+              exportSize : 10000,
+              lastColor : '',
+              spyable     : true,
+              show_queries:true,
+              error : '',
+              chartColors : querySrv.colors,
               refresh: {
                     enable: false,
                     interval: 2
                 },
+              anomaly_th:0.8
             };
             _.defaults($scope.panel,_d);
 
@@ -139,36 +140,43 @@ define([
              * @param {String} filetype -'json', 'xml', 'csv'
              */
             $scope.build_query = function(filetype, isForExport) {
-                // Build Solr query
-                var fq = '';
-                if (filterSrv.getSolrFq()) {
-                  fq = '&' + filterSrv.getSolrFq();
-                }
-                if (dashboard.current.anomaly_fq) {
-                  fq = fq + '&' + dashboard.current.anomaly_fq;
-                }
-                if (DEBUG) console.log(dashboard.current.metric_field);
-                if (dashboard.current.metric_field) {
-                  fq = fq + '&fq=facet_name_s:"' + dashboard.current.metric_field + '"';
-                }
-                var wt_json = '&wt=' + filetype;
-                var rows_limit = isForExport ? '&rows=0' : ''; // for terms, we do not need the actual response doc, so set rows=0
-                var facet = '';
-                {
-                    // stats does not support something like facet.limit, so we have to sort and limit the results manually.
-                    facet = '&stats=true&stats.facet='+$scope.panel.stats_field + '&stats.field=value_f' + '&facet.missing=true';
-                }
+              // Build Solr query
+              var fq = '';
+              if (filterSrv.getSolrFq()) {
+                fq = '&' + filterSrv.getSolrFq();
+              }
+              /* if (dashboard.current.anomaly_fq) {
+                fq = fq + '&' + dashboard.current.anomaly_fq;
+              }
+              if (DEBUG) console.log(dashboard.current.metric_field);
+              if (dashboard.current.metric_field) {
+                fq = fq + '&fq=facet_name_s:"' + dashboard.current.metric_field + '"';
+              }*/
+              fq = fq + '&fq=anomaly_f:[' + $scope.panel.anomaly_th + '%20TO%20*]';
+              if (!_.isUndefined($routeParams.res_id)) {
+                fq = fq + '&fq=ad_name_s:'+$routeParams.res_id;
+              }
+              if (!_.isUndefined($routeParams.facet_name)) {
+                fq = fq + '&fq=facet_name_s:' + $routeParams.facet_name;
+              }
+              var wt_json = '&wt=' + filetype;
+              var rows_limit = isForExport ? '&rows=0' : ''; // for terms, we do not need the actual response doc, so set rows=0
+              var facet = '';
+              {
+                  // stats does not support something like facet.limit, so we have to sort and limit the results manually.
+                  facet = '&stats=true&stats.facet='+$scope.panel.stats_field + '&stats.field=value_f' + '&facet.missing=true';
+              }
 
-                var exclude_length = $scope.panel.exclude.length;
-                var exclude_filter = '';
-                if(exclude_length > 0){
-                    for (var i = 0; i < exclude_length; i++) {
-                        if($scope.panel.exclude[i] !== "") {
-                            exclude_filter += '&fq=-' + $scope.panel.field +":"+ $scope.panel.exclude[i];
-                        }
-                    }
-                }
-                return querySrv.getORquery() + wt_json + rows_limit + fq + exclude_filter + facet + ($scope.panel.queries.custom !== null ? $scope.panel.queries.custom : '');
+              var exclude_length = $scope.panel.exclude.length;
+              var exclude_filter = '';
+              if(exclude_length > 0){
+                  for (var i = 0; i < exclude_length; i++) {
+                      if($scope.panel.exclude[i] !== "") {
+                          exclude_filter += '&fq=-' + $scope.panel.field +":"+ $scope.panel.exclude[i];
+                      }
+                  }
+              }
+              return querySrv.getORquery() + wt_json + rows_limit + fq + exclude_filter + facet + ($scope.panel.queries.custom !== null ? $scope.panel.queries.custom : '');
             };
 
             $scope.exportfile = function(filetype) {

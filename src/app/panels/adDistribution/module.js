@@ -43,7 +43,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
   var DEBUG = false;
   console.log('adDistribution DEBUG : ' + DEBUG);
-  module.controller('adDistribution', function($scope, $q, $http, querySrv, dashboard, filterSrv, alertSrv) {
+  module.controller('adDistribution', function($scope, $q, $http, $routeParams, querySrv, dashboard, filterSrv, alertSrv) {
     $scope.panelMeta = {
       modals : [
         {
@@ -180,22 +180,28 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
 
     $scope.build_query = function(filetype, isForExport) {
-        // Build Solr query
-        var fq = '';
-        if (filterSrv.getSolrFq()) {
-            fq = '&' + filterSrv.getSolrFq();
-        }
-        if (dashboard.current.fq) {
-            fq = fq + '&' + dashboard.current.fq;
-        }
-        var wt_json = '&wt=' + filetype;
-        var rows_limit = isForExport ? '&rows=0' : ''; // for terms, we do not need the actual response doc, so set rows=0
-        var facet = '';
-        {
-            // stats does not support something like facet.limit, so we have to sort and limit the results manually.
-            facet = '&facet=on' + '&facet.range=anomaly_f' + '&facet.range.start=0.0' + '&facet.range.end=1.0' + '&facet.range.gap=0.1';
-        }
-        return querySrv.getORquery() + wt_json + rows_limit + fq + facet + ($scope.panel.queries.custom !== null ? $scope.panel.queries.custom : '');
+      // Build Solr query
+      var fq = '';
+      if (filterSrv.getSolrFq()) {
+        fq = '&' + filterSrv.getSolrFq();
+      }
+      /*if (dashboard.current.fq) {
+        fq = fq + '&' + dashboard.current.fq;
+      }*/
+      if (!_.isUndefined($routeParams.res_id)) {
+        fq = fq + '&fq=ad_name_s:'+$routeParams.res_id;
+      }
+      if (!_.isUndefined($routeParams.facet_name)) {
+        fq = fq + '&fq=facet_name_s:' + $routeParams.facet_name;
+      }
+      var wt_json = '&wt=' + filetype;
+      var rows_limit = isForExport ? '&rows=0' : ''; // for terms, we do not need the actual response doc, so set rows=0
+      var facet = '';
+      {
+        // stats does not support something like facet.limit, so we have to sort and limit the results manually.
+        facet = '&facet=on' + '&facet.range=anomaly_f' + '&facet.range.start=0.0' + '&facet.range.end=1.0' + '&facet.range.gap=0.1';
+      }
+      return querySrv.getORquery() + wt_json + rows_limit + fq + facet + ($scope.panel.queries.custom !== null ? $scope.panel.queries.custom : '');
     };
 
     /**
@@ -336,65 +342,68 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
               myChart.dispose();
             }
             myChart = echarts.init(document.getElementById(distribution_id));
+            var colors = ['#44ff00', '#55ee00', '#66dd00', '#77cc00', '#88bb00', '#99aa00',
+              '#aa9900', '#bb8800', '#cc7700', '#dd6600', '#ee5500', '#ff4400'];
             var option = {
-                title : {
-                    text: '异常分值分布情况',
-                    x:'center',
-                    textStyle: {
-                        fontWeight: 'bolder',
-                        color: '#aaa'          // 主标题文字颜色
-                    },
-                    show:false
-                },
-                tooltip : {
-                    trigger: 'item',
-                    formatter: "异常分值在<big>{b}</big>之间的数量为: <br\><big>{c} ({d}%)</big>"
-                },
-                legend: {
-                    x : 'center',
-                    y : 'bottom',
-                    data:['[0.0 TO 0.1]','[0.1 TO 0.2]','[0.2 TO 0.3]','[0.3 TO 0.4]',
-                    '[0.4 TO 0.5]','[0.5 TO 0.6]','[0.6 TO 0.7]','[0.7 TO 0.8]',
-                    '[0.8 TO 0.9]', '[0.9 TO 1.0]'],
-                    textStyle: {
+              color : colors,
+              title : {
+                  text: '异常分值分布情况',
+                  x:'center',
+                  textStyle: {
                       fontWeight: 'bolder',
                       color: '#aaa'          // 主标题文字颜色
-                    }
-                },
-                toolbox: {
-                    show : true,
-                    feature : {
-                        mark : {show: true},
-                        dataView : {show: true, readOnly: false},
-                        magicType : {
-                            show: true,
-                            type: ['pie', 'funnel']
-                        },
-                        restore : {show: true},
-                        saveAsImage : {show: true}
-                    }
-                },
-                calculable : true,
-                series : [
-                    {
-                        name:'异常分布',
-                        type:'pie',
-                        radius : [30, 110],
-                        roseType : 'area',
-                        data:[
-                            {value:scope.data[0], name:'[0.0 TO 0.1]'},
-                            {value:scope.data[1], name:'[0.1 TO 0.2]'},
-                            {value:scope.data[2], name:'[0.2 TO 0.3]'},
-                            {value:scope.data[3], name:'[0.3 TO 0.4]'},
-                            {value:scope.data[4], name:'[0.4 TO 0.5]'},
-                            {value:scope.data[5], name:'[0.5 TO 0.6]'},
-                            {value:scope.data[6], name:'[0.6 TO 0.7]'},
-                            {value:scope.data[7], name:'[0.7 TO 0.8]'},
-                            {value:scope.data[8], name:'[0.8 TO 0.9]'},
-                            {value:scope.data[9], name:'[0.9 TO 1.0]'},
-                        ]
-                    }
-                ]
+                  },
+                  show:false
+              },
+              tooltip : {
+                  trigger: 'item',
+                  formatter: "异常分值在<big>{b}</big>之间的数量为: <br\><big>{c} ({d}%)</big>"
+              },
+              legend: {
+                  x : 'center',
+                  y : 'bottom',
+                  data:['[0.0 TO 0.1]','[0.1 TO 0.2]','[0.2 TO 0.3]','[0.3 TO 0.4]',
+                  '[0.4 TO 0.5]','[0.5 TO 0.6]','[0.6 TO 0.7]','[0.7 TO 0.8]',
+                  '[0.8 TO 0.9]', '[0.9 TO 1.0]'],
+                  textStyle: {
+                    fontWeight: 'bolder',
+                    color: '#aaa'          // 主标题文字颜色
+                  }
+              },
+              toolbox: {
+                  show : true,
+                  feature : {
+                      mark : {show: true},
+                      dataView : {show: true, readOnly: false},
+                      magicType : {
+                          show: true,
+                          type: ['pie', 'funnel']
+                      },
+                      restore : {show: true},
+                      saveAsImage : {show: true}
+                  }
+              },
+              calculable : true,
+              series : [
+                  {
+                      name:'异常分布',
+                      type:'pie',
+                      radius : [30, 110],
+                      roseType : 'area',
+                      data:[
+                          {value:scope.data[0], name:'[0.0 TO 0.1]'},
+                          {value:scope.data[1], name:'[0.1 TO 0.2]'},
+                          {value:scope.data[2], name:'[0.2 TO 0.3]'},
+                          {value:scope.data[3], name:'[0.3 TO 0.4]'},
+                          {value:scope.data[4], name:'[0.4 TO 0.5]'},
+                          {value:scope.data[5], name:'[0.5 TO 0.6]'},
+                          {value:scope.data[6], name:'[0.6 TO 0.7]'},
+                          {value:scope.data[7], name:'[0.7 TO 0.8]'},
+                          {value:scope.data[8], name:'[0.8 TO 0.9]'},
+                          {value:scope.data[9], name:'[0.9 TO 1.0]'},
+                      ]
+                  }
+              ]
             };
             myChart.setOption(option);
           });
