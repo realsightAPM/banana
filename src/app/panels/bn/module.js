@@ -597,7 +597,7 @@ define([
             function convertKeyImage(key) {
               if (!key) key = "dvi";
               key = query_list[parseInt(key)];
-              var pic_str = key.split("_")[0];
+              var pic_str = key.split("_")[0].toLocaleDateString();
               return "./app/panels/bn/pic/" + pic_str  + ".png";
             }
 
