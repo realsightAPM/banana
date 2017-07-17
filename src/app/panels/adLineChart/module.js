@@ -141,6 +141,8 @@ define([
                 $scope.panel.facet_name = $routeParams.facet_name;
                 fq = fq + '&fq=facet_name_s:' + $routeParams.facet_name;
                 ex_fq = '';
+              } else {
+                $scope.panel.facet_name = undefined;
               }
               fq = fq + '&' + ex_fq;
               var wt_json = '&wt=' + filetype;
@@ -352,7 +354,6 @@ define([
                 var base = -totalData.reduce(function (min, val) {
                   return (Math.min(min, val.l));
                 }, Infinity).toFixed(2);
-                base = 0;
                 var facet_name = '';
                 if (dashboard.current.line_chart_name) {
                   facet_name = dashboard.current.line_chart_name;
@@ -360,6 +361,9 @@ define([
                 if (scope.panel.facet_name) {
                   facet_name = scope.panel.facet_name;
                 }
+                if (DEBUG) console.log(facet_name);
+                if (DEBUG) console.log(dashboard.current.line_chart_name);
+                if (DEBUG) console.log(scope.panel.facet_name);
                 var option = {
                   title: {
                     text: facet_name,
@@ -463,16 +467,25 @@ define([
                     symbolSize: 6,
                     itemStyle: {
                       normal: {
-                        color: '#c23531'
+                        color: '#3333aa'
                       }
                     },
                     showSymbol: false,
                     markPoint: {
+                      itemStyle:{
+                        normal:{
+                          color: '#ff3333',
+                          label:{
+                            show: true,
+                            formatter: function (param) {
+                              return param.origin;
+                            }
+                          }
+                        }
+                      },
                       data: anomalyData.map(function (item) {
                         item.xAxis = echarts.format.formatTime('yyyy/MM/dd hh:mm:ss', item.xAxis);
                         item.yAxis += base;
-                        //console.log(base+ " " + item.value);
-                        //item.value = item.origin-base;
                         return item;
                       })
                     }

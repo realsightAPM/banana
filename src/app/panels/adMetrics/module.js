@@ -567,7 +567,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
               }); */
               var resourceId = ad_name;
               var field = facet_name;
-              var path = '/acl_realtime_dashboard/pages/index.html#!/dashboard?kbnType=file&kbnId=A_Metric_Analysis&res_id=' + resourceId;
+              var path = 'index.html#!/dashboard?kbnType=file&kbnId=A_Metric_Analysis&res_id=' + resourceId;
               path += '&field=' + field;
               path += '&facet_name=' + facet_name;
               scope.goToUrl(path);
