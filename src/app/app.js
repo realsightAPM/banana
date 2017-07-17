@@ -121,6 +121,16 @@ define([
       $translateProvider.preferredLanguage(lang);
     }]);
 
+    app.config(['$qProvider', function ($qProvider) {
+      $qProvider.errorOnUnhandledRejections(false);
+    }]);
+
+    app.config(['$sceDelegateProvider', function($sceDelegateProvider) {
+      $sceDelegateProvider.resourceUrlWhitelist([
+        '**'
+
+      ]);
+    }])
 
     var apps_deps = [
       'elasticjs.service',

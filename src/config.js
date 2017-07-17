@@ -144,7 +144,9 @@ function (Settings) {
       'facet_default_show',
       'statistics_only_count',
       'javastacking',
-      'network'
+      'network',
+      'topologybar',
+      'topologystacking'
     ]
   });
 });
