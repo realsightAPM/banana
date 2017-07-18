@@ -148,7 +148,8 @@ function (Settings) {
       'topologybar',
       'topologystacking',
       'topologypie',
-      'topologyscatter'
+      'topologyscatter',
+      'group'
     ]
   });
 });
