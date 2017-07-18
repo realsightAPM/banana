@@ -41,7 +41,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
   var module = angular.module('kibana.panels.adBranch', []);
   app.useModule(module);
 
-  var DEBUG = true;
+  var DEBUG = false;
   console.log('adBranch DEBUG : ' + DEBUG);
   module.controller('adBranch', function($scope, $q, $http, $routeParams, $location, querySrv, dashboard, filterSrv) {
     $scope.panelMeta = {
@@ -524,7 +524,8 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
               if (DEBUG) {console.log( data[x][y]);}
               if (DEBUG) {console.log(y);}
               var resourceId = data[x][y][0].ad_name;
-              var path = '/acl_realtime_dashboard/pages/index.html#!/dashboard?kbnType=file&kbnId=Resource_Analysis&res_id=' + resourceId;
+              //var path = '/banana/src/index.html?_ijt=aup5t4uvr3lda733ku4so5viq2#!/dashboard?kbnType=file&kbnId=Resource_Analysis&res_id=' + resourceId;
+              var path = 'index.html#!/dashboard?kbnType=file&kbnId=Resource_Analysis&res_id=' + resourceId;
               scope.goToUrl(path);
             });
         });
