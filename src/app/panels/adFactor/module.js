@@ -43,7 +43,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
   var DEBUG = false;
   console.log('adFactor DEBUG : ' + DEBUG);
-  module.controller('adFactor', function($scope, $q, $http, querySrv, dashboard, filterSrv, alertSrv) {
+  module.controller('adFactor', function($scope, $q, $http, $routeParams, querySrv, dashboard, filterSrv, alertSrv) {
     $scope.panelMeta = {
       modals : [
         {
@@ -109,7 +109,8 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
       },
       jobid : '',
       job_status: 'Ready',
-      fields  : []
+      fields  : [],
+      anomaly_th:0.8
     };
 
     _.defaults($scope.panel,_d);
@@ -180,18 +181,25 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
 
     $scope.build_query = function(filetype, isForExport) {
-        // Build Solr query
-        var fq = '';
-        if (filterSrv.getSolrFq()) {
-            fq = '&' + filterSrv.getSolrFq();
-        }
-        if (dashboard.current.anomaly_fq) {
-            fq = fq + '&' + dashboard.current.anomaly_fq;
-        }
-        var wt_json = '&wt=' + filetype;
-        var rows_limit = isForExport ? '&rows=0' : '&rows='+$scope.panel.max_rows; // for terms, we do not need the actual response doc, so set rows=0
-        var facet = '';
-        return querySrv.getORquery() + wt_json + rows_limit + fq + facet + ($scope.panel.queries.custom !== null ? $scope.panel.queries.custom : '');
+      // Build Solr query
+      var fq = '';
+      if (filterSrv.getSolrFq()) {
+          fq = '&' + filterSrv.getSolrFq();
+      }
+      /*if (dashboard.current.anomaly_fq) {
+          fq = fq + '&' + dashboard.current.anomaly_fq;
+      }*/
+      fq = fq + '&fq=anomaly_f:[' + $scope.panel.anomaly_th + '%20TO%20*]';
+      if (!_.isUndefined($routeParams.res_id)) {
+        fq = fq + '&fq=ad_name_s:'+$routeParams.res_id;
+      }
+      if (!_.isUndefined($routeParams.facet_name)) {
+        fq = fq + '&fq=facet_name_s:' + $routeParams.facet_name;
+      }
+      var wt_json = '&wt=' + filetype;
+      var rows_limit = isForExport ? '&rows=0' : '&rows='+$scope.panel.max_rows; // for terms, we do not need the actual response doc, so set rows=0
+      var facet = '';
+      return querySrv.getORquery() + wt_json + rows_limit + fq + facet + ($scope.panel.queries.custom !== null ? $scope.panel.queries.custom : '');
     };
 
     /**

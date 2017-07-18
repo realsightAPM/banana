@@ -20,12 +20,12 @@ define([
     function (angular, app, _, $, kbn) {
         'use strict';
         var DEBUG = false;
-        console.log('adLineChart DEBUG : ' + DEBUG);
+        console.log('adMultiLine DEBUG : ' + DEBUG);
 
-        var module = angular.module('kibana.panels.adLineChart', []);
+        var module = angular.module('kibana.panels.adMultiLine', []);
         app.useModule(module);
 
-        module.controller('adLineChart', function($scope, $timeout, $filter, $routeParams, timer, querySrv, dashboard, filterSrv) {
+        module.controller('adMultiLine', function($scope, $timeout, $filter, $routeParams, timer, querySrv, dashboard, filterSrv) {
             $scope.panelMeta = {
                 exportfile: true,
                 editorTabs : [
@@ -74,7 +74,6 @@ define([
                 error : '',
                 max_rows : 1000,
                 chartColors : querySrv.colors,
-                anomaly_th:0.7,
                 refresh: {
                     enable: false,
                     interval: 2
@@ -129,27 +128,17 @@ define([
              * @param {String} filetype -'json', 'xml', 'csv'
              */
             $scope.build_query = function(filetype, ex_fq) {
-              // Build Solr query
-              var fq = '';
-              if (filterSrv.getSolrFq()) {
-                  fq = '&' + filterSrv.getSolrFq();
-              }
-              if (!_.isUndefined($routeParams.res_id)) {
-                fq = fq + '&fq=ad_name_s:'+$routeParams.res_id;
-              }
-              if (!_.isUndefined($routeParams.facet_name)) {
-                $scope.panel.facet_name = $routeParams.facet_name;
-                fq = fq + '&fq=facet_name_s:' + $routeParams.facet_name;
-                ex_fq = '';
-              } else {
-                $scope.panel.facet_name = undefined;
-              }
-              fq = fq + '&' + ex_fq;
-              var wt_json = '&wt=' + filetype;
-              var rows_limit = '&rows=' + $scope.panel.max_rows; // for terms, we do not need the actual response doc, so set rows=0
-              var facet = '';
-              var sort = '&sort=start_timestamp_l%20asc'
-              return querySrv.getORquery() + wt_json + rows_limit + fq + sort + facet + ($scope.panel.queries.custom !== null ? $scope.panel.queries.custom : '');
+                // Build Solr query
+                var fq = '';
+                if (filterSrv.getSolrFq()) {
+                    fq = '&' + filterSrv.getSolrFq();
+                }
+                fq = fq + '&' + ex_fq;
+                var wt_json = '&wt=' + filetype;
+                var rows_limit = '&rows=' + $scope.panel.max_rows; // for terms, we do not need the actual response doc, so set rows=0
+                var facet = '';
+                var sort = '&sort=start_timestamp_l%20asc'
+                return querySrv.getORquery() + wt_json + rows_limit + fq + sort + facet + ($scope.panel.queries.custom !== null ? $scope.panel.queries.custom : '');
             };
 
             $scope.exportfile = function(filetype) {
@@ -214,20 +203,24 @@ define([
                 $scope.inspector = angular.toJson(JSON.parse(request.toString()), true);
 
                 if (dashboard.current.line_chart_anomaly_fq === undefined) {return ;}
-                var line_chart_fq = '';
-                if (dashboard.current.anomaly_name) {
-                  line_chart_fq += '&fq=ad_name_s:' + dashboard.current.anomaly_name;
+                var ex_fq = '';
+                if (DEBUG) { console.log($routeParams); }
+                if (!_.isUndefined($routeParams.res_id)) {
+                  $scope.panel.ad_name = $routeParams.res_id;
+                  ex_fq = ex_fq + '&fq=ad_name_s:'+$routeParams.res_id;
                 }
-                if (dashboard.current.line_chart_fq) {
-                  line_chart_fq += '&' + dashboard.current.line_chart_fq;
+                if (!_.isUndefined($routeParams.facet_name)) {
+                  $scope.panel.facet_name = $routeParams.facet_name;
+                  ex_fq = ex_fq + '&fq=facet_name_s:' + $routeParams.facet_name;
                 }
-                var total_query = this.build_query('json', line_chart_fq);
 
-                if (DEBUG) {console.log(total_query);}
+                var query = this.build_query('json', ex_fq);
+
+                if (DEBUG) {console.log(query);}
                 // Set the panel's query
-                $scope.panel.queries.query = total_query;
+                $scope.panel.queries.query = query;
 
-                request.setQuery(total_query);
+                request.setQuery(query);
                 results = request.doSearch();
                 // Populate scope when we have results
 
@@ -241,7 +234,6 @@ define([
                       return;
                   }
                   $scope.data = [];
-                  var anomaly = [];
                   $scope.panelMeta.loading = false;
                   {
                     // In stats mode, set y-axis min to null so jquery.flot will set the scale automatically.
@@ -250,18 +242,12 @@ define([
                     var total = [];
                     for (var index in results.response.docs) {
                       var doc = results.response.docs[index];
-                      if (isNaN(doc.down_margin_f)) {continue;}
-                      if (isNaN(doc.up_margin_f)) {continue;}
                       var slice = {value: doc.value_f, timestamp: doc.start_timestamp_l, l: doc.down_margin_f, u:doc.up_margin_f};
-                      if (doc.anomaly_f > $scope.panel.anomaly_th) {
-                        anomaly.push({origin:doc.value_f, value:doc.value_f ,yAxis: doc.value_f, xAxis: doc.start_timestamp_l});
-                      }
-
+                      if (doc.value_f === NaN) {continue;}
                       //var slice = {label: facet_field, data: [[k, stats_obj['mean'], stats_obj['count'], stats_obj['max'], stats_obj['min'], stats_obj['stddev'], facet_field]], actions: true};
                       total.push(slice);
                     }
-                    $scope.data.push(total);
-                    $scope.data.push(anomaly);
+                    $scope.data = total;
                   }
                   if (DEBUG) console.log($scope.data);
                   $scope.$emit('render');
@@ -307,7 +293,7 @@ define([
 
         });
 
-      module.directive('lineChart', function(querySrv,dashboard,filterSrv) {
+      module.directive('multilineChart', function(querySrv,dashboard,filterSrv) {
         return {
           restrict: 'A',
           link: function(scope, elem) {
@@ -344,29 +330,15 @@ define([
                   myChart.dispose();
                 }
                 myChart = echarts.init(document.getElementById(line_id));
-                myChart.showLoading();
                 if (chartData === []) return ;
-                var totalData = chartData[0];
-                var anomalyData = chartData[1];
-                if (totalData === []) return ;
-                if(DEBUG) { console.log(anomalyData); }
-                myChart.hideLoading();
+                var totalData = chartData;
                 var base = -totalData.reduce(function (min, val) {
                   return (Math.min(min, val.l));
                 }, Infinity).toFixed(2);
-                var facet_name = '';
-                if (dashboard.current.line_chart_name) {
-                  facet_name = dashboard.current.line_chart_name;
-                }
-                if (scope.panel.facet_name) {
-                  facet_name = scope.panel.facet_name;
-                }
-                if (DEBUG) console.log(facet_name);
-                if (DEBUG) console.log(dashboard.current.line_chart_name);
-                if (DEBUG) console.log(scope.panel.facet_name);
+                base = 0;
                 var option = {
                   title: {
-                    text: facet_name,
+                    text: scope.panel.facet_name,
                     left: 'center',
                     textStyle: {
                       fontWeight: 'bolder',
@@ -467,28 +439,10 @@ define([
                     symbolSize: 6,
                     itemStyle: {
                       normal: {
-                        color: '#3333aa'
+                        color: '#c23531'
                       }
                     },
-                    showSymbol: false,
-                    markPoint: {
-                      itemStyle:{
-                        normal:{
-                          color: '#ff3333',
-                          label:{
-                            show: true,
-                            formatter: function (param) {
-                              return param.origin;
-                            }
-                          }
-                        }
-                      },
-                      data: anomalyData.map(function (item) {
-                        item.xAxis = echarts.format.formatTime('yyyy/MM/dd hh:mm:ss', item.xAxis);
-                        item.yAxis += base;
-                        return item;
-                      })
-                    }
+                    showSymbol: false
                   }]
                 };
                 myChart.setOption(option);
