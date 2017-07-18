@@ -244,99 +244,19 @@ function (angular, app, _, $, kbn) {
     };
 
     $scope.get_data = function() {
-      // var request;
-      // request = $http({
-      //   url: $scope.query_url,
-      //   method: "GET"
-      // });
-      // request.then(
-      //   function successCallback(response) {
-      //     // this callback will be called asynchronously
-      //     // when the response is available
-      //     $scope.data =response;
-      //   },
-      //   function errorCallback(response) {
-      //     // called asynchronously if an error occurs
-      //     // or server returns response with an error status.
-      //     if (response.status === 0) {
-      //       alertSrv.set('Error', "Could not contact it at " + $scope.query_url +
-      //         ". Please ensure that  is reachable from your system.", 'error');
-      //     } else {
-      //       alertSrv.set('Error', "Collection not found at " +  $scope.query_url +
-      //         ". Please check your configuration or create the collection. If you're using a proxy ensure it is configured correctly.", 'error');
-      //     }
-      //   }
-      // );
-      if((($scope.panel.linkage_id === dashboard.current.linkage_id)&&$scope.panel.isrefresh)||dashboard.current.enable_linkage) {
-        $scope.query_url = "http://" + $scope.panel.HbaseIP + "/getServerMapData.pinpoint?applicationName=DMDB&from=" + dashboard.current.timefrom + "&to=" + dashboard.current.timeto + "&callerRange=1&calleeRange=1&serviceTypeName=TOMCAT";
+
+      //同id 图表刷新，图表自身点击不刷新，时间选择全局刷新，更换应用刷新
+      if((($scope.panel.linkage_id === dashboard.current.linkage_id)&&dashboard.current.network_force_refresh)||dashboard.current.enable_linkage) {
+        $scope.query_url = "http://" + $scope.panel.HbaseIP + "/getServerMapData.pinpoint?applicationName="+dashboard.current.network_app_name+"&from=" + dashboard.current.timefrom + "&to=" + dashboard.current.timeto + "&callerRange=1&calleeRange=1&serviceTypeName=TOMCAT";
         $.getJSON($scope.query_url, function (json) {
           $scope.data = json;
-
+          dashboard.current.hbasedata = json;
+          dashboard.current.network_force_refresh = false;
           $scope.$emit('render');
         });
       }
 
-    //     if(($scope.panel.linkage_id === dashboard.current.linkage_id)||dashboard.current.enable_linkage){
-    //     // Make sure we have everything for the request to complete
-    //     if (dashboard.indices.length === 0) {
-    //         return;
-    //     }
-    //
-    //     delete $scope.panel.error;
-    //     $scope.panelMeta.loading = true;
-    //     var request, results;
-    //
-    //     $scope.sjs.client.server(dashboard.current.solr.server + dashboard.current.solr.core_name);
-    //
-    //     request = $scope.sjs.Request().indices(dashboard.indices);
-    //     $scope.panel.queries.ids = querySrv.idsByMode($scope.panel.queries);
-    //
-    //     // Populate the inspector panel
-    //     $scope.inspector = angular.toJson(JSON.parse(request.toString()), true);
-    //
-    //     var query = this.build_query('json', false);
-    //
-    //     // Set the panel's query
-    //     $scope.panel.queries.query = query;
-    //
-    //     request.setQuery(query);
-    //
-    //     results = request.doSearch();
-    //
-    //     // Populate scope when we have results
-    //     results.then(function (results) {
-    //         // Check for error and abort if found
-    //         if (!(_.isUndefined(results.error))) {
-    //             $scope.panel.error = $scope.parse_error(results.error.msg);
-    //             $scope.data = [];
-    //             $scope.label = [];
-    //             $scope.panelMeta.loading = false;
-    //             $scope.$emit('render');
-    //             return;
-    //         }
-    //
-    //         var y1 =0;
-    //
-    //         $scope.panelMeta.loading = false;
-    //
-    //         $scope.data = [];
-    //         $scope.label = [];
-    //         $scope.radardata = [];
-    //         $scope.maxdata = 0;
-    //         for(var i1 =0;i1<results.response.docs.length;i1++){
-    //           $scope.label[i1]={id: results.response.docs[i1][$scope.panel.field], label: results.response.docs[i1][$scope.panel.field], shape: 'circle'};
-    //           if(!(_.isUndefined(results.response.docs[i1][$scope.panel.edge]))){
-    //           for(var i2 =0;i2<results.response.docs[i1][$scope.panel.edge].length;i2++){
-    //             $scope.data[y1] ={from: results.response.docs[i1][$scope.panel.edge][i2].split(">")[0], to: results.response.docs[i1][$scope.panel.edge][i2].split(">")[1], arrows:'to', width: 1, length: 200};
-    //             y1++;
-    //           }
-    //           }
-    //
-    //         }
-    //
-    //         $scope.$emit('render');
-    //     });
-    // }
+
     };
 
     $scope.build_search = function(term,negate) {
@@ -498,8 +418,9 @@ function (angular, app, _, $, kbn) {
                 dashboard.current.network_node_id = params.nodes[0];
                 dashboard.current.linkage_id = scope.panel.linkage_id;
                 dashboard.current.enable_linkage = false;
+                dashboard.current.topology_click=true;
                 scope.panel.isrefresh = false;
-                dashboard.current.hbasedata = json;
+
                 dashboard.refresh();
               }
 

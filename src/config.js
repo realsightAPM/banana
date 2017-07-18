@@ -146,7 +146,9 @@ function (Settings) {
       'javastacking',
       'network',
       'topologybar',
-      'topologystacking'
+      'topologystacking',
+      'topologypie',
+      'topologyscatter'
     ]
   });
 });
