@@ -480,7 +480,7 @@ define([
 
 
             function drawGraph(nodeDataArray, linkDataArray, graph_id) {
-              go.licenseKey = "73fe40e1ba1c28c702d95d76423d6cbc5cf07f21de8219a00b5011a7ee5c3f167699ed7057d78dd2c2ff4daf4f7d908a8d976b2b9e4c5133e735d2d546e68efeb43323b5440a44dda21136c5ccaa2ca1ae2870e0d2b676a2dc678eedebab";
+              // go.licenseKey = "73fe40e1ba1c28c702d95d76423d6cbc5cf07f21de8219a00b5011a7ee5c3f167699ed7057d78dd2c2ff4daf4f7d908a8d976b2b9e4c5133e735d2d546e68efeb43323b5440a44dda21136c5ccaa2ca1ae2870e0d2b676a2dc678eedebab";
               var $ = go.GraphObject.make;  // for conciseness in defining templates
               if (myDiagram) {
                 return ;
@@ -495,12 +495,19 @@ define([
                     // center of the
                     // viewport
                     layout:
-                      $(ContinuousForceDirectedLayout,    // automatically spread
-                        // nodes apart while
-                        // dragging
-                        { defaultSpringLength: 30, defaultElectricalCharge: 100 }),
-                    // do an extra layout at the end of a move
-                    "SelectionMoved": function(e) { e.diagram.layout.invalidateLayout(); }
+                      $(go.LayeredDigraphLayout,
+                        { direction: 90,
+                          layerSpacing: 10,
+                          columnSpacing: 70,
+                          setsPortSpots: false })
+
+                    // layout:
+                    //   $(ContinuousForceDirectedLayout,    // automatically spread
+                    //     // nodes apart while
+                    //     // dragging
+                    //     { defaultSpringLength: 30, defaultElectricalCharge: 100 }),
+                    // // do an extra layout at the end of a move
+                    // "SelectionMoved": function(e) { e.diagram.layout.invalidateLayout(); }
                   });
 
               // get tooltip text from the object's data
