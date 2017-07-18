@@ -37,6 +37,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       failover: false,
       en_cn:false,
       alarm:false,
+      network_app_name:'',
       switch:"App_Demo_Operate",
       panel_hints: true,
       hide_head: false,
