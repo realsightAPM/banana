@@ -144,7 +144,12 @@ function (Settings) {
       'facet_default_show',
       'statistics_only_count',
       'javastacking',
-      'group'
+      'group',
+      'topology',
+      'topologystacking',
+      'topologybar',
+      'topologypie',
+      'topologyscatter'
     ]
   });
 });
