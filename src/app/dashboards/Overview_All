@@ -440,7 +440,7 @@
         {
           "span": 4,
           "editable": true,
-          "type": "groupby",
+          "type": "group",
           "loadingEditor": false,
           "mode": "values",
           "queries": {
@@ -448,12 +448,12 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Health&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Health res_name&group=true&group.field=res_id&group.limit=100000\n",
             "custom": "&fq=res_type:JAVAEE_JAVAEE&fq=JAVAEE_Health:*"
           },
           "max_rows": 100000,
-          "value_field": "JAVAEE_Health",
-          "group_field": "res_name",
+          "value_field": "JAVAEE_Health res_name",
+          "group_field": "res_id",
           "sum_value": false,
           "auto_int": true,
           "linkage_id": "a",
@@ -519,7 +519,7 @@
         {
           "span": 4,
           "editable": true,
-          "type": "groupby",
+          "type": "group",
           "loadingEditor": false,
           "mode": "values",
           "queries": {
@@ -527,12 +527,12 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Health&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Health res_name&group=true&group.field=res_id&group.limit=100000\n",
             "custom": "&fq=res_type:PHP_PHP&fq=PHP_Health:*"
           },
           "max_rows": 100000,
-          "value_field": "PHP_Health",
-          "group_field": "res_name",
+          "value_field": "PHP_Health res_name",
+          "group_field": "res_id",
           "sum_value": false,
           "auto_int": true,
           "linkage_id": "a",
@@ -598,7 +598,7 @@
         {
           "span": 4,
           "editable": true,
-          "type": "groupby",
+          "type": "group",
           "loadingEditor": false,
           "mode": "values",
           "queries": {
@@ -606,12 +606,12 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Availability&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Availability res_name&group=true&group.field=res_id&group.limit=100000\n",
             "custom": "&fq=res_type:DOTNET_DOTNET&fq=DOTNET_Availability:*"
           },
           "max_rows": 100000,
-          "value_field": "DOTNET_Availability",
-          "group_field": "res_name",
+          "value_field": "DOTNET_Availability res_name",
+          "group_field": "res_id",
           "sum_value": false,
           "auto_int": true,
           "linkage_id": "a",
@@ -686,7 +686,7 @@
         {
           "span": 4,
           "editable": true,
-          "type": "groupby",
+          "type": "group",
           "loadingEditor": false,
           "mode": "values",
           "queries": {
@@ -694,12 +694,12 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Apdex&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Apdex res_name&group=true&group.field=res_id&group.limit=100000\n",
             "custom": "&fq=res_type:JAVAEE_JAVAEE&fq=JAVAEE_Apdex:*"
           },
           "max_rows": 100000,
-          "value_field": "JAVAEE_Apdex",
-          "group_field": "res_name",
+          "value_field": "JAVAEE_Apdex res_name",
+          "group_field": "res_id",
           "sum_value": false,
           "auto_int": true,
           "linkage_id": "a",
@@ -765,7 +765,7 @@
         {
           "span": 4,
           "editable": true,
-          "type": "groupby",
+          "type": "group",
           "loadingEditor": false,
           "mode": "values",
           "queries": {
@@ -773,12 +773,12 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Apdex&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Apdex res_name&group=true&group.field=res_id&group.limit=100000\n",
             "custom": "&fq=res_type:PHP_PHP&fq=PHP_Apdex:*"
           },
           "max_rows": 100000,
-          "value_field": "PHP_Apdex",
-          "group_field": "res_name",
+          "value_field": "PHP_Apdex res_name",
+          "group_field": "res_id",
           "sum_value": false,
           "auto_int": true,
           "linkage_id": "a",
@@ -844,7 +844,7 @@
         {
           "span": 4,
           "editable": true,
-          "type": "groupby",
+          "type": "group",
           "loadingEditor": false,
           "mode": "values",
           "queries": {
@@ -852,12 +852,12 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Apdex&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Apdex res_name&group=true&group.field=res_id&group.limit=100000\n",
             "custom": "&fq=res_type:DOTNET_DOTNET&fq=DOTNET_Apdex:*"
           },
           "max_rows": 100000,
-          "value_field": "DOTNET_Apdex",
-          "group_field": "res_name",
+          "value_field": "DOTNET_Apdex res_name",
+          "group_field": "res_id",
           "sum_value": false,
           "auto_int": true,
           "linkage_id": "a",
@@ -932,7 +932,7 @@
         {
           "span": 4,
           "editable": true,
-          "type": "groupby",
+          "type": "group",
           "loadingEditor": false,
           "mode": "values",
           "queries": {
@@ -940,12 +940,12 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Availability&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_Availability res_name&group=true&group.field=res_id&group.limit=100000\n",
             "custom": "&fq=res_type:JAVAEE_JAVAEE&fq=JAVAEE_Availability:*"
           },
           "max_rows": 100000,
-          "value_field": "JAVAEE_Availability",
-          "group_field": "res_name",
+          "value_field": "JAVAEE_Availability res_name",
+          "group_field": "res_id",
           "sum_value": false,
           "auto_int": true,
           "linkage_id": "a",
@@ -1011,7 +1011,7 @@
         {
           "span": 4,
           "editable": true,
-          "type": "groupby",
+          "type": "group",
           "loadingEditor": false,
           "mode": "values",
           "queries": {
@@ -1019,12 +1019,12 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Availability&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_Availability res_name&group=true&group.field=res_id&group.limit=100000\n",
             "custom": "&fq=res_type:PHP_PHP&fq=PHP_Availability:*"
           },
           "max_rows": 100000,
-          "value_field": "PHP_Availability",
-          "group_field": "res_name",
+          "value_field": "PHP_Availability res_name",
+          "group_field": "res_id",
           "sum_value": false,
           "auto_int": true,
           "linkage_id": "a",
@@ -1090,7 +1090,7 @@
         {
           "span": 4,
           "editable": true,
-          "type": "groupby",
+          "type": "group",
           "loadingEditor": false,
           "mode": "values",
           "queries": {
@@ -1098,12 +1098,12 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_User_Connections&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_User_Connections res_name&group=true&group.field=res_id&group.limit=100000\n",
             "custom": "&fq=res_type:DOTNET_DOTNET&fq=DOTNET_User_Connections:*"
           },
           "max_rows": 100000,
-          "value_field": "DOTNET_User_Connections",
-          "group_field": "res_name",
+          "value_field": "DOTNET_User_Connections res_name",
+          "group_field": "res_id",
           "sum_value": false,
           "auto_int": true,
           "linkage_id": "a",
@@ -1178,7 +1178,7 @@
         {
           "span": 4,
           "editable": true,
-          "type": "groupby",
+          "type": "group",
           "loadingEditor": false,
           "mode": "values",
           "queries": {
@@ -1186,12 +1186,12 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_OnlineUserNum_total&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp JAVAEE_OnlineUserNum_total res_name&group=true&group.field=res_id&group.limit=100000\n",
             "custom": "&fq=res_type:JAVAEE_JAVAEE&fq=JAVAEE_OnlineUserNum_total:*"
           },
           "max_rows": 100000,
-          "value_field": "JAVAEE_OnlineUserNum_total",
-          "group_field": "res_name",
+          "value_field": "JAVAEE_OnlineUserNum_total res_name",
+          "group_field": "res_id",
           "sum_value": false,
           "auto_int": true,
           "linkage_id": "a",
@@ -1257,7 +1257,7 @@
         {
           "span": 4,
           "editable": true,
-          "type": "groupby",
+          "type": "group",
           "loadingEditor": false,
           "mode": "values",
           "queries": {
@@ -1265,12 +1265,12 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_ThroughPut&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp PHP_ThroughPut res_name&group=true&group.field=res_id&group.limit=100000\n",
             "custom": "&fq=res_type:PHP_PHP&fq=PHP_ThroughPut:*"
           },
           "max_rows": 100000,
-          "value_field": "PHP_ThroughPut",
-          "group_field": "res_name",
+          "value_field": "PHP_ThroughPut res_name",
+          "group_field": "res_id",
           "sum_value": false,
           "auto_int": true,
           "linkage_id": "a",
@@ -1336,7 +1336,7 @@
         {
           "span": 4,
           "editable": true,
-          "type": "groupby",
+          "type": "group",
           "loadingEditor": false,
           "mode": "values",
           "queries": {
@@ -1344,12 +1344,12 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Sessions_Total&group=true&group.field=res_name&group.limit=100000\n",
+            "query": "q=*%3A*&wt=json&rows=100000&fq=rs_timestamp:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp DOTNET_Sessions_Total res_name&group=true&group.field=res_id&group.limit=100000\n",
             "custom": "&fq=res_type:DOTNET_DOTNET&fq=DOTNET_Sessions_Total:*"
           },
           "max_rows": 100000,
-          "value_field": "DOTNET_Sessions_Total",
-          "group_field": "res_name",
+          "value_field": "DOTNET_Sessions_Total res_name",
+          "group_field": "res_id",
           "sum_value": false,
           "auto_int": true,
           "linkage_id": "a",
