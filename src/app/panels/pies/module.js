@@ -17,7 +17,7 @@ define([
   'jquery',
   'kbn',
   'echarts-liquidfill',
-    'echarts-wordcloud'
+   'echarts-wordcloud'
 
 ],
 function (angular, app, _, $, kbn) {

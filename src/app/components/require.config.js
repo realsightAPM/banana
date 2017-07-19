@@ -60,6 +60,7 @@ require.config({
     solrjs:                   '../vendor/solrjs/solr-angular-client',
 
     d3:                       '../../bower_components/d3/d3',
+    fisheye:                '../vendor/d3/fisheye',
     viz:                    '../vendor/viz.v1.0.0.min',
     Donut3D:                  '../vendor/d3/Donut3D',
     html2canvas:              '../../bower_components/html2canvas/build/html2canvas',
@@ -150,6 +151,7 @@ require.config({
     elasticjs:              ['angular', '../vendor/elasticjs/elastic'],
     solrjs:                 ['angular', '../vendor/solrjs/solr'],
     Donut3D:                ['d3'],
+    fisheye:                ['d3'],
     d3transform:            ['d3'],
     bubble:                 ['d3'],
     lines:                  ['d3','bubble'],

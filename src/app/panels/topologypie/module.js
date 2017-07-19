@@ -365,7 +365,8 @@ function (angular, app, _, $, kbn) {
 
             var option2 = {
               title: {
-                show:false,
+                show:true,
+                text:'当前选择的应用为：'+dashboard.current.network_app_name,
                 x: "center"
               },
               color:colors,
@@ -439,7 +440,7 @@ function (angular, app, _, $, kbn) {
 
             var option = {
               title : {
-                show:false,
+                show:true,
                 x:'center'
               },
               color:colors,
@@ -466,7 +467,7 @@ function (angular, app, _, $, kbn) {
                 {
                   name:scope.panel.title,
                   type: 'pie',
-
+                  selectedMode: 'single',
                   radius : ['60%','90%'],
                   label :{
                     normal:{
@@ -514,6 +515,7 @@ function (angular, app, _, $, kbn) {
                 dashboard.current.linkage_id = scope.panel.linkage_id;
                 dashboard.current.enable_linkage = false;
                 dashboard.current.network_force_refresh=true;
+                dashboard.current.network_bar_show =true;
                 dashboard.current.hbasedata = null;
                 dashboard.refresh();
 
