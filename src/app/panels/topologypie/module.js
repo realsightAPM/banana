@@ -376,7 +376,7 @@ function (angular, app, _, $, kbn) {
               tooltip: {
                 trigger: "item",
                 confine:true,
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                formatter: "{a} <br/>{b} "
               },
               legend: {
                 show:true,
@@ -411,7 +411,7 @@ function (angular, app, _, $, kbn) {
                 center: ['50%', '60%'],
                 label: {
                   normal: {
-                    show: scope.panel.labels
+                    show: false
                   },
                   emphasis: {
                     show: scope.panel.labels

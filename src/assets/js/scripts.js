@@ -44,6 +44,9 @@ jQuery(document).ready(function() {
             $.cookie("rtd_password", password);
             $(this).find('input[type="password"]').removeClass('input-error');
             var url =window.location.href;
+            if(goalUrlName==null){
+              goalUrlName = '#';
+            }
             document.login.action="./"+goalUrlName;
         }else{
             e.preventDefault();
