@@ -330,7 +330,6 @@ function (angular, app, _, $, kbn) {
         angular.element(window).bind('resize', function(){
           render_panel();
         });
-
         // Function for rendering panel
         function render_panel() {
           var colors = [];
