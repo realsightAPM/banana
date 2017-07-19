@@ -349,7 +349,7 @@ function (angular, app, _, $, kbn) {
 
           var idd = scope.$id;
           var labelcolor = false;
-          if (dashboard.current.style === 'dark'){
+          if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
               labelcolor = true;
           }
                 // Add plot to scope so we can build out own legend
@@ -384,13 +384,6 @@ function (angular, app, _, $, kbn) {
 
               }
 
-
-
-
-
-
-
-
             // create some edges
 
 
@@ -412,6 +405,13 @@ function (angular, app, _, $, kbn) {
                   }
                 },
                 nodes: {
+                  font: {
+                    size: scope.panel.fontsize,
+                    color: labelcolor?'#DCDCDC':'#696969'
+                  }
+
+                },
+                edges: {
                   font: {
                     size: scope.panel.fontsize,
                     color: labelcolor?'#DCDCDC':'#696969'
