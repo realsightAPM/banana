@@ -553,7 +553,7 @@ var myChart;
 				
 				 var labelcolor = false;
 				 var isspan = false;
-					if (dashboard.current.style === 'dark'){
+              if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
 							labelcolor = true;
 						}
                 if (scope.panel.span <5){

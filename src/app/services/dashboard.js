@@ -274,10 +274,8 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
     };
     this.is_refresh = function(){
         if (self.current.style !== self.current.isstyle){
-        if(self.current.style === 'dark' || self.current.isstyle === 'dark'){
-            self.refresh();
-        }
-            self.current.isstyle = self.current.style;
+         self.refresh();
+         self.current.isstyle = self.current.style;
         }
     };
 

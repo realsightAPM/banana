@@ -17,9 +17,7 @@ define([
   'jquery',
   'kbn',
   'echarts-liquidfill',
-  'echarts-wordcloud',
-  'd3',
-  'fisheye'
+  'echarts-wordcloud'
 
 ],
 function (angular, app, _, $, kbn) {
@@ -320,7 +318,7 @@ function (angular, app, _, $, kbn) {
 
           var idd = scope.$id;
           var labelcolor = false;
-          if (dashboard.current.style === 'dark'){
+          if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
               labelcolor = true;
           }
                 // Add plot to scope so we can build out own legend
@@ -457,9 +455,7 @@ function (angular, app, _, $, kbn) {
               series : series
             };
             myChart.setOption(option);
-            var fisheye = d3.fisheye.circular()
-              .radius(200)
-              .distortion(2);
+
             // var bb = network.getSelection();
             // var cc= bb;
            // });

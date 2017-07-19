@@ -523,7 +523,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
               }
 
 				  var labelcolor = false;
-          if (dashboard.current.style === 'dark'){
+            if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
             labelcolor = true;
           }
               // Add plot to scope so we can build out own legend

@@ -346,7 +346,7 @@ function (angular, app, _, $, kbn) {
 
           var idd = scope.$id;
           var labelcolor = false;
-          if (dashboard.current.style === 'dark'){
+          if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
               labelcolor = true;
           }
                 // Add plot to scope so we can build out own legend
@@ -366,6 +366,9 @@ function (angular, app, _, $, kbn) {
             var option2 = {
               title: {
                 show:true,
+                textStyle:{
+                  color:labelcolor?"#fff":"333"
+                },
                 text:'当前选择的应用为：'+dashboard.current.network_app_name,
                 x: "center"
               },

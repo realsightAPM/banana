@@ -17,7 +17,9 @@ define([
     'jquery',
     'kbn',
     'echarts-liquidfill',
-    'echarts-wordcloud'
+    'echarts-wordcloud',
+    'd3',
+    'fisheye'
 
   ],
   function (angular, app, _, $, kbn) {
@@ -282,7 +284,7 @@ define([
             cloneData.scatter.dotList.reverse();
             var idd = scope.$id;
             var labelcolor = false;
-            if (dashboard.current.style === 'dark'){
+            if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
               labelcolor = true;
             }
             Date.prototype.pattern = function (fmt) {
@@ -415,7 +417,10 @@ define([
                     type : 'value',
                     scale:true,
                     axisLabel : {
-                      formatter: '{value} ms'
+                      formatter: '{value} ms',
+                      textStyle:{
+                        color:labelcolor?'#DCDCDC':'#696969'
+                      }
                     },
                     splitLine: {
                       lineStyle: {

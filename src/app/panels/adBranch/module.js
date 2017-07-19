@@ -364,7 +364,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
               myChart.dispose();
             }
             var labelcolor = false;
-            if (dashboard.current.style === 'dark'){
+            if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
                 labelcolor = true;
             }
             var time_length = scope.panel.time_length + 1;
