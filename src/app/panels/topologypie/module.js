@@ -367,7 +367,7 @@ function (angular, app, _, $, kbn) {
               title: {
                 show:true,
                 textStyle:{
-                  color:labelcolor?"#fff":"333"
+                  color:labelcolor?"#fff":"#333"
                 },
                 text:'当前选择的应用为：'+dashboard.current.network_app_name,
                 x: "center"

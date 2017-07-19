@@ -30,12 +30,10 @@
       ],
       "list": {
         "0": {
-          "from": "NOW/HOUR-24HOUR",
-          "to": "NOW/HOUR%2B1HOUR",
+          "from": "2017-06-27T07:30:30.000Z",
+          "to": "2017-06-29T07:30:30.000Z",
           "field": "rs_timestamp_tdt",
           "type": "time",
-          "fromDateObj": "2017-05-26T07:08:36.436Z",
-          "toDateObj": "2017-05-27T07:08:36.437Z",
           "mandate": "must",
           "active": true,
           "alias": "",
@@ -62,7 +60,7 @@
           "type": "timepicker",
           "loadingEditor": false,
           "status": "Stable",
-          "mode": "relative",
+          "mode": "absolute",
           "time_options": [
             "6h",
             "12h",
@@ -75,10 +73,7 @@
             "15d",
             "30d",
             "90d",
-            "180d",
-            "1y",
-            "3y",
-            "5y"
+            "180d"
           ],
           "timespan": "24h",
           "timefield": "rs_timestamp_tdt",
@@ -92,7 +87,11 @@
           "spyable": true,
           "title": "时间轴",
           "display": "block",
-          "icon": "icon-caret-down"
+          "icon": "icon-caret-down",
+          "time": {
+            "from": "06/27/2017 15:30:30",
+            "to": "06/29/2017 15:30:30"
+          }
         },
         {
           "error": false,
@@ -132,7 +131,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=memoryUsed_i&facet.limit=10000&facet.missing=true&f.memoryUsed_i.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp_tdt:[2017-06-27T07:30:30.000Z%20TO%202017-06-29T07:30:30.000Z]&facet=true&facet.field=memoryUsed_i&facet.limit=10000&facet.missing=true&f.memoryUsed_i.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -243,7 +242,7 @@
             "ids": [
               0
             ],
-            "query": "q=caton_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp_tdt caton_i\n",
+            "query": "q=caton_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[2017-06-27T07:30:30.000Z%20TO%202017-06-29T07:30:30.000Z]&fl=rs_timestamp_tdt caton_i\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -266,7 +265,7 @@
           "field_color": "#2ce41b",
           "resolution": 100,
           "value_sort": "rs_timestamp_tdt",
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -331,7 +330,7 @@
             "ids": [
               0
             ],
-            "query": "q=collapse_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp_tdt collapse_i\n",
+            "query": "q=collapse_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[2017-06-27T07:30:30.000Z%20TO%202017-06-29T07:30:30.000Z]&fl=rs_timestamp_tdt collapse_i\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -354,7 +353,7 @@
           "field_color": "#2ce41b",
           "resolution": 100,
           "value_sort": "rs_timestamp_tdt",
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -419,7 +418,7 @@
             "ids": [
               0
             ],
-            "query": "q=network_s%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp_tdt network_s\n",
+            "query": "q=network_s%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[2017-06-27T07:30:30.000Z%20TO%202017-06-29T07:30:30.000Z]&fl=rs_timestamp_tdt network_s\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -442,7 +441,7 @@
           "field_color": "#2ce41b",
           "resolution": 100,
           "value_sort": "rs_timestamp_tdt",
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -516,7 +515,7 @@
             "ids": [
               0
             ],
-            "query": "q=cpu_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp_tdt cpu_i\n",
+            "query": "q=cpu_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[2017-06-27T07:30:30.000Z%20TO%202017-06-29T07:30:30.000Z]&fl=rs_timestamp_tdt cpu_i\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -533,7 +532,7 @@
           "field_color": "#2ce41b",
           "resolution": 100,
           "value_sort": "rs_timestamp_tdt",
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -603,7 +602,7 @@
             "ids": [
               0
             ],
-            "query": "q=memoryUsed_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp_tdt memoryUsed_i\n",
+            "query": "q=memoryUsed_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[2017-06-27T07:30:30.000Z%20TO%202017-06-29T07:30:30.000Z]&fl=rs_timestamp_tdt memoryUsed_i\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -620,7 +619,7 @@
           "field_color": "#2ce41b",
           "resolution": 100,
           "value_sort": "rs_timestamp_tdt",
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -699,7 +698,7 @@
             "ids": [
               0
             ],
-            "query": "q=pageResponse_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[NOW/HOUR-24HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp_tdt pageResponse_i\n",
+            "query": "q=pageResponse_i%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp_tdt%20asc&rows=100000&fq=rs_timestamp_tdt:[2017-06-27T07:30:30.000Z%20TO%202017-06-29T07:30:30.000Z]&fl=rs_timestamp_tdt pageResponse_i\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -716,7 +715,7 @@
           "field_color": "#2ce41b",
           "resolution": 100,
           "value_sort": "rs_timestamp_tdt",
-          "interval": "10m",
+          "interval": "30m",
           "intervals": [
             "auto",
             "1s",
@@ -847,7 +846,7 @@
     "save_as_public": false
   },
   "solr": {
-    "server": "http://10.4.53.205:9983/solr/",
+    "server": "http://127.0.0.1:19983/solr/",
     "core_name": "mobile_terminal",
     "core_list": [
       "PHP_logs",
@@ -876,6 +875,8 @@
   "alarm": false,
   "switch": "App_Demo_Operate",
   "loading": false,
-  "enable_linkage": false,
-  "linkage_id": "a"
+  "enable_linkage": true,
+  "linkage_id": "a",
+  "headHide": true,
+  "load": false
 }

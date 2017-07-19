@@ -384,13 +384,6 @@ function (angular, app, _, $, kbn) {
 
               }
 
-
-
-
-
-
-
-
             // create some edges
 
 
@@ -412,6 +405,13 @@ function (angular, app, _, $, kbn) {
                   }
                 },
                 nodes: {
+                  font: {
+                    size: scope.panel.fontsize,
+                    color: labelcolor?'#DCDCDC':'#696969'
+                  }
+
+                },
+                edges: {
                   font: {
                     size: scope.panel.fontsize,
                     color: labelcolor?'#DCDCDC':'#696969'
