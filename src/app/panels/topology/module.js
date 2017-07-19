@@ -410,7 +410,14 @@ function (angular, app, _, $, kbn) {
                     treeSpacing:600,
                     levelSeparation:300
                   }
-                }
+                },
+                nodes: {
+                  font: {
+                    size: scope.panel.fontsize,
+                    color: labelcolor?'#DCDCDC':'#696969'
+                  }
+
+                },
               };
             var network = new vis.Network(document.getElementById(idd), data, options);
             network.on('click', function (params) {
@@ -419,6 +426,7 @@ function (angular, app, _, $, kbn) {
                 dashboard.current.linkage_id = scope.panel.linkage_id;
                 dashboard.current.enable_linkage = false;
                 dashboard.current.topology_click=true;
+                dashboard.current.network_bar_show =true;
                 scope.panel.isrefresh = false;
 
                 dashboard.refresh();

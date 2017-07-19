@@ -17,7 +17,9 @@ define([
     'jquery',
     'kbn',
     'echarts-liquidfill',
-    'echarts-wordcloud'
+    'echarts-wordcloud',
+    'd3',
+    'fisheye'
 
   ],
   function (angular, app, _, $, kbn) {
@@ -179,7 +181,7 @@ define([
 
       $scope.get_data = function() {
         //同id 图表刷新，图表自身点击不刷新，时间选择全局刷新，更换应用刷新
-        if((($scope.panel.linkage_id === dashboard.current.linkage_id)&&dashboard.current.network_force_refresh)||dashboard.current.enable_linkage) {
+        if((($scope.panel.linkage_id === dashboard.current.linkage_id))||dashboard.current.enable_linkage) {
           $scope.query_url = "http://" + $scope.panel.HbaseIP + "/getScatterData.pinpoint?to="+dashboard.current.timeto+"&from="+dashboard.current.timefrom+"&limit=5000&filter=&application="+dashboard.current.network_app_name+"&xGroupUnit=987&yGroupUnit=1";
           //$scope.query_url = "http://" + $scope.panel.HbaseIP + "/getScatterData.pinpoint?to=1500275616000&from=1500275316000&limit=5000&filter=&application=chartsshow&xGroupUnit=987&yGroupUnit=1"+dashboard.current.network_app_name+"&from=" + dashboard.current.timefrom + "&to=" + dashboard.current.timeto + "&callerRange=1&calleeRange=1&serviceTypeName=TOMCAT";
           $.getJSON($scope.query_url, function (json) {
@@ -359,6 +361,15 @@ define([
                   bottom: '3%',
                   containLabel: true
                 },
+                toolbox: {
+                  feature: {
+                    dataZoom: {
+                      yAxisIndex: 'none'
+                    },
+                    dataView: {readOnly: false},
+                    restore: {}
+                  }
+                },
                 color:['#EF843C','#1ab0f9'],
                 tooltip : {
                   trigger: 'item',
@@ -366,12 +377,12 @@ define([
                   formatter : function (params) {
                     if (params.value.length > 1) {
                       return params.seriesName + ' :<br/>'
-                        + params.value[0]
+                        + params.value[0]+'<br/>'
                         + params.value[1] + 'ms ';
                     }
                     else {
                       return params.seriesName + ' :<br/>'
-                        + params.name + ' : '
+                        + params.name + ' :<br/>'
                         + params.value + 'ms ';
                     }
                   },
@@ -386,7 +397,7 @@ define([
                 },
                 legend: {
                   data: ["success","error"],
-                  left: 'right'
+                  left: 'left'
                 },
                 xAxis : [
                   {
@@ -406,7 +417,10 @@ define([
                     type : 'value',
                     scale:true,
                     axisLabel : {
-                      formatter: '{value} ms'
+                      formatter: '{value} ms',
+                      textStyle:{
+                        color:labelcolor?'#DCDCDC':'#696969'
+                      }
                     },
                     splitLine: {
                       lineStyle: {
@@ -441,6 +455,7 @@ define([
               };
 
               myChart.setOption(option3);
+
               // var bb = network.getSelection();
               // var cc= bb;
               // });
