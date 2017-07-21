@@ -492,7 +492,7 @@ function (angular, app, _, $, kbn) {
                     .attr("width", width)
                     .attr("height", height);
 
-                  d3.json("miserables.json", function(data) {
+                  d3.json("vendor/d3/fisheye/miserables.json", function(data) {
                     var n = data.nodes.length;
 
                     force.nodes(data.nodes).links(data.links);

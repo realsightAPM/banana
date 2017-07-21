@@ -536,7 +536,7 @@ function (angular, app, _, $, kbn) {
                     .text("life expectancy (years)");
 
                   // Load the data.
-                  d3.json("nations.json", function(nations) {
+                  d3.json("vendor/d3/fisheye/nations.json", function(nations) {
 
                     // Add a dot per nation. Initialize the data at 1800, and set the colors.
                     var dot = svg.append("g")
@@ -582,32 +582,7 @@ function (angular, app, _, $, kbn) {
         });
         }
 
-        elem.bind("plotclick", function (event, pos, object) {
-          if(object) {
-            scope.build_search(scope.data[object.seriesIndex]);
-            scope.panel.lastColor = object.series.color;
-          }
-        });
 
-        var $tooltip = $('<div>');
-        elem.bind("plothover", function (event, pos, item) {
-          if (item) {
-            var value = scope.panel.chart === 'bar'  ? item.datapoint[1] : item.datapoint[1][0][1];
-            // if (scope.panel.mode === 'count') {
-            //   value = value.toFixed(0);
-            // } else {
-            //   value = value.toFixed(scope.panel.decimal_points);
-            // }
-            $tooltip
-              .html(
-                kbn.query_color_dot(item.series.color, 20) + ' ' +
-                item.series.label + " (" + dashboard.numberWithCommas(value.toFixed(scope.panel.decimal_points)) +")"
-              )
-              .place_tt(pos.pageX, pos.pageY);
-          } else {
-            $tooltip.remove();
-          }
-        });
 
       }
     };
