@@ -149,7 +149,10 @@ function (Settings) {
       'topologystacking',
       'topologybar',
       'topologypie',
-      'topologyscatter'
+      'topologyscatter',
+      'fisheye',
+      'topologyfisheye',
+      'fisheyescatter'
     ]
   });
 });
