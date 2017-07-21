@@ -16,8 +16,6 @@ define([
     'underscore',
     'jquery',
     'kbn',
-    'echarts-liquidfill',
-    'echarts-wordcloud',
     'd3',
     'fisheye'
 
@@ -28,7 +26,7 @@ define([
     var module = angular.module('kibana.panels.network', []);
     app.useModule(module);
 
-    module.controller('topologyscatter', function($scope, $http,$sce,$timeout, $translate,timer, querySrv, dashboard, filterSrv) {
+    module.controller('fisheyescatter', function($scope, $http,$sce,$timeout, $translate,timer, querySrv, dashboard, filterSrv) {
       $scope.panelMeta = {
         exportfile: true,
         editorTabs : [
@@ -54,7 +52,6 @@ define([
         missing : false,
         other   : false,
         size    : 10000,
-        dataZoom:false,
         sortBy  : 'count',
         order   : 'descending',
         fontsize   : 12,
@@ -251,7 +248,7 @@ define([
 
     });
 
-    module.directive('topologyscatterChart', function(querySrv,dashboard,filterSrv) {
+    module.directive('fisheyescatterChart', function(querySrv,dashboard,filterSrv) {
       return {
         restrict: 'A',
         link: function(scope, elem) {
@@ -275,7 +272,9 @@ define([
 
             // Make a clone we can operate on.
 
+            elem.html("");
 
+            var el = elem[0];
             if (filterSrv.idsByTypeAndField('pies',scope.panel.field).length > 0) {
               colors.push(scope.panel.lastColor);
             } else {
@@ -288,173 +287,131 @@ define([
             if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
               labelcolor = true;
             }
-
+            var x;
+            var y;
+            var radius;
+            var color;
+            var position;
             // Add plot to scope so we can build out own legend
-            var echarts = require('echarts');
-            // require(['vis'], function(nw){
-            if(myChart) {
-              myChart.dispose();
-            }
+
             if(scope.panel.chart === 'network') {
 
               var time ;
               var timeData = [];
-              var success_i=0;
-              var error_i=0;
-              var success_data=[];
-              var error_data = [];
+              var max_data=0;
+              // 获取fisheye图表数据
+              var fisheye_data=[];
+              //x轴以每分钟作为间隔
+              var time_from_to=(dashboard.current.timeto-dashboard.current.timefrom)/60000;
 
+              //将接口数据转化为图表所需数据
               for(var i1=0;i1<cloneData.scatter.dotList.length;i1++){
-                if(!isNaN(cloneData.scatter.dotList[i1][0])){
-                  time = new Date(cloneData.scatter.dotList[i1][0]+cloneData.from);
-                  timeData[i1] = time.toLocaleString();
-                }else{
-                  timeData[i1] =cloneData.scatter.dotList[i1][0];
+                if(max_data<cloneData.scatter.dotList[i1][1]){
+                  max_data=cloneData.scatter.dotList[i1][1];
                 }
+                timeData[i1] = cloneData.scatter.dotList[i1][0]/60000;
+                fisheye_data[i1] = {name:"时间"+cloneData.scatter.dotList[i1][1]+"ms",time:cloneData.scatter.dotList[i1][0]/60000,value:cloneData.scatter.dotList[i1][1],status:cloneData.scatter.dotList[i1][4],radius:cloneData.scatter.dotList[i1][4]}
 
-                if(cloneData.scatter.dotList[i1][4]===1){
-                  success_data[success_i]=cloneData.scatter.dotList[i1];
-                  success_data[success_i][0]=timeData[i1];
-                  success_i++;
-                }else{
-                  error_data[error_i]=cloneData.scatter.dotList[i1];
-                  error_data[error_i][0]=timeData[i1];
-                  error_i++;
-                }
               }
-              myChart = echarts.init(document.getElementById(idd));
-              var option3 =  {
-                grid: {
-                  left: '3%',
-                  right: '4%',
-                  bottom: '3%',
-                  containLabel: true
-                },
-                toolbox: {
-                  feature: {
-                    dataZoom: {
-                      yAxisIndex: 'none'
-                    },
-                    dataView: {readOnly: false},
-                    restore: {}
-                  }
-                },
-                color:['#EF843C','#1ab0f9'],
-                dataZoom: scope.panel.dataZoom?[
-                  {
-                    type: 'slider',
-                    show: true,
-                    xAxisIndex: [0],
-                    start: 1,
-                    end: 35
-                  },
-                  {
-                    type: 'slider',
-                    show: true,
-                    yAxisIndex: [0],
-                    start: 0,
-                    end: 30
-                  },
-                  {
-                    type: 'inside',
-                    xAxisIndex: [0],
-                    start: 1,
-                    end: 35
-                  },
-                  {
-                    type: 'inside',
-                    yAxisIndex: [0],
-                    start: 0,
-                    end: 30
-                  }
-                ]:[],
-                tooltip : {
-                  trigger: 'item',
-                  showDelay : 0,
-                  formatter : function (params) {
-                    if (params.value.length > 1) {
-                      return params.seriesName + ' :<br/>'
-                        + params.value[0]+'<br/>'
-                        + params.value[1] + 'ms ';
-                    }
-                    else {
-                      return params.seriesName + ' :<br/>'
-                        + params.name + ' :<br/>'
-                        + params.value + 'ms ';
-                    }
-                  },
-                  axisPointer:{
-                    show: true,
-                    type : 'cross',
-                    lineStyle: {
-                      type : 'dashed',
-                      width : 1
-                    }
-                  }
-                },
-                legend: {
-                  data: ["success","error"],
-                  left: 'left',
-                  textStyle:{
-                    color:labelcolor?'#DCDCDC':'#696969'
-                  }
-                },
-                xAxis : [
-                  {
-                    type : 'category',
-                    boundaryGap : false,
-                    axisLine: {onZero: true},
-                    axisLabel:{
-                      textStyle:{
-                        color:labelcolor?'#DCDCDC':'#696969'
-                      }
-                    },
-                    data :timeData
-                  }
-                ],
-                yAxis : [
-                  {
-                    type : 'value',
-                    scale:true,
-                    axisLabel : {
-                      formatter: '{value} ms',
-                      textStyle:{
-                        color:labelcolor?'#DCDCDC':'#696969'
-                      }
-                    },
-                    splitLine: {
-                      lineStyle: {
-                        type: 'dashed'
-                      }
-                    }
-                  }
-                ],
-                series : [
-                  {
-                    name:"error",
-                    type:'scatter',
-                    data: error_data,
-                    markPoint : {
-                      data : [
-                        {type : 'max', name: '最大值'},
-                        {type : 'min', name: '最小值'}
-                      ]
-                    }
-                  }, {
-                    name:"success",
-                    type:'scatter',
-                    data: success_data,
-                    markPoint : {
-                      data : [
-                        {type : 'max', name: '最大值'},
-                        {type : 'min', name: '最小值'}
-                      ]
-                    }
-                  }
-                ]
-              };
+              //timeData.sort();
+              //x轴为时间，y轴为对应值，radius函数返回点大小，color函数返回点颜色
+              x=function(d){return d.time;}
+              y=function(d){return d.value;}
+              radius=function(d){return d.radius;}
+              color=function(d){return d.status;}
+              position=function(dot){
+                dot .attr("cx", function(d) { return xScale(x(d)); })
+                  .attr("cy", function(d) { return yScale(y(d)); })
+                  .attr("r", function(d) { return radiusScale(radius(d)); });
+              }
 
-              myChart.setOption(option3);
+
+              // Chart dimensions.
+              var margin = {top: 5.5, right: 19.5, bottom: 12.5, left: 39.5},
+                width = 0.96*elem.parent().width(),
+                height = parseInt(scope.panel.height) - margin.top - margin.bottom;
+
+              // Various scales and distortions.
+              var xScale = d3.fisheye.scale(d3.scale.log).domain([time_from_to,timeData[0]]).range([0, width]),
+                yScale = d3.fisheye.scale(d3.scale.linear).domain([0, max_data]).range([height, 0]),
+                radiusScale = d3.scale.sqrt().domain([0, 80]).range([1, 40]),
+                colorScale = d3.scale.category20c().domain([0, 1]);
+
+              // The x & y axes.
+              var xAxis = d3.svg.axis().orient("bottom").scale(xScale).tickFormat(d3.format(",d")).tickSize(-height),
+                yAxis = d3.svg.axis().scale(yScale).orient("left").tickSize(-width);
+
+              // Create the SVG container and set the origin.
+              var svg = d3.select(el).append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+              // Add a background rect for mousemove.
+              svg.append("rect")
+                .attr("class", "background")
+                .attr("width", width)
+                .attr("height", height);
+
+              // Add the x-axis.
+              svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+              // Add the y-axis.
+              svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis);
+
+              // Add an x-axis label.
+              svg.append("text")
+                .attr("class", "x label")
+                .attr("text-anchor", "end")
+                .attr("x", width - 6)
+                .attr("y", height - 6)
+                .attr("dy", ".35em")
+                .text("time");
+
+              // Add a y-axis label.
+              svg.append("text")
+                .attr("class", "y label")
+                .attr("text-anchor", "end")
+
+                .attr("dy", ".75em")
+
+                .text("ms");
+
+              // Load the data.
+
+
+                // Add a dot per nation. Initialize the data at 1800, and set the colors.
+                var dot = svg.append("g")
+                  .attr("class", "dots")
+                  .selectAll(".dot")
+                  .data(fisheye_data)
+                  .enter().append("circle")
+                  .attr("class", "dot")
+                  .style("fill", function(d) { return colorScale(color(d)); })
+                  .call(position)
+                  .sort(function(a, b) { return radius(b) - radius(a); });
+
+                // Add a title.
+                dot.append("title")
+                  .text(function(d) { return d.name; });
+
+                // Positions the dots based on data.
+
+                svg.on("mousemove", function() {
+                  var mouse = d3.mouse(this);
+                  xScale.distortion(2.5).focus(mouse[0]);
+                  yScale.distortion(2.5).focus(mouse[1]);
+
+                  dot.call(position);
+                  svg.select(".x.axis").call(xAxis);
+                  svg.select(".y.axis").call(yAxis);
+                });
 
               // var bb = network.getSelection();
               // var cc= bb;
