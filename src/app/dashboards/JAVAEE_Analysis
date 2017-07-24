@@ -33,8 +33,8 @@
           "to": "NOW/HOUR%2B1HOUR",
           "field": "rs_timestamp",
           "type": "time",
-          "fromDateObj": "2017-07-04T19:36:34.992Z",
-          "toDateObj": "2017-07-05T07:36:34.992Z",
+          "fromDateObj": "2017-07-11T19:07:56.690Z",
+          "toDateObj": "2017-07-12T07:07:56.690Z",
           "mandate": "must",
           "active": true,
           "alias": "",
@@ -112,7 +112,7 @@
             "ids": [
               2
             ],
-            "query": "q=jvm hostname os appserver arguments javaversion%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20desc&rows=100000&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp jvm hostname os appserver arguments javaversion\n",
+            "query": "q=jvm hostname os appserver arguments javaversion%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20desc&rows=100000&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp jvm hostname os appserver arguments javaversion\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -182,7 +182,7 @@
             "ids": [
               2
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=stackTrace&facet.limit=10000&facet.missing=true&f.stackTrace.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&facet=true&facet.field=stackTrace&facet.limit=10000&facet.missing=true&f.stackTrace.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -289,7 +289,7 @@
             "ids": [
               2
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=httpRequest&facet.limit=10000&facet.missing=true&f.httpRequest.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&facet=true&facet.field=httpRequest&facet.limit=10000&facet.missing=true&f.httpRequest.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -396,115 +396,7 @@
       "collapsable": true,
       "panels": [
         {
-          "span": 4,
-          "editable": true,
-          "type": "pies",
-          "loadingEditor": false,
-          "queries": {
-            "mode": "all",
-            "ids": [
-              2
-            ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=remoteUser&facet.limit=10000&facet.missing=true&f.remoteUser.facet.sort=count",
-            "custom": ""
-          },
-          "mode": "count",
-          "field": "remoteUser",
-          "stats_field": "",
-          "decimal_points": 0,
-          "exclude": [],
-          "missing": false,
-          "other": false,
-          "size": 10000,
-          "sortBy": "count",
-          "order": "descending",
-          "fontsize": 12,
-          "donut": true,
-          "tilt": false,
-          "display": "block",
-          "icon": "icon-caret-down",
-          "labels": true,
-          "ylabels": true,
-          "logAxis": false,
-          "arrangement": "vertical",
-          "RoseType": "area",
-          "chart": "rosepie",
-          "solrFq": "fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]",
-          "exportSize": 10000,
-          "linkage_id": "b",
-          "value_sort": "rs_timestamp",
-          "defaulttimestamp": true,
-          "lastColor": "",
-          "spyable": true,
-          "show_queries": true,
-          "chartColors": [
-            "#1a93f9",
-            "#EAB839",
-            "#6ED0E0",
-            "#EF843C",
-            "#E24D42",
-            "#1F78C1",
-            "#BA43A9",
-            "#705DA0",
-            "#508642",
-            "#CCA300",
-            "#447EBC",
-            "#C15C17",
-            "#890F02",
-            "#0A437C",
-            "#6D1F62",
-            "#584477",
-            "#B7DBAB",
-            "#F4D598",
-            "#70DBED",
-            "#F9BA8F",
-            "#F29191",
-            "#82B5D8",
-            "#E5A8E2",
-            "#AEA2E0",
-            "#629E51",
-            "#E5AC0E",
-            "#64B0C8",
-            "#E0752D",
-            "#BF1B00",
-            "#0A50A1",
-            "#962D82",
-            "#614D93",
-            "#9AC48A",
-            "#F2C96D",
-            "#65C5DB",
-            "#F9934E",
-            "#EA6460",
-            "#5195CE",
-            "#D683CE",
-            "#806EB7",
-            "#3F6833",
-            "#967302",
-            "#2F575E",
-            "#99440A",
-            "#58140C",
-            "#052B51",
-            "#511749",
-            "#3F2B5B",
-            "#E0F9D7",
-            "#FCEACA",
-            "#CFFAFF",
-            "#F9E2D2",
-            "#FCE2DE",
-            "#BADFF4",
-            "#F9D9F9",
-            "#DEDAF7"
-          ],
-          "refresh": {
-            "enable": false,
-            "interval": 2
-          },
-          "height": "300",
-          "eLegend": true,
-          "title": "访问用户统计"
-        },
-        {
-          "span": 4,
+          "span": 6,
           "editable": true,
           "type": "map",
           "loadingEditor": false,
@@ -513,7 +405,7 @@
             "ids": [
               2
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&rows=0&facet=true&facet.field=country&facet.limit=1000",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&rows=0&facet=true&facet.field=country&facet.limit=1000",
             "custom": ""
           },
           "mode": "count",
@@ -538,7 +430,7 @@
           "title": "用户来源分布"
         },
         {
-          "span": 4,
+          "span": 6,
           "editable": true,
           "type": "pies",
           "loadingEditor": false,
@@ -547,7 +439,7 @@
             "ids": [
               2
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=remoteAddr&facet.limit=10000&facet.missing=true&f.remoteAddr.facet.sort=count",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&facet=true&facet.field=remoteAddr&facet.limit=10000&facet.missing=true&f.remoteAddr.facet.sort=count",
             "custom": ""
           },
           "mode": "count",
@@ -663,7 +555,7 @@
             "ids": [
               2
             ],
-            "query": "q=*%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=message&facet.limit=10000&facet.missing=true&f.message.facet.sort=count&fq=httpRequest:*",
+            "query": "q=*%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&facet=true&facet.field=message&facet.limit=10000&facet.missing=true&f.message.facet.sort=count&fq=httpRequest:*",
             "custom": "&fq=httpRequest:*"
           },
           "mode": "count",
@@ -757,8 +649,8 @@
             "enable": false,
             "interval": 2
           },
-          "height": "300",
-          "eLegend": true,
+          "height": "418",
+          "eLegend": false,
           "title": "HTTP错误分类"
         },
         {
@@ -772,8 +664,8 @@
             "ids": [
               2
             ],
-            "query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&wt=json&rows=3000",
-            "basic_query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]",
+            "query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&wt=json&rows=3000",
+            "basic_query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da",
             "custom": "&fq = httpRequest:*"
           },
           "size": 6,
@@ -846,8 +738,8 @@
             "ids": [
               2
             ],
-            "query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&wt=json&rows=6000",
-            "basic_query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]",
+            "query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&wt=json&rows=6000",
+            "basic_query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da",
             "custom": "&fq= stackTrace:*"
           },
           "size": 6,
@@ -868,6 +760,7 @@
           ],
           "important_fields": [
             "_version_",
+            "httpRequest",
             "id",
             "message",
             "res_id",
@@ -920,9 +813,9 @@
             "ids": [
               2
             ],
-            "query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&wt=json&rows=10000",
-            "basic_query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]",
-            "custom": "&fq=remoteUser:*"
+            "query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&wt=json&rows=10000",
+            "basic_query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da",
+            "custom": "&fq=remoteAddr:*"
           },
           "size": 20,
           "pages": 500,
@@ -935,7 +828,6 @@
           },
           "overflow": "min-height",
           "fields": [
-            "remoteUser",
             "country",
             "remoteAddr",
             "userAgent",
@@ -952,7 +844,6 @@
             "id",
             "lastAccess",
             "remoteAddr",
-            "remoteUser",
             "res_id",
             "res_name",
             "res_type",
@@ -1004,7 +895,7 @@
             "ids": [
               2
             ],
-            "query": "q=cpuPercentage%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp cpuPercentage pid\n",
+            "query": "q=cpuPercentage%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp cpuPercentage pid\n",
             "custom": "&fq=rs_timestamp:[NOW/MINUTE-10MINUTE%20TO%20NOW/MINUTE%2B1MINUTE]"
           },
           "max_rows": 100000,
@@ -1093,7 +984,7 @@
             "ids": [
               2
             ],
-            "query": "q=memPercentage%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp memPercentage pid\n",
+            "query": "q=memPercentage%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp memPercentage pid\n",
             "custom": "&fq=rs_timestamp:[NOW/MINUTE-10MINUTE%20TO%20NOW/MINUTE%2B1MINUTE]"
           },
           "max_rows": 100000,
@@ -1191,8 +1082,8 @@
             "ids": [
               2
             ],
-            "query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&wt=json&rows=7500",
-            "basic_query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]",
+            "query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&wt=json&rows=7500",
+            "basic_query": "q=*%3A*&fq=rs_timestamp:[NOW/HOUR-12HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da",
             "custom": "&fq=rs_timestamp:[NOW/MINUTE-5MINUTE%20TO%20NOW/MINUTE%2B1MINUTE]&fq=pid:*"
           },
           "size": 15,
@@ -1330,7 +1221,7 @@
     "save_as_public": false
   },
   "solr": {
-    "server": "http://10.4.53.205:9983/solr/",
+    "server": "/solr/",
     "core_name": "nifi",
     "core_list": [
       "PHP_logs",

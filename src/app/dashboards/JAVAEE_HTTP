@@ -48,8 +48,8 @@
           "to": "NOW/HOUR%2B1HOUR",
           "field": "rs_timestamp",
           "type": "time",
-          "fromDateObj": "2017-07-04T00:44:35.390Z",
-          "toDateObj": "2017-07-04T03:44:35.390Z",
+          "fromDateObj": "2017-07-12T03:56:14.525Z",
+          "toDateObj": "2017-07-12T06:56:14.525Z",
           "mandate": "must",
           "active": true,
           "alias": "",
@@ -129,7 +129,7 @@
               1,
               2
             ],
-            "query": "q=HttpRequest instance_name%3A%5B*%20TO%20*%5D&wt=json&sort=HttpRequest%20desc&rows=10000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp HttpRequest instance_name\n",
+            "query": "q=HttpRequest instance_name%3A%5B*%20TO%20*%5D&wt=json&sort=HttpRequest%20desc&rows=10000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp HttpRequest instance_name\n",
             "custom": "&fq = instance_metric:JAVAEE_duration"
           },
           "max_rows": 10000,
@@ -220,7 +220,7 @@
               1,
               2
             ],
-            "query": "q=HttpRequest%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp HttpRequest instance_name\n",
+            "query": "q=HttpRequest%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp HttpRequest instance_name\n",
             "custom": "&fq = instance_metric:JAVAEE_duration"
           },
           "max_rows": 100000,
@@ -319,7 +319,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=instance_name&facet.limit=10000&facet.missing=true&f.instance_name.facet.sort=count&fq = instance_metric:JAVAEE_duration&fq = HttpRequest :*",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&facet=true&facet.field=instance_name&facet.limit=10000&facet.missing=true&f.instance_name.facet.sort=count&fq = instance_metric:JAVAEE_duration&fq = HttpRequest :*",
             "custom": "&fq = instance_metric:JAVAEE_duration&fq = HttpRequest :*"
           },
           "mode": "count",
@@ -439,7 +439,7 @@
               1,
               2
             ],
-            "query": "q=HttpRequest instance_name%3A%5B*%20TO%20*%5D&wt=json&sort=HttpRequest%20desc&rows=10000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp HttpRequest instance_name\n",
+            "query": "q=HttpRequest instance_name%3A%5B*%20TO%20*%5D&wt=json&sort=HttpRequest%20desc&rows=10000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp HttpRequest instance_name\n",
             "custom": "&fq = instance_metric:JAVAEE_hit"
           },
           "max_rows": 10000,
@@ -530,7 +530,7 @@
               1,
               2
             ],
-            "query": "q=HttpRequest%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp HttpRequest instance_name\n",
+            "query": "q=HttpRequest%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp HttpRequest instance_name\n",
             "custom": "&fq = instance_metric:JAVAEE_hit"
           },
           "max_rows": 100000,
@@ -629,7 +629,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=instance_name&facet.limit=10000&facet.missing=true&f.instance_name.facet.sort=count&fq = instance_metric:JAVAEE_hit&fq = HttpRequest :*",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&facet=true&facet.field=instance_name&facet.limit=10000&facet.missing=true&f.instance_name.facet.sort=count&fq = instance_metric:JAVAEE_hit&fq = HttpRequest :*",
             "custom": "&fq = instance_metric:JAVAEE_hit&fq = HttpRequest :*"
           },
           "mode": "count",
@@ -749,7 +749,7 @@
               1,
               2
             ],
-            "query": "q=HttpRequest instance_name%3A%5B*%20TO%20*%5D&wt=json&sort=HttpRequest%20desc&rows=10000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp HttpRequest instance_name\n",
+            "query": "q=HttpRequest instance_name%3A%5B*%20TO%20*%5D&wt=json&sort=HttpRequest%20desc&rows=10000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp HttpRequest instance_name\n",
             "custom": "&fq = instance_metric:JAVAEE_cputime"
           },
           "max_rows": 10000,
@@ -840,7 +840,7 @@
               1,
               2
             ],
-            "query": "q=HttpRequest%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp HttpRequest instance_name\n",
+            "query": "q=HttpRequest%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp HttpRequest instance_name\n",
             "custom": "&fq = instance_metric:JAVAEE_cputime"
           },
           "max_rows": 100000,
@@ -939,7 +939,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=instance_name&facet.limit=10000&facet.missing=true&f.instance_name.facet.sort=count&fq = instance_metric:JAVAEE_cputime&fq = HttpRequest :*",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&facet=true&facet.field=instance_name&facet.limit=10000&facet.missing=true&f.instance_name.facet.sort=count&fq = instance_metric:JAVAEE_cputime&fq = HttpRequest :*",
             "custom": "&fq = instance_metric:JAVAEE_cputime&fq = HttpRequest :*"
           },
           "mode": "count",
@@ -1059,7 +1059,7 @@
               1,
               2
             ],
-            "query": "q=HttpRequest instance_name%3A%5B*%20TO%20*%5D&wt=json&sort=HttpRequest%20desc&rows=10000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp HttpRequest instance_name\n",
+            "query": "q=HttpRequest instance_name%3A%5B*%20TO%20*%5D&wt=json&sort=HttpRequest%20desc&rows=10000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp HttpRequest instance_name\n",
             "custom": "&fq = instance_metric:JAVAEE_systemerror"
           },
           "max_rows": 10000,
@@ -1150,7 +1150,7 @@
               1,
               2
             ],
-            "query": "q=HttpRequest%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp HttpRequest instance_name\n",
+            "query": "q=HttpRequest%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp HttpRequest instance_name\n",
             "custom": "&fq = instance_metric:JAVAEE_systemerror"
           },
           "max_rows": 100000,
@@ -1249,7 +1249,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=instance_name&facet.limit=10000&facet.missing=true&f.instance_name.facet.sort=count&fq = instance_metric:JAVAEE_systemerror&fq = HttpRequest :*",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&facet=true&facet.field=instance_name&facet.limit=10000&facet.missing=true&f.instance_name.facet.sort=count&fq = instance_metric:JAVAEE_systemerror&fq = HttpRequest :*",
             "custom": "&fq = instance_metric:JAVAEE_systemerror&fq = HttpRequest :*"
           },
           "mode": "count",
@@ -1369,7 +1369,7 @@
               1,
               2
             ],
-            "query": "q=HttpRequest instance_name%3A%5B*%20TO%20*%5D&wt=json&sort=HttpRequest%20desc&rows=10000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp HttpRequest instance_name\n",
+            "query": "q=HttpRequest instance_name%3A%5B*%20TO%20*%5D&wt=json&sort=HttpRequest%20desc&rows=10000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp HttpRequest instance_name\n",
             "custom": "&fq = instance_metric:JAVAEE_responsesize"
           },
           "max_rows": 10000,
@@ -1460,7 +1460,7 @@
               1,
               2
             ],
-            "query": "q=HttpRequest%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fl=rs_timestamp HttpRequest instance_name\n",
+            "query": "q=HttpRequest%3A%5B*%20TO%20*%5D&wt=json&sort=rs_timestamp%20asc&rows=100000&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&fl=rs_timestamp HttpRequest instance_name\n",
             "custom": "&fq = instance_metric:JAVAEE_responsesize"
           },
           "max_rows": 100000,
@@ -1559,7 +1559,7 @@
               1,
               2
             ],
-            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&facet=true&facet.field=instance_name&facet.limit=10000&facet.missing=true&f.instance_name.facet.sort=count&fq = instance_metric:JAVAEE_responsesize&fq = HttpRequest :*",
+            "query": "q=*%3A* OR *%3A* OR *%3A*&wt=json&fq=rs_timestamp:[NOW/HOUR-3HOUR%20TO%20NOW/HOUR%2B1HOUR]&fq=res_id:ff8080815d313658015d313d90e80003.7faa0ae86f36e98a28762d69949a06da&facet=true&facet.field=instance_name&facet.limit=10000&facet.missing=true&f.instance_name.facet.sort=count&fq = instance_metric:JAVAEE_responsesize&fq = HttpRequest :*",
             "custom": "&fq = instance_metric:JAVAEE_responsesize&fq = HttpRequest :*"
           },
           "mode": "count",
@@ -1729,7 +1729,7 @@
     "save_as_public": false
   },
   "solr": {
-    "server": "http://10.4.53.205:9983/solr/",
+    "server": "/solr/",
     "core_name": "nifi",
     "core_list": [
       "PHP_logs",
@@ -1757,7 +1757,7 @@
   "en_cn": false,
   "alarm": false,
   "loading": false,
-  "enable_linkage": false,
+  "enable_linkage": true,
   "linkage_id": "a",
   "headHide": true,
   "switch": "App_Demo_Operate",
