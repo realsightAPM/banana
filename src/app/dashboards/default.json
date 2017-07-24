@@ -2266,7 +2266,7 @@
     "save_as_public": false
   },
   "solr": {
-    "server": "http://10.4.53.205:9983/solr/",
+    "server": "http://101.201.82.138:7983/solr/",
     "core_name": "apm3",
     "core_list": [
       "PHP_logs",
