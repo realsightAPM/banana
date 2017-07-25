@@ -44,6 +44,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         load:true,
         enable_linkage:true,
       linkage_id:'a',
+      template:[],
       rows: [],
       services: {},
       loader: {
@@ -84,6 +85,9 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
 
     this.current = _.clone(_dash);
     this.last = {};
+    this.topology = {
+      network_force_refresh:true,
+    };
 
     $rootScope.$on('$routeChangeSuccess',function(){
       // Clear the current dashboard to prevent reloading
@@ -137,6 +141,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
     // Since the dashboard is responsible for index computation, we can compute and assign the indices
     // here before telling the panels to refresh
     this.refresh = function() {
+       self.solr_list('*:*',10);
         self.current.filterids = filterSrv.ids;
       // Retrieve Solr collections for the dashboard
       kbnIndex.collections(self.current.solr.server).then(function (p) {
@@ -409,17 +414,35 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
           // return renderTemplate(JSON.stringify(source_json.dashboard), $routeParams);
           return renderTemplate(JSON.stringify(source_json), $routeParams);
         }
-      }).error(function(data, status) {
-        if(status === 0) {
-          alertSrv.set('Error',"Could not contact Solr at "+config.solr+
-            ". Please ensure that Solr is reachable from your system." ,'error');
-        } else {
-          alertSrv.set('Error','Could not find dashboard named "'+id+'". Please ensure that the dashboard name is correct or exists in the system.','error');
+      }).then(
+        function successCallback(data) {
+          // this callback will be called asynchronously
+          // when the response is available
+          self.dash_load(data.data);
+        },
+        function errorCallback(data, status) {
+          // called asynchronously if an error occurs
+          // or server returns response with an error status.
+          if(status === 0) {
+            alertSrv.set('Error',"Could not contact Solr at "+config.solr+
+              ". Please ensure that Solr is reachable from your system." ,'error');
+          } else {
+            alertSrv.set('Error','Could not find dashboard named "'+id+'". Please ensure that the dashboard name is correct or exists in the system.','error');
+          }
+          return false;
         }
-        return false;
-      }).success(function(data) {
-        self.dash_load(data);
-      });
+      );
+        // .error(function(data, status) {
+        // if(status === 0) {
+        //   alertSrv.set('Error',"Could not contact Solr at "+config.solr+
+        //     ". Please ensure that Solr is reachable from your system." ,'error');
+        // } else {
+        //   alertSrv.set('Error','Could not find dashboard named "'+id+'". Please ensure that the dashboard name is correct or exists in the system.','error');
+        // }
+        // return false;
+      // }).success(function(data) {
+      //   self.dash_load(data);
+      // });
     };
 
     this.script_load = function(file) {
@@ -477,7 +500,8 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         function(result) {
           if(type === 'dashboard') {
             // TODO
-            $location.url('/dashboard/solr/'+title+'?server='+self.current.solr.server);
+           // self.elasticsearch_load(type,id);
+            //$location.url('/dashboard/solr/'+title+'?server='+self.current.solr.server);
           }
           return result;
         },
@@ -505,6 +529,144 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       );
     };
 
+    this.solr_delete = function(id) {
+      // Set sjs.client.server to use 'banana-int' for deleting dashboard
+      var solrserver = self.current.solr.server + config.banana_index || config.solr + config.banana_index;
+      sjs.client.server(solrserver);
+
+      return sjs.Document(config.banana_index,'dashboard',id).doDelete(
+        // Success
+        function(result) {
+          self.solr_list('*:*',100);
+          return result;
+        },
+        // Failure
+        function() {
+          return false;
+        }
+      );
+    };
+    this.solr_list = function(query,count) {
+      // set indices and type
+      var solrserver = self.current.solr.server + config.banana_index || config.solr + config.banana_index;
+      sjs.client.server(solrserver);
+
+      var request = sjs.Request().indices(config.banana_index).types('dashboard');
+
+      // Need to set sjs.client.server back to use 'logstash_logs' collection
+      // But cannot do it here, it will interrupt other modules.
+      // sjs.client.server(config.solr);
+
+      return request.query(
+        sjs.QueryStringQuery(query || '*:*')
+      ).size(count).doSearch(
+        // Success
+        function(result) {
+          var data =[];
+          for(var i=0;i<result.response.numFound;i++){
+            data[i] = result.response.docs[i].title;
+          }
+          self.current.template =data;
+          return data;
+        },
+        // Failure
+        function() {
+          return false;
+        }
+      );
+
+    };
+    this.solr_load = function(type,id) {
+      var server =self.current.solr.server;
+      return $http({
+        url: server + config.banana_index + '/select?wt=json&q=title:"' + id + '"',
+        method: "GET",
+        transformResponse: function(response) {
+          response = angular.fromJson(response);
+          var source_json = angular.fromJson(response.response.docs[0].dashboard);
+
+          if (DEBUG) { console.debug('dashboard: type=',type,' id=',id,' response=',response,' source_json=',source_json); }
+
+          // return renderTemplate(angular.fromJson(response)._source.dashboard, $routeParams);
+          // return renderTemplate(JSON.stringify(source_json.dashboard), $routeParams);
+          return renderTemplate(JSON.stringify(source_json), $routeParams);
+        }
+      }).then(
+        function successCallback(data) {
+          // this callback will be called asynchronously
+          // when the response is available
+          self.dash_load(data.data);
+        },
+        function errorCallback(data, status) {
+          // called asynchronously if an error occurs
+          // or server returns response with an error status.
+          if(status === 0) {
+            alertSrv.set('Error',"Could not contact Solr at "+config.solr+
+              ". Please ensure that Solr is reachable from your system." ,'error');
+          } else {
+            alertSrv.set('Error','Could not find dashboard named "'+id+'". Please ensure that the dashboard name is correct or exists in the system.','error');
+          }
+          return false;
+        }
+      );
+      // .error(function(data, status) {
+      // if(status === 0) {
+      //   alertSrv.set('Error',"Could not contact Solr at "+config.solr+
+      //     ". Please ensure that Solr is reachable from your system." ,'error');
+      // } else {
+      //   alertSrv.set('Error','Could not find dashboard named "'+id+'". Please ensure that the dashboard name is correct or exists in the system.','error');
+      // }
+      // return false;
+      // }).success(function(data) {
+      //   self.dash_load(data);
+      // });
+    };
+    this.solr_save = function(type,title,ttl) {
+      // Clone object so we can modify it without influencing the existing obejct
+      var save = _.clone(self.current);
+      var id;
+
+      // Change title on object clone
+      if (type === 'dashboard') {
+        id = save.title = _.isUndefined(title) ? self.current.title : title;
+      }
+
+      // Create request with id as title. Rethink this.
+      // Use id instead of _id, because it is the default field of Solr schema-less.
+      var request = sjs.Document(config.banana_index,type,id).source({
+        // _id: id,
+        id: id,
+        user:  $.cookie('rtd_username'),
+        group: 'apm',
+        title: save.title,
+        dashboard: angular.toJson(save)
+      });
+
+      request = type === 'temp' && ttl ? request.ttl(ttl) : request;
+
+      // Solr: set sjs.client.server to use 'banana-int' for saving dashboard
+      var solrserver = self.current.solr.server + config.banana_index || config.solr + config.banana_index;
+      sjs.client.server(solrserver);
+
+      return request.doIndex(
+        // Success
+        function(result) {
+          if(type === 'dashboard') {
+            // TODO
+            alertSrv.set('Store to solr success',self.current.title+' has been store to solr','success',5000);
+            // self.elasticsearch_load(type,id);
+            //$location.url('/dashboard/solr/'+title+'?server='+self.current.solr.server);
+          }
+          return result;
+        },
+        // Failure
+        function() {
+          return false;
+        }
+      );
+    };
+
+
     this.elasticsearch_list = function(query,count) {
       // set indices and type
       var solrserver = self.current.solr.server + config.banana_index || config.solr + config.banana_index;
@@ -530,7 +692,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         );
 
     };
-      this.save_pdf = function() {
+    this.save_pdf = function() {
         var background_color = '#272b30';
           if(self.current.style === 'blue'){
               background_color = '#5bc0de';

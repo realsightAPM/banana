@@ -138,18 +138,18 @@
                     <input type="text" class="input" placeholder="e.g. &defType=lucid&qt=lucid&df=message&..." ng-model="dashboard.current.solr.global_params">
                 </div>
             </div>
-            <div >
-                <a data-toggle="collapse" class="aaa4" style='text-decoration:none;' data-parent="#accordion" href="#collapseSix">
-                    &nbsp;<i class="icon icon-folder-open"></i>
-                    &nbsp;&nbsp;{{'Collection select'|translate}}<i class="icon-angle-left4" style='float:right;'></i>
-                </a>
+          <!-- <div >
+               <a data-toggle="collapse" class="aaa4" style='text-decoration:none;' data-parent="#accordion" href="#collapseSix">
+                   &nbsp;<i class="icon icon-folder-open"></i>
+                   &nbsp;&nbsp;{{'Collection select'|translate}}<i class="icon-angle-left4" style='float:right;'></i>
+               </a>
 
-                <div id="collapseSix" class=" collapse">
+               <div id="collapseSix" class=" collapse">
 
-                    <select class="span2" ng-model="dashboard.current.solr.core_name" ng-change="dashboard.refresh()" ng-options="c as c for c in dashboard.current.solr.core_list"></select>
+                   <select class="span2" ng-model="dashboard.current.solr.core_name" ng-change="dashboard.refresh()" ng-options="c as c for c in dashboard.current.solr.core_list"></select>
 
-                </div>
-            </div>
+               </div>
+           </div>-->
             <div >
                 <a data-toggle="collapse" class="aaa5" style='text-decoration:none;' data-parent="#accordion" href="#collapseTwo">
                     &nbsp;<i class="icon icon-flag"></i>
@@ -183,9 +183,6 @@
             </div>
             <div >
                 <a ng-controller='dashLoader' ng-init="init()" ng-include="'app/partials/dashLoader.html'"></a>
-
-
-
             </div>
             <div >
                 <a data-toggle="collapse" class="aaa8" style='text-decoration:none;' data-parent="#accordion" href="#collapseFive">
@@ -200,6 +197,31 @@
                 </div>
             </div>
 
+          <div >
+            <a data-toggle="collapse" class="aaa9" style='text-decoration:none;' data-parent="#accordion" href="#collapseSeven">
+              &nbsp;<i class="icon icon-cloud"></i>
+              &nbsp;&nbsp;{{'Template Setting'|translate}}<i class="icon-angle-left9" style='float:right;'></i>
+            </a>
+
+            <div id="collapseSeven" class=" collapse">
+              <li id="solrsave"  ng-click="dashboard.solr_save('dashboard',dashboard.current.title) "><i class="icon-download"></i> <label  class="small">{{'Save Template'|translate}} </label></li>
+               <label  class="small">{{'Template List'|translate}} </label><select class="span2" ng-model="dashboard.current.template_delete_name" ng-change="dashboard.solr_delete(dashboard.current.template_delete_name)" ng-options="f for f in dashboard.current.template"></select>
+
+            </div>
+          </div>
+
+          <div >
+            <a data-toggle="collapse" class="aaa10" style='text-decoration:none;' data-parent="#accordion" href="#collapseEight">
+              &nbsp;<i class="icon icon-cloud-upload"></i>
+              &nbsp;&nbsp;{{'Template Select'|translate}}<i class="icon-angle-left10" style='float:right;'></i>
+            </a>
+
+            <div id="collapseEight" class=" collapse">
+              &nbsp;<i class="icon icon-upload"></i>  <select class="span2" ng-model="dashboard.current.templatename" ng-change="dashboard.solr_load('dashboard',dashboard.current.templatename)" ng-options="f for f in dashboard.current.template"></select>
+
+            </div>
+          </div>
+
           <div class="setings-item defaultBlue-skin" style="cursor:pointer" ng-click="dashboard.clear_cookie()">
 
             <i class="icon-signout icon-2x" ></i>
@@ -210,6 +232,10 @@
 
 
           </div>
+
+
+
+
             <!-- <a data-placement="bottom" bs-popover="'app/panels/timepicker/refreshctrl.html'">Time-series dashboard</a>-->
 
             <!--<div class="setings-item light-skin" style="cursor:pointer" ng-click="dashboard.current.style='flatlight'">
@@ -411,5 +437,11 @@
     })
     $('.aaa8').on('click',function(){
         $('.icon-angle-left8').toggleClass('active');
+    })
+    $('.aaa9').on('click',function(){
+      $('.icon-angle-left9').toggleClass('active');
+    })
+    $('.aaa10').on('click',function(){
+      $('.icon-angle-left10').toggleClass('active');
     })
 </script>

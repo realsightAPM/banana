@@ -311,7 +311,11 @@
   "Black":"黑色皮肤",
   "Node":"节点字段",
   "Edge":"关系字段",
-  "Logout":"登出"
+  "Logout":"登出",
+  "Save Template":"保存模板",
+  "Template Setting":"模板设置",
+  "Template List":"模板列表",
+  "Template Select":"模板选择"
 
 
 

@@ -152,7 +152,8 @@ function (Settings) {
       'group',
       'fisheye',
       'topologyfisheye',
-      'fisheyescatter'
+      'fisheyescatter',
+      'infoalarm'
     ]
   });
 });

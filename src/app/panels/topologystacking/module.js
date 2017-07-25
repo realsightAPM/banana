@@ -184,26 +184,28 @@ function (angular, app, _, $, kbn) {
       $scope.data = {};
       if(dashboard.current.network_bar_show) {
         if (($scope.panel.linkage_id === dashboard.current.linkage_id) || dashboard.current.enable_linkage) {
-          if (dashboard.current.hbasedata == null || _.isUndefined(dashboard.current.hbasedata)) {
+          if (dashboard.topology.hbasedata == null || _.isUndefined(dashboard.topology.hbasedata)) {
             $scope.query_url = "http://" + $scope.panel.HbaseIP + "/getServerMapData.pinpoint?applicationName=" + dashboard.current.network_app_name + "&from=" + dashboard.current.timefrom + "&to=" + dashboard.current.timeto + "&callerRange=1&calleeRange=1&serviceTypeName=TOMCAT";
             $.getJSON($scope.query_url, function (json) {
-              dashboard.current.hbasedata = json;
-              for (var i1 = 0; i1 < dashboard.current.hbasedata.applicationMapData.nodeDataArray.length; i1++) {
-                if (dashboard.current.hbasedata.applicationMapData.nodeDataArray[i1].applicationName === dashboard.current.network_app_name) {
-                  $scope.data = dashboard.current.hbasedata.applicationMapData.nodeDataArray[i1].timeSeriesHistogram;
+              dashboard.topology.hbasedata = json;
+              for (var i1 = 0; i1 < dashboard.topology.hbasedata.applicationMapData.nodeDataArray.length; i1++) {
+                if (dashboard.topology.hbasedata.applicationMapData.nodeDataArray[i1].applicationName === dashboard.current.network_app_name) {
+                  $scope.data = dashboard.topology.hbasedata.applicationMapData.nodeDataArray[i1].timeSeriesHistogram;
                   break;
                 }
               }
               $scope.$emit('render');
             });
           } else {
-            for (var i1 = 0; i1 < dashboard.current.hbasedata.applicationMapData.nodeDataArray.length; i1++) {
-              if (dashboard.current.hbasedata.applicationMapData.nodeDataArray[i1].key === dashboard.current.network_node_id) {
-                $scope.data = dashboard.current.hbasedata.applicationMapData.nodeDataArray[i1].timeSeriesHistogram;
+            $.getJSON('assets/json/json.json', function (json) {
+            for (var i1 = 0; i1 < dashboard.topology.hbasedata.applicationMapData.nodeDataArray.length; i1++) {
+              if (dashboard.topology.hbasedata.applicationMapData.nodeDataArray[i1].key === dashboard.current.network_node_id) {
+                $scope.data = dashboard.topology.hbasedata.applicationMapData.nodeDataArray[i1].timeSeriesHistogram;
                 break;
               }
             }
             $scope.$emit('render');
+          });
           }
 
 
@@ -212,10 +214,10 @@ function (angular, app, _, $, kbn) {
         if (($scope.panel.linkage_id === dashboard.current.linkage_id) || dashboard.current.enable_linkage) {
           $scope.query_url = "http://" + $scope.panel.HbaseIP + "/getServerMapData.pinpoint?applicationName=" + dashboard.current.network_app_name + "&from=" + dashboard.current.timefrom + "&to=" + dashboard.current.timeto + "&callerRange=1&calleeRange=1&serviceTypeName=TOMCAT";
           $.getJSON($scope.query_url, function (json) {
-            dashboard.current.hbasedata = json;
-            for (var i1 = 0; i1 < dashboard.current.hbasedata.applicationMapData.nodeDataArray.length; i1++) {
-              if (dashboard.current.hbasedata.applicationMapData.nodeDataArray[i1].applicationName === dashboard.current.network_app_name) {
-                $scope.data = dashboard.current.hbasedata.applicationMapData.nodeDataArray[i1].timeSeriesHistogram;
+            dashboard.topology.hbasedata = json;
+            for (var i1 = 0; i1 < dashboard.topology.hbasedata.applicationMapData.nodeDataArray.length; i1++) {
+              if (dashboard.topology.hbasedata.applicationMapData.nodeDataArray[i1].applicationName === dashboard.current.network_app_name) {
+                $scope.data = dashboard.topology.hbasedata.applicationMapData.nodeDataArray[i1].timeSeriesHistogram;
                 break;
               }
             }

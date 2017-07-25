@@ -134,69 +134,7 @@ function (angular, app, _, $, kbn) {
       var fq = 'fl='+$scope.panel.field+' '+$scope.panel.edge+'&wt=json'+($scope.panel.queries.custom != null ? $scope.panel.queries.custom : '');
 
 
-      //http://10.0.67.17:8080/getServerMapData.pinpoint?applicationName=DMDB&from=1499937049000&to=1499937349000&callerRange=1&calleeRange=1&serviceTypeName=TOMCAT&_=1499937383140
-      //var surl = $sce.trustAsResourceUrl("http://10.0.67.14:28080/getServerMapData.pinpoint?applicationName=test123&from=1499838187000&to=1499838487000&callerRange=1&calleeRange=1&serviceTypeName=TOMCAT&_=1499838447935");
-      // $.ajax({
-      //   type: "get",
-      //   async: false,
-      //   url: "http://www.runoob.com/try/ajax/jsonp.php?jsoncallback=?",
-      //   dataType: "jsonp",
-      //   jsonp: "callback",
-      //   jsonpCallback: "?",
-      //   success: function(data){
-      //    aaa = data;
-      //
-      //   },
-      //   error: function(data){
-      //     aaa = data.getAllResponseHeaders;
-      //
-      //   }
-      // });
-      // $.getJSON(surl, function(data) {
-      //     aaa = data;
-      // });
-      // $http.jsonp("http://59.110.9.55:28080/getServerMapData.pinpoint?applicationName=dataviz2&from=1499761406000&to=1499934206000&callerRange=1&calleeRange=1&serviceTypeName=TOMCAT&_=1499915283292")
-      //   .then(function successCallback(response){
-      //     aaa = response;
-      //   }, function errorCallback(response){
-      //     aaa = response;
-      //   });
-      // window.JSON_CALLBACK = function(data) {
-      //
-      //  var aa =data;
-      // };
 
-
-
-      //var bbb = aaa;
-      // if (filterSrv.getSolrFq()) {
-      //   fq = '&' + filterSrv.getSolrFq();
-      //     if(!$scope.panel.defaulttimestamp){
-      //         fq = fq.replace(filterSrv.getTimeField(),$scope.panel.value_sort);
-      //     }
-      // }
-      // var wt_json = '&wt=' + filetype;
-      // var rows_limit = isForExport ? '&rows=0' : ''; // for pies, we do not need the actual response doc, so set rows=0
-      // var facet = '';
-      //
-      // if ($scope.panel.mode === 'count') {
-      //   facet = '&facet=true&facet.field=' + $scope.panel.field + '&facet.limit=' + $scope.panel.size + '&facet.missing=true';
-      // } else {
-      //   // if mode != 'count' then we need to use stats query
-      //   // stats does not support something like facet.limit, so we have to sort and limit the results manually.
-      //   facet = '&stats=true&stats.facet=' + $scope.panel.field + '&stats.field=' + $scope.panel.stats_field + '&facet.missing=true';
-      // }
-      // facet += '&f.' + $scope.panel.field + '.facet.sort=' + ($scope.panel.sortBy || 'count');
-      //
-      // var exclude_length = $scope.panel.exclude.length;
-      // var exclude_filter = '';
-      // if(exclude_length > 0){
-      //   for (var i = 0; i < exclude_length; i++) {
-      //     if($scope.panel.exclude[i] !== "") {
-      //       exclude_filter += '&fq=-' + $scope.panel.field +":"+ $scope.panel.exclude[i];
-      //     }
-      //   }
-      // }
 
       return  fq ;
     };
@@ -441,75 +379,7 @@ function (angular, app, _, $, kbn) {
             };
 
 
-            var option = {
-              title : {
-                show:true,
-                x:'center'
-              },
-              color:colors,
-              tooltip : {
-                trigger: 'item',
-                confine:true,
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-              },
-              legend: {
-                show:true,
 
-                left: 'left',
-                top:'1%',
-                bottom:'1%',
-
-                textStyle:{
-                  fontSize:scope.panel.fontsize,
-                  color:'auto'
-                },
-
-                data: data
-              },
-              series : [
-                {
-                  name:scope.panel.title,
-                  type: 'pie',
-                  selectedMode: 'single',
-                  radius : ['60%','90%'],
-                  label :{
-                    normal:{
-                      show: false,
-                      position:'center',
-                      textStyle:{
-                        fontSize:scope.panel.fontsize
-                      }
-                    },
-                    emphasis: {
-                      show: true,
-                      textStyle: {
-                        fontSize: scope.panel.fontsize,
-                        fontWeight: 'bold'
-                      }
-                    }
-
-                  },
-                  center: ['60%', '50%'],
-                  data:data,
-                  itemStyle: {
-                    normal: {
-                      color: function(params) {
-                        var colorList = colors;
-                        return colorList[params.dataIndex];
-                      },
-                      shadowColor: '#fff',
-                      barBorderRadius: 5
-
-                    },
-                    emphasis: {
-                      shadowBlur: 10,
-                      shadowOffsetX: 0,
-                      shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                  }
-                }
-              ]
-            };
             myChart.setOption(option2);
             myChart.on('click', function (params) {
               // 点击联动
@@ -517,9 +387,9 @@ function (angular, app, _, $, kbn) {
                 dashboard.current.network_app_name =  params.name;
                 dashboard.current.linkage_id = scope.panel.linkage_id;
                 dashboard.current.enable_linkage = false;
-                dashboard.current.network_force_refresh=true;
+                dashboard.topology.network_force_refresh=true;
                 dashboard.current.network_bar_show =true;
-                dashboard.current.hbasedata = null;
+                dashboard.topology.hbasedata = null;
                 dashboard.refresh();
 
               //scope.build_search(params);

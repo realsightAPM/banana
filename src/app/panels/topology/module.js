@@ -246,12 +246,12 @@ function (angular, app, _, $, kbn) {
     $scope.get_data = function() {
 
       //同id 图表刷新，图表自身点击不刷新，时间选择全局刷新，更换应用刷新
-      if((($scope.panel.linkage_id === dashboard.current.linkage_id)&&dashboard.current.network_force_refresh)||dashboard.current.enable_linkage) {
+      if((($scope.panel.linkage_id === dashboard.current.linkage_id)&&dashboard.topology.network_force_refresh)||dashboard.current.enable_linkage) {
         $scope.query_url = "http://" + $scope.panel.HbaseIP + "/getServerMapData.pinpoint?applicationName="+dashboard.current.network_app_name+"&from=" + dashboard.current.timefrom + "&to=" + dashboard.current.timeto + "&callerRange=1&calleeRange=1&serviceTypeName=TOMCAT";
         $.getJSON($scope.query_url, function (json) {
           $scope.data = json;
-          dashboard.current.hbasedata = json;
-          dashboard.current.network_force_refresh = false;
+          dashboard.topology.hbasedata = json;
+
           $scope.$emit('render');
         });
       }
@@ -427,7 +427,7 @@ function (angular, app, _, $, kbn) {
                 dashboard.current.topology_click=true;
                 dashboard.current.network_bar_show =true;
                 scope.panel.isrefresh = false;
-
+                dashboard.topology.network_force_refresh = false;
                 dashboard.refresh();
               }
 

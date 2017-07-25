@@ -309,7 +309,11 @@
   "Black":"Black",
   "Node":"Node",
   "Edge":"Edge",
-  "Logout":"Logout"
+  "Logout":"Logout",
+  "Save Template":"Save Template",
+  "Template Setting":"Template Setting",
+  "Template List":"Template List",
+  "Template Select":"Template Select"
 
 
 
