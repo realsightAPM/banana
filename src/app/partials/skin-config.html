@@ -175,6 +175,7 @@
 
                 <div id="collapseThree" class=" collapse">
                     <li id="saveFile"  ng-click="dashboard.to_file() "><i class="icon-download"></i> <label  class="small">{{'Export to File'|translate}} </label></li>
+                  <li id="solrsave"  ng-click="dashboard.solr_save('dashboard',dashboard.current.title) "><i class="icon-download"></i> <label  class="small">{{'Save Template'|translate}} </label></li>
                     <li id="savePdf" ng-click="dashboard.save_pdf() "><i class="icon-download-alt"></i> <label  class="small"> {{'Export to PDF'|translate}}</label></li>
                     <li id="setDefault" ng-show="dashboard.current.loader.save_default" ng-click="dashboard.set_default()"><i class="icon-bookmark"></i>  <label class="small" >{{'Set as Browser Default'|translate}}</label></li>
                     <li id="clearDefault" ng-show="dashboard.current.loader.save_default" ng-click="dashboard.purge_default()"><i class="icon-ban-circle"></i> <label class="small">{{'Clear Browser Default'|translate}}</label></li>
@@ -198,29 +199,32 @@
             </div>
 
           <div >
-            <a data-toggle="collapse" class="aaa9" style='text-decoration:none;' data-parent="#accordion" href="#collapseSeven">
-              &nbsp;<i class="icon icon-cloud"></i>
-              &nbsp;&nbsp;{{'Template Setting'|translate}}<i class="icon-angle-left9" style='float:right;'></i>
-            </a>
-
-            <div id="collapseSeven" class=" collapse">
-              <li id="solrsave"  ng-click="dashboard.solr_save('dashboard',dashboard.current.title) "><i class="icon-download"></i> <label  class="small">{{'Save Template'|translate}} </label></li>
-               <label  class="small">{{'Template List'|translate}} </label><select class="span2" ng-model="dashboard.current.template_delete_name" ng-change="dashboard.solr_delete(dashboard.current.template_delete_name)" ng-options="f for f in dashboard.current.template"></select>
-
-            </div>
-          </div>
-
-          <div >
             <a data-toggle="collapse" class="aaa10" style='text-decoration:none;' data-parent="#accordion" href="#collapseEight">
               &nbsp;<i class="icon icon-cloud-upload"></i>
               &nbsp;&nbsp;{{'Template Select'|translate}}<i class="icon-angle-left10" style='float:right;'></i>
             </a>
 
             <div id="collapseEight" class=" collapse">
-              &nbsp;<i class="icon icon-upload"></i>  <select class="span2" ng-model="dashboard.current.templatename" ng-change="dashboard.solr_load('dashboard',dashboard.current.templatename)" ng-options="f for f in dashboard.current.template"></select>
+              &nbsp;<i class="icon icon-upload"></i>  <select class="span2" ng-model="dashboard.current.templatename" ng-change="dashboard.solr_load('dashboard',dashboard.current.templatename)" ng-options="f for f in dashboard.current.template"><option  value="">{{'Please select template to load'|translate}}</option></select>
+
 
             </div>
           </div>
+
+          <div >
+            <a data-toggle="collapse" class="aaa9" style='text-decoration:none;' data-parent="#accordion" href="#collapseSeven">
+              &nbsp;<i class="icon icon-cloud"></i>
+              &nbsp;&nbsp;{{'Template Delete'|translate}}<i class="icon-angle-left9" style='float:right;'></i>
+            </a>
+
+            <div id="collapseSeven" class=" collapse">
+
+              <i class="icon icon-minus"></i>   <select class="span2" ng-model="dashboard.current.template_delete_name" ng-change="dashboard.solr_delete(dashboard.current.template_delete_name)" ng-options="f for f in dashboard.current.template"><option  value="">{{'Please select template to delete'|translate}}</option></select>
+
+            </div>
+          </div>
+
+
 
           <div class="setings-item defaultBlue-skin" style="cursor:pointer" ng-click="dashboard.clear_cookie()">
 
@@ -232,6 +236,9 @@
 
 
           </div>
+
+
+
 
 
 

@@ -313,7 +313,9 @@
   "Save Template":"Save Template",
   "Template Setting":"Template Setting",
   "Template List":"Template List",
-  "Template Select":"Template Select"
+  "Template Select":"Template Select",
+  "Please select template to load":"Please select the template to load",
+  "Please select template to delete":"Please select the template to delete"
 
 
 
