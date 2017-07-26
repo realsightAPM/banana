@@ -83,7 +83,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
       interval    : '5m',
       intervals   : ['auto','1s','1m','5m','10m','30m','1h','3h','12h','1d','1w','1M','1y'],
       fill        : 0,
-      chartColors :['#6ef7d8','#6ef4f7','#6ed1f7','#6eb9f7','#6ea6f7','#6e8bf7','#6e6ff7','#f7d36e','#f7b86e','#f79f6e','#f78d6e'],
+      chartColors :['#0d6ece','#b8f53d','#3db3f5','#3df563','#3dedf5','#f5a93d','#f56a3d','#713df5','#dbe7c5','#c5d4e7','#6aecd3','#ec6aa0','#c8f519','#5ff519','#8b5fd8','#b493d2','#53eea5','#5393ee','#53ee97','#300abd','#0fbd0a','#0abd77','#0a65bd','#a2bd0a'],
       linewidth   : 3,
       timezone    : 'browser', // browser, utc or a standard timezone
       spyable     : true,
@@ -487,7 +487,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           timedata.sort();
           var series = [];
           for(var i = 0;i<label.length;i++){
-            series[i]={name:label[i],type:'line',areaStyle: {normal: {opacity:0.6}},data:data[i]};
+            series[i]={name:label[i],stack: '总量',type:'line',areaStyle: {normal: {opacity:0.6}},data:data[i]};
 
           }
 
