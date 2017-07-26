@@ -297,6 +297,8 @@ a .icon-rotate-90:before,a .icon-rotate-180:before,a .icon-rotate-270:before,a .
 .icon-angle-left9.active:before{content:"\f107";}
 .icon-angle-left10:before{content:"\f104";}
 .icon-angle-left10.active:before{content:"\f107";}
+.icon-angle-left11:before{content:"\f104";}
+.icon-angle-left11.active:before{content:"\f107";}
 .icon-angle-right:before{content:"\f105";}
 .icon-angle-up:before{content:"\f106";}
 .icon-angle-down:before{content:"\f107";}

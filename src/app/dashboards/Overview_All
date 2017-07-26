@@ -501,19 +501,6 @@
           },
           "height": "250",
           "yname": "",
-          "chartColors": [
-            "#6ef7d8",
-            "#6ef4f7",
-            "#6ed1f7",
-            "#6eb9f7",
-            "#6ea6f7",
-            "#6e8bf7",
-            "#6e6ff7",
-            "#f7d36e",
-            "#f7b86e",
-            "#f79f6e",
-            "#f78d6e"
-          ],
           "title": "JAVA应用健康度概览"
         },
         {
@@ -555,19 +542,7 @@
             "1y"
           ],
           "fill": 0,
-          "chartColors": [
-            "#6ef7d8",
-            "#6ef4f7",
-            "#6ed1f7",
-            "#6eb9f7",
-            "#6ea6f7",
-            "#6e8bf7",
-            "#6e6ff7",
-            "#f7d36e",
-            "#f7b86e",
-            "#f79f6e",
-            "#f78d6e"
-          ],
+
           "linewidth": 3,
           "timezone": "browser",
           "spyable": true,
@@ -634,19 +609,7 @@
             "1y"
           ],
           "fill": 0,
-          "chartColors": [
-            "#6ef7d8",
-            "#6ef4f7",
-            "#6ed1f7",
-            "#6eb9f7",
-            "#6ea6f7",
-            "#6e8bf7",
-            "#6e6ff7",
-            "#f7d36e",
-            "#f7b86e",
-            "#f79f6e",
-            "#f78d6e"
-          ],
+
           "linewidth": 3,
           "timezone": "browser",
           "spyable": true,
@@ -722,19 +685,7 @@
             "1y"
           ],
           "fill": 0,
-          "chartColors": [
-            "#6ef7d8",
-            "#6ef4f7",
-            "#6ed1f7",
-            "#6eb9f7",
-            "#6ea6f7",
-            "#6e8bf7",
-            "#6e6ff7",
-            "#f7d36e",
-            "#f7b86e",
-            "#f79f6e",
-            "#f78d6e"
-          ],
+
           "linewidth": 3,
           "timezone": "browser",
           "spyable": true,
@@ -801,19 +752,7 @@
             "1y"
           ],
           "fill": 0,
-          "chartColors": [
-            "#6ef7d8",
-            "#6ef4f7",
-            "#6ed1f7",
-            "#6eb9f7",
-            "#6ea6f7",
-            "#6e8bf7",
-            "#6e6ff7",
-            "#f7d36e",
-            "#f7b86e",
-            "#f79f6e",
-            "#f78d6e"
-          ],
+
           "linewidth": 3,
           "timezone": "browser",
           "spyable": true,
@@ -880,19 +819,7 @@
             "1y"
           ],
           "fill": 0,
-          "chartColors": [
-            "#6ef7d8",
-            "#6ef4f7",
-            "#6ed1f7",
-            "#6eb9f7",
-            "#6ea6f7",
-            "#6e8bf7",
-            "#6e6ff7",
-            "#f7d36e",
-            "#f7b86e",
-            "#f79f6e",
-            "#f78d6e"
-          ],
+
           "linewidth": 3,
           "timezone": "browser",
           "spyable": true,
@@ -968,19 +895,7 @@
             "1y"
           ],
           "fill": 0,
-          "chartColors": [
-            "#6ef7d8",
-            "#6ef4f7",
-            "#6ed1f7",
-            "#6eb9f7",
-            "#6ea6f7",
-            "#6e8bf7",
-            "#6e6ff7",
-            "#f7d36e",
-            "#f7b86e",
-            "#f79f6e",
-            "#f78d6e"
-          ],
+
           "linewidth": 3,
           "timezone": "browser",
           "spyable": true,
@@ -1047,19 +962,7 @@
             "1y"
           ],
           "fill": 0,
-          "chartColors": [
-            "#6ef7d8",
-            "#6ef4f7",
-            "#6ed1f7",
-            "#6eb9f7",
-            "#6ea6f7",
-            "#6e8bf7",
-            "#6e6ff7",
-            "#f7d36e",
-            "#f7b86e",
-            "#f79f6e",
-            "#f78d6e"
-          ],
+
           "linewidth": 3,
           "timezone": "browser",
           "spyable": true,
@@ -1126,19 +1029,7 @@
             "1y"
           ],
           "fill": 0,
-          "chartColors": [
-            "#6ef7d8",
-            "#6ef4f7",
-            "#6ed1f7",
-            "#6eb9f7",
-            "#6ea6f7",
-            "#6e8bf7",
-            "#6e6ff7",
-            "#f7d36e",
-            "#f7b86e",
-            "#f79f6e",
-            "#f78d6e"
-          ],
+
           "linewidth": 3,
           "timezone": "browser",
           "spyable": true,
@@ -1214,19 +1105,7 @@
             "1y"
           ],
           "fill": 0,
-          "chartColors": [
-            "#6ef7d8",
-            "#6ef4f7",
-            "#6ed1f7",
-            "#6eb9f7",
-            "#6ea6f7",
-            "#6e8bf7",
-            "#6e6ff7",
-            "#f7d36e",
-            "#f7b86e",
-            "#f79f6e",
-            "#f78d6e"
-          ],
+
           "linewidth": 3,
           "timezone": "browser",
           "spyable": true,
@@ -1293,19 +1172,7 @@
             "1y"
           ],
           "fill": 0,
-          "chartColors": [
-            "#6ef7d8",
-            "#6ef4f7",
-            "#6ed1f7",
-            "#6eb9f7",
-            "#6ea6f7",
-            "#6e8bf7",
-            "#6e6ff7",
-            "#f7d36e",
-            "#f7b86e",
-            "#f79f6e",
-            "#f78d6e"
-          ],
+
           "linewidth": 3,
           "timezone": "browser",
           "spyable": true,
@@ -1372,19 +1239,7 @@
             "1y"
           ],
           "fill": 0,
-          "chartColors": [
-            "#6ef7d8",
-            "#6ef4f7",
-            "#6ed1f7",
-            "#6eb9f7",
-            "#6ea6f7",
-            "#6e8bf7",
-            "#6e6ff7",
-            "#f7d36e",
-            "#f7b86e",
-            "#f79f6e",
-            "#f78d6e"
-          ],
+
           "linewidth": 3,
           "timezone": "browser",
           "spyable": true,

@@ -18,7 +18,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
 
   var module = angular.module('kibana.services');
 
-  module.service('dashboard', function($routeParams, $http, $rootScope, $injector, $location,
+  module.service('dashboard', function($routeParams, $http, $rootScope, $injector, $location,$translate,
     sjsResource, timer, kbnIndex, alertSrv
   ) {
     // A hash of defaults to use when loading a dashboard
@@ -38,11 +38,12 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       en_cn:false,
       alarm:false,
       network_app_name:'',
+      template_server:config.solr,
       switch:"App_Demo_Operate",
       panel_hints: true,
       hide_head: false,
-        load:true,
-        enable_linkage:true,
+      load:true,
+      enable_linkage:true,
       linkage_id:'a',
       template:[],
       rows: [],
@@ -85,6 +86,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
 
     this.current = _.clone(_dash);
     this.last = {};
+    this.template=[];
     this.topology = {
       network_force_refresh:true,
     };
@@ -141,7 +143,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
     // Since the dashboard is responsible for index computation, we can compute and assign the indices
     // here before telling the panels to refresh
     this.refresh = function() {
-       self.solr_list('*:*',10);
+       self.solr_list('*:*',100);
         self.current.filterids = filterSrv.ids;
       // Retrieve Solr collections for the dashboard
       kbnIndex.collections(self.current.solr.server).then(function (p) {
@@ -531,24 +533,26 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
 
     this.solr_delete = function(id) {
       // Set sjs.client.server to use 'banana-int' for deleting dashboard
-      var solrserver = self.current.solr.server + config.banana_index || config.solr + config.banana_index;
+      var solrserver = self.current.template_server + config.banana_index || config.solr + config.banana_index;
       sjs.client.server(solrserver);
 
       return sjs.Document(config.banana_index,'dashboard',id).doDelete(
         // Success
         function(result) {
+          alertSrv.set($translate.instant('Delete template successfully'),self.current.title+' has been deleted','success',5000);
           self.solr_list('*:*',100);
           return result;
         },
         // Failure
         function() {
+          alertSrv.set($translate.instant('Delete template failed'),self.current.title+' has been deleted','error',5000);
           return false;
         }
       );
     };
     this.solr_list = function(query,count) {
       // set indices and type
-      var solrserver = self.current.solr.server + config.banana_index || config.solr + config.banana_index;
+      var solrserver = self.current.template_server + config.banana_index || config.solr + config.banana_index;
       sjs.client.server(solrserver);
 
       var request = sjs.Request().indices(config.banana_index).types('dashboard');
@@ -566,18 +570,20 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
           for(var i=0;i<result.response.numFound;i++){
             data[i] = result.response.docs[i].title;
           }
-          self.current.template =data;
+          self.template =data;
+          alertSrv.set($translate.instant('List template successfully'),'Template has been listed','success',5000);
           return data;
         },
         // Failure
         function() {
+          alertSrv.set($translate.instant('List template failed'),'Templates have been not listed','error',5000);
           return false;
         }
       );
 
     };
     this.solr_load = function(type,id) {
-      var server =self.current.solr.server;
+      var server =self.current.template_server;
       return $http({
         url: server + config.banana_index + '/select?wt=json&q=title:"' + id + '"',
         method: "GET",
@@ -601,10 +607,10 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
           // called asynchronously if an error occurs
           // or server returns response with an error status.
           if(status === 0) {
-            alertSrv.set('Error',"Could not contact Solr at "+config.solr+
-              ". Please ensure that Solr is reachable from your system." ,'error');
+            alertSrv.set('Error:'+"Could not contact template system at "+self.current.template_server,
+              "Please ensure that Solr is reachable from your system." ,'error');
           } else {
-            alertSrv.set('Error','Could not find dashboard named "'+id+'". Please ensure that the dashboard name is correct or exists in the system.','error');
+            alertSrv.set('Error:'+'Could not find dashboard named '+id,' Please ensure that the dashboard name is correct or exists in the system.','error');
           }
           return false;
         }
@@ -645,7 +651,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       request = type === 'temp' && ttl ? request.ttl(ttl) : request;
 
       // Solr: set sjs.client.server to use 'banana-int' for saving dashboard
-      var solrserver = self.current.solr.server + config.banana_index || config.solr + config.banana_index;
+      var solrserver = self.current.template_server + config.banana_index || config.solr + config.banana_index;
       sjs.client.server(solrserver);
 
       return request.doIndex(
@@ -653,7 +659,8 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         function(result) {
           if(type === 'dashboard') {
             // TODO
-            alertSrv.set('Store to solr success',self.current.title+' has been store to solr','success',5000);
+            self.solr_list('*:*',100);
+            alertSrv.set($translate.instant('Store template successfully'),self.current.title+' has been store to solr','success',5000);
             // self.elasticsearch_load(type,id);
             //$location.url('/dashboard/solr/'+title+'?server='+self.current.solr.server);
           }
@@ -661,6 +668,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         },
         // Failure
         function() {
+          alertSrv.set($translate.instant('Store template failed'),self.current.title+' has been store to solr','error',5000);
           return false;
         }
       );

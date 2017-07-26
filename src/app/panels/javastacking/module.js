@@ -88,10 +88,8 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 	  linkage     :false,
         display:'block',
         icon:"icon-caret-down",
-
         linkage_id:'a',
 	    label : true,
-
       interactive : true,
       options     : true,
       show_queries:true,
@@ -127,8 +125,6 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           if($scope.panel.display === 'none'){
               $scope.panel.display='block';
               $scope.panel.icon="icon-caret-down";
-
-
           }else{
               $scope.panel.display='none';
               $scope.panel.icon="icon-caret-up";
@@ -447,7 +443,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
 
 				  var labelcolor = false;
-            if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
+          if (dashboard.current.style === 'dark'){
             labelcolor = true;
           }
               // Add plot to scope so we can build out own legend
@@ -459,6 +455,13 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
             var option = {
 
               series: [{
+                animation: true,
+                waveAnimation: true,
+                itemStyle: {
+                  normal: {
+                    shadowBlur: 0
+                  }
+                },
                 center: ['50%', '25%'],
                 radius: scope.panel.figuresize+'%',
                 backgroundStyle: {

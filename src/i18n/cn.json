@@ -312,13 +312,20 @@
   "Node":"节点字段",
   "Edge":"关系字段",
   "Logout":"登出",
-  "Save Template":"保存模板",
-  "Template Setting":"模板设置",
+  "Save Template":"在线模板保存",
+  "Template Setting":"模板存储设置",
   "Template List":"模板列表",
   "Template Select":"在线模板导入",
   "Please select template to load":"请选择要载入的模板",
   "Please select template to delete":"请选择要删除的模板",
-  "Template Delete":"在线模板删除"
+  "Template Delete":"在线模板删除",
+  "Template Address":"在线模板地址",
+  "List template successfully":"仪表盘在线模板列表已更新",
+  "List template failed":"仪表盘在线模板列表更新失败",
+  "Delete template successfully":"选中模板删除成功",
+  "Delete template failed":"选中模板删除失败",
+  "Store template successfully":"模板在线存储成功",
+  "Store template failed":"模板在线存储失败"
 
 
 

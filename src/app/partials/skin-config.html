@@ -175,7 +175,6 @@
 
                 <div id="collapseThree" class=" collapse">
                     <li id="saveFile"  ng-click="dashboard.to_file() "><i class="icon-download"></i> <label  class="small">{{'Export to File'|translate}} </label></li>
-                  <li id="solrsave"  ng-click="dashboard.solr_save('dashboard',dashboard.current.title) "><i class="icon-download"></i> <label  class="small">{{'Save Template'|translate}} </label></li>
                     <li id="savePdf" ng-click="dashboard.save_pdf() "><i class="icon-download-alt"></i> <label  class="small"> {{'Export to PDF'|translate}}</label></li>
                     <li id="setDefault" ng-show="dashboard.current.loader.save_default" ng-click="dashboard.set_default()"><i class="icon-bookmark"></i>  <label class="small" >{{'Set as Browser Default'|translate}}</label></li>
                     <li id="clearDefault" ng-show="dashboard.current.loader.save_default" ng-click="dashboard.purge_default()"><i class="icon-ban-circle"></i> <label class="small">{{'Clear Browser Default'|translate}}</label></li>
@@ -197,15 +196,30 @@
 
                 </div>
             </div>
+          <div >
+            <a data-toggle="collapse"  class="aaa11" style='text-decoration:none;' data-parent="#accordion" href="#collapseNine">
+              &nbsp;<i class="icon icon-cog"></i>
+              &nbsp;&nbsp;{{'Template Setting'|translate}}<i class="icon-angle-left11" style='float:right;'></i>
+            </a>
 
+            <div id="collapseNine" class="panel-collapse collapse ">
+              <label name="registerDiv" class="small"><span >{{'Template Address'|translate}}</span></label>
+              <input type="text" class="input" ng-model="dashboard.current.template_server">
+              <button type="button" class="btn btn-success" ng-click="dashboard.refresh()">{{'Confirm'|translate}}</button>
+            </div>
+          </div>
+
+          <div>
+            <a  style='text-decoration:none;cursor:pointer;' ng-click="dashboard.solr_save('dashboard',dashboard.current.title) ">&nbsp;<i class="icon-cloud-upload"></i> &nbsp;&nbsp;{{'Save Template'|translate}} </a>
+          </div>
           <div >
             <a data-toggle="collapse" class="aaa10" style='text-decoration:none;' data-parent="#accordion" href="#collapseEight">
-              &nbsp;<i class="icon icon-cloud-upload"></i>
+              &nbsp;<i class="icon icon-cloud-download"></i>
               &nbsp;&nbsp;{{'Template Select'|translate}}<i class="icon-angle-left10" style='float:right;'></i>
             </a>
 
             <div id="collapseEight" class=" collapse">
-              &nbsp;<i class="icon icon-upload"></i>  <select class="span2" ng-model="dashboard.current.templatename" ng-change="dashboard.solr_load('dashboard',dashboard.current.templatename)" ng-options="f for f in dashboard.current.template"><option  value="">{{'Please select template to load'|translate}}</option></select>
+              &nbsp;<i class="icon icon-upload"></i>  <select class="span2" ng-model="dashboard.current.templatename" ng-change="dashboard.solr_load('dashboard',dashboard.current.templatename)" ng-options="f for f in dashboard.template"><option  value="">{{'Please select template to load'|translate}}</option></select>
 
 
             </div>
@@ -219,7 +233,7 @@
 
             <div id="collapseSeven" class=" collapse">
 
-              <i class="icon icon-minus"></i>   <select class="span2" ng-model="dashboard.current.template_delete_name" ng-change="dashboard.solr_delete(dashboard.current.template_delete_name)" ng-options="f for f in dashboard.current.template"><option  value="">{{'Please select template to delete'|translate}}</option></select>
+              <i class="icon icon-minus"></i>   <select class="span2" ng-model="dashboard.current.template_delete_name" ng-change="dashboard.solr_delete(dashboard.current.template_delete_name)" ng-options="f for f in dashboard.template"><option  value="">{{'Please select template to delete'|translate}}</option></select>
 
             </div>
           </div>
@@ -450,5 +464,8 @@
     })
     $('.aaa10').on('click',function(){
       $('.icon-angle-left10').toggleClass('active');
+    })
+    $('.aaa11').on('click',function(){
+      $('.icon-angle-left11').toggleClass('active');
     })
 </script>
