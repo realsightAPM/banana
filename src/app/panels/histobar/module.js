@@ -220,13 +220,13 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
         $scope.panel.queries.query = "";
         // Build the query
-        _.each($scope.panel.queries.ids, function (id) {
+        _
             var query = $scope.sjs.FilteredQuery(
-                querySrv.getEjsObj(id),
+                querySrv.getEjsObj(0),
                 filterSrv.getBoolFilter(filterSrv.ids)
             );
 
-            var facet = $scope.sjs.DateHistogramFacet(id);
+            var facet = $scope.sjs.DateHistogramFacet(0);
             if ($scope.panel.mode === 'count' || $scope.panel.mode === 'counts') {
                 facet = facet.field(filterSrv.getTimeField());
             } else {
@@ -239,7 +239,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
             facet = facet.interval(_interval).facetFilter($scope.sjs.QueryFilter(query));
             request = request.facet(facet).size(0);
 
-        });
+
 
         // Populate the inspector panel
         $scope.populate_modal(request);
@@ -467,7 +467,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           var sum_risk = 0;
           var sum_warning = 0;
 
-
+          //时间转换
           Date.prototype.pattern = function (fmt) {
                 var o = {
                     "M+" : this.getMonth() + 1, //月份
@@ -501,7 +501,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                 }
                 return fmt;
             };
-
+          //数据处理
           for (var i =0;i<chartData[0].length;i++){
               sum_data++;
               selecttime[i] =Date.parse(chartData[0][i][scope.panel.value_sort]);
@@ -533,6 +533,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
 
           var idd = scope.$id;
+          //载入echarts
           var echarts = require('echarts');
 
 

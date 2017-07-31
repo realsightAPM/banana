@@ -571,7 +571,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
             data[i] = result.response.docs[i].title;
           }
           self.template =data;
-          alertSrv.set($translate.instant('List template successfully'),'Template has been listed','success',5000);
+         // alertSrv.set($translate.instant('List template successfully'),'Template has been listed','success',5000);
           return data;
         },
         // Failure

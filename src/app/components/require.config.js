@@ -35,6 +35,7 @@ require.config({
 
     jquery:                   '../vendor/jquery/jquery-1.12.1',
     cookies:                   '../vendor/jquery/jquery.cookie',
+    golden:                    '../vendor/goldenlayout',
     'jquery-ui':              '../vendor/jquery/jquery-ui-1.10.3',
 
     'extend-jquery':          'components/extend-jquery',
@@ -148,6 +149,7 @@ require.config({
     timepicker:             ['jquery', 'bootstrap'],
     datepicker:             ['jquery', 'bootstrap'],
 
+    golden:                 ['jquery'],
     elasticjs:              ['angular', '../vendor/elasticjs/elastic'],
     solrjs:                 ['angular', '../vendor/solrjs/solr'],
     Donut3D:                ['d3'],
