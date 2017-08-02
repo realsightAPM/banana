@@ -106,10 +106,10 @@ $(document).ready(function () {
     });
 
     // Tooltips demo
-    $('.tooltip-demo').tooltip({
-        selector: "[data-toggle=tooltip]",
-        container: "body"
-    });
+    // $('.tooltip-demo').tooltip({
+    //     selector: "[data-toggle=tooltip]",
+    //     container: "body"
+    // });
 
 
     // Full height of sidebar

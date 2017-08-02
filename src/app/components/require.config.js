@@ -33,7 +33,11 @@ require.config({
     'underscore-src':         '../vendor/underscore',
     bootstrap:                '../vendor/bootstrap/bootstrap',
 
-    jquery:                   '../vendor/jquery/jquery-1.12.1',
+    jquery:                   '../vendor/nav/jquery-3.1.1.min',
+    metisMenu:                '../vendor/nav/plugins/metisMenu/jquery.metisMenu',
+    slimscroll:               '../vendor/nav/plugins/slimscroll/jquery.slimscroll.min',
+    inspinia:                 '../vendor/nav/inspinia',
+    pace:                     '../vendor/nav/plugins/pace/pace.min',
     cookies:                   '../vendor/jquery/jquery.cookie',
     golden:                    '../vendor/goldenlayout',
     'jquery-ui':              '../vendor/jquery/jquery-ui-1.10.3',
@@ -121,6 +125,10 @@ require.config({
     },
 
     // simple dependency declaration
+    metisMenu:              ['jquery'],
+    slimscroll:             ['jquery'],
+    inspinia:               ['jquery'],
+    pace:                   ['jquery'],
     'jquery-ui':            ['jquery'],
     'jquery.flot':          ['jquery'],
     'jquery.flot.pie':      ['jquery', 'jquery.flot'],
