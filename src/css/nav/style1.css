@@ -635,10 +635,10 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
   padding: 0 20px;
 }
 .wrapper-content {
-  padding: 20px 10px 40px;
+  padding: 0px 0px 0px;
 }
 #page-wrapper {
-  padding: 0 15px;
+  padding: 0 10px;
   min-height: 568px;
   position: relative !important;
 }
@@ -1531,11 +1531,13 @@ body.md-skin {
     position: inherit;
     margin: 0 0 0 220px;
     min-height: 100vh;
+    background:#f3f3f4
   }
   .navbar-static-side {
     z-index: 2001;
     position: absolute;
     width: 220px;
+    background-color:#2f4050
   }
   .navbar-top-links .dropdown-messages,
   .navbar-top-links .dropdown-tasks,

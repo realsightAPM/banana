@@ -85,11 +85,12 @@
           <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
               <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-              <form role="search" class="navbar-form-custom" method="post" action="#">
-                <div class="form-group">
-                  <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
-                </div>
-              </form>
+              <!--<form role="search" class="navbar-form-custom" method="post" action="#">-->
+                <!--<div class="form-group">-->
+                  <!--<input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">-->
+                <!--</div>-->
+              <!--</form>-->
+
             </div>
             <ul class="nav navbar-top-links navbar-right">
               <li>
@@ -98,27 +99,27 @@
                 </a>
               </li>
             </ul>
-
+            <div ng-include="'app/partials/skin-config.html'" class="ng-scope" ></div>
           </nav>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
-          <div class="wrapper wrapper-content animated fadeInRight">
+
             <div id="bodyContent"  >
-              <div class="navbar navbar-static-top" ng-hide = "dashboard.current.hide_head ">
-                <div class="navbar-inner">
-                  <div class="container-fluid">
-                    <img src="img/rsapm_logo.png" data-placement="left" style="float:left;margin-top:4px">
-                    <span class="brand" style = "text-align:center;margin-top:4px">
+              <!--<div class="navbar navbar-static-top" ng-hide = "dashboard.current.hide_head ">-->
+                <!--<div class="navbar-inner">-->
+                  <!--<div class="container-fluid">-->
+                    <!--<img src="img/rsapm_logo.png" data-placement="left" style="float:left;margin-top:4px">-->
+                    <!--<span class="brand" style = "text-align:center;margin-top:4px">-->
 
-               &nbsp;&nbsp;&nbsp;&nbsp; {{dashboard.current.title}}
-          </span>
+               <!--&nbsp;&nbsp;&nbsp;&nbsp; {{dashboard.current.title}}-->
+          <!--</span>-->
 
 
 
-                  </div>
-                </div>
-              </div>
-              <div ng-include="'app/partials/skin-config.html'" class="ng-scope" ></div>
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+
               <div class="container-fluid main">
                 <div class="row-fluid">
           <span  style="position:absolute; left:50%; top:50%; margin:-25px 0 0 -25px ;" ng-show="dashboard.current.load">
@@ -128,7 +129,7 @@
                 </div>
               </div>
             </div>
-          </div>
+
 
         </div>
         <div class="footer">
