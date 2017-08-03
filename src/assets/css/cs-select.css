@@ -6,7 +6,7 @@ div.cs-select {
 	text-align: right;
 	background: rgba(255, 255, 255, 0);
 	z-index: 100;
-	width: 100%;
+
 	max-width: 500px;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -36,7 +36,7 @@ div.cs-select:focus {
 
 /* Placeholder and selected option */
 .cs-select > span {
-	padding-right: 3em;
+	padding-right: 1.5em;
 }
 
 .cs-select > span::after,
@@ -52,7 +52,7 @@ div.cs-select:focus {
 
 .cs-select > span::after {
 	content: '\25BE';
-	right: 1em;
+	right: 1000000em;
 }
 
 .cs-select .cs-selected span::after {
@@ -69,7 +69,7 @@ div.cs-select:focus {
 .cs-select .cs-options {
 	position: absolute;
 	overflow: hidden;
-	width: 100%;
+	width: 70%;
 	background: #fff;
 	visibility: hidden;
 }

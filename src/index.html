@@ -23,6 +23,9 @@
     <script src="vendor/go.js"></script>
     <script src="vendor/vis.js"></script>
     <script src="vendor/pdf/jspdf.js"></script>
+    <script src="vendor/nav/classie.js"></script>
+    <script src="vendor/nav/selectFx.js"></script>
+    <!--<script src="vendor/nav/toastr.min.js"></script>-->
     <script src="vendor/require/require.js"></script>
     <script src="app/components/require.config.js"></script>
     <!--<script src="vendor/jquery/jquery.cookie.js"></script>-->
@@ -39,8 +42,11 @@
     <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
 	  <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/nav/style1.css">
+    <link rel="stylesheet" href="css/nav/nav-style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/cs-select.css" />
 
+    <link rel="stylesheet" type="text/css" href="assets/css/cs-skin-rotate.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/toastr.min.css" />
     <div ng-repeat='alert in dashAlerts.list' class="alert-{{alert.severity}} dashboard-notice" ng-if="$last" style="position:fixed">
       <button type="button" class="close" ng-click="dashAlerts.clear(alert)" style="padding-right:50px">&times;</button>
       <strong>{{alert.title}}</strong> <span ng-bind-html-unsafe='alert.text'></span> <div style="padding-right:10px" class='pull-right small'> {{$index + 1}} alert(s) </div>
@@ -58,22 +64,24 @@
           <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
               <div class="dropdown profile-element">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong>
-                             </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
-                <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                  <li><a href="#">Logout</a></li>
-                </ul>
+                <img src="img/rsapm_logo.png" class="img-circle" data-placement="left" >
+                <!--<a data-toggle="dropdown" class="dropdown-toggle" >-->
+
+                            <!--<span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong>-->
+                             <!--</span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>-->
+                <!--<ul class="dropdown-menu animated fadeInRight m-t-xs">-->
+                  <!--<li><a href="#">Logout</a></li>-->
+                <!--</ul>-->
               </div>
               <div class="logo-element">
-                IN+
+                <img src="img/apm-logo.png"  data-placement="left" >
               </div>
             </li>
             <li class="active">
               <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Main view</span></a>
             </li>
             <li>
-              <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Minor view</span> </a>
+              <a href="index.html"><i class="fa fa-free-code-camp"></i> <span class="nav-label">Minor view</span> </a>
             </li>
           </ul>
 
@@ -81,10 +89,10 @@
       </nav>
 
       <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
+        <div class="row border-bottom" style="background-color:#626d77;">
           <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-              <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+              <a class="navbar-minimalize minimalize-styl-2 " href="#" ><i class="fa fa-ravelry"></i> </a>
               <!--<form role="search" class="navbar-form-custom" method="post" action="#">-->
                 <!--<div class="form-group">-->
                   <!--<input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">-->
@@ -92,13 +100,31 @@
               <!--</form>-->
 
             </div>
-            <ul class="nav navbar-top-links navbar-right">
+
+            <ul class="nav  navbar-right" style="float:right;margin-right:3%;margin-top: 0.27%" ng-click="dashboard.clear_cookie()">
               <li>
-                <a href="#">
-                  <i class="fa fa-sign-out"></i> Log out
+                <a >
+                  <i class="fa fa-sign-out"></i> {{'Logout'|translate}}
                 </a>
               </li>
             </ul>
+
+
+              <select class="cs-select cs-skin-rotate"  >
+                <option value="cn">简体中文</option>
+                <option value="en">English</option>
+              </select>
+
+            <!--<select id="language" class="cs-select cs-skin-slide">-->
+              <!--<option  value="cn" data-class="icon-camera">简体中文</option>-->
+              <!--<option  value="en" data-class="icon-money">English</option>-->
+
+            <!--</select>-->
+            <!--<select style="float:right;margin-right:8.5%"  ng-controller="LanguageSwitchingCtrl" ng-model="cur_lang"  ng-change="switching(cur_lang)">-->
+              <!--<option value="en">English</option>-->
+              <!--<option value="cn">简体中文</option>-->
+            <!--</select>-->
+
             <div ng-include="'app/partials/skin-config.html'" class="ng-scope" ></div>
           </nav>
         </div>
@@ -133,11 +159,9 @@
 
         </div>
         <div class="footer">
-          <div class="pull-right">
-            10GB of <strong>250GB</strong> Free.
-          </div>
+
           <div>
-            <strong>Copyright</strong> Example Company &copy; 2014-2017
+            <strong>Copyright</strong> © 2017 Neusoft ALL Rights Reserved
           </div>
         </div>
 
@@ -145,6 +169,7 @@
     </div>
     <!-- Mainly scripts -->
     <!--<script src="vendor/nav/jquery-3.1.1.min.js"></script>-->
+    <!--<script src="vendor/nav/toastr.min.js"></script>-->
     <!--<script src="vendor/nav/plugins/metisMenu/jquery.metisMenu.js"></script>-->
     <!--<script src="vendor/nav/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
 

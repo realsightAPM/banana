@@ -9,11 +9,22 @@ define([
   'modernizr',
   'filesaver',
   'html2canvas',
-    'cookies',
+  'cookies',
+  'toastr'
 ],
 function (angular, $, kbn, _, config, moment, Modernizr) {
   'use strict';
-
+  var toastr = require('toastr');
+  // setTimeout(function() {
+  //   toastr.options = {
+  //     closeButton: true,
+  //     progressBar: true,
+  //     showMethod: 'slideDown',
+  //     timeOut: 5000
+  //   };
+  //   toastr.info('Responsive Admin Theme', 'Welcome to RealsightAPM');
+  //
+  // }, 1000);
   var DEBUG = false; // DEBUG mode
 
   var module = angular.module('kibana.services');
@@ -95,11 +106,21 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       // Clear the current dashboard to prevent reloading
       self.current = {};
       self.indices = [];
+
+      [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
+
+        new SelectFx(el);
+      } );
+
       route();
     });
 
     var route = function() {
       // Is there a dashboard type and id in the URL?
+      setTimeout(function() {
+        self.solr_list('*:*',100);
+      }, 3000);
+
       if(!(_.isUndefined($routeParams.kbnType)) && !(_.isUndefined($routeParams.kbnId))) {
         var _type = $routeParams.kbnType;
         var _id = $routeParams.kbnId;
@@ -138,12 +159,15 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
           self.file_load('default.json');
         }
       }
+      //require(['toastr'], function(toastr){
+
+      //});
     };
 
     // Since the dashboard is responsible for index computation, we can compute and assign the indices
     // here before telling the panels to refresh
     this.refresh = function() {
-       self.solr_list('*:*',100);
+
         self.current.filterids = filterSrv.ids;
       // Retrieve Solr collections for the dashboard
       kbnIndex.collections(self.current.solr.server).then(function (p) {
@@ -539,13 +563,29 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       return sjs.Document(config.banana_index,'dashboard',id).doDelete(
         // Success
         function(result) {
-          alertSrv.set($translate.instant('Delete template successfully'),self.current.title+' has been deleted','success',5000);
+          toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            showEasing: "swing",
+            timeOut: 3000
+          };
+          toastr.success($translate.instant('Delete template successfully'), 'RealsightAPM');
+          //alertSrv.set($translate.instant('Delete template successfully'),self.current.title+' has been deleted','success',5000);
           self.solr_list('*:*',100);
           return result;
         },
         // Failure
         function() {
-          alertSrv.set($translate.instant('Delete template failed'),self.current.title+' has been deleted','error',5000);
+          toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            showEasing: "swing",
+            timeOut: 3000
+          };
+          toastr.error($translate.instant('Delete template failed'), 'RealsightAPM');
+          //alertSrv.set($translate.instant('Delete template failed'),self.current.title+' has been deleted','error',5000);
           return false;
         }
       );
@@ -571,12 +611,27 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
             data[i] = result.response.docs[i].title;
           }
           self.template =data;
-         // alertSrv.set($translate.instant('List template successfully'),'Template has been listed','success',5000);
+          toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            showEasing: "swing",
+            timeOut: 3000
+          };
+          toastr.success($translate.instant('List template successfully'), 'RealsightAPM');
+          //alertSrv.set($translate.instant('List template successfully'),'Template has been listed','success',5000);
           return data;
         },
         // Failure
         function() {
-          alertSrv.set($translate.instant('List template failed'),'Templates have been not listed','error',5000);
+          toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            timeOut: 4000
+          };
+          toastr.warning($translate.instant('List template failed'), 'RealsightAPM');
+          //alertSrv.set($translate.instant('List template failed'),'Templates have been not listed','error',5000);
           return false;
         }
       );
@@ -606,12 +661,21 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         function errorCallback(data, status) {
           // called asynchronously if an error occurs
           // or server returns response with an error status.
-          if(status === 0) {
-            alertSrv.set('Error:'+"Could not contact template system at "+self.current.template_server,
-              "Please ensure that Solr is reachable from your system." ,'error');
-          } else {
-            alertSrv.set('Error:'+'Could not find dashboard named '+id,' Please ensure that the dashboard name is correct or exists in the system.','error');
-          }
+
+          toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            showEasing: "swing",
+            timeOut: 3000
+          };
+          toastr.error($translate.instant('Load template failed'), 'RealsightAPM');
+          // if(status === 0) {
+          //   alertSrv.set('Error:'+"Could not contact template system at "+self.current.template_server,
+          //     "Please ensure that Solr is reachable from your system." ,'error');
+          // } else {
+          //   alertSrv.set('Error:'+'Could not find dashboard named '+id,' Please ensure that the dashboard name is correct or exists in the system.','error');
+          // }
           return false;
         }
       );
@@ -659,8 +723,16 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         function(result) {
           if(type === 'dashboard') {
             // TODO
+            toastr.options = {
+              closeButton: true,
+              progressBar: true,
+              showMethod: 'slideDown',
+              showEasing: "swing",
+              timeOut: 3000
+            };
+            toastr.success($translate.instant('Store template successfully'), 'RealsightAPM');
             self.solr_list('*:*',100);
-            alertSrv.set($translate.instant('Store template successfully'),self.current.title+' has been store to solr','success',5000);
+            //alertSrv.set($translate.instant('Store template successfully'),self.current.title+' has been store to solr','success',5000);
             // self.elasticsearch_load(type,id);
             //$location.url('/dashboard/solr/'+title+'?server='+self.current.solr.server);
           }
@@ -668,7 +740,15 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         },
         // Failure
         function() {
-          alertSrv.set($translate.instant('Store template failed'),self.current.title+' has been store to solr','error',5000);
+          toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            showEasing: "swing",
+            timeOut: 3000
+          };
+          toastr.error($translate.instant('Store template failed'), 'RealsightAPM');
+         // alertSrv.set($translate.instant('Store template failed'),self.current.title+' has been store to solr','error',5000);
           return false;
         }
       );

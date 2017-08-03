@@ -1,5 +1,6 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,300,500,700");
+@import "open-sans.css";
+@import "roboto.css";
+@import "font-awesome.min.css";
 /*
  *
  *   INSPINIA - Responsive Admin Theme
@@ -44,7 +45,7 @@ h5 {
   padding: 14px 20px 14px 25px;
 }
 .nav.navbar-right > li > a {
-  color: #999c9e;
+  color: #f3f3f4;
 }
 .nav > li.active > a {
   color: #ffffff;
@@ -195,9 +196,9 @@ ul.nav-second-level {
   color: #8095a8;
 }
 .minimalize-styl-2 {
-  padding: 4px 12px;
-  margin: 14px 5px 5px 20px;
-  font-size: 14px;
+  padding: 6px 12px;
+  margin: 7px 7px 7px 0px;
+  font-size: 16px;
   float: left;
 }
 .navbar-form-custom {
@@ -332,7 +333,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 .navbar-fixed-top,
 .navbar-static-top {
-  background: #f3f3f4;
+
 }
 .fixed-nav #wrapper {
   margin-top: 0;
@@ -638,7 +639,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
   padding: 0px 0px 0px;
 }
 #page-wrapper {
-  padding: 0 10px;
+  padding: 0 0px;
   min-height: 568px;
   position: relative !important;
 }

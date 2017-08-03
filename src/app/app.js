@@ -28,6 +28,7 @@ define([
   'pace'
   ],
   function (angular, $, _, appLevelRequire) {
+
     "use strict";
     var username = $.cookie('rtd_username');
     var password = $.cookie('rtd_password');
@@ -52,6 +53,7 @@ define([
 
       window.location.href = window.location.origin+window.location.pathname.replace("index.html","")+"login.html";
     }
+
     var app = angular.module('kibana', ['ngRoute', 'ngSanitize','pascalprecht.translate']),
       // we will keep a reference to each module defined before boot, so that we can
       // go back and allow it to define new features later. Once we boot, this will be false
