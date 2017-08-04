@@ -514,7 +514,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
             }
             data[i1]=dataAll.sort();
-
+            dataAll=[];
             y3=0;
           }
           timedata.sort();
