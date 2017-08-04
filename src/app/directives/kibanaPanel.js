@@ -31,7 +31,7 @@ function (angular) {
 
           '<span class="extra row-button" ng-if="panel.editable != false">' +
             '<span confirm-click="row.panels = _.without(row.panels,panel)" '+
-            'confirmation="Are you sure you want to remove this {{panel.type}} panel?" class="pointer">'+
+            'confirmation="\'{{\'Are you sure you want to remove this\'|translate}}\' {{panel.type}} \'{{\'panel?\'|translate}}\'" class="pointer">'+
             '<i class="icon-remove pointer" bs-tooltip="\'{{\'Remove\'|translate}}\'"></i></span>'+
           '</span>' +
 

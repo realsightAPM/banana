@@ -75,6 +75,7 @@ require.config({
     jspdf:                    '../../bower_components/jspdf/dist/jspdf.min',
 
     vis:                    '../../node_modules/vis/dist/vis',
+    vizceral:                    '../../node_modules/vizceral/dist/vizceral',
     //gojs:                     '../../src/vendor/go',
     // d3transform:                    '../vendor/d3/d3-transform',
     // extarray:                     '../vendor/d3/extarray',

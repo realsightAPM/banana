@@ -322,7 +322,13 @@
   "Delete template successfully":"Delete template successfully",
   "Delete template failed":"Delete template failed",
   "Store template successfully":"Store template successfully",
-  "Store template failed":"Store template failed"
+  "Store template failed":"Store template failed",
+  "Local default template set successfully":"Local default template set successfully",
+  "Local default template set failed":"Local default template set failed",
+  "Local default template clear successfully":"Local default template clear successfully",
+  "Local default template clear failed":"Local default template clear failed",
+  "Are you sure you want to remove this":"Are you sure you want to remove this",
+  "panel?":"panel?"
 
 
 

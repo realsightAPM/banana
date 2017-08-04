@@ -325,8 +325,13 @@
   "Delete template successfully":"选中模板删除成功",
   "Delete template failed":"选中模板删除失败",
   "Store template successfully":"模板在线存储成功",
-  "Store template failed":"模板在线存储失败"
-
+  "Store template failed":"模板在线存储失败",
+  "Local default template set successfully":"浏览器默认模板设置成功",
+  "Local default template set failed":"浏览器默认模板设置失败",
+  "Local default template clear successfully":"清除浏览器默认模板成功",
+  "Local default template clear failed":"清除浏览器默认模板失败",
+  "Are you sure you want to remove this":"确定要移除",
+  "panel?":"图表吗？"
 
 
 

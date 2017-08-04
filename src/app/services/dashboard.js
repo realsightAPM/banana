@@ -365,19 +365,30 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       if (Modernizr.localstorage) {
         window.localStorage['dashboard'] = angular.toJson(dashboard || self.current);
         $location.path('/dashboard');
-        alertSrv.set('Local Default Set',self.current.title+' has been set as your local default','success',5000);
+        toastr.options = {
+          closeButton: true,
+          progressBar: true,
+          showMethod: 'slideDown',
+          showEasing: "swing",
+          timeOut: 3000
+        };
+        toastr.success($translate.instant('Local default template set successfully'), 'RealsightAPM');
+        //alertSrv.set('Local Default Set',self.current.title+' has been set as your local default','success',5000);
       } else {
-        alertSrv.set('Incompatible Browser','Sorry, your browser is too old for this feature','error',5000);
+        toastr.error($translate.instant('Local default template set failed'), 'RealsightAPM');
+        //alertSrv.set('Incompatible Browser','Sorry, your browser is too old for this feature','error',5000);
       }
     };
 
     this.purge_default = function() {
       if (Modernizr.localstorage) {
         window.localStorage['dashboard'] = '';
-        alertSrv.set('Local Default Clear','Your local default dashboard has been cleared','success',5000);
+        toastr.success($translate.instant('Local default template clear successfully'), 'RealsightAPM');
+        //alertSrv.set('Local Default Clear','Your local default dashboard has been cleared','success',5000);
 
       } else {
-        alertSrv.set('Incompatible Browser','Sorry, your browser is too old for this feature','error',5000);
+        toastr.error($translate.instant('Local default template clear failed'), 'RealsightAPM');
+        //alertSrv.set('Incompatible Browser','Sorry, your browser is too old for this feature','error',5000);
       }
     };
 
