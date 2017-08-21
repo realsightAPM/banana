@@ -210,7 +210,7 @@
           </div>
 
           <div>
-            <a  style='text-decoration:none;cursor:pointer;' ng-click="dashboard.solr_save('dashboard',dashboard.current.title) ">&nbsp;<i class="icon-cloud-upload"></i> &nbsp;&nbsp;{{'Save Template'|translate}} </a>
+            <a  style='text-decoration:none;cursor:pointer;' ng-click="dashboard.confirm()"   >&nbsp;<i class="icon-cloud-upload"></i> &nbsp;&nbsp;{{'Save Template'|translate}} </a>
           </div>
           <div >
             <a data-toggle="collapse" class="aaa10" style='text-decoration:none;' data-parent="#accordion" href="#collapseEight">
@@ -233,7 +233,7 @@
 
             <div id="collapseSeven" class=" collapse">
 
-              <i class="icon icon-minus"></i>   <select class="span2" ng-model="dashboard.current.template_delete_name" ng-change="dashboard.solr_delete(dashboard.current.template_delete_name)" ng-options="f for f in dashboard.template"><option  value="">{{'Please select template to delete'|translate}}</option></select>
+              <i class="icon icon-minus"></i>   <select class="span2" ng-model="dashboard.current.template_delete_name" ng-change="dashboard.confirm_delete(dashboard.current.template_delete_name)" ng-options="f for f in dashboard.template"><option  value="">{{'Please select template to delete'|translate}}</option></select>
 
             </div>
           </div>

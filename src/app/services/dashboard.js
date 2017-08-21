@@ -10,11 +10,19 @@ define([
   'filesaver',
   'html2canvas',
   'cookies',
-  'toastr'
+  'toastr',
+    'confirm'
 ],
 function (angular, $, kbn, _, config, moment, Modernizr) {
   'use strict';
   var toastr = require('toastr');
+  toastr.options = {
+    closeButton: true,
+    progressBar: true,
+    showMethod: 'slideDown',
+    showEasing: "swing",
+    timeOut: 3000
+  };
   // setTimeout(function() {
   //   toastr.options = {
   //     closeButton: true,
@@ -201,8 +209,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
               } else {
                 // Do not issue refresh if no indices match. This should be removed when panels
                 // properly understand when no indices are present
-                alertSrv.set('No results','There were no results because no indices were found that match your'+
-                  ' selected time span','info',5000);
+                toastr.info($translate.instant('No results'), 'RealsightAPM');
                 return false;
               }
             }
@@ -214,9 +221,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
             self.indices = [self.current.index.default];
             $rootScope.$broadcast('refresh');
           } else {
-            alertSrv.set("No time filter",
-              'Timestamped indices are configured without a failover. Waiting for time filter.',
-              'info',5000);
+            toastr.info($translate.instant('No time filter'), 'RealsightAPM');
           }
         }
       } else {
@@ -291,7 +296,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
               self.dash_load(dash_defaults(result.data));
               return true;
           }, function () {
-              alertSrv.set('Error', "Could not load <i>dashboards/" + "</i>. Please make sure it exists", 'error');
+            toastr.error($translate.instant('Could not load dashboards'), 'RealsightAPM');
               return false;
           });
       };
@@ -431,7 +436,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         self.dash_load(dash_defaults(result.data));
         return true;
       },function() {
-        alertSrv.set('Error',"Could not load <i>dashboards/"+file+"</i>. Please make sure it exists" ,'error');
+        toastr.error($translate.instant('Could not load dashboards'), 'RealsightAPM');
         return false;
       });
     };
@@ -880,6 +885,56 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         return false;
       });
     };
+    this.confirm = function(){
+      $.confirm({
+        boxWidth: '30%',
+        useBootstrap: false,
+        type:'blue',
+        theme:'material',
+        icon:'icon icon-cloud-upload',
+        title: $translate.instant('Save Template'),
+        content: $translate.instant('Are you sure to continue?'),
+        autoClose: 'NO|10000',
+        buttons: {
+          Yes: {
+            btnClass: 'btn-success custom-class',
+            action: function () {
+              self.solr_save('dashboard',self.current.title);
+            }
+          },
+          NO: {
+            text: 'cancel'
+          }
+        }
+      });
+    }
+
+    this.confirm_delete = function(id){
+      if(id!=null){
+        $.confirm({
+          boxWidth: '30%',
+          useBootstrap: false,
+          type:'blue',
+          theme:'material',
+          icon:'icon icon-minus',
+          title: $translate.instant('Template Delete'),
+          content: $translate.instant('Are you sure to delete?'),
+          autoClose: 'NO|10000',
+          buttons: {
+            Yes: {
+              btnClass: 'btn-success custom-class',
+              action: function () {
+                self.solr_delete(id);
+              }
+            },
+            NO: {
+              text: 'cancel'
+            }
+          }
+        });
+      }
+
+    }
 
     this.numberWithCommas = function(x) {
       if (x) {

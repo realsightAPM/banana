@@ -322,7 +322,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
     };
   });
 
-  module.directive('adtotalChart', function(querySrv,dashboard,filterSrv) {
+  module.directive('adtotalChart', function(querySrv,dashboard,filterSrv,$translate) {
     return {
       restrict: 'A',
       link: function(scope, elem) {
@@ -463,7 +463,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                 },
                 yAxis: {
                     type: 'category',
-                    data: ['异常总数'],
+                    data: [$translate.instant('Total Anomaly')],
                     splitArea: {
                         show: true
                     },

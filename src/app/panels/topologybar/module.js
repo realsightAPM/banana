@@ -339,15 +339,16 @@ function (angular, app, _, $, kbn) {
           if(myChart) {
             myChart.dispose();
           }
+           var j1 = 0;
+           var x_data = [];
+           var data_data=[];
+           for(var item in scope.data){
+             x_data[j1]=item;
+             data_data[j1]=scope.data[item];
+             j1++;
+           }
           if(scope.panel.chart === 'network') {
-            var j1 = 0;
-            var x_data = [];
-            var data_data=[];
-            for(var item in scope.data){
-              x_data[j1]=item;
-              data_data[j1]=scope.data[item];
-              j1++;
-            }
+
             myChart = echarts.init(document.getElementById(idd));
             var option3 = {
               color:colors,
@@ -442,6 +443,101 @@ function (angular, app, _, $, kbn) {
             // var cc= bb;
             //});
           }
+
+           if(scope.panel.chart === 'bars'){
+             var islength = 0;
+             if(data_data.length>5){
+               islength =1;
+             }
+
+             myChart = echarts.init(document.getElementById(idd));
+             var option5 = {
+               tooltip: {
+                 trigger: 'axis',
+                 confine:true,
+                 axisPointer: {
+                   type: 'none'
+                 },
+                 formatter: function(params) {
+                   return params[0].name + ': ' + params[0].value;
+                 }
+               },
+               color:['#1a75f9', '#1ab0f9', '#42d3f0', '#e59d87', '#759aa0', '#dc6b67', '#efdd79', '#8dc1aa', '#ea7d52', '#8dace7', '#a6a1e1', '#FECDA3', '#FED980','#bcf924','#f9ac24','#8224f9','#24e5f9','#f96524'],
+               grid: {
+                 left: '0%',
+                 right: '3%',
+                 bottom: '3%',
+                 top: '3%',
+                 containLabel: true
+               },
+               xAxis: {
+                 data: x_data,
+                 axisTick: {
+                   show: false
+                 },
+                 axisLine: {
+                   show: false
+                 },
+                 axisLabel: {
+                   show:true,
+                   textStyle:{
+                     color:labelcolor ? '#fff':'#4F4F4F',
+                     fontSize:scope.panel.fontsize,
+                   }
+                 }
+               },
+               yAxis: {
+                 splitLine: {
+                   show: false
+                 },
+                 axisTick: {
+                   show: false
+                 },
+                 axisLine: {
+                   show: false
+                 },
+                 axisLabel: {
+                   show: true,
+                   margin:52,
+                   textStyle:{
+                     color:labelcolor ? '#DCDCDC':'#4F4F4F',
+                     fontSize:scope.panel.fontsize+2,
+                     fontStyle: 'italic'
+                   }
+                 }
+               },
+               //color: ['#1a75f9', '#1a93f9', '#1ab0f9', '#1acef9', '#42d3f0', '#e59d87', '#759aa0', '#dc6b67', '#efdd79', '#8dc1aa', '#ea7d52', '#8dace7', '#a6a1e1', '#FECDA3', '#FED980'],
+               series: [{
+                 name: scope.panel.title,
+                 type: 'pictorialBar',
+                 barCategoryGap: islength?'-60%':'-10%',
+                 symbolSize:['120%','100%'],
+                 // symbol: 'path://M0,10 L10,10 L5,0 L0,10 z',
+                 symbol: 'path://M0,10 L10,10 C5.5,10 5.5,5 5,0 C4.5,5 4.5,10 0,10 z',
+                 itemStyle: {
+                   normal: {
+                     color: function(params) {
+                       var colorList = ['#1a75f9', '#1ab0f9', '#42d3f0', '#e59d87', '#759aa0', '#dc6b67', '#efdd79', '#8dc1aa', '#ea7d52', '#8dace7', '#a6a1e1', '#FECDA3', '#FED980','#bcf924','#f9ac24','#8224f9','#24e5f9','#f96524'];
+                       return colorList[params.dataIndex];
+                     },
+                     shadowColor: '#fff',
+                     barBorderRadius: 5,
+                     opacity: 0.8
+
+                   },
+                   emphasis: {
+                     opacity: 1
+                   }
+                 },
+                 data: data_data,
+                 z: 10
+               }]
+             };
+               myChart.setOption(option5);
+
+
+
+           }
 
 
         });

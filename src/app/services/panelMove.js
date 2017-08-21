@@ -1,10 +1,19 @@
 define([
     'angular',
-    'underscore'
+    'underscore',
+    'jquery',
+    'toastr'
   ],
   function (angular, _) {
     'use strict';
-
+    var toastr = require('toastr');
+    toastr.options = {
+      closeButton: true,
+      progressBar: true,
+      showMethod: 'slideDown',
+      showEasing: "swing",
+      timeOut: 3000
+    };
     var module = angular.module('kibana.services');
 
     module.service('panelMove', function(dashboard, $rootScope, alertSrv) {
@@ -15,13 +24,12 @@ define([
 
       this.onStart = function() {
         dashboard.panelDragging =  true;
-        notices.push(alertSrv.set('Moving','Drop this panel into an available space, or on top of another panel','info'));
+        toastr.info($translate.instant('Drop this panel into an available space, or on top of another panel'), 'RealsightAPM');
         $rootScope.$apply();
       };
 
       this.onOver = function() {
-        notices.push(alertSrv.set('Add panel',
-          'Drop to add panel to this row. Panel will use row height, but retain their span','success'));
+        toastr.success($translate.instant('Drop to add panel to this row. Panel will use row height'), 'RealsightAPM');
         $rootScope.$apply();
       };
 

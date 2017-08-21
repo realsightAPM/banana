@@ -900,7 +900,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                 to: moment.utc(ranges.xaxis.to).toDate(),
                 field: filterSrv.getTimeField()
             });
-            dashboard.current.linkage_id = scope.panel.linkage_id_for_log;
+            dashboard.current.linkage_id = scope.panel.linkage_id;
             dashboard.current.enable_linkage =false;
             dashboard.refresh();
 

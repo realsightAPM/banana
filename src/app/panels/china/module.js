@@ -404,7 +404,11 @@ function (angular, app, _, $, kbn) {
 
           // IE doesn't work without this
           elem.css({height:scope.panel.height||scope.row.height});
-
+          if(window.localStorage.lang=='cn'){
+            scope.panel.isEN=false;
+          }else if(window.localStorage.lang=='en'){
+            scope.panel.isEN=true;
+          }
           // Make a clone we can operate on.
 		  
           chartData = _.clone(scope.data);

@@ -248,7 +248,7 @@ define([
 
     });
 
-    module.directive('fisheyescatterChart', function(querySrv,dashboard,filterSrv) {
+    module.directive('fisheyescatterChart', function(querySrv,dashboard,filterSrv,$translate) {
       return {
         restrict: 'A',
         link: function(scope, elem) {
@@ -284,8 +284,11 @@ define([
             cloneData.scatter.dotList.reverse();
             var idd = scope.$id;
             var labelcolor = false;
+            var d3_label_color = "black";
             if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
               labelcolor = true;
+              var d3_label_color = "white";
+
             }
             var x;
             var y;
@@ -310,7 +313,7 @@ define([
                   max_data=cloneData.scatter.dotList[i1][1];
                 }
                 timeData[i1] = cloneData.scatter.dotList[i1][0]/60000;
-                fisheye_data[i1] = {name:"时间"+cloneData.scatter.dotList[i1][1]+"ms",time:cloneData.scatter.dotList[i1][0]/60000,value:cloneData.scatter.dotList[i1][1],status:cloneData.scatter.dotList[i1][4],radius:cloneData.scatter.dotList[i1][4]}
+                fisheye_data[i1] = {name:$translate.instant("Time")+cloneData.scatter.dotList[i1][1]+"ms",time:cloneData.scatter.dotList[i1][0]/60000,value:cloneData.scatter.dotList[i1][1],status:cloneData.scatter.dotList[i1][4],radius:cloneData.scatter.dotList[i1][4]}
 
               }
               //timeData.sort();
@@ -334,7 +337,7 @@ define([
               // Various scales and distortions.
               var xScale = d3.fisheye.scale(d3.scale.log).domain([time_from_to,timeData[0]]).range([0, width]),
                 yScale = d3.fisheye.scale(d3.scale.linear).domain([0, max_data]).range([height, 0]),
-                radiusScale = d3.scale.sqrt().domain([0, 80]).range([1, 40]),
+                radiusScale = d3.scale.sqrt().domain([0, 80]).range([1, 25]),
                 colorScale = d3.scale.category20c().domain([0, 1]);
 
               // The x & y axes.
@@ -357,31 +360,32 @@ define([
               // Add the x-axis.
               svg.append("g")
                 .attr("class", "x axis")
+                .attr("fill",d3_label_color)
                 .attr("transform", "translate(0," + height + ")")
                 .call(xAxis);
 
               // Add the y-axis.
               svg.append("g")
                 .attr("class", "y axis")
+                .attr("fill",d3_label_color)
                 .call(yAxis);
 
               // Add an x-axis label.
               svg.append("text")
-                .attr("class", "x label")
-                .attr("text-anchor", "end")
-                .attr("x", width - 6)
-                .attr("y", height - 6)
-                .attr("dy", ".35em")
-                .text("time");
+                .attr("fill",d3_label_color)
+                .attr("font-size", 20)
+                .attr("x", width-20 )
+                .attr("y", height+11)
+                .text($translate.instant("Interval")+"(min)");
 
               // Add a y-axis label.
               svg.append("text")
-                .attr("class", "y label")
+                .attr("fill",d3_label_color)
+                .attr("font-size", 20)
                 .attr("text-anchor", "end")
-
-                .attr("dy", ".75em")
-
-                .text("ms");
+                .attr("x",2)
+                .attr("y",2)
+                .text($translate.instant("Time")+"(ms)");
 
               // Load the data.
 

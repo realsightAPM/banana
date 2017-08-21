@@ -1,26 +1,9 @@
 <div ng-controller='topologyscatter' ng-init="init()">
 
 <style>
-    table.tableSection {
-        display: table;
-        width: 100%;
-    }
-    table.tableSection thead, table.tableSection tbody {
-        float: left;
-        width: 100%;
-    }
-    table.tableSection tbody {
-        overflow: auto;
-        /*height: 150px;*/
-    }
-    table.tableSection tr {
-        width: 100%;
-        display: table;
-        text-align: left;
-    }
-    table.tableSection th, table.tableSection td {
-        width: 33%;
-    }
+  table td {
+    word-break: break-all;
+  }
     .floatleft{
       float:left;
     }
@@ -40,12 +23,124 @@
     }
     </style>
   <!-- START Pie or bar chart -->
- 
+
 
   <div style="overflow:hidden" ng-style="{'display':panel.display}"  topologyscatter-chart params="{{panel}}" style="position:relative" class="pointer " ng-style="{'floatleft':panel.counter_pos == 'right'}" id='{{$id}}'></div>
+  <span ng-show='panel.options'>
+      <a class="link underline small" ng-show='panel.options' ng-click="options=!options" style="color:#1babf4">
+        <i ng-show="!options" class="icon-caret-right"></i><i ng-show="options" class="icon-caret-down"></i> {{'EventTrack'|translate}}
+      </a>
+    </span>
 
-  
-  <!-- END Pie or Bar chart -->
+  <form  class="form-inline bordered histogram-options" ng-show="options">
+
+  <table ng-style="panel.style" class="table table-hover" >
+    <caption style="text-align: left">{{'EventMessage'|translate}}</caption>
+    <thead>
+    <th style="text-align: center">{{'StartTime'|translate}}</th>
+    <th style="text-align: center">{{'EventName'|translate}}</th>
+    <th style="text-align: center">{{'ResponseTime'|translate}}</th>
+    <th style="text-align: center">{{'AgentID'|translate}}</th>
+    <th style="text-align: center">{{'ClientIP'|translate}}</th>
+    <th style="text-align: center">{{'EventID'|translate}}</th>
+    <th style="text-align: center">{{'Exception'|translate}}</th>
+
+    </thead>
+    <tbody >
+    <tr >
+      <td style="text-align: center">{{startTime}}</td>
+      <td style="text-align: center">{{eventName}}</td>
+      <td style="text-align: center">{{responseTime}}</td>
+      <td style="text-align: center">{{agentID}}</td>
+      <td style="text-align: center">{{clientIP}}</td>
+      <td style="text-align: center">{{eventID}}</td>
+      <td style="text-align: center"><i class="icon icon-bell-alt" ng-show="exception_icon"></i> &nbsp; {{exception}} </td>
+
+    </tr>
+    </tbody>
+  </table>
+
+    <ul class="nav nav-tabs" role="tablist" id="myTab">
+      <li role="presentation" class="active"><a href="#resource_topology" role="tab" data-toggle="tab" > {{'Resource Topology'|translate}}</a></li>
+      <li role="presentation"><a href="#resource_consumption" role="tab" data-toggle="tab">{{'Resource Consumption'|translate}}</a></li>
+      <li role="presentation"><a href="#method_consumption" role="tab" data-toggle="tab">{{'MethodTrack'|translate}}</a></li>
+
+    </ul>
+    <div class="tab-content" >
+      <div role="tabpanel" class="tab-pane active" id="resource_topology">
+        <div  style="width:30%;height:600px;display: inline-block"><label style="color:#1babf4;margin-left:50%;font-size:16px" class="small">{{'Topology'|translate}} </label> <div id='{{$id}}a' style="height:100%;"> </div></div>
+        <div  style="width:69%;height:600px;display: inline-block"><label style="color:#1babf4;margin-left:50%;font-size:16px" class="small">{{'CallStack'|translate}} </label> <div id='{{$id}}e' style="height:100%;"> </div></div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="resource_consumption">
+        <div id='{{$id}}b' style="width:498px;height:400px;display: inline-block"></div>
+        <div id='{{$id}}c'  style="width:498px;height:400px;display: inline-block"></div>
+        <div id='{{$id}}d'  style="width:498px;height:400px;display: inline-block"></div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="method_consumption">
+        <table st-table="displayedCollection" st-safe-src="filteredItems" class="table table-striped table-bordered">
+          <caption style="text-align: left">{{'MethodTrack'|translate}}</caption>
+          <thead>
+
+          <tr>
+            <th>
+              <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+            </th>
+          </tr>
+          <tr>
+            <th style="text-align: center">{{'Call relationship'|translate}}</th>
+            <th style="text-align: center">{{'Method'|translate}}</th>
+            <th style="text-align: center">{{'Parameter'|translate}}</th>
+            <th style="text-align: center">{{'StartTime'|translate}}</th>
+            <th style="text-align: center">{{'Interval(ms)'|translate}}</th>
+            <th style="text-align: center">{{'Time consumption'|translate}}</th>
+            <th style="text-align: center">{{'Method consumption'|translate}}</th>
+            <th style="text-align: center">{{'Belongs to class'|translate}}</th>
+            <th style="text-align: center">{{'API'|translate}}</th>
+            <th style="text-align: center">{{'Agent'|translate}}</th>
+            <th style="text-align: center">{{'Application'|translate}}</th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="term in displayedCollection" >
+            <td style="text-align: left">{{term.call_relationship}}</td>
+            <td style="text-align: center">{{term.method}}</td>
+            <td style="text-align: center">{{term.parameter}}</td>
+            <td style="text-align: center">{{term.startTime}}</td>
+            <td style="text-align: center">{{term.interval}}</td>
+            <td style="text-align: center">{{term.timeConsumption}}</td>
+            <td style="text-align: center">{{term.methodConsumption}}</td>
+            <td style="text-align: center">{{term.belongsToClass}}</td>
+            <td style="text-align: center">{{term.api}}</td>
+            <td style="text-align: center">{{term.agent}}</td>
+            <td style="text-align: center">{{term.application}}</td>
+
+            <!--<td style="text-align: center">{{term[10]}}</td>-->
+            <!--<td style="text-align: center">{{term[11]}}</td>-->
+            <!--<td style="text-align: center">{{term[12]}}</td>-->
+            <!--<td style="text-align: center">{{term[13]}}</td>-->
+            <!--<td style="text-align: center">{{term[14]}}</td>-->
+            <!--<td style="text-align: center">{{term[16]}}</td>-->
+            <!--<td style="text-align: center">{{term[17]}}</td>-->
+            <!--<td style="text-align: center">{{term[19]}}</td>-->
+            <!--<td style="text-align: center">{{term[20]}}</td>-->
+            <!--<td style="text-align: center">{{term[4]}}</td>-->
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="5">
+              <div st-pagination="" st-items-by-page="panel.itemsByPage" st-displayed-pages="panel.displayPage" class="pagination pull-right"></div>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+
+    </div>
+
+
+  </form>
 
   <!-- START Table -->
 

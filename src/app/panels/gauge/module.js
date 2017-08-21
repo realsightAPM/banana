@@ -386,7 +386,7 @@ function (angular, app, _, $, kbn) {
 
   });
 
-  module.directive('gaugeChart', function(querySrv,dashboard) {
+  module.directive('gaugeChart', function(querySrv,dashboard,$translate) {
     return {
       restrict: 'A',
       link: function(scope, elem) {
@@ -442,13 +442,13 @@ function (angular, app, _, $, kbn) {
           if(myChart) {
                   myChart.dispose();
                 }
-				  var term  = "告警";
+				  var term  = $translate.instant('Warning');
           var color_term = "#F6AB60";
           if(scope.apdex<=20){
-                      term  = "风险";
+                      term  = $translate.instant('Risk');
                       color_term = '#EB5768';
                   }else if(scope.apdex>60){
-                      term  = "健康";
+                      term  = $translate.instant('Health');
                       color_term = '#1e90ff';
                   }
 

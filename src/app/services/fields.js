@@ -1,11 +1,20 @@
 define([
   'angular',
   'underscore',
-  'config'
+  'config',
+    'jquery',
+    'toastr'
 ],
 function (angular, _, config) {
   'use strict';
-
+  var toastr = require('toastr');
+  toastr.options = {
+    closeButton: true,
+    progressBar: true,
+    showMethod: 'slideDown',
+    showEasing: "swing",
+    timeOut: 3000
+  };
   var module = angular.module('kibana.services');
 
   module.service('fields', function(dashboard, $rootScope, $http, alertSrv) {
@@ -94,11 +103,9 @@ function (angular, _, config) {
           // called asynchronously if an error occurs
           // or server returns response with an error status.
           if (response.status === 0) {
-            alertSrv.set('Error', "Could not contact Solr at " + dashboard.current.solr.server +
-              ". Please ensure that Solr is reachable from your system.", 'error');
+            toastr.error($translate.instant('Could not contact Solr,please ensure that Solr is reachable from your system.'), 'RealsightAPM');
           } else {
-            alertSrv.set('Error', "Collection not found at " + dashboard.current.solr.server + dashboard.current.solr.core_name +
-              ". Please check your configuration or create the collection. If you're using a proxy ensure it is configured correctly.", 'error');
+            toastr.error($translate.instant('Collection not found at Solr'), 'RealsightAPM');
           }
         }
       );

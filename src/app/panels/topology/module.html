@@ -40,8 +40,22 @@
     }
     </style>
   <!-- START Pie or bar chart -->
- 
-
+  <span ng-show='panel.options'>
+      <a class="link underline small" ng-show='panel.options' ng-click="options=!options" style="color:#1babf4">
+        <i ng-show="!options" class="icon-caret-right"></i><i ng-show="options" class="icon-caret-down"></i> {{'View'|translate}}
+      </a>
+    </span>
+  <form  class="form-inline bordered histogram-options" ng-show="options">
+    <span class="checkbox">
+       <label style="color:#1babf4" class="small">{{'CalleeRange'|translate}}</label>
+    <select style="background-color:#2f3e50" class="input-mini" ng-model="panel.calleeRange" ng-options="f for f in [1,2,3,4]"></select></span>
+    </span>
+    <span class="checkbox">
+       <label style="color:#1babf4" class="small">{{'CallerRange'|translate}}</label>
+    <select style="background-color:#2f3e50" class="input-mini" ng-model="panel.callerRange" ng-options="f for f in [1,2,3,4]"></select></span>
+    </span>
+    <button class="button button-large button-plain button-borderless " ng-click="dashboard.refresh()"><i class="icon icon-check"></i></button>
+  </form>
   <div style="overflow:hidden" ng-style="{'display':panel.display}"  topology-chart params="{{panel}}" style="position:relative" class="pointer " ng-style="{'floatleft':panel.counter_pos == 'right'}" id='{{$id}}'></div>
 
   

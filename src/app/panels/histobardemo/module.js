@@ -475,46 +475,17 @@ var myChart;
 		  var sum_risk = 0;
 		  var sum_warning = 0;
 
-
-            Date.prototype.pattern = function (fmt) {
-                var o = {
-                    "M+" : this.getMonth() + 1, //月份
-                    "d+" : this.getDate(), //日
-                    "h+" : this.getHours(), //小时
-                    "H+" : this.getHours(), //小时
-                    "m+" : this.getMinutes(), //分
-                    "s+" : this.getSeconds(), //秒
-                    "q+" : Math.floor((this.getMonth() + 3) / 3), //季度
-                    "S" : this.getMilliseconds() //毫秒
-                };
-                var week = {
-                    "0" : "/u65e5",
-                    "1" : "/u4e00",
-                    "2" : "/u4e8c",
-                    "3" : "/u4e09",
-                    "4" : "/u56db",
-                    "5" : "/u4e94",
-                    "6" : "/u516d"
-                };
-                if (/(y+)/.test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-                }
-                if (/(E+)/.test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f" : "/u5468") : "") + week[this.getDay() + ""]);
-                }
-                for (var k in o) {
-                    if (new RegExp("(" + k + ")").test(fmt)) {
-                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-                    }
-                }
-                return fmt;
-            };
+		  if(window.localStorage.lang=='cn'){
+            scope.panel.isEN=false;
+          }else if(window.localStorage.lang=='en'){
+            scope.panel.isEN=true;
+          }
 
 		  for (var i =0;i<chartData[0].length;i++){
 			  sum_data++;
 			  selecttime[i] =Date.parse(chartData[0][i][scope.panel.value_sort]);
 			  secondtime = new Date(selecttime[i]);
-			  rs_timestamp[i] = secondtime.pattern("yyyy-MM-dd hh:mm:ss");
+			  rs_timestamp[i] = secondtime.pattern("yyyy-MM-dd HH:mm:ss");
 			  valuedata[i] = chartData[0][i][scope.panel.value_field];
 			  if(maxdata<valuedata[i]){
 				   maxdata=chartData[0][i][scope.panel.value_field];
@@ -561,9 +532,9 @@ var myChart;
                 }
               // Add plot to scope so we can build out own legend
               if(scope.panel.chart === 'histobar') {
-                    var  a = '网络错误';
+                    var  a = scope.panel.isEN?'Network Error':'网络错误';
 				  if(scope.panel.value_field ==='collapse_i'){
-                    a = '崩溃';
+                    a = scope.panel.isEN?'Collapse':'崩溃';
                   }
 				  
 
@@ -585,21 +556,21 @@ var option = {
             var myWarn = " ";
             if(warn>scope.panel.threshold_second){
                 if(scope.panel.another){ myWarn = a;}else{
-                    myWarn = "卡顿";
+                    myWarn = scope.panel.isEN?"Caton":"卡顿";
                 }
             }else if(warn<scope.panel.threshold_first||warn === 0){
 
-                myWarn = "正常";
+                myWarn = scope.panel.isEN?"Normal":"正常";
             }else{
                 if(scope.panel.another){ myWarn = a;}else {
-                    myWarn = "卡顿";
+                    myWarn = scope.panel.isEN?"Caton":"卡顿";
                 }
             }
           var res;
             if(scope.panel.another){
-                res =  "APP 状态: "+myWarn+'<br/>'+"Time: "+params[0].name;
+                res =  scope.panel.isEN?"APP State: ":"APP 状态: "+myWarn+'<br/>'+"Time: "+params[0].name;
             }else {
-              res =  "APP 状态: " + myWarn+'<br/>'+"Time: "+params[0].name;
+              res =  scope.panel.isEN?"APP State: ":"APP 状态: " + myWarn+'<br/>'+"Time: "+params[0].name;
             }
             return res;
         },
@@ -731,7 +702,7 @@ var option = {
                 value: 10,
                 label: {
                     normal: {
-                        formatter: scope.panel.another?a+'率':'卡顿率',
+                        formatter: scope.panel.another?a+ (scope.panel.isEN?'rate':'率'):(scope.panel.isEN?'Caton rate':'卡顿率'),
                         textStyle: {
                             color: scope.panel.another?'#ec4653':'#f48a52',
                             fontSize: 12

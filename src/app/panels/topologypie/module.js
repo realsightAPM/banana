@@ -26,7 +26,7 @@ function (angular, app, _, $, kbn) {
   var module = angular.module('kibana.panels.network', []);
   app.useModule(module);
 
-  module.controller('topologypie', function($scope, $http,$sce,$timeout, $translate,timer, querySrv, dashboard, filterSrv) {
+  module.controller('topologypie', function($scope, $http,$sce,$timeout,timer, querySrv, dashboard, filterSrv,$translate) {
     $scope.panelMeta = {
       exportfile: true,
       editorTabs : [
@@ -251,7 +251,7 @@ function (angular, app, _, $, kbn) {
 
   });
 
-  module.directive('topologypieChart', function(querySrv,dashboard,filterSrv) {
+  module.directive('topologypieChart', function(querySrv,dashboard,filterSrv,$translate) {
     return {
       restrict: 'A',
       link: function(scope, elem) {
@@ -307,7 +307,7 @@ function (angular, app, _, $, kbn) {
                 textStyle:{
                   color:labelcolor?"#fff":"#333"
                 },
-                text:'当前选择的应用为：'+dashboard.current.network_app_name,
+                text:$translate.instant('The application selected is：')+dashboard.current.network_app_name,
                 x: "center"
               },
               color:colors,

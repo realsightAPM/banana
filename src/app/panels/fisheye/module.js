@@ -398,7 +398,7 @@ function (angular, app, _, $, kbn) {
 
   });
 
-  module.directive('fisheyeChart', function(querySrv,dashboard,filterSrv) {
+  module.directive('fisheyeChart', function(querySrv,dashboard,filterSrv,$translate) {
     return {
       restrict: 'A',
       link: function(scope, elem) {
@@ -466,9 +466,12 @@ function (angular, app, _, $, kbn) {
             try {
 
                 var labelcolor = false;
+              var d3_label_color = "black";
               if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
-                    labelcolor = true;
-                }
+                labelcolor = true;
+                var d3_label_color = "white";
+
+              }
                 // Add plot to scope so we can build out own legend
 
 
@@ -480,7 +483,7 @@ function (angular, app, _, $, kbn) {
 
                   // Chart dimensions.
                   var margin = {top: 5.5, right: 19.5, bottom: 12.5, left: 39.5},
-                    width = 0.96*elem.parent().width(),
+                    width = 0.95*elem.parent().width(),
                     height = parseInt(scope.panel.height) - margin.top - margin.bottom;
 
                   // Various scales and distortions.
@@ -510,30 +513,31 @@ function (angular, app, _, $, kbn) {
                   svg.append("g")
                     .attr("class", "x axis")
                     .attr("transform", "translate(0," + height + ")")
+                    .attr("fill","white")
                     .call(xAxis);
 
                   // Add the y-axis.
                   svg.append("g")
                     .attr("class", "y axis")
+                    .attr("fill","white")
                     .call(yAxis);
 
                   // Add an x-axis label.
                   svg.append("text")
-                    .attr("class", "x label")
-                    .attr("text-anchor", "end")
-                    .attr("x", width - 6)
-                    .attr("y", height - 6)
-                    .text("income per capita, inflation-adjusted (dollars)");
+                    .attr("fill",d3_label_color)
+                    .attr("font-size", 20)
+                    .attr("x", width-37)
+                    .attr("y", height-5)
+                    .text($translate.instant("Interval")+"(s)");
 
                   // Add a y-axis label.
                   svg.append("text")
-                    .attr("class", "y label")
+                    .attr("fill",d3_label_color)
+                    .attr("font-size", 20)
                     .attr("text-anchor", "end")
-                    .attr("x", -6)
-                    .attr("y", 6)
-                    .attr("dy", ".75em")
-                    .attr("transform", "rotate(-90)")
-                    .text("life expectancy (years)");
+                    .attr("x",2)
+                    .attr("y",12)
+                    .text($translate.instant("Time")+"(ms)");
 
                   // Load the data.
                   d3.json("vendor/d3/fisheye/nations.json", function(nations) {

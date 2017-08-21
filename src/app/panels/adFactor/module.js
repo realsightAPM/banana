@@ -300,7 +300,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
     };
   });
 
-  module.directive('factorChart', function(querySrv,dashboard,filterSrv) {
+  module.directive('factorChart', function(querySrv,dashboard,filterSrv,$translate) {
     return {
       restrict: 'A',
       link: function(scope, elem) {
@@ -417,7 +417,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                       color: '#888'
                     }
                   },
-                  data: [{value: scope.data[1], name: '陌生波动导致异常数量'}]
+                  data: [{value: scope.data[1], name: $translate.instant('Abnormal Numbers Leaded by Strange Fluctuations')}]
                 },
                 {
                   name: '过小数量',
@@ -485,7 +485,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                       color: '#888'
                     }
                   },
-                  data: [{value: scope.data[0], name: '数值过小导致异常数量'}]
+                  data: [{value: scope.data[0], name: $translate.instant('Abnormal Numbers Leaded by Small Number')}]
                 },
                 {
                   name: '过大数量',
@@ -554,7 +554,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                       color: '#888'
                     }
                   },
-                  data: [{value: scope.data[2], name: '值过大导致的异常数量'}]
+                  data: [{value: scope.data[2], name: $translate.instant('Abnormal Numbers Leaded by Large Value')}]
                 }
               ]
             };

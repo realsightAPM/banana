@@ -56,10 +56,13 @@ function (angular, app, _, $, kbn) {
       donut   : false,
       tilt    : false,
       display:'block',
-
+      showlabel:true,
+      dragging:false,
+      physics:false,
       icon:"icon-caret-down",
       labels  : true,
 	  ylabels :true,
+      options:false,
       logAxis : false,
       arrangement : 'vertical',
 	  RoseType	  : 'area',
@@ -84,7 +87,7 @@ function (angular, app, _, $, kbn) {
     $scope.init = function () {
       $scope.hits = 0;
       //$scope.testMultivalued();
-
+      $scope.options = false;
       // Start refresh timer if enabled
       if ($scope.panel.refresh.enable) {
         $scope.set_timer($scope.panel.refresh.interval);
@@ -178,6 +181,14 @@ function (angular, app, _, $, kbn) {
       response.then(function(response) {
         kbn.download_response(response, filetype, "pies");
       });
+    };
+
+
+    $scope.allowDraggingOfNodes = function(){
+      $scope.viz.setOptions({showLabels:$scope.panel.showlabel,allowDraggingOfNodes:$scope.panel.dragging});
+    };
+    $scope.setPhysicsOption = function(){
+      $scope.viz.setPhysicsOptions({isEnabled:$scope.panel.physics});
     };
 
     $scope.set_timer = function(refresh_interval) {
@@ -457,7 +468,9 @@ function (angular, app, _, $, kbn) {
           canvas.width  = elem.parent().width();
           canvas.height =parseInt(scope.panel.height);
           document.getElementById(idd).appendChild(canvas);
+          //scope.
           scope.viz = new Vizceral.default(canvas);
+
           // Add plot to scope so we can build out own legend
           //var Vizceral = require('vizceral');
 
@@ -468,7 +481,7 @@ function (angular, app, _, $, kbn) {
               {
                 "renderer": "region",
                 "name": "INTERNET",
-                "displayName": "INTERNET",
+                "displayName": "总线",
                 "nodes": [],
                 "metadata": {},
                 "class": "normal",
@@ -477,11 +490,11 @@ function (angular, app, _, $, kbn) {
               {
                 "renderer": "region",
                 "name": "us-east-1",
-                "displayName": "US-EAST-1",
+                "displayName": "Server2",
                 "updated": 1477690448572,
                 "nodes": [
                   {
-                    "name": "viraemic",
+                    "name": "ECC",
                     "metadata": {
                       "streaming": 1
                     },
@@ -552,7 +565,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "foetal",
+                    "name": "SRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -568,7 +581,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "buglers",
+                    "name": "EAS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -584,7 +597,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "lassoing",
+                    "name": "农行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -600,7 +613,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "proletarianised",
+                    "name": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -616,7 +629,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "neuritics",
+                    "name": "CRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -631,7 +644,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "disseat",
+                    "name": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -647,7 +660,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "risks",
+                    "name": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -662,7 +675,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "wickyups",
+                    "name": "智模",
                     "metadata": {
                       "streaming": 1
                     },
@@ -678,7 +691,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "disenthral",
+                    "name": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -693,7 +706,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "macrurous",
+                    "name": "EPPOS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -709,7 +722,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "parrocks",
+                    "name": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -724,7 +737,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "yuppifies",
+                    "name": "DMP",
                     "metadata": {
                       "streaming": 1
                     },
@@ -740,7 +753,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "commanderies",
+                    "name": "KAD",
                     "metadata": {
                       "streaming": 1
                     },
@@ -755,7 +768,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "malvasias",
+                    "name": "青岛银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -771,7 +784,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "perfectibilians",
+                    "name": "平安银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -786,7 +799,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "nanuas",
+                    "name": "LIMS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -801,7 +814,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "overburning",
+                    "name": "ZH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -817,7 +830,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "veniremen",
+                    "name": "NH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -844,7 +857,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "quittors",
+                    "name": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -1698,7 +1711,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "INTERNET",
-                    "target": "buglers",
+                    "target": "EAS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -1720,8 +1733,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "quittors",
-                    "target": "disseat",
+                    "source": "YSL",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -1784,7 +1797,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "unapproachabilities",
-                    "target": "disseat",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -1816,7 +1829,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "lassoing",
+                    "source": "农行",
                     "target": "spuds",
                     "metadata": {
                       "streaming": 1
@@ -1827,7 +1840,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "lassoing",
+                    "source": "农行",
                     "target": "immedicably",
                     "metadata": {
                       "streaming": 1
@@ -1838,8 +1851,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "lassoing",
-                    "target": "foetal",
+                    "source": "农行",
+                    "target": "SRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -1849,8 +1862,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "lassoing",
-                    "target": "neuritics",
+                    "source": "农行",
+                    "target": "CRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -1860,8 +1873,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
-                    "target": "disseat",
+                    "source": "EPPOS",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -1871,7 +1884,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "tanrec",
                     "metadata": {
                       "streaming": 1
@@ -1882,7 +1895,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "semitropics",
                     "metadata": {
                       "streaming": 1
@@ -1893,7 +1906,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "spuds",
                     "metadata": {
                       "streaming": 1
@@ -1904,8 +1917,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
-                    "target": "disenthral",
+                    "source": "EPPOS",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -1914,7 +1927,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "rummlegumptions",
                     "metadata": {
                       "streaming": 1
@@ -1925,7 +1938,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "overdosed",
                     "metadata": {
                       "streaming": 1
@@ -1936,7 +1949,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "corfhouses",
                     "metadata": {
                       "streaming": 1
@@ -1947,7 +1960,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "immedicably",
                     "metadata": {
                       "streaming": 1
@@ -1958,7 +1971,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "multiracialisms",
                     "metadata": {
                       "streaming": 1
@@ -1969,8 +1982,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
-                    "target": "proletarianised",
+                    "source": "EPPOS",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -1979,7 +1992,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "gainfully",
                     "metadata": {
                       "streaming": 1
@@ -1990,8 +2003,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
-                    "target": "overburning",
+                    "source": "EPPOS",
+                    "target": "ZH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2001,8 +2014,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
-                    "target": "foetal",
+                    "source": "EPPOS",
+                    "target": "SRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2012,7 +2025,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "relocator",
                     "metadata": {
                       "streaming": 1
@@ -2023,8 +2036,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "perfectibilians",
-                    "target": "disenthral",
+                    "source": "平安银行",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2033,7 +2046,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "perfectibilians",
+                    "source": "平安银行",
                     "target": "rummlegumptions",
                     "metadata": {
                       "streaming": 1
@@ -2044,7 +2057,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "perfectibilians",
+                    "source": "平安银行",
                     "target": "overdosed",
                     "metadata": {
                       "streaming": 1
@@ -2055,7 +2068,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "perfectibilians",
+                    "source": "平安银行",
                     "target": "corfhouses",
                     "metadata": {
                       "streaming": 1
@@ -2066,8 +2079,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "perfectibilians",
-                    "target": "overburning",
+                    "source": "平安银行",
+                    "target": "ZH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2088,7 +2101,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "karroos",
-                    "target": "viraemic",
+                    "target": "ECC",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2099,7 +2112,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "karroos",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2109,7 +2122,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "cylindricalness",
-                    "target": "parrocks",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2120,7 +2133,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "arabesk",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2141,7 +2154,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "arabesk",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2152,7 +2165,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "arabesk",
-                    "target": "quittors",
+                    "target": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2217,7 +2230,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "commerce",
-                    "target": "disseat",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2313,7 +2326,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "commerce",
-                    "target": "parrocks",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2324,7 +2337,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "hydroxyureas",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2346,7 +2359,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "hydroxyureas",
-                    "target": "quittors",
+                    "target": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2367,8 +2380,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "overburning",
-                    "target": "disseat",
+                    "source": "ZH",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2444,7 +2457,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "methadone",
-                    "target": "quittors",
+                    "target": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2454,8 +2467,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "malvasias",
-                    "target": "risks",
+                    "source": "青岛银行",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2465,7 +2478,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "malvasias",
+                    "source": "青岛银行",
                     "target": "oiks",
                     "metadata": {
                       "streaming": 1
@@ -2476,7 +2489,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "malvasias",
+                    "source": "青岛银行",
                     "target": "uraei",
                     "metadata": {
                       "streaming": 1
@@ -2499,7 +2512,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "alignment",
-                    "target": "viraemic",
+                    "target": "ECC",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2521,7 +2534,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "alignment",
-                    "target": "neuritics",
+                    "target": "CRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2531,8 +2544,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "veniremen",
-                    "target": "disseat",
+                    "source": "NH",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2542,8 +2555,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "neuritics",
-                    "target": "disenthral",
+                    "source": "CRM",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2553,8 +2566,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "neuritics",
-                    "target": "yuppifies",
+                    "source": "CRM",
+                    "target": "DMP",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2575,8 +2588,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "commanderies",
-                    "target": "wickyups",
+                    "source": "KAD",
+                    "target": "智模",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2586,8 +2599,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "commanderies",
-                    "target": "parrocks",
+                    "source": "KAD",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2609,7 +2622,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "gainfully",
-                    "target": "parrocks",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2620,7 +2633,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "relocator",
-                    "target": "disenthral",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2630,7 +2643,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "relocator",
-                    "target": "yuppifies",
+                    "target": "DMP",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2641,7 +2654,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "profulgent",
-                    "target": "disseat",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2652,7 +2665,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "profulgent",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2685,7 +2698,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "profulgent",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2696,7 +2709,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "gerents",
-                    "target": "disseat",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2707,7 +2720,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "gerents",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2748,8 +2761,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "disseat",
+                    "source": "ECC",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2759,7 +2772,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "compellation",
                     "metadata": {
                       "streaming": 1
@@ -2769,8 +2782,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "risks",
+                    "source": "ECC",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2780,7 +2793,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "tanrec",
                     "metadata": {
                       "streaming": 1
@@ -2791,7 +2804,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "commerce",
                     "metadata": {
                       "streaming": 1
@@ -2802,7 +2815,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "remarkableness",
                     "metadata": {
                       "streaming": 1
@@ -2813,8 +2826,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "nanuas",
+                    "source": "ECC",
+                    "target": "LIMS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2824,7 +2837,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "semitropics",
                     "metadata": {
                       "streaming": 1
@@ -2835,7 +2848,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "blastodiscs",
                     "metadata": {
                       "streaming": 1
@@ -2845,7 +2858,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "prickliest",
                     "metadata": {
                       "streaming": 1
@@ -2856,8 +2869,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "disenthral",
+                    "source": "ECC",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2867,7 +2880,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "priviest",
                     "metadata": {
                       "streaming": 1
@@ -2878,8 +2891,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "veniremen",
+                    "source": "ECC",
+                    "target": "NH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2889,7 +2902,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "arabesk",
                     "metadata": {
                       "streaming": 1
@@ -2900,7 +2913,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "methadone",
                     "metadata": {
                       "streaming": 1
@@ -2911,8 +2924,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "perfectibilians",
+                    "source": "ECC",
+                    "target": "平安银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2922,7 +2935,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "multiracialisms",
                     "metadata": {
                       "streaming": 1
@@ -2933,8 +2946,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "proletarianised",
+                    "source": "ECC",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2944,8 +2957,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "commanderies",
+                    "source": "ECC",
+                    "target": "KAD",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2955,7 +2968,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "gainfully",
                     "metadata": {
                       "streaming": 1
@@ -2966,8 +2979,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "malvasias",
+                    "source": "ECC",
+                    "target": "青岛银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2977,8 +2990,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "foetal",
+                    "source": "ECC",
+                    "target": "SRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2988,8 +3001,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "neuritics",
+                    "source": "ECC",
+                    "target": "CRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -2999,7 +3012,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "legwork",
                     "metadata": {
                       "streaming": 1
@@ -3010,7 +3023,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "relocator",
                     "metadata": {
                       "streaming": 1
@@ -3021,7 +3034,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "brazed",
                     "metadata": {
                       "streaming": 1
@@ -3032,7 +3045,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "unapproachabilities",
                     "metadata": {
                       "streaming": 1
@@ -3043,8 +3056,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "parrocks",
+                    "source": "ECC",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3055,7 +3068,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "uraei",
-                    "target": "disseat",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3064,8 +3077,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "nanuas",
-                    "target": "disseat",
+                    "source": "LIMS",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3076,7 +3089,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "microparasites",
-                    "target": "viraemic",
+                    "target": "ECC",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3086,8 +3099,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "foetal",
-                    "target": "disenthral",
+                    "source": "SRM",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3096,8 +3109,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "foetal",
-                    "target": "yuppifies",
+                    "source": "SRM",
+                    "target": "DMP",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3108,7 +3121,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "imbalmers",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3119,7 +3132,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "imbalmers",
-                    "target": "veniremen",
+                    "target": "NH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3130,7 +3143,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "imbalmers",
-                    "target": "quittors",
+                    "target": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3163,7 +3176,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "semitropics",
-                    "target": "disseat",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3219,7 +3232,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "schemozzling",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3230,7 +3243,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "schemozzling",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3241,7 +3254,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "majordomo",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3263,7 +3276,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "majordomo",
-                    "target": "veniremen",
+                    "target": "NH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3274,7 +3287,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "majordomo",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3285,7 +3298,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "majordomo",
-                    "target": "quittors",
+                    "target": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3296,7 +3309,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "cleavage",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3327,7 +3340,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "cleavage",
-                    "target": "parrocks",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3347,7 +3360,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "appropriable",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3378,7 +3391,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "appropriable",
-                    "target": "parrocks",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3424,11 +3437,11 @@ function (angular, app, _, $, kbn) {
               {
                 "renderer": "region",
                 "name": "eu-west-1",
-                "displayName": "EU-WEST-1",
+                "displayName": "Server3",
                 "updated": 1477690450280,
                 "nodes": [
                   {
-                    "name": "viraemic",
+                    "name": "ECC",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3467,7 +3480,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "foetal",
+                    "name": "SRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3483,7 +3496,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "buglers",
+                    "name": "EAS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3499,7 +3512,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "lassoing",
+                    "name": "农行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3515,7 +3528,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "proletarianised",
+                    "name": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3531,7 +3544,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "neuritics",
+                    "name": "CRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3546,7 +3559,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "risks",
+                    "name": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3561,7 +3574,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "disseat",
+                    "name": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3577,7 +3590,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "wickyups",
+                    "name": "智模",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3593,7 +3606,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "disenthral",
+                    "name": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3608,7 +3621,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "malvasias",
+                    "name": "青岛银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3623,7 +3636,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "commanderies",
+                    "name": "KAD",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3638,7 +3651,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "perfectibilians",
+                    "name": "平安银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3653,7 +3666,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "overburning",
+                    "name": "ZH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3668,7 +3681,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "nanuas",
+                    "name": "LIMS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3698,7 +3711,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "yuppifies",
+                    "name": "DMP",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3714,7 +3727,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "parrocks",
+                    "name": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3729,7 +3742,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "macrurous",
+                    "name": "EPPOS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3745,7 +3758,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "veniremen",
+                    "name": "NH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -3772,7 +3785,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "quittors",
+                    "name": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -4610,7 +4623,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "INTERNET",
-                    "target": "buglers",
+                    "target": "EAS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -4643,8 +4656,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "quittors",
-                    "target": "disseat",
+                    "source": "YSL",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -4706,7 +4719,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "unapproachabilities",
-                    "target": "disseat",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -4726,7 +4739,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "lassoing",
+                    "source": "农行",
                     "target": "spuds",
                     "metadata": {
                       "streaming": 1
@@ -4736,8 +4749,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "lassoing",
-                    "target": "foetal",
+                    "source": "农行",
+                    "target": "SRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -4747,8 +4760,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "lassoing",
-                    "target": "neuritics",
+                    "source": "农行",
+                    "target": "CRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -4758,7 +4771,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "tanrec",
                     "metadata": {
                       "streaming": 1
@@ -4768,7 +4781,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "semitropics",
                     "metadata": {
                       "streaming": 1
@@ -4779,7 +4792,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "spuds",
                     "metadata": {
                       "streaming": 1
@@ -4790,8 +4803,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
-                    "target": "disenthral",
+                    "source": "EPPOS",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -4801,7 +4814,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "rummlegumptions",
                     "metadata": {
                       "streaming": 1
@@ -4811,7 +4824,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "overdosed",
                     "metadata": {
                       "streaming": 1
@@ -4821,7 +4834,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "corfhouses",
                     "metadata": {
                       "streaming": 1
@@ -4831,7 +4844,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "immedicably",
                     "metadata": {
                       "streaming": 1
@@ -4842,7 +4855,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "gainfully",
                     "metadata": {
                       "streaming": 1
@@ -4853,8 +4866,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
-                    "target": "overburning",
+                    "source": "EPPOS",
+                    "target": "ZH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -4864,8 +4877,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
-                    "target": "foetal",
+                    "source": "EPPOS",
+                    "target": "SRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -4875,7 +4888,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "relocator",
                     "metadata": {
                       "streaming": 1
@@ -4886,8 +4899,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "perfectibilians",
-                    "target": "disenthral",
+                    "source": "平安银行",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -4897,7 +4910,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "perfectibilians",
+                    "source": "平安银行",
                     "target": "rummlegumptions",
                     "metadata": {
                       "streaming": 1
@@ -4908,7 +4921,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "perfectibilians",
+                    "source": "平安银行",
                     "target": "overdosed",
                     "metadata": {
                       "streaming": 1
@@ -4919,7 +4932,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "perfectibilians",
+                    "source": "平安银行",
                     "target": "corfhouses",
                     "metadata": {
                       "streaming": 1
@@ -4930,7 +4943,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "perfectibilians",
+                    "source": "平安银行",
                     "target": "italianated",
                     "metadata": {
                       "streaming": 1
@@ -4941,8 +4954,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "perfectibilians",
-                    "target": "overburning",
+                    "source": "平安银行",
+                    "target": "ZH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -4953,7 +4966,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "relocator",
-                    "target": "disenthral",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -4964,7 +4977,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "relocator",
-                    "target": "yuppifies",
+                    "target": "DMP",
                     "metadata": {
                       "streaming": 1
                     },
@@ -4975,7 +4988,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "cylindricalness",
-                    "target": "parrocks",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -4986,7 +4999,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "arabesk",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5007,7 +5020,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "arabesk",
-                    "target": "quittors",
+                    "target": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5018,7 +5031,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "profulgent",
-                    "target": "disseat",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5029,7 +5042,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "profulgent",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5060,7 +5073,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "profulgent",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5071,7 +5084,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "gerents",
-                    "target": "disseat",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5082,7 +5095,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "gerents",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5220,7 +5233,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "commerce",
-                    "target": "parrocks",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5231,7 +5244,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "tutresses",
-                    "target": "viraemic",
+                    "target": "ECC",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5242,7 +5255,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "cleavage",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5262,8 +5275,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "disseat",
+                    "source": "ECC",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5273,7 +5286,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "compellation",
                     "metadata": {
                       "streaming": 1
@@ -5283,8 +5296,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "risks",
+                    "source": "ECC",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5294,7 +5307,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "tanrec",
                     "metadata": {
                       "streaming": 1
@@ -5305,7 +5318,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "commerce",
                     "metadata": {
                       "streaming": 1
@@ -5315,7 +5328,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "oiks",
                     "metadata": {
                       "streaming": 1
@@ -5326,8 +5339,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "nanuas",
+                    "source": "ECC",
+                    "target": "LIMS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5337,7 +5350,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "semitropics",
                     "metadata": {
                       "streaming": 1
@@ -5348,7 +5361,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "empyreal",
                     "metadata": {
                       "streaming": 1
@@ -5358,7 +5371,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "blastodiscs",
                     "metadata": {
                       "streaming": 1
@@ -5368,7 +5381,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "prickliest",
                     "metadata": {
                       "streaming": 1
@@ -5379,8 +5392,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "disenthral",
+                    "source": "ECC",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5390,7 +5403,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "priviest",
                     "metadata": {
                       "streaming": 1
@@ -5401,8 +5414,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "veniremen",
+                    "source": "ECC",
+                    "target": "NH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5412,7 +5425,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "immedicably",
                     "metadata": {
                       "streaming": 1
@@ -5423,7 +5436,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "arabesk",
                     "metadata": {
                       "streaming": 1
@@ -5433,7 +5446,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "methadone",
                     "metadata": {
                       "streaming": 1
@@ -5444,8 +5457,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "perfectibilians",
+                    "source": "ECC",
+                    "target": "平安银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5455,7 +5468,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "multiracialisms",
                     "metadata": {
                       "streaming": 1
@@ -5466,8 +5479,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "proletarianised",
+                    "source": "ECC",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5477,8 +5490,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "commanderies",
+                    "source": "ECC",
+                    "target": "KAD",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5488,7 +5501,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "gainfully",
                     "metadata": {
                       "streaming": 1
@@ -5499,8 +5512,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "malvasias",
+                    "source": "ECC",
+                    "target": "青岛银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5510,8 +5523,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "foetal",
+                    "source": "ECC",
+                    "target": "SRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5521,8 +5534,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "neuritics",
+                    "source": "ECC",
+                    "target": "CRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5532,7 +5545,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "legwork",
                     "metadata": {
                       "streaming": 1
@@ -5543,7 +5556,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "relocator",
                     "metadata": {
                       "streaming": 1
@@ -5554,7 +5567,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "brazed",
                     "metadata": {
                       "streaming": 1
@@ -5565,7 +5578,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "unapproachabilities",
                     "metadata": {
                       "streaming": 1
@@ -5576,8 +5589,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "parrocks",
+                    "source": "ECC",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5587,8 +5600,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "overburning",
-                    "target": "disseat",
+                    "source": "ZH",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5599,7 +5612,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "uraei",
-                    "target": "disseat",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5609,8 +5622,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "nanuas",
-                    "target": "disseat",
+                    "source": "LIMS",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5662,7 +5675,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "microparasites",
-                    "target": "viraemic",
+                    "target": "ECC",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5683,8 +5696,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "foetal",
-                    "target": "disenthral",
+                    "source": "SRM",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5694,8 +5707,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "foetal",
-                    "target": "yuppifies",
+                    "source": "SRM",
+                    "target": "DMP",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5706,7 +5719,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "imbalmers",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5716,7 +5729,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "imbalmers",
-                    "target": "veniremen",
+                    "target": "NH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5727,7 +5740,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "imbalmers",
-                    "target": "quittors",
+                    "target": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5749,7 +5762,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "methadone",
-                    "target": "quittors",
+                    "target": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5759,8 +5772,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "malvasias",
-                    "target": "risks",
+                    "source": "青岛银行",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5781,7 +5794,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "alignment",
-                    "target": "viraemic",
+                    "target": "ECC",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5803,7 +5816,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "alignment",
-                    "target": "neuritics",
+                    "target": "CRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5813,8 +5826,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "veniremen",
-                    "target": "disseat",
+                    "source": "NH",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5835,8 +5848,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "neuritics",
-                    "target": "disenthral",
+                    "source": "CRM",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5846,8 +5859,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "neuritics",
-                    "target": "yuppifies",
+                    "source": "CRM",
+                    "target": "DMP",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5901,7 +5914,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "schemozzling",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5923,7 +5936,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "gainfully",
-                    "target": "parrocks",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5933,8 +5946,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "commanderies",
-                    "target": "wickyups",
+                    "source": "KAD",
+                    "target": "智模",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5945,7 +5958,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "majordomo",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5966,7 +5979,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "majordomo",
-                    "target": "veniremen",
+                    "target": "NH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5977,7 +5990,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "majordomo",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -5988,7 +6001,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "majordomo",
-                    "target": "quittors",
+                    "target": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6009,7 +6022,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "appropriable",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6062,7 +6075,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "appropriable",
-                    "target": "parrocks",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6108,11 +6121,11 @@ function (angular, app, _, $, kbn) {
               {
                 "renderer": "region",
                 "name": "us-west-2",
-                "displayName": "US-WEST-2",
+                "displayName": "Server1",
                 "updated": 1477690452072,
                 "nodes": [
                   {
-                    "name": "viraemic",
+                    "name": "ECC",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6199,7 +6212,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "foetal",
+                    "name": "SRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6215,7 +6228,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "buglers",
+                    "name": "EAS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6231,7 +6244,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "lassoing",
+                    "name": "农行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6247,7 +6260,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "neuritics",
+                    "name": "CRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6262,7 +6275,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "proletarianised",
+                    "name": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6278,7 +6291,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "disseat",
+                    "name": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6293,7 +6306,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "risks",
+                    "name": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6308,7 +6321,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "wickyups",
+                    "name": "智模",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6330,7 +6343,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "disenthral",
+                    "name": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6345,7 +6358,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "parrocks",
+                    "name": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6360,7 +6373,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "macrurous",
+                    "name": "EPPOS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6382,7 +6395,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "perfectibilians",
+                    "name": "平安银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6397,7 +6410,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "overburning",
+                    "name": "ZH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6412,7 +6425,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "yuppifies",
+                    "name": "DMP",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6428,7 +6441,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "commanderies",
+                    "name": "KAD",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6443,7 +6456,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "veniremen",
+                    "name": "NH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6470,7 +6483,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "malvasias",
+                    "name": "青岛银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6501,7 +6514,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "nanuas",
+                    "name": "LIMS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -6516,7 +6529,7 @@ function (angular, app, _, $, kbn) {
                     "renderer": "focusedChild"
                   },
                   {
-                    "name": "quittors",
+                    "name": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7436,7 +7449,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "INTERNET",
-                    "target": "buglers",
+                    "target": "EAS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7474,8 +7487,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "quittors",
-                    "target": "disseat",
+                    "source": "YSL",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7549,7 +7562,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "unapproachabilities",
-                    "target": "disseat",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7579,7 +7592,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "lassoing",
+                    "source": "农行",
                     "target": "spuds",
                     "metadata": {
                       "streaming": 1
@@ -7589,7 +7602,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "lassoing",
+                    "source": "农行",
                     "target": "immedicably",
                     "metadata": {
                       "streaming": 1
@@ -7600,8 +7613,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "lassoing",
-                    "target": "foetal",
+                    "source": "农行",
+                    "target": "SRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7611,8 +7624,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "lassoing",
-                    "target": "neuritics",
+                    "source": "农行",
+                    "target": "CRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7622,8 +7635,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
-                    "target": "disseat",
+                    "source": "EPPOS",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7633,7 +7646,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "tanrec",
                     "metadata": {
                       "streaming": 1
@@ -7643,7 +7656,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "semitropics",
                     "metadata": {
                       "streaming": 1
@@ -7654,7 +7667,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "spuds",
                     "metadata": {
                       "streaming": 1
@@ -7665,8 +7678,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
-                    "target": "disenthral",
+                    "source": "EPPOS",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7675,7 +7688,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "rummlegumptions",
                     "metadata": {
                       "streaming": 1
@@ -7685,7 +7698,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "overdosed",
                     "metadata": {
                       "streaming": 1
@@ -7695,7 +7708,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "corfhouses",
                     "metadata": {
                       "streaming": 1
@@ -7705,7 +7718,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "immedicably",
                     "metadata": {
                       "streaming": 1
@@ -7716,7 +7729,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "multiracialisms",
                     "metadata": {
                       "streaming": 1
@@ -7727,7 +7740,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "gainfully",
                     "metadata": {
                       "streaming": 1
@@ -7738,8 +7751,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
-                    "target": "overburning",
+                    "source": "EPPOS",
+                    "target": "ZH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7749,8 +7762,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
-                    "target": "foetal",
+                    "source": "EPPOS",
+                    "target": "SRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7760,7 +7773,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "macrurous",
+                    "source": "EPPOS",
                     "target": "relocator",
                     "metadata": {
                       "streaming": 1
@@ -7782,7 +7795,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "karroos",
-                    "target": "viraemic",
+                    "target": "ECC",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7793,7 +7806,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "karroos",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7802,8 +7815,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "perfectibilians",
-                    "target": "disenthral",
+                    "source": "平安银行",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7812,7 +7825,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "perfectibilians",
+                    "source": "平安银行",
                     "target": "italianated",
                     "metadata": {
                       "streaming": 1
@@ -7823,8 +7836,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "perfectibilians",
-                    "target": "overburning",
+                    "source": "平安银行",
+                    "target": "ZH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7835,7 +7848,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "relocator",
-                    "target": "disenthral",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7846,7 +7859,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "relocator",
-                    "target": "yuppifies",
+                    "target": "DMP",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7857,7 +7870,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "cylindricalness",
-                    "target": "parrocks",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7867,7 +7880,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "arabesk",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7888,7 +7901,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "arabesk",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7899,7 +7912,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "arabesk",
-                    "target": "quittors",
+                    "target": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7910,7 +7923,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "profulgent",
-                    "target": "disseat",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7921,7 +7934,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "profulgent",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7953,7 +7966,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "profulgent",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7964,7 +7977,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "gerents",
-                    "target": "disseat",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -7975,7 +7988,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "gerents",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8123,7 +8136,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "commerce",
-                    "target": "parrocks",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8133,7 +8146,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "tutresses",
-                    "target": "viraemic",
+                    "target": "ECC",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8144,7 +8157,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "staircases",
-                    "target": "viraemic",
+                    "target": "ECC",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8155,7 +8168,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "cleavage",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8185,8 +8198,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "disseat",
+                    "source": "ECC",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8196,7 +8209,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "compellation",
                     "metadata": {
                       "streaming": 1
@@ -8206,8 +8219,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "risks",
+                    "source": "ECC",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8217,7 +8230,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "tanrec",
                     "metadata": {
                       "streaming": 1
@@ -8227,7 +8240,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "commerce",
                     "metadata": {
                       "streaming": 1
@@ -8238,7 +8251,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "remarkableness",
                     "metadata": {
                       "streaming": 1
@@ -8249,8 +8262,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "nanuas",
+                    "source": "ECC",
+                    "target": "LIMS",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8260,7 +8273,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "semitropics",
                     "metadata": {
                       "streaming": 1
@@ -8271,7 +8284,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "empyreal",
                     "metadata": {
                       "streaming": 1
@@ -8281,7 +8294,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "blastodiscs",
                     "metadata": {
                       "streaming": 1
@@ -8291,7 +8304,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "prickliest",
                     "metadata": {
                       "streaming": 1
@@ -8302,8 +8315,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "disenthral",
+                    "source": "ECC",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8313,7 +8326,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "priviest",
                     "metadata": {
                       "streaming": 1
@@ -8323,8 +8336,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "veniremen",
+                    "source": "ECC",
+                    "target": "NH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8334,7 +8347,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "immedicably",
                     "metadata": {
                       "streaming": 1
@@ -8344,7 +8357,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "arabesk",
                     "metadata": {
                       "streaming": 1
@@ -8355,7 +8368,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "methadone",
                     "metadata": {
                       "streaming": 1
@@ -8366,8 +8379,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "perfectibilians",
+                    "source": "ECC",
+                    "target": "平安银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8377,7 +8390,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "multiracialisms",
                     "metadata": {
                       "streaming": 1
@@ -8388,8 +8401,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "proletarianised",
+                    "source": "ECC",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8399,8 +8412,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "commanderies",
+                    "source": "ECC",
+                    "target": "KAD",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8410,7 +8423,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "gainfully",
                     "metadata": {
                       "streaming": 1
@@ -8421,8 +8434,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "malvasias",
+                    "source": "ECC",
+                    "target": "青岛银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8432,8 +8445,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "foetal",
+                    "source": "ECC",
+                    "target": "SRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8443,8 +8456,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "neuritics",
+                    "source": "ECC",
+                    "target": "CRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8454,7 +8467,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "legwork",
                     "metadata": {
                       "streaming": 1
@@ -8465,7 +8478,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "relocator",
                     "metadata": {
                       "streaming": 1
@@ -8476,7 +8489,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "brazed",
                     "metadata": {
                       "streaming": 1
@@ -8487,7 +8500,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
+                    "source": "ECC",
                     "target": "unapproachabilities",
                     "metadata": {
                       "streaming": 1
@@ -8498,8 +8511,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "viraemic",
-                    "target": "parrocks",
+                    "source": "ECC",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8509,8 +8522,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "overburning",
-                    "target": "disseat",
+                    "source": "ZH",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8520,8 +8533,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "nanuas",
-                    "target": "disseat",
+                    "source": "LIMS",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8584,7 +8597,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "microparasites",
-                    "target": "viraemic",
+                    "target": "ECC",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8605,8 +8618,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "foetal",
-                    "target": "disenthral",
+                    "source": "SRM",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8615,8 +8628,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "foetal",
-                    "target": "yuppifies",
+                    "source": "SRM",
+                    "target": "DMP",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8627,7 +8640,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "imbalmers",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8638,7 +8651,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "imbalmers",
-                    "target": "veniremen",
+                    "target": "NH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8649,7 +8662,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "imbalmers",
-                    "target": "quittors",
+                    "target": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8670,7 +8683,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "methadone",
-                    "target": "quittors",
+                    "target": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8680,8 +8693,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "malvasias",
-                    "target": "risks",
+                    "source": "青岛银行",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8691,7 +8704,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "malvasias",
+                    "source": "青岛银行",
                     "target": "oiks",
                     "metadata": {
                       "streaming": 1
@@ -8702,7 +8715,7 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "malvasias",
+                    "source": "青岛银行",
                     "target": "uraei",
                     "metadata": {
                       "streaming": 1
@@ -8724,7 +8737,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "alignment",
-                    "target": "viraemic",
+                    "target": "ECC",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8756,7 +8769,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "alignment",
-                    "target": "neuritics",
+                    "target": "CRM",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8766,8 +8779,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "veniremen",
-                    "target": "disseat",
+                    "source": "NH",
+                    "target": "立体库",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8788,8 +8801,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "neuritics",
-                    "target": "disenthral",
+                    "source": "CRM",
+                    "target": "OA",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8799,8 +8812,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "neuritics",
-                    "target": "yuppifies",
+                    "source": "CRM",
+                    "target": "DMP",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8854,7 +8867,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "schemozzling",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8865,7 +8878,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "schemozzling",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8875,8 +8888,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "commanderies",
-                    "target": "wickyups",
+                    "source": "KAD",
+                    "target": "智模",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8886,8 +8899,8 @@ function (angular, app, _, $, kbn) {
                     }
                   },
                   {
-                    "source": "commanderies",
-                    "target": "parrocks",
+                    "source": "KAD",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8909,7 +8922,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "gainfully",
-                    "target": "parrocks",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8920,7 +8933,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "majordomo",
-                    "target": "risks",
+                    "target": "AMT",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8941,7 +8954,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "majordomo",
-                    "target": "veniremen",
+                    "target": "NH",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8952,7 +8965,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "majordomo",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8963,7 +8976,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "majordomo",
-                    "target": "quittors",
+                    "target": "YSL",
                     "metadata": {
                       "streaming": 1
                     },
@@ -8984,7 +8997,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "appropriable",
-                    "target": "proletarianised",
+                    "target": "招商银行",
                     "metadata": {
                       "streaming": 1
                     },
@@ -9035,7 +9048,7 @@ function (angular, app, _, $, kbn) {
                   },
                   {
                     "source": "appropriable",
-                    "target": "parrocks",
+                    "target": "BW",
                     "metadata": {
                       "streaming": 1
                     },
@@ -9155,6 +9168,7 @@ function (angular, app, _, $, kbn) {
             ],
             "serverUpdateTime": 1477691777441
           };
+
           scope.viz.updateData(vizdata);
           scope.viz.setView();
           scope.viz.animate();
