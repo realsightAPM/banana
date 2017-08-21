@@ -189,6 +189,7 @@ ul.nav-second-level {
 .nav.nav-second-level.collapse[style] {
   height: auto !important;
 }
+.navbar-collapse,
 .nav-header a {
   color: #DFE4ED;
 }
@@ -733,7 +734,27 @@ body.body-small .footer.fixed {
 body.rtls {
   /* Theme config */
 }
-
+body.rtls #page-wrapper {
+  margin: 0 220px 0 0;
+}
+body.rtls .nav-second-level li a {
+  padding: 7px 35px 7px 10px;
+}
+body.rtls .ibox-title h5 {
+  float: right;
+}
+body.rtls .pull-right {
+  float: left !important;
+}
+body.rtls .pull-left {
+  float: right !important;
+}
+body.rtls .ibox-tools {
+  float: left;
+}
+body.rtls .stat-percent {
+  float: left;
+}
 body.rtls .navbar-right {
   float: left !important;
 }
@@ -741,7 +762,105 @@ body.rtls .navbar-top-links li:last-child {
   margin-left: 40px;
   margin-right: 0;
 }
-
+body.rtls .minimalize-styl-2 {
+  float: right;
+  margin: 14px 20px 5px 5px;
+}
+body.rtls .feed-element > .pull-left {
+  margin-left: 10px;
+  margin-right: 0;
+}
+body.rtls .timeline-item .date {
+  text-align: left;
+}
+body.rtls .timeline-item .date i {
+  left: 0;
+  right: auto;
+}
+body.rtls .timeline-item .content {
+  border-right: 1px solid #e7eaec;
+  border-left: none;
+}
+body.rtls .theme-config {
+  left: 0;
+  right: auto;
+}
+body.rtls .spin-icon {
+  border-radius: 0 20px 20px 0;
+}
+body.rtls .toast-close-button {
+  float: left;
+}
+body.rtls #toast-container > .toast:before {
+  margin: auto -1.5em auto 0.5em;
+}
+body.rtls #toast-container > div {
+  padding: 15px 50px 15px 15px;
+}
+body.rtls .center-orientation .vertical-timeline-icon i {
+  margin-left: 0;
+  margin-right: -12px;
+}
+body.rtls .vertical-timeline-icon i {
+  right: 50%;
+  left: auto;
+  margin-left: auto;
+  margin-right: -12px;
+}
+body.rtls .file-box {
+  float: right;
+}
+body.rtls ul.notes li {
+  float: right;
+}
+body.rtls .chat-users,
+body.rtls .chat-statistic {
+  margin-right: -30px;
+  margin-left: auto;
+}
+body.rtls .dropdown-menu > li > a {
+  text-align: right;
+}
+body.rtls .b-r {
+  border-left: 1px solid #e7eaec;
+  border-right: none;
+}
+body.rtls .dd-list .dd-list {
+  padding-right: 30px;
+  padding-left: 0;
+}
+body.rtls .dd-item > button {
+  float: right;
+}
+body.rtls .theme-config-box {
+  margin-left: -220px;
+  margin-right: 0;
+}
+body.rtls .theme-config-box.show {
+  margin-left: 0;
+  margin-right: 0;
+}
+body.rtls .spin-icon {
+  right: 0;
+  left: auto;
+}
+body.rtls .skin-settings {
+  margin-right: 40px;
+  margin-left: 0;
+}
+body.rtls .skin-settings {
+  direction: ltr;
+}
+body.rtls .footer.fixed {
+  margin-right: 220px;
+  margin-left: 0;
+}
+@media (max-width: 992px) {
+  body.rtls .chat-users,
+  body.rtls .chat-statistic {
+    margin-right: 0;
+  }
+}
 body.rtls.mini-navbar .footer.fixed,
 body.body-small.mini-navbar .footer.fixed {
   margin: 0 70px 0 0;
@@ -835,6 +954,73 @@ body.rtls.top-navigation .footer.fixed {
   left: 0;
 }
 
+.metismenu .plus-minus,
+.metismenu .plus-times {
+  float: right;
+}
+.metismenu .arrow {
+  float: right;
+  line-height: 1.42857;
+}
+.metismenu .glyphicon.arrow:before {
+  content: "\e079";
+}
+.metismenu .active > a > .glyphicon.arrow:before {
+  content: "\e114";
+}
+.metismenu .fa.arrow:before {
+  content: "\f104";
+}
+.metismenu .active > a > .fa.arrow:before {
+  content: "\f107";
+}
+.metismenu .ion.arrow:before {
+  content: "\f3d2";
+}
+.metismenu .active > a > .ion.arrow:before {
+  content: "\f3d0";
+}
+.metismenu .fa.plus-minus:before,
+.metismenu .fa.plus-times:before {
+  content: "\f067";
+}
+.metismenu .active > a > .fa.plus-times {
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.metismenu .active > a > .fa.plus-minus:before {
+  content: "\f068";
+}
+.metismenu .collapse {
+  display: none;
+}
+.metismenu .collapse.in {
+  display: block;
+}
+.metismenu .collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition-timing-function: ease;
+  transition-timing-function: ease;
+  -webkit-transition-duration: .35s;
+  transition-duration: .35s;
+  -webkit-transition-property: height, visibility;
+  transition-property: height, visibility;
+}
+.mini-navbar .metismenu .collapse {
+  opacity: 0;
+}
+.mini-navbar .metismenu .collapse.in {
+  opacity: 1;
+}
+.mini-navbar .metismenu .collapse a {
+  display: none;
+}
+.mini-navbar .metismenu .collapse.in a {
+  display: block;
+}
 
 /*
  *
