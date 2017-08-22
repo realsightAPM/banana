@@ -381,7 +381,8 @@
   "Local default template set successfully":"本地默认模板设置成功",
   "Local default template set failed":"本地默认模板设置失败",
   "Dashboard":"仪表盘",
-  "Load template failed":"导入仪表盘失败"
+  "Load template failed":"导入仪表盘失败",
+  "Delete dashboard controller":"仪表盘编辑"
 
 
 

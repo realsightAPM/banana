@@ -181,7 +181,7 @@ ul.nav-second-level {
   background: #293846;
 }
 .nav > li.active {
-  border-left: 4px solid #19aa8d;
+  border-left: 4px solid #13c7e7;
   background: #293846;
 }
 .nav.nav-second-level > li.active {
@@ -614,7 +614,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
   display: none;
 }
 .pace .pace-progress {
-  background: #1ab394;
+  background: #13c7e7;
   position: fixed;
   z-index: 2040;
   top: 0;

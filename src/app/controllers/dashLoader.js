@@ -58,33 +58,65 @@ function (angular, _) {
     };
     
     $scope.create_new = function(type) {
+
+
       $http.get('app/dashboards/' + type + '.json?' + new Date().getTime()).
-        success(function(data) {
-          data.solr.server = $scope.new.server;
-          data.solr.core_name = $scope.new.core_name;
-          // If time series dashboard, update all timefield references in the default dashboard
-          if (type === 'default-ts') {
-            data.services.filter.list[0].field = $scope.new.time_field;
-            // Iterate over panels and update timefield
-            for (var i = 0; i < data.rows.length; i++) {
-              for (var j = 0; j < data.rows[i].panels.length; j++) {
-                if (data.rows[i].panels[j].timefield) {
-                  data.rows[i].panels[j].timefield = $scope.new.time_field;
-                } else if (data.rows[i].panels[j].time_field) {
-                  data.rows[i].panels[j].time_field = $scope.new.time_field;
-                }
+      then(function successCallback(response) {
+        // 请求成功执行代码
+        var data = response.data;
+        data.solr.server = $scope.new.server;
+        data.solr.core_name = $scope.new.core_name;
+        // If time series dashboard, update all timefield references in the default dashboard
+        if (type === 'default-ts') {
+          data.services.filter.list[0].field = $scope.new.time_field;
+          // Iterate over panels and update timefield
+          for (var i = 0; i < data.rows.length; i++) {
+            for (var j = 0; j < data.rows[i].panels.length; j++) {
+              if (data.rows[i].panels[j].timefield) {
+                data.rows[i].panels[j].timefield = $scope.new.time_field;
+              } else if (data.rows[i].panels[j].time_field) {
+                data.rows[i].panels[j].time_field = $scope.new.time_field;
               }
             }
           }
+        }
 
-          dashboard.dash_load(data);
-          
-          // Reset new dashboard defaults
-          $scope.resetNewDefaults();
-        }).
-        error(function() {
+        dashboard.dash_load(data);
+
+        // Reset new dashboard defaults
+        $scope.resetNewDefaults();
+      }, function errorCallback(data) {
+        // 请求失败执行代码
         toastr.error($translate.instant('Unable to load default dashboard'), 'RealsightAPM');
-        });
+      });
+      //
+      // $http.get('app/dashboards/' + type + '.json?' + new Date().getTime()).
+      //   success(function(data) {
+      //     data.solr.server = $scope.new.server;
+      //     data.solr.core_name = $scope.new.core_name;
+      //     // If time series dashboard, update all timefield references in the default dashboard
+      //     if (type === 'default-ts') {
+      //       data.services.filter.list[0].field = $scope.new.time_field;
+      //       // Iterate over panels and update timefield
+      //       for (var i = 0; i < data.rows.length; i++) {
+      //         for (var j = 0; j < data.rows[i].panels.length; j++) {
+      //           if (data.rows[i].panels[j].timefield) {
+      //             data.rows[i].panels[j].timefield = $scope.new.time_field;
+      //           } else if (data.rows[i].panels[j].time_field) {
+      //             data.rows[i].panels[j].time_field = $scope.new.time_field;
+      //           }
+      //         }
+      //       }
+      //     }
+      //
+      //     dashboard.dash_load(data);
+      //
+      //     // Reset new dashboard defaults
+      //     $scope.resetNewDefaults();
+      //   }).
+      //   error(function() {
+      //   toastr.error($translate.instant('Unable to load default dashboard'), 'RealsightAPM');
+      //   });
     };
 
     $scope.set_default = function() {

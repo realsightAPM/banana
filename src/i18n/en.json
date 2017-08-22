@@ -375,7 +375,8 @@
   "Local default template set successfully":"Local default template set successfully",
   "Local default template set failed":"Local default template set failed",
   "Dashboard":"Dashboards",
-  "Load template failed":"Load dashboard failed"
+  "Load template failed":"Load dashboard failed",
+  "Delete dashboard controller":"Delete dashboard controller"
 
 
 

@@ -33,12 +33,12 @@ require.config({
     'underscore-src':         '../vendor/underscore',
     bootstrap:                '../vendor/bootstrap/bootstrap',
 
-    jquery:                    '../vendor/jquery/jquery-3.1.1',
-    jquery:                   '../../bower_components/jquery/dist/jquery.js',
+
+    jquery:                   '../../bower_components/jquery/dist/jquery',
     metisMenu:                '../../bower_components/metisMenu/dist/metisMenu',
     slimscroll:               '../vendor/nav/plugins/slimscroll/jquery.slimscroll',
     inspinia:                 '../vendor/nav/inspinia',
-    pace:                     '../vendor/nav/plugins/pace/pace.min',
+    pace:                     '../vendor/nav/plugins/pace/pace',
     toastr:                    '../vendor/nav/toastr.min',
     confirm:                    '../../node_modules/jquery-confirm/js/jquery-confirm',
     // classie:                  '../vendor/nav/classie',
@@ -133,7 +133,7 @@ require.config({
     // simple dependency declaration
     metisMenu:              ['jquery'],
     slimscroll:             ['jquery'],
-    inspinia:               ['jquery'],
+    inspinia:               ['jquery','metisMenu','slimscroll'],
     pace:                   ['jquery'],
     classie:                  ['jquery'],
     selectFx:                 ['jquery','classie'],
