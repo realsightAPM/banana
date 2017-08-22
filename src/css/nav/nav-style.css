@@ -275,7 +275,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
   position: absolute;
   left: 70px;
   top: 0;
-  background-color: #2f4050;
+  background-color: rgba(53, 72, 90, 0.92);
   padding: 10px 10px 10px 10px;
   font-size: 12px;
 }

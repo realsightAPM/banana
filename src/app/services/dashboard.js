@@ -148,12 +148,10 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         }
         return fmt;
       };
-      [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
 
-        new SelectFx(el);
-      } );
 
       route();
+
     });
 
     var route = function() {

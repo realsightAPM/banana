@@ -53,7 +53,9 @@ define([
 
       window.location.href = window.location.origin+window.location.pathname.replace("index.html","")+"login.html";
     }
-
+    [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
+      new SelectFx(el);
+    } );
     var app = angular.module('kibana', ['ngRoute', 'ngSanitize','pascalprecht.translate']),
       // we will keep a reference to each module defined before boot, so that we can
       // go back and allow it to define new features later. Once we boot, this will be false
@@ -105,6 +107,9 @@ define([
         })
         .when('/dashboard/:kbnType/:kbnId/:params', {
           templateUrl: 'app/partials/dashboard.html'
+        })
+        .when('/demo',{
+          templateUrl: 'app/partials/demo.html',
         })
         .otherwise({
           redirectTo: 'dashboard'
