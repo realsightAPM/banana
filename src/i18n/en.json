@@ -371,7 +371,11 @@
   "The file is not valid json file":"The file is not valid json file",
   "HTML5 File APIs are not fully supported in this browser":"HTML5 File APIs are not fully supported in this browser",
   "Are you sure to continue?":"Are you sure to continue?",
-  "Are you sure to delete?":"Are you sure to delete?"
+  "Are you sure to delete?":"Are you sure to delete?",
+  "Local default template set successfully":"Local default template set successfully",
+  "Local default template set failed":"Local default template set failed",
+  "Dashboard":"Dashboards",
+  "Load template failed":"Load dashboard failed"
 
 
 

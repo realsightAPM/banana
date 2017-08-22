@@ -34,8 +34,9 @@ require.config({
     bootstrap:                '../vendor/bootstrap/bootstrap',
 
     jquery:                    '../vendor/jquery/jquery-3.1.1',
-    metisMenu:                '../vendor/nav/plugins/metisMenu/jquery.metisMenu',
-    slimscroll:               '../vendor/nav/plugins/slimscroll/jquery.slimscroll.min',
+    jquery:                   '../../bower_components/jquery/dist/jquery.js',
+    metisMenu:                '../../bower_components/metisMenu/dist/metisMenu',
+    slimscroll:               '../vendor/nav/plugins/slimscroll/jquery.slimscroll',
     inspinia:                 '../vendor/nav/inspinia',
     pace:                     '../vendor/nav/plugins/pace/pace.min',
     toastr:                    '../vendor/nav/toastr.min',

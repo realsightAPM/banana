@@ -377,7 +377,11 @@
   "The file is not valid json file":"该文件不是json格式",
   "HTML5 File APIs are not fully supported in this browser":"该浏览器不支持该html5文件",
   "Are you sure to continue?":"确定保存吗？",
-  "Are you sure to delete?":"确定删除吗？"
+  "Are you sure to delete?":"确定删除吗？",
+  "Local default template set successfully":"本地默认模板设置成功",
+  "Local default template set failed":"本地默认模板设置失败",
+  "Dashboard":"仪表盘",
+  "Load template failed":"导入仪表盘失败"
 
 
 

@@ -4,10 +4,10 @@
 <li><a bs-tooltip="'Goto saved default'" data-placement="bottom" href='#/dashboard'><i class='icon-home'></i></a></li>-->
 <!-- New menu -->
 <li class="dropdown"  ng-show="showDropdown('new')" style="text-decoration:none;list-style-type:none">
-  <a  data-toggle="dropdown" style='text-decoration:none;'>
-      &nbsp;<i class='icon-file'></i>&nbsp;&nbsp;&nbsp;&nbsp;{{'New'|translate}}
+  <a  data-toggle="dropdown" style='text-decoration:none;color:#a2acbd;text-decoration:none;cursor:pointer;'>
+    <i class="fa fa-plus-circle"></i> <span class="nav-label">{{'New'|translate}}</span>
   </a>
-  <ul class="dropdown-menu" style="padding:5px;top:-50px;left:-50px">
+  <ul class="dropdown-menu" style="padding:5px;left: 110%;top: -72%;">
     <li><a class="link" bs-modal="'app/partials/solrSettings.html'" ng-click="$scope.type='default-ts'"><i class="icon-time"></i> {{'Time-series dashboard'|translate}}</a></li>
     <li><a class="link" bs-modal="'app/partials/solrSettings.html'" ng-click="$scope.type='default-nts'"><i class="icon-th-large"></i> {{'Non time-series dashboard'|translate}} </a></li>
   </ul>
@@ -50,11 +50,8 @@
           <td ng-show="dashboard.current.loader.save_elasticsearch"><a confirm-click="elasticsearch_delete(row.id)" confirmation="Are you sure you want to delete {{row.id}} dashboard?"><i class="icon-remove"></i></a></td>
           <td><a href="#/dashboard/solr/{{row.id}}?server={{row.server}}">{{row.id}}</a></td>
           <!--<td><a><i class="icon-share" ng-click="share = dashboard.share_link(row.id,'solr',row.id)" bs-modal="'app/panels/dashcontrol/share.html'"></i></a></td>-->
-        </tr>
-      </table>
-    </li>
-  </ul>
-</li>
+
+
 <!-- Save menu
 <li class="dropdown" bs-tooltip="'Save'" data-placement="bottom" ng-show="showDropdown('save')">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
