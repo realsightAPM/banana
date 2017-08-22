@@ -174,6 +174,7 @@ define([
       'controllers/all',
       'directives/all',
       'filters/all',
+      'alarms/all'
     ], function () {
 
       // bootstrap the app

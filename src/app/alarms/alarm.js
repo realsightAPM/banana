@@ -12,16 +12,7 @@ define([
 
     var module = angular.module('kibana.alarms', ['ngMaterial']);
 
-    module.controller('AlarmCtrl', function ($scope, $timeout, $filter, timer, querySrv, dashboard, filterSrv) {
-
-      $scope.option_solr = "http://10.4.55.171:8983/solr/";
-      $scope.option_collection = "option";
-
-      $scope.rca_solr = "http://10.4.55.171:8983/solr/";
-      $scope.rca_collection = "rca1";
-
-      $scope.ad_name_field = "ad_name_s";
-      $scope.facet_limit = 100;
+    module.controller('AlarmCtrl', function ($scope, $timeout, $filter, timer, dashboard) {
 
       $scope.opened_incidents = [
         {
@@ -98,31 +89,7 @@ define([
 
       $scope.get_data = function() {
 
-        var request, results;
 
-        $scope.sjs.client.server($scope.rca_solr + $scope.rca_collection);
-
-        request = $scope.sjs.Request().indices(dashboard.indices);
-
-
-        var query = this.build_query('json', false);
-        console.log(query);
-        // Set the panel's query
-        request.setQuery(query);
-        results = request.doSearch();
-        // Populate scope when we have results
-
-        $scope.data = [];
-        results.then(function successCallback(response) {
-          console.log(response);
-          _.each(response.response, function (item) {
-            console.log(item)
-          })
-
-        }, function errorCallback() {
-          console.log("error");
-
-        });
       };
 
       $scope.get_data();
