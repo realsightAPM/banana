@@ -106,6 +106,9 @@ define([
         .when('/dashboard/:kbnType/:kbnId/:params', {
           templateUrl: 'app/partials/dashboard.html'
         })
+        .when('/alert', {
+          templateUrl: 'app/partials/alert.html'
+        })
         .otherwise({
           redirectTo: 'dashboard'
         });

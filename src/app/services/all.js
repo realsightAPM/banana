@@ -1,5 +1,4 @@
 define([
-  './alertSrv',
   './dashboard',
   './fields',
   './filterSrv',
@@ -7,6 +6,7 @@ define([
   './querySrv',
   './timer',
   './panelMove',
-  './solrSrv'
-],
+  './solrSrv',
+  './alertSrv',
+  ],
 function () {});
