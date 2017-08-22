@@ -22,10 +22,10 @@ define([
     'extend-jquery',
     'angular-translate',
     'angular-translate-loader-static-files',
-  'metisMenu',
-  'slimscroll',
-  'inspinia',
-  'pace'
+    'metisMenu',
+    'slimscroll',
+    'inspinia',
+    'pace'
   ],
   function (angular, $, _, appLevelRequire) {
 

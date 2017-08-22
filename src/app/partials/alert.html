@@ -11,52 +11,46 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.-->
 
-<div ng-controller="AlarmCtrl">
-  <div ng-cloak>
-    <md-content>
-      <md-tabs md-border-bottom>
-        <md-tab label="当前告警">
-          <md-content class="md-padding">
 
-            <table st-table="displayedCollection" st-safe-src="data" class="table table-striped">
+<div ng-controller="AlarmCtrl">
+
+
+            <table st-table="rowCollection" class="table table-striped">
               <thead>
               <tr>
-                <th>策略名称</th>
-                <th>告警级别</th>
-                <th>告警类型</th>
-                <th>告警次数</th>
+                <th st-sort="firstName">first name</th>
+                <th st-sort="lastName">last name</th>
+                <th st-sort="birthDate">birth date</th>
+                <th st-sort="balance">balance</th>
+                <th>email</th>
               </tr>
               <tr>
-                <th colspan="12">
+                <th>
+                  <input st-search="'firstName'" placeholder="search for firstname" class="input-sm form-control" type="search"/>
+                </th>
+                <th colspan="4">
                   <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
                 </th>
               </tr>
               </thead>
               <tbody>
-              <tr ng-repeat="row in displayedCollection">
-                <td>{{row.name}}</td>
-                <td>{{row.level}}</td>
-                <td>{{row.type}}</td>
-                <td>{{row.count}}</td>
+              <tr ng-repeat="row in rowCollection">
+                <td>{{row.firstName | uppercase}}</td>
+                <td>{{row.lastName}}</td>
+                <td>{{row.birthDate | date}}</td>
+                <td>{{row.balance | currency}}</td>
+                <td><a ng-href="mailto:{{row.email}}">email</a></td>
               </tr>
               </tbody>
               <tfoot>
               <tr>
-                <td colspan="5">
-                  <div st-pagination="" st-items-by-page="panel.itemsByPage" st-displayed-pages="panel.displayPage" class="pagination pull-right"></div>
+                <td colspan="5" class="text-center">
+                  <div st-pagination="" st-items-by-page="2" st-displayed-pages="2"></div>
                 </td>
               </tr>
               </tfoot>
             </table>
-          </md-content>
 
-        </md-tab>
-        <md-tab label="历史告警">
-          <md-content class="md-padding">
-          </md-content>
-        </md-tab>
-      </md-tabs>
-    </md-content>
-  </div>
+
 </div>
 
