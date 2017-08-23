@@ -212,31 +212,31 @@
           <div>
             <a  style='text-decoration:none;cursor:pointer;' ng-click="dashboard.confirm()"   >&nbsp;<i class="icon-cloud-upload"></i> &nbsp;&nbsp;{{'Save Template'|translate}} </a>
           </div>
-          <div >
-            <a data-toggle="collapse" class="aaa10" style='text-decoration:none;' data-parent="#accordion" href="#collapseEight">
-              &nbsp;<i class="icon icon-cloud-download"></i>
-              &nbsp;&nbsp;{{'Template Select'|translate}}<i class="icon-angle-left10" style='float:right;'></i>
-            </a>
+          <!--<div >-->
+            <!--<a data-toggle="collapse" class="aaa10" style='text-decoration:none;' data-parent="#accordion" href="#collapseEight">-->
+              <!--&nbsp;<i class="icon icon-cloud-download"></i>-->
+              <!--&nbsp;&nbsp;{{'Template Select'|translate}}<i class="icon-angle-left10" style='float:right;'></i>-->
+            <!--</a>-->
 
-            <div id="collapseEight" class=" collapse">
-              &nbsp;<i class="icon icon-upload"></i>  <select class="span2" ng-model="dashboard.current.templatename" ng-change="dashboard.solr_load('dashboard',dashboard.current.templatename)" ng-options="f for f in dashboard.template"><option  value="">{{'Please select template to load'|translate}}</option></select>
+            <!--<div id="collapseEight" class=" collapse">-->
+              <!--&nbsp;<i class="icon icon-upload"></i>  <select class="span2" ng-model="dashboard.current.templatename" ng-change="dashboard.solr_load('dashboard',dashboard.current.templatename)" ng-options="f for f in dashboard.template"><option  value="">{{'Please select template to load'|translate}}</option></select>-->
 
 
-            </div>
-          </div>
+            <!--</div>-->
+          <!--</div>-->
 
-          <div >
-            <a data-toggle="collapse" class="aaa9" style='text-decoration:none;' data-parent="#accordion" href="#collapseSeven">
-              &nbsp;<i class="icon icon-cloud"></i>
-              &nbsp;&nbsp;{{'Template Delete'|translate}}<i class="icon-angle-left9" style='float:right;'></i>
-            </a>
+          <!--<div >-->
+            <!--<a data-toggle="collapse" class="aaa9" style='text-decoration:none;' data-parent="#accordion" href="#collapseSeven">-->
+              <!--&nbsp;<i class="icon icon-cloud"></i>-->
+              <!--&nbsp;&nbsp;{{'Template Delete'|translate}}<i class="icon-angle-left9" style='float:right;'></i>-->
+            <!--</a>-->
 
-            <div id="collapseSeven" class=" collapse">
+            <!--<div id="collapseSeven" class=" collapse">-->
 
-              <i class="icon icon-minus"></i>   <select class="span2" ng-model="dashboard.current.template_delete_name" ng-change="dashboard.confirm_delete(dashboard.current.template_delete_name)" ng-options="f for f in dashboard.template"><option  value="">{{'Please select template to delete'|translate}}</option></select>
+              <!--<i class="icon icon-minus"></i>   <select class="span2" ng-model="dashboard.current.template_delete_name" ng-change="dashboard.confirm_delete(dashboard.current.template_delete_name)" ng-options="f for f in dashboard.template"><option  value="">{{'Please select template to delete'|translate}}</option></select>-->
 
-            </div>
-          </div>
+            <!--</div>-->
+          <!--</div>-->
 
 
 
@@ -250,12 +250,6 @@
 
 
           <!--</div>-->
-
-
-
-
-
-
 
             <!-- <a data-placement="bottom" bs-popover="'app/panels/timepicker/refreshctrl.html'">Time-series dashboard</a>-->
 

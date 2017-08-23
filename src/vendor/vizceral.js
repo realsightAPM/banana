@@ -741,7 +741,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {array} viewArray e.g. [ node1, node2 ]
 	     */
 	
-	  }, {
+	  },
+      {
 	    key: 'getNode',
 	    value: function getNode(viewArray) {
 	      var currentGraph = this.getGraph(this.rootGraphName);
@@ -866,7 +867,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      }
 	    }
-	  }, {
+	  },{
+        key: 'setPhysicsOptions',
+        value: function setPhysicsOptions(options) {
+         this.currentGraph.setPhysicsOptions(options);
+        }
+      }, {
 	    key: 'zoomOutOfNode',
 	    value: function zoomOutOfNode() {
 	      if (this.currentGraph && this.currentGraph !== this.getGraph(this.rootGraphName)) {
@@ -74370,8 +74376,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      detailedNode: {
 	        volume: {
 	          default: {
-	            top: { header: 'RPS', data: 'data.volumePercent', format: '0.0%' },
-	            bottom: { header: 'ERROR RATE', data: 'data.classPercents.danger', format: '0.00%' },
+	            top: { header: 'Throughput', data: 'data.volumePercent', format: '0.0%' },
+	            bottom: { header: 'Error rate', data: 'data.classPercents.danger', format: '0.00%' },
 	            donut: {
 	              data: 'data.globalClassPercents',
 	              indices: [{ key: 'danger' }, { key: 'warning' }, { key: 'normal', class: 'normalDonut' }]
@@ -74379,13 +74385,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            arc: {}
 	          },
 	          focused: {
-	            top: { header: 'RPS', data: 'data.volume', format: '0,0' },
+	            top: { header: 'Throughput', data: 'data.volume', format: '0,0' },
 	            donut: {
 	              data: 'data.classPercents'
 	            }
 	          },
 	          entry: {
-	            top: { header: 'TOTAL RPS', data: 'data.volume', format: '0,0' }
+	            top: { header: 'Total Throughput', data: 'data.volume', format: '0,0' }
 	          }
 	        }
 	      }

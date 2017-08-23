@@ -48,9 +48,30 @@
       </a>
     </span>
   <form  class="form-inline bordered histogram-options" ng-show="options">
-  &nbsp;{{'Dragging'|translate}}&nbsp;<input type="checkbox" ng-model="panel.dragging" ng-checked="panel.dragging" ng-change="allowDraggingOfNodes()">
-  &nbsp;{{'Showlabel'|translate}}&nbsp;<input type="checkbox" ng-model="panel.showlabel" ng-checked="panel.showlabel" ng-change="allowDraggingOfNodes()">
-  &nbsp;{{'Physics'|translate}}&nbsp;<input type="checkbox" ng-model="panel.physics" ng-checked="panel.physics" ng-change="setPhysicsOption()">
+    <div class="checkbox checkbox-primary" style="display: inline-block;margin-right:1%">
+
+      <input id="checkbox1" ng-model="panel.dragging" ng-checked="panel.dragging" type="checkbox" ng-change="allowDraggingOfNodes()">
+      <label for="checkbox1">
+        {{'Dragging'|translate}}
+      </label>
+
+
+    </div>
+    <div class="checkbox checkbox-primary" style="display: inline-block;margin-right:1%">
+      <input id="checkbox222" ng-model="panel.showlabel" ng-checked="panel.showlabel" type="checkbox" ng-change="allowDraggingOfNodes()">
+      <label for="checkbox222">
+        {{'Showlabel'|translate}}
+      </label>
+    </div>
+    <div class="checkbox checkbox-primary" style="display: inline-block;margin-right:1%">
+      <input id="checkbox3" ng-model="panel.physics" ng-checked="panel.physics" ng-change="setPhysicsOption()" type="checkbox" >
+      <label for="checkbox3">
+        {{'Physics'|translate}}&nbsp;
+      </label>
+    </div>
+  <!--&nbsp;&nbsp;<input type="checkbox " ng-model="panel.dragging" ng-checked="panel.dragging" ng-change="allowDraggingOfNodes()">-->
+  <!--&nbsp;{{'Showlabel'|translate}}&nbsp;<input type="checkbox " ng-model="panel.showlabel" ng-checked="panel.showlabel" ng-change="allowDraggingOfNodes()">-->
+  <!--&nbsp;<input type="checkbox " ng-model="panel.physics" ng-checked="panel.physics" ng-change="setPhysicsOption()">-->
   </form>
   <!--<input type="text" id="myInput" >-->
   <!--<input class="search-query panel-query" style="margin:15px" bs-typeahead="panel.history" data-min-length=0 data-items=100 type="text" oninput="viz.zoomOutViewLevel()"  />-->

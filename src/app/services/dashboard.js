@@ -11,7 +11,8 @@ define([
   'html2canvas',
   'cookies',
   'toastr',
-    'confirm'
+    'confirm',
+  'sweetalert'
 ],
 function (angular, $, kbn, _, config, moment, Modernizr) {
   'use strict';
@@ -23,6 +24,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
     showEasing: "swing",
     timeOut: 3000
   };
+
   // setTimeout(function() {
   //   toastr.options = {
   //     closeButton: true,
@@ -38,7 +40,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
   var module = angular.module('kibana.services');
 
   module.service('dashboard', function($routeParams, $http, $rootScope, $injector, $location,$translate,
-    sjsResource, timer, kbnIndex, alertSrv
+    sjsResource, timer, kbnIndex, alertSrv,SweetAlert
   ) {
     // A hash of defaults to use when loading a dashboard
     var _dash = {
@@ -963,6 +965,18 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
             }
           }
         });
+        // SweetAlert.swal({
+        //     title: "Are you sure?",
+        //     text: "Your will not be able to recover this imaginary file!",
+        //     type: "warning",
+        //     showCancelButton: true,
+        //     confirmButtonColor: "#DD6B55",
+        //     confirmButtonText: "Yes, delete it!",
+        //     closeOnConfirm: false},
+        //   function(){
+        //     SweetAlert.swal("Booyah!");
+        //   });
+
       }
 
     }

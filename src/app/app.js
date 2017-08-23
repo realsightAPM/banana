@@ -17,15 +17,17 @@ define([
     'angular-route',
     'angular-material',
     'angular-smart-table',
-
-
     'extend-jquery',
     'angular-translate',
     'angular-translate-loader-static-files',
+    'angular-sweetalert',
   'metisMenu',
   'slimscroll',
   'inspinia',
-  'pace'
+  'pace',
+    'sweetalert',
+  'nestable'
+
   ],
   function (angular, $, _, appLevelRequire) {
 
@@ -56,7 +58,7 @@ define([
     [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
       new SelectFx(el);
     } );
-    var app = angular.module('kibana', ['ngRoute', 'ngSanitize','pascalprecht.translate']),
+    var app = angular.module('kibana', ['ngRoute', 'ngSanitize','pascalprecht.translate','oitozero.ngSweetAlert']),
       // we will keep a reference to each module defined before boot, so that we can
       // go back and allow it to define new features later. Once we boot, this will be false
       pre_boot_modules = [],
@@ -110,6 +112,12 @@ define([
         })
         .when('/demo',{
           templateUrl: 'app/partials/demo.html',
+        })
+        .when('/demo1',{
+        templateUrl: 'app/partials/demo1.html',
+      })
+        .when('/demo2',{
+          templateUrl: 'app/partials/demo2.html',
         })
         .otherwise({
           redirectTo: 'dashboard'

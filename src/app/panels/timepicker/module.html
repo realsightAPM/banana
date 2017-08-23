@@ -61,8 +61,14 @@
       <a class="link" ng-click="set_mode('absolute')" ng-class="{'strong': (panel.mode == 'absolute')}">{{'Absolute'|translate}}</a> |
       <a class="link" ng-click="set_mode('since')"    ng-class="{'strong': (panel.mode == 'since')}">{{'Since'|translate}}</a>
 
-      <span ng-hide="panel.mode == 'absolute' || panel.mode == 'none'"> |
-        <input type="checkbox" ng-model="panel.refresh.enable" ng-change='refresh();'> {{'Auto-refresh'|translate}}
+      <span ng-hide="panel.mode == 'absolute' || panel.mode == 'none'" > |
+         <div class="checkbox checkbox-info" style="display: inline-block;margin-left:0.5%;margin-top:0.5%">
+      <input id="checkbox5" ng-model="panel.refresh.enable" ng-checked="panel.physics" ng-change='refresh();' type="checkbox" >
+      <label for="checkbox5" style="margin-top:6%;font-size:12px">
+       {{'Auto-refresh'|translate}}&nbsp;
+      </label>
+    </div>
+        <!--<input type="checkbox" ng-model="panel.refresh.enable" ng-change='refresh();'> {{'Auto-refresh'|translate}}-->
         <span ng-class="{'ng-cloak': !panel.refresh.enable}">
           every <a data-title="<small>Auto-refresh Settings</small>" data-placement="right" bs-popover="'app/panels/timepicker/refreshctrl.html'">{{panel.refresh.interval}}s</a>.
         </span>

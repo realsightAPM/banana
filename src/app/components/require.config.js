@@ -25,7 +25,8 @@ require.config({
     'angular-smart-table':    '../../bower_components/angular-smart-table/dist/smart-table',
     'angular-translate':  '../vendor/angular/angular-translate',
     'angular-translate-loader-static-files':  '../vendor/angular/angular-translate-loader-static-files',
-
+    'angular-sweetalert':    '../../bower_components/ngSweetAlert/SweetAlert',
+    sweetalert:               '../../bower_components/sweetalert/dist/sweetalert.min',
     timepicker:               '../vendor/angular/timepicker',
     datepicker:               '../vendor/angular/datepicker',
 
@@ -45,6 +46,7 @@ require.config({
     // selectFx:                  '../vendor/nav/selectFx',
     cookies:                   '../vendor/jquery/jquery.cookie',
     golden:                    '../vendor/goldenlayout',
+    nestable:                 '../vendor/jquery/jquery.nestable',
     'jquery-ui':              '../vendor/jquery/jquery-ui-1.10.3',
 
     'extend-jquery':          'components/extend-jquery',
@@ -139,6 +141,7 @@ require.config({
     selectFx:                 ['jquery','classie'],
     toastr:                   ['jquery'],
     confirm:                   ['jquery'],
+    nestable:                 ['jquery'],
       'jquery-ui':            ['jquery'],
     'jquery.flot':          ['jquery'],
     'jquery.flot.pie':      ['jquery', 'jquery.flot'],
@@ -147,8 +150,9 @@ require.config({
     'jquery.flot.stackpercent':['jquery', 'jquery.flot'],
     'jquery.flot.time':     ['jquery', 'jquery.flot'],
     'jquery.flot.axislabels':['jquery', 'jquery.flot'],
-
-    'angular-sanitize':     ['angular'],
+    sweetalert: ['jquery'],
+    'angular-sweetalert':     ['angular'],
+      'angular-sanitize':     ['angular'],
     'angular-cookies':      ['angular'],
     'angular-dragdrop':     ['jquery','jquery-ui','angular'],
     'angular-loader':       ['angular'],

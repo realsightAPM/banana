@@ -274,7 +274,8 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 .mini-navbar .nav .nav-second-level {
   position: absolute;
   left: 70px;
-  top: 0;
+  margin-top: -70%;
+  margin-left: 5%;
   background-color: rgba(53, 72, 90, 0.92);
   padding: 10px 10px 10px 10px;
   font-size: 12px;
@@ -656,6 +657,36 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
   text-align: right;
   padding-top: 30px;
 }
+.ibox .label {
+  font-size: 10px;
+}
+/* UI Sortable */
+.ui-sortable .ibox-title {
+  cursor: move;
+}
+.ui-sortable-placeholder {
+  border: 1px dashed #cecece !important;
+  visibility: visible !important;
+  background: #e7eaec;
+}
+.ibox.ui-sortable-placeholder {
+  margin: 0 0 23px !important;
+}
+/* Resizable */
+.resizable-panels .ibox {
+  clear: none;
+  margin: 10px;
+  float: left;
+  overflow: hidden;
+  min-height: 150px;
+  min-width: 150px;
+}
+.resizable-panels .ibox .ibox-content {
+  height: calc(100% - 49px);
+}
+.ui-resizable-helper {
+  background: rgba(211, 211, 211, 0.4);
+}
 .ibox-content h1,
 .ibox-content h2,
 .ibox-content h3,
@@ -667,6 +698,304 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 .ibox-title h4,
 .ibox-title h5 {
   margin-top: 5px;
+}
+/* GLOBAL  */
+.no-padding {
+  padding: 0 !important;
+}
+.no-borders {
+  border: none !important;
+}
+.no-margins {
+  margin: 0 !important;
+}
+.no-top-border {
+  border-top: 0 !important;
+}
+.ibox-content.text-box {
+  padding-bottom: 0;
+  padding-top: 15px;
+}
+.border-left-right {
+  border-left: 1px solid #e7eaec;
+  border-right: 1px solid #e7eaec;
+}
+.border-top-bottom {
+  border-top: 1px solid #e7eaec;
+  border-bottom: 1px solid #e7eaec;
+}
+.border-left {
+  border-left: 1px solid #e7eaec;
+}
+.border-right {
+  border-right: 1px solid #e7eaec;
+}
+.border-top {
+  border-top: 1px solid #e7eaec;
+}
+.border-bottom {
+  border-bottom: 1px solid #e7eaec;
+}
+.border-size-sm {
+  border-width: 3px;
+}
+.border-size-md {
+  border-width: 6px;
+}
+.border-size-lg {
+  border-width: 9px;
+}
+.border-size-xl {
+  border-width: 12px;
+}
+.full-width {
+  width: 100% !important;
+}
+.link-block {
+  font-size: 12px;
+  padding: 10px;
+}
+.nav.navbar-top-links .link-block a {
+  font-size: 12px;
+}
+.link-block a {
+  font-size: 10px;
+  color: inherit;
+}
+body.mini-navbar .branding {
+  display: none;
+}
+img.circle-border {
+  border: 6px solid #FFFFFF;
+  border-radius: 50%;
+}
+.branding {
+  float: left;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 17px 20px;
+  text-align: center;
+  background-color: #1ab394;
+}
+.login-panel {
+  margin-top: 25%;
+}
+.icons-box h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.icons-box .infont a i {
+  font-size: 25px;
+  display: block;
+  color: #676a6c;
+}
+.icons-box .infont a {
+  color: #a6a8a9;
+}
+.icons-box .infont a {
+  padding: 10px;
+  margin: 1px;
+  display: block;
+}
+.ui-draggable .ibox-title {
+  cursor: move;
+}
+.breadcrumb {
+  background-color: #ffffff;
+  padding: 0;
+  margin-bottom: 0;
+}
+.breadcrumb > li a {
+  color: inherit;
+}
+.breadcrumb > .active {
+  color: inherit;
+}
+code {
+  background-color: #F9F2F4;
+  border-radius: 4px;
+  color: #ca4440;
+  font-size: 90%;
+  padding: 2px 4px;
+  white-space: nowrap;
+}
+.ibox {
+  clear: both;
+  margin-bottom: 25px;
+  margin-top: 0;
+  padding: 0;
+}
+.ibox.collapsed .ibox-content {
+  display: none;
+}
+.ibox.collapsed .fa.fa-chevron-up:before {
+  content: "\f078";
+}
+.ibox.collapsed .fa.fa-chevron-down:before {
+  content: "\f077";
+}
+.ibox:after,
+.ibox:before {
+  display: table;
+}
+.ibox-title {
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background-color: #ffffff;
+  border-color: #e7eaec;
+  border-image: none;
+  border-style: solid solid none;
+  border-width: 2px 0 0;
+  color: inherit;
+  margin-bottom: 0;
+  padding: 15px 15px 7px;
+  min-height: 48px;
+}
+.ibox-content {
+  background-color: #ffffff;
+  color: inherit;
+  padding: 15px 20px 20px 20px;
+  border-color: #e7eaec;
+  border-image: none;
+  border-style: solid solid none;
+  border-width: 1px 0;
+}
+.ibox-footer {
+  color: inherit;
+  border-top: 1px solid #e7eaec;
+  font-size: 90%;
+  background: #ffffff;
+  padding: 10px 15px;
+}
+table.table-mail tr td {
+  padding: 12px;
+}
+.table-mail .check-mail {
+  padding-left: 20px;
+}
+.table-mail .mail-date {
+  padding-right: 20px;
+}
+.star-mail,
+.check-mail {
+  width: 40px;
+}
+.unread td a,
+.unread td {
+  font-weight: 600;
+  color: inherit;
+}
+.read td a,
+.read td {
+  font-weight: normal;
+  color: inherit;
+}
+.unread td {
+  background-color: #f9f8f8;
+}
+.ibox-content {
+  clear: both;
+}
+.ibox-heading {
+  background-color: #f3f6fb;
+  border-bottom: none;
+}
+.ibox-heading h3 {
+  font-weight: 200;
+  font-size: 24px;
+}
+.ibox-title h5 {
+  display: inline-block;
+  font-size: 14px;
+  margin: 0 0 7px;
+  padding: 0;
+  text-overflow: ellipsis;
+  float: left;
+}
+.ibox-title .label {
+  float: left;
+  margin-left: 4px;
+}
+.ibox-tools {
+  display: block;
+  float: none;
+  margin-top: 0;
+  position: relative;
+  padding: 0;
+  text-align: right;
+}
+.ibox-tools a {
+  cursor: pointer;
+  margin-left: 5px;
+  color: #c4c4c4;
+}
+.ibox-tools a.btn-primary {
+  color: #fff;
+}
+.ibox-tools .dropdown-menu > li > a {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+.ibox .ibox-tools.open > .dropdown-menu {
+  left: auto;
+  right: 0;
+}
+.fullscreen-ibox-mode .animated {
+  animation: none;
+}
+body.fullscreen-ibox-mode {
+  overflow-y: hidden;
+}
+.ibox.fullscreen {
+  z-index: 2030;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  margin-bottom: 0;
+}
+.ibox.fullscreen .collapse-link {
+  display: none;
+}
+.ibox.fullscreen .ibox-content {
+  min-height: calc(100% - 48px);
+}
+.chat-view .ibox-content {
+  padding: 0;
+}
+.article .ibox-content {
+  padding: 40px;
+}
+.product-detail .ibox-content {
+  padding: 30px 30px 50px 30px;
+}
+.ibox-content > .sk-spinner {
+  display: none;
+}
+.ibox-content.sk-loading {
+  position: relative;
+}
+.ibox-content.sk-loading:after {
+  content: '';
+  background-color: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.ibox-content.sk-loading > .sk-spinner {
+  display: block;
+  position: absolute;
+  top: 40%;
+  left: 0;
+  right: 0;
+  z-index: 2000;
 }
 ul.unstyled,
 ol.unstyled {
@@ -1753,7 +2082,7 @@ body.md-skin {
     background:#f3f3f4
   }
   .navbar-static-side {
-    z-index: 2001;
+    z-index: 1001;
     position: absolute;
     width: 220px;
     background-color:#2f4050

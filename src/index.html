@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/normalize.min.css">
     <link rel="stylesheet" href="css/rotate.css">
+    <link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
+    <!--<link rel="stylesheet" href="css/bootstrap.css">-->
 
     <!-- <link rel="stylesheet" href="css/kagi.css">-->
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
@@ -50,6 +52,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/cs-skin-rotate.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/toastr.min.css" />
     <link rel="stylesheet" type="text/css" href="css/jquery-confirm.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/sweetalert.css" />
     <div ng-repeat='alert in dashAlerts.list' class="alert-{{alert.severity}} dashboard-notice" ng-if="$last" style="position:fixed">
       <button type="button" class="close" ng-click="dashAlerts.clear(alert)" style="padding-right:50px">&times;</button>
       <strong>{{alert.title}}</strong> <span ng-bind-html-unsafe='alert.text'></span> <div style="padding-right:10px" class='pull-right small'> {{$index + 1}} alert(s) </div>
@@ -82,7 +85,7 @@
             <li >
               <a  style='text-decoration:none;cursor:pointer;'><i class="fa fa-th-large"></i> <span class="nav-label">{{'Dashboard'|translate}}</span> <span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
-                <li ng-repeat="term in dashboard.template"><i  ng-click="dashboard.confirm_delete(term)" style="display: inline-block" class="fa fa-remove" ng-show="dashboard.current.hide_head"></i><a  style='text-decoration:none;cursor:pointer;display: inline-block;'  ng-click="dashboard.solr_load('dashboard',term)" ><i class="fa fa-dashboard"></i>{{term}}</a></li>
+                <li ng-repeat="term in dashboard.template"><i  ng-click="dashboard.confirm_delete(term)" style="display: inline-block" class="fa fa-remove" ng-show="dashboard.current.hide_head"></i><a href="#!dashboard" style='text-decoration:none;cursor:pointer;display: inline-block;'  ng-click="dashboard.solr_load('dashboard',term)" ><i class="fa fa-dashboard"></i>{{term}}</a></li>
 
               </ul>
             </li>
