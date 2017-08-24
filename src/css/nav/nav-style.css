@@ -660,6 +660,15 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 .ibox .label {
   font-size: 10px;
 }
+.ibox.fullscreen .collapse-link {
+  display: none;
+}
+
+.label-primary,
+.badge-primary {
+  background-color: #2c5882;
+  color: #FFFFFF;
+}
 /* UI Sortable */
 .ui-sortable .ibox-title {
   cursor: move;

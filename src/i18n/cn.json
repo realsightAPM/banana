@@ -320,8 +320,8 @@
   "Please select template to delete":"请选择要删除的模板",
   "Template Delete":"在线模板删除",
   "Template Address":"在线模板地址",
-  "List template successfully":"仪表盘在线模板列表已更新",
-  "List template failed":"仪表盘在线模板列表更新失败",
+  "List template successfully":"仪表盘列表已更新",
+  "List template failed":"仪表盘列表更新失败",
   "Delete template successfully":"选中模板删除成功",
   "Delete template failed":"选中模板删除失败",
   "Store template successfully":"模板在线存储成功",
@@ -382,7 +382,12 @@
   "Local default template set failed":"本地默认模板设置失败",
   "Dashboard":"仪表盘",
   "Load template failed":"导入仪表盘失败",
-  "Delete dashboard controller":"仪表盘编辑"
+  "Delete dashboard controller":"仪表盘编辑",
+  "Template":"模板",
+  "Application Stack Mapper":"应用拓扑分析仪表盘模板",
+  "User Behavior Tracker":"用户行为监控仪表盘模板",
+  "Network Topology Mapper":"网络拓扑分析仪表盘模板",
+  "Topology Mapper":"拓扑分析仪表盘模板（鱼眼）"
 
 
 

@@ -116,6 +116,9 @@ define([
         .when('/demo1',{
         templateUrl: 'app/partials/demo1.html',
       })
+        .when('/template_demo',{
+          templateUrl: 'app/partials/template_demo.html',
+        })
         .when('/demo2',{
           templateUrl: 'app/partials/demo2.html',
         })

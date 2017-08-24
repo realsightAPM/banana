@@ -317,8 +317,8 @@
   "Please select template to load":"Please Select The Template To Load",
   "Please select template to delete":"Please Select The Template To Delete",
   "Template Address":"Template Address",
-  "List template successfully":"List Template Successfully",
-  "List template failed":"List Template Failed",
+  "List template successfully":"List Dashboard Successfully",
+  "List template failed":"List Dashboard Failed",
   "Delete template successfully":"Delete Template Successfully",
   "Delete template failed":"Delete Template Failed",
   "Store template successfully":"Store Template Successfully",
@@ -376,7 +376,11 @@
   "Local default template set failed":"Local default template set failed",
   "Dashboard":"Dashboards",
   "Load template failed":"Load dashboard failed",
-  "Delete dashboard controller":"Delete dashboard controller"
+  "Delete dashboard controller":"Delete dashboard controller",
+  "Template":"Template",
+  "User Behavior Tracker":"User Behavior Tracker",
+  "Network Topology Mapper":"Network Topology Mapper",
+  "Topology Mapper":"Topology Mapper"
 
 
 
