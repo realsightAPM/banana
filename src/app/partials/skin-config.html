@@ -175,7 +175,8 @@
 
                 <div id="collapseThree" class=" collapse">
                     <li id="saveFile"  ng-click="dashboard.to_file() "><i class="icon-download"></i> <label  class="small">{{'Export to File'|translate}} </label></li>
-                    <li id="savePdf" ng-click="dashboard.save_pdf() "><i class="icon-download-alt"></i> <label  class="small"> {{'Export to PDF'|translate}}</label></li>
+                    <li  ng-click="dashboard.save_pdf() "><i class="icon-download-alt"></i> <label  class="small"> {{'Export to PDF'|translate}}</label></li>
+                    <li id="savePdf" ng-click="dashboard.save_pdf_f2() " ng-show="0"></li>
                     <li id="setDefault" ng-show="dashboard.current.loader.save_default" ng-click="dashboard.set_default()"><i class="icon-bookmark"></i>  <label class="small" >{{'Set as Browser Default'|translate}}</label></li>
                     <li id="clearDefault" ng-show="dashboard.current.loader.save_default" ng-click="dashboard.purge_default()"><i class="icon-ban-circle"></i> <label class="small">{{'Clear Browser Default'|translate}}</label></li>
 

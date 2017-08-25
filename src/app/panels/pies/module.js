@@ -806,6 +806,7 @@ function (angular, app, _, $, kbn) {
           }
 
           if(scope.panel.chart === 'bar') {
+            scope.label.reverse();
             myChart = echarts.init(document.getElementById(idd));
             var option3 = {
             color:colors,
@@ -1134,6 +1135,7 @@ function (angular, app, _, $, kbn) {
           }
 
           if(scope.panel.chart === 'bars'){
+            scope.label.reverse();
             var islength = 0;
             if(scope.data.length>5){
               islength =1;
@@ -1328,6 +1330,7 @@ function (angular, app, _, $, kbn) {
           }
 
           if(scope.panel.chart === 'ebar') {
+            scope.label.reverse();
 
             myChart = echarts.init(document.getElementById(idd));
             var option7 = {
