@@ -65,6 +65,9 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:true,
+      fullHeight:'700%',
+      useInitHeight:true,
       mode        : 'values',
       queries     : {
         mode        : 'all',
@@ -115,7 +118,19 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
     $scope.init = function() {
       // Hide view options by default
       $scope.options = false;
-
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //   $scope.$emit('render');
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
       // Start refresh timer if enabled
       if ($scope.panel.refresh.enable) {
         $scope.set_timer($scope.panel.refresh.interval);
@@ -127,7 +142,22 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
       $scope.get_data();
     };
+    $scope.reSize=function() {
 
+      $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+      $scope.$emit('render');
+      $(window).trigger('resize');
+
+
+    };
     $scope.set_timer = function(refresh_interval) {
       $scope.panel.refresh.interval = refresh_interval;
       if (_.isNumber($scope.panel.refresh.interval)) {
@@ -529,7 +559,11 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
         // Function for rendering panel
         function render_panel() {
           // IE doesn't work without this
-          elem.css({height:scope.panel.height || scope.row.height});
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
+          elem.css({height:divHeight});
           var aaa= scope.data;
           var label=[];
           var timedata=[];

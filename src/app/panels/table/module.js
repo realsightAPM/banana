@@ -55,6 +55,7 @@ function (angular, app, _, kbn, moment) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:false,
       status  : "Stable",
       queries     : {
         mode        : 'all',

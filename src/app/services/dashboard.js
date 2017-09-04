@@ -158,6 +158,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
 
     var route = function() {
       // Is there a dashboard type and id in the URL?
+
       setTimeout(function() {
         self.solr_list('*:*',100);
       }, 3000);

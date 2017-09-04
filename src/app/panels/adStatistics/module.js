@@ -37,6 +37,9 @@ define([
 
             // Set and populate defaults
             var _d = {
+              panelExpand:false,
+              fullHeight:'700%',
+              useInitHeight:true,
               queries     : {
                   mode        : 'all',
                   ids         : [],
@@ -84,7 +87,19 @@ define([
             $scope.init = function () {
                 $scope.hits = 0;
                 //$scope.testMultivalued();
-
+              // $('.fullscreen-link').on('click', function () {
+              //   var ibox = $(this).closest('div.ibox1');
+              //   var button = $(this).find('i');
+              //
+              //   $('body').toggleClass('fullscreen-ibox1-mode');
+              //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+              //   ibox.toggleClass('fullscreen');
+              //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+              //
+              //
+              //   $(window).trigger('resize');
+              //
+              // });
                 // Start refresh timer if enabled
                 if ($scope.panel.refresh.enable) {
                     $scope.set_timer($scope.panel.refresh.interval);
@@ -101,6 +116,23 @@ define([
                 var range = filterSrv.timeRange('min');
                 return range;
             };
+
+          $scope.reSize=function() {
+
+            $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+            var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+            var button = $('#'+$scope.$id+'z').find('i');
+            //var aaa = '#'+$scope.$id+'z';
+            $('body').toggleClass('fullscreen-ibox1-mode');
+            button.toggleClass('fa-expand').toggleClass('fa-compress');
+            ibox.toggleClass('fullscreen');
+            $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+            $scope.$emit('render');
+            $(window).trigger('resize');
+
+
+          };
 
             $scope.testMultivalued = function() {
                 if($scope.panel.field && $scope.fields.typeList[$scope.panel.field] && $scope.fields.typeList[$scope.panel.field].schema.indexOf("M") > -1) {

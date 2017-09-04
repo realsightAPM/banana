@@ -30,6 +30,9 @@ function (angular, app, _, $, d3) {
 
     // Define panel's default properties and values
     var _d = {
+      panelExpand:false,
+      fullHeight:'700%',
+      useInitHeight:true,
       queries: {
         mode: 'all',
         query: '*:*',
@@ -48,6 +51,7 @@ function (angular, app, _, $, d3) {
     _.defaults($scope.panel, _d);
 
     $scope.init = function() {
+
       $scope.$on('refresh',function(){
         $scope.get_data();
       });

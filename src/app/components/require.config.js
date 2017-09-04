@@ -47,6 +47,7 @@ require.config({
     cookies:                   '../vendor/jquery/jquery.cookie',
     golden:                    '../vendor/goldenlayout',
     nestable:                 '../vendor/jquery/jquery.nestable',
+    datatable:                 '../../bower_components/datatables.net/js/jquery.dataTables',
     'jquery-ui':              '../vendor/jquery/jquery-ui-1.10.3',
 
     'extend-jquery':          'components/extend-jquery',
@@ -142,6 +143,7 @@ require.config({
     toastr:                   ['jquery'],
     confirm:                   ['jquery'],
     nestable:                 ['jquery'],
+    datatable:                ['jquery','bootstrap'],
       'jquery-ui':            ['jquery'],
     'jquery.flot':          ['jquery'],
     'jquery.flot.pie':      ['jquery', 'jquery.flot'],

@@ -38,6 +38,9 @@ function (angular, app, _, $, kbn) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:true,
+      fullHeight:'700%',
+      useInitHeight:true,
       queries     : {
         mode        : 'all',
         ids         : [],
@@ -89,6 +92,19 @@ function (angular, app, _, $, kbn) {
     _.defaults($scope.panel,_d);
 
     $scope.init = function () {
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //   $scope.$emit('render');
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
       $scope.hits = 0;
       //$scope.testMultivalued();
       $scope.options = false;
@@ -103,7 +119,25 @@ function (angular, app, _, $, kbn) {
       
       $scope.get_data();
     };
+    $scope.reSize=function() {
 
+
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+
+        $scope.$emit('render');
+
+
+
+
+
+    };
     $scope.testMultivalued = function() {
       if($scope.panel.field && $scope.fields.typeList[$scope.panel.field] && $scope.fields.typeList[$scope.panel.field].schema.indexOf("M") > -1) {
         $scope.panel.error = "Can't proceed with Multivalued field";
@@ -115,7 +149,7 @@ function (angular, app, _, $, kbn) {
         return;
       }
     };
-      $scope.display=function() {
+    $scope.display=function() {
           if($scope.panel.display === 'none'){
               $scope.panel.display='block';
               $scope.panel.icon="icon-caret-down";
@@ -250,10 +284,12 @@ function (angular, app, _, $, kbn) {
 
       //同id 图表刷新，图表自身点击不刷新，时间选择全局刷新，更换应用刷新
       if((($scope.panel.linkage_id === dashboard.current.linkage_id)&&dashboard.topology.network_force_refresh)||dashboard.current.enable_linkage) {
+        // $scope.panelMeta.loading = true;
         $scope.query_url = "http://" + $scope.panel.HbaseIP + "/getServerMapData.pinpoint?applicationName="+dashboard.current.network_app_name+"&from=" + dashboard.current.timefrom + "&to=" + dashboard.current.timeto + "&callerRange="+$scope.panel.callerRange+"&calleeRange="+$scope.panel.calleeRange+"&serviceTypeName=TOMCAT";
         $.getJSON($scope.query_url, function (json) {
           $scope.data = json;
           dashboard.topology.hbasedata = json;
+
 
           $scope.$emit('render');
         });
@@ -328,8 +364,10 @@ function (angular, app, _, $, kbn) {
   module.directive('topologyChart', function(querySrv,dashboard,filterSrv) {
     return {
       restrict: 'A',
+
       link: function(scope, elem) {
         var myChart;
+
         // Receive render events
         scope.$on('render',function(){
           render_panel();
@@ -344,7 +382,11 @@ function (angular, app, _, $, kbn) {
           var colors = [];
 
           // IE doesn't work without this
-            elem.css({height:scope.panel.height||scope.row.height});
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
+          elem.css({height:divHeight});
 
           // Make a clone we can operate on.
 
@@ -432,6 +474,11 @@ function (angular, app, _, $, kbn) {
 
                 },
               };
+
+
+
+
+
             var network = new vis.Network(document.getElementById(idd), data, options);
             network.on('click', function (params) {
               if(params.nodes.length>0){

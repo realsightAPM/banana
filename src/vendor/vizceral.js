@@ -515,6 +515,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'onDocumentClick',
 	    value: function onDocumentClick(event) {
 	      this.calculateIntersectedObject(event.center.x, event.center.y);
+	     // console.log(this.currentGraph);
 	      if (this.currentGraph) {
 	        this.currentGraph.handleIntersectedObjectClick();
 	      }

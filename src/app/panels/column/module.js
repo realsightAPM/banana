@@ -27,6 +27,7 @@ define([
 
       // Set and populate defaults
       var _d = {
+        panelExpand:true,
         display:'block',
         icon:"icon-caret-down",
         panels : []
@@ -57,7 +58,22 @@ define([
           $scope.panel.icon="icon-caret-up";
         }
       };
+      $scope.reSize=function() {
 
+        $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+        var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+        var button = $('#'+$scope.$id+'z').find('i');
+        //var aaa = '#'+$scope.$id+'z';
+        $('body').toggleClass('fullscreen-ibox1-mode');
+        button.toggleClass('fa-expand').toggleClass('fa-compress');
+        ibox.toggleClass('fullscreen');
+        $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+        $scope.$emit('render');
+        $(window).trigger('resize');
+
+
+      };
       $scope.send_render = function() {
         $scope.$broadcast('render');
       };

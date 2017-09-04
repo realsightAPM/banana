@@ -36,6 +36,9 @@ define([
 
             // Set and populate defaults
             var _d = {
+              panelExpand:false,
+              fullHeight:'700%',
+              useInitHeight:true,
                 queries     : {
                     mode        : 'all',
                     ids         : [],

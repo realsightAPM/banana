@@ -1,4 +1,4 @@
-<div ng-controller='topologyscatter' ng-init="init()">
+<div ng-controller='topologyscatter' ng-init="init()" style="overflow-x:hidden">
 
 <style>
   table td {
@@ -32,8 +32,12 @@
       </a>
     </span>
 
-  <form  class="form-inline bordered histogram-options" ng-show="options">
+  <form  class="form-inline bordered histogram-options ibox-content" ng-show="options" id="ibox1">
 
+    <div class="sk-spinner sk-spinner-double-bounce">
+      <div class="sk-double-bounce1"></div>
+      <div class="sk-double-bounce2"></div>
+    </div>
   <table ng-style="panel.style" class="table table-hover" >
     <caption style="text-align: left">{{'EventMessage'|translate}}</caption>
     <thead>
@@ -69,12 +73,12 @@
     <div class="tab-content" >
       <div role="tabpanel" class="tab-pane active" id="resource_topology">
         <div  style="width:30%;height:600px;display: inline-block"><label style="color:#1babf4;margin-left:50%;font-size:16px" class="small">{{'Topology'|translate}} </label> <div id='{{$id}}a' style="height:100%;"> </div></div>
-        <div  style="width:69%;height:600px;display: inline-block"><label style="color:#1babf4;margin-left:50%;font-size:16px" class="small">{{'CallStack'|translate}} </label> <div id='{{$id}}e' style="height:100%;"> </div></div>
+        <div  style="width:69%;height:600px;display: inline-block"><label style="color:#1babf4;margin-left:50%;font-size:16px" class="small">{{'CallStack'|translate}} </label> <div></div><div id='{{$id}}e' style="height:100%;"> </div></div>
       </div>
       <div role="tabpanel" class="tab-pane" id="resource_consumption">
-        <div id='{{$id}}b' style="width:475px;height:400px;display: inline-block"></div>
-        <div id='{{$id}}c'  style="width:475px;height:400px;display: inline-block"></div>
-        <div id='{{$id}}d'  style="width:475px;height:400px;display: inline-block"></div>
+        <div id='{{$id}}b' style="width:415px;height:400px;display: inline-block"></div>
+        <div id='{{$id}}c'  style="width:415px;height:400px;display: inline-block"></div>
+        <div id='{{$id}}d'  style="width:415px;height:400px;display: inline-block"></div>
       </div>
       <div role="tabpanel" class="tab-pane" id="method_consumption">
         <table st-table="displayedCollection" st-safe-src="filteredItems" class="table table-striped table-bordered">
@@ -142,9 +146,11 @@
 
   </form>
 
+
   <!-- START Table -->
 
   <!-- END Table -->
   <!-- Dummy div for testing color name -->
   <div id="colorTest"></div>
 </div>
+

@@ -6,12 +6,13 @@ function (angular) {
 
   angular
     .module('kibana.directives')
-    .directive('kibanaPanel', function($compile) {
-      var container = '<div class="panelCont animated fadeInLeft" ></div>';
-
+    .directive('kibanaPanel', function($compile,reSize) {
+      // var container = '<div class="panelCont animated fadeInLeft ibox-content" >'+
+      //   '</div>';
+      var container = '<div class="ibox1 panelCont animated fadeInLeft " ><div class="ibox1-content"></div></div>';
       var editorTemplate =
 
-        '<div class="row-fluid panel-extra"><div class="panel-extra-container">' +
+        '<div class="row-fluid panel-extra "><div class="panel-extra-container">' +
 
           '<span class="extra row-button" ng-hide="panel.draggable == false">' +
             '<span class="row-text pointer" bs-tooltip="\'{{\'Drag here to move\'|translate}}\'"'+
@@ -47,7 +48,11 @@ function (angular) {
           '<span class="row-button extra" ng-if="panel.transpose_show">' +
           '<span class="rotate-icon pointer" bs-tooltip="\'{{\'Transpose Rows and Columns\'|translate}}\'" ng-click="flip()"></span>' +
           '</span>' +
-
+        '<span class="row-button extra" >' +
+        '<span class="row-button extra " ng-click="reSize()" id="{{$id}}z" ng-show="panel.panelExpand">'+
+        '<i class="fa fa-expand"></i>'+
+        '</span>'+
+        '</span>' +
           '<span ng-repeat="task in panelMeta.modals" class="row-button extra" ng-if="panel.spyable">' +
             '<span bs-modal="task.partial"class="pointer"><i ' +
               'bs-tooltip="task.description" ng-class="task.icon" class="pointer"></i></span>'+
@@ -76,11 +81,12 @@ function (angular) {
 //              'ng-class="dropdown.icon" class="pointer"></i></a></span>'+
 //          '</span>' +
 
-          '<span class="row-button extra" ng-if="panelMeta.loading == true">' +
+          '<span class="row-button extra"   ng-show="panelMeta.loading">' +
             '<span>'+
               '<i class="icon-spinner smaller icon-spin icon-large"></i>' +
             '</span>'+
           '</span>' +
+
 
           '<span class="row-button row-text panel-title" ng-if="panel.title">' +
             '{{panel.title}}' +

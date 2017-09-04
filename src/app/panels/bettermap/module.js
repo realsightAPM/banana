@@ -43,6 +43,8 @@ function (angular, app, _, L, localRequire) {
 
     // Set and populate defaults
     var _d = {
+      fullHeight:'700%',
+      useInitHeight:true,
       queries     : {
         mode        : 'all',
         ids         : [],
@@ -70,6 +72,20 @@ function (angular, app, _, L, localRequire) {
     // setting this property the paths would be relative to the app not this context/file.
 
     $scope.init = function() {
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //   $scope.$emit('render');
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
+
       $scope.$on('refresh',function() {
         $scope.get_data();
       });

@@ -122,6 +122,12 @@ define([
         .when('/demo2',{
           templateUrl: 'app/partials/demo2.html',
         })
+        .when('/demo3',{
+          templateUrl: 'app/partials/demo3.html',
+        })
+        .when('/demo4',{
+          templateUrl: 'app/partials/demo4.html',
+        })
         .otherwise({
           redirectTo: 'dashboard'
         });

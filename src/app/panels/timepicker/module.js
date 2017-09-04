@@ -35,6 +35,7 @@ function (angular, app, _, moment, kbn, $) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:false,
       status: "Stable",
       mode: "relative",
       time_options: ['5m', '15m', '1h', '6h', '12h', '24h', '2d', '7d', '30d'],
@@ -53,6 +54,8 @@ function (angular, app, _, moment, kbn, $) {
     _.defaults($scope.panel,_d);
 
     $scope.init = function() {
+
+
       // Private refresh interval that we can use for view display without causing
       // unnecessary refreshes during changes
       $scope.refresh_interval = $scope.panel.refresh.interval;

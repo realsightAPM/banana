@@ -1,4 +1,4 @@
-<div class="modal-body">
+<div class="modal-body" style="z-index: 2040">
   <div class="pull-right editor-title">{{panel.type}} {{'Settings'|translate}}</div>
   <div ng-model="editor.index" bs-tabs>
     <div ng-repeat="tab in setEditorTabs(panelMeta)" data-title="{{tab}}">
@@ -21,7 +21,7 @@
   </div>
 </div>
 
-<div class="modal-footer">
+<div class="modal-footer" style="z-index: 2040">
   <!-- close_edit() is provided here to allow for a scope to perform action on dismiss -->
   <button type="button" class="btn btn-danger" ng-click="editor.index=0;close_edit();dismiss()">{{'Close'|translate}}</button>
 </div>

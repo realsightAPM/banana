@@ -26,7 +26,7 @@ function (angular, app, _, $, kbn) {
   var module = angular.module('kibana.panels.pies', []);
   app.useModule(module);
 
-  module.controller('pies', function($scope, $timeout, $translate,timer, querySrv, dashboard, filterSrv) {
+  module.controller('pies', function($scope, $timeout, $translate,timer, querySrv, dashboard, filterSrv,reSize) {
     $scope.panelMeta = {
       exportfile: true,
       editorTabs : [
@@ -38,6 +38,7 @@ function (angular, app, _, $, kbn) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:true,
       queries     : {
         mode        : 'all',
         ids         : [],
@@ -58,7 +59,8 @@ function (angular, app, _, $, kbn) {
       donut   : false,
       tilt    : false,
       display:'block',
-
+     fullHeight:'700%',
+     useInitHeight:true,
       icon:"icon-caret-down",
       labels  : true,
 	  ylabels :true,
@@ -85,7 +87,19 @@ function (angular, app, _, $, kbn) {
 
     $scope.init = function () {
       $scope.hits = 0;
+
       //$scope.testMultivalued();
+
+
+      // $('.fullscreen-link').on('click', function () {
+      //
+      //
+      // });
+
+      // Fullscreen ibox function
+
+
+
 
       // Start refresh timer if enabled
       if ($scope.panel.refresh.enable) {
@@ -98,6 +112,25 @@ function (angular, app, _, $, kbn) {
       
       $scope.get_data();
     };
+    $scope.reSize=function() {
+
+      $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+      $scope.$emit('render');
+      $(window).trigger('resize');
+
+
+    };
+
+
+
 
     $scope.testMultivalued = function() {
       if($scope.panel.field && $scope.fields.typeList[$scope.panel.field] && $scope.fields.typeList[$scope.panel.field].schema.indexOf("M") > -1) {
@@ -206,6 +239,7 @@ function (angular, app, _, $, kbn) {
     };
 
     $scope.get_data = function() {
+      //$('#'+$scope.$id+'a').addClass('sk-loading');
         if(($scope.panel.linkage_id === dashboard.current.linkage_id)||dashboard.current.enable_linkage){
         // Make sure we have everything for the request to complete
         if (dashboard.indices.length === 0) {
@@ -240,7 +274,7 @@ function (angular, app, _, $, kbn) {
                 $scope.panel.error = $scope.parse_error(results.error.msg);
                 $scope.data = [];
                 $scope.label = [];
-                $scope.panelMeta.loading = false;
+                // $scope.panelMeta.loading = false;
                 $scope.$emit('render');
                 return;
             }
@@ -273,7 +307,7 @@ function (angular, app, _, $, kbn) {
             var sum = 0;
             var k = 0;
             var missing = 0;
-            $scope.panelMeta.loading = false;
+            // $scope.panelMeta.loading = false;
             $scope.hits = results.response.numFound;
             $scope.data = [];
             $scope.label = [];
@@ -384,6 +418,7 @@ function (angular, app, _, $, kbn) {
 
     $scope.close_edit = function() {
       // Start refresh timer if enabled
+      $scope.panel.init_height = $scope.panel.height;
       if ($scope.panel.refresh.enable) {
         $scope.set_timer($scope.panel.refresh.interval);
       }
@@ -422,6 +457,9 @@ function (angular, app, _, $, kbn) {
         });
 
         // Re-render if the window is resized
+        // $(window).resize(function() {
+        //   render_panel();
+        // });
         angular.element(window).bind('resize', function(){
           render_panel();
         });
@@ -429,9 +467,13 @@ function (angular, app, _, $, kbn) {
         // Function for rendering panel
         function render_panel() {
           var colors = [];
-
+          scope.panelMeta.loading = false;
           // IE doesn't work without this
-            elem.css({height:scope.panel.height||scope.row.height});
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
+            elem.css({height:divHeight});
 
           // Make a clone we can operate on.
 		  
@@ -484,7 +526,7 @@ function (angular, app, _, $, kbn) {
           if(myChart) {
             myChart.dispose();
           }
-
+          //$('#'+idd+'a').removeClass('sk-loading');
           if(scope.panel.chart === 'dashboard') {
 
             var AP_1 = 0.0;

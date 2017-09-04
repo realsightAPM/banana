@@ -1,4 +1,4 @@
-<div ng-controller='viz' ng-init="init()">
+<div ng-controller='viz' ng-init="init()" style="overflow-x:hidden">
 
 <style>
     table.tableSection {
@@ -89,3 +89,24 @@
   <!-- Dummy div for testing color name -->
   <div id="colorTest"></div>
 </div>
+<script>
+  $('.close-link').on('click', function () {
+    var content = $(this).closest('div.ibox1');
+    content.remove();
+  });
+
+  // Fullscreen ibox function
+//  $('.fullscreen-link').on('click', function () {
+//    var ibox = $(this).closest('div.ibox1');
+//    var button = $(this).find('i');
+//    $('body').toggleClass('fullscreen-ibox1-mode');
+//    button.toggleClass('fa-expand').toggleClass('fa-compress');
+//    ibox.toggleClass('fullscreen');
+//    setTimeout(function () {
+//      debugger;
+//      $(window).trigger('resize');
+//    }, 10);
+//  });
+
+
+</script>

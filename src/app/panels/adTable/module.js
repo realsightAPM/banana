@@ -55,6 +55,9 @@ function (angular, app, _, kbn, moment) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:false,
+      fullHeight:'700%',
+      useInitHeight:true,
       status  : "Stable",
       queries     : {
         mode        : 'all',
@@ -103,6 +106,20 @@ function (angular, app, _, kbn, moment) {
 
     $scope.init = function () {
       $scope.Math = Math;
+
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
       // Solr
       $scope.sjs = $scope.sjs || sjsResource(dashboard.current.solr.server + dashboard.current.solr.core_name); // jshint ignore: line
       $scope.$on('refresh',function(){$scope.get_data();});
@@ -110,6 +127,24 @@ function (angular, app, _, kbn, moment) {
       $scope.fields = fields;
       $scope.get_data();
     };
+
+    $scope.reSize=function() {
+
+      $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+      $scope.$emit('render');
+      $(window).trigger('resize');
+
+
+    };
+
       $scope.display=function() {
           if($scope.panel.display==='none'){
               $scope.panel.display='block';

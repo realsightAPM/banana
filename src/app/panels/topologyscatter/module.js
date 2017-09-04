@@ -40,6 +40,9 @@ define([
 
       // Set and populate defaults
       var _d = {
+        panelExpand:true,
+        fullHeight:'700%',
+        useInitHeight:true,
         queries     : {
           mode        : 'all',
           ids         : [],
@@ -91,6 +94,19 @@ define([
       _.defaults($scope.panel,_d);
 
       $scope.init = function () {
+        // $('.fullscreen-link').on('click', function () {
+        //   var ibox = $(this).closest('div.ibox1');
+        //   var button = $(this).find('i');
+        //
+        //   $('body').toggleClass('fullscreen-ibox1-mode');
+        //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+        //   ibox.toggleClass('fullscreen');
+        //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+        //   $scope.$emit('render');
+        //
+        //   $(window).trigger('resize');
+        //
+        // });
         $scope.hits = 0;
         //$scope.testMultivalued();
         $scope.options =false;
@@ -122,6 +138,40 @@ define([
           return;
         }
       };
+
+      $scope.reSize=function() {
+
+        $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+        var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+        var button = $('#'+$scope.$id+'z').find('i');
+        //var aaa = '#'+$scope.$id+'z';
+        $('body').toggleClass('fullscreen-ibox1-mode');
+        button.toggleClass('fa-expand').toggleClass('fa-compress');
+        ibox.toggleClass('fullscreen');
+        $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+        $scope.$emit('render');
+        $(window).trigger('resize');
+
+
+      };
+
+      // $scope.reSize_y=function() {
+      //
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //
+      //   var ibox = $('#'+$scope.$id+'y').closest('div.ibox1');
+      //   var button = $('#'+$scope.$id+'y').find('i');
+      //   //var aaa = '#'+$scope.$id+'z';
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.$emit('render');
+      //   $(window).trigger('resize');
+      //
+      //
+      // };
+
       $scope.display=function() {
         if($scope.panel.display === 'none'){
           $scope.panel.display='block';
@@ -192,6 +242,7 @@ define([
       };
 
       $scope.get_data = function() {
+
         //同id 图表刷新，图表自身点击不刷新，时间选择全局刷新，更换应用刷新
         if((($scope.panel.linkage_id === dashboard.current.linkage_id))||dashboard.current.enable_linkage) {
           $scope.query_url = "http://" + $scope.panel.HbaseIP + "/getScatterData.pinpoint?to="+dashboard.current.timeto+"&from="+dashboard.current.timefrom+"&limit=10000&filter=&application="+dashboard.current.network_app_name+"&xGroupUnit=987&yGroupUnit=1";
@@ -270,6 +321,7 @@ define([
           var myChart1;
           var myChart2;
           var myChart3;
+          scope.panelMeta.loading = false;
           // Receive render events
           scope.$on('render',function(){
             render_panel();
@@ -285,7 +337,11 @@ define([
             var colors = [];
             $('#myTab li:eq(0) a').tab('show');
             // IE doesn't work without this
-            elem.css({height:scope.panel.height||scope.row.height});
+            var divHeight=scope.panel.height||scope.row.height;
+            if(!scope.panel.useInitHeight){
+              divHeight = scope.panel.fullHeight;
+            }
+            elem.css({height:divHeight});
 
             // Make a clone we can operate on.
 
@@ -479,6 +535,7 @@ define([
               myChart.setOption(option3);
               myChart.on('click', function (params) {
                 // 点击联动
+                $('#ibox1').toggleClass('sk-loading');
                 var i0 = tabel_data.scatter.metadata["1"][0]+"^"+tabel_data.scatter.metadata["1"][2]+"^"+params.data[3];
                 var post_data={I0:i0,T0:params.data[6],R0:params.data[1]};
                 var post_url = "http://" + scope.panel.HbaseIP +"/transactionmetadata.pinpoint";
@@ -992,6 +1049,7 @@ define([
 
                   });
                   $.ajaxSettings.async = true;
+                  $('#ibox1').toggleClass('sk-loading');
                   scope.$emit('render');
 
                 }, function errorCallback(response) {

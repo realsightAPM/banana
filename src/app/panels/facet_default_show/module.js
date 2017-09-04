@@ -36,6 +36,7 @@ define([
 
       // Set and populate defaults
       var _d = {
+        panelExpand:false,
         status: "Stable",
           display:'block',
           icon:"icon-caret-down",

@@ -34,6 +34,9 @@ define([
 
       // Set and populate defaults
       var _d = {
+        panelExpand:true,
+        fullHeight:'700%',
+        useInitHeight:true,
         queries: {
           mode: 'all',
           query: '*:*',
@@ -52,12 +55,41 @@ define([
 
       $scope.init = function() {
         $scope.hits = 0;
+        // $('.fullscreen-link').on('click', function () {
+        //   var ibox = $(this).closest('div.ibox1');
+        //   var button = $(this).find('i');
+        //
+        //   $('body').toggleClass('fullscreen-ibox1-mode');
+        //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+        //   ibox.toggleClass('fullscreen');
+        //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+        //   $scope.$emit('render');
+        //
+        //   $(window).trigger('resize');
+        //
+        // });
+
         $scope.$on('refresh', function() {
           $scope.get_data();
         });
         $scope.get_data();
       };
+      $scope.reSize=function() {
 
+        $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+        var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+        var button = $('#'+$scope.$id+'z').find('i');
+        //var aaa = '#'+$scope.$id+'z';
+        $('body').toggleClass('fullscreen-ibox1-mode');
+        button.toggleClass('fa-expand').toggleClass('fa-compress');
+        ibox.toggleClass('fullscreen');
+        $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+        $scope.$emit('render');
+        $(window).trigger('resize');
+
+
+      };
         $scope.display=function() {
             if($scope.panel.display === 'none'){
                 $scope.panel.display='block';
@@ -202,9 +234,12 @@ define([
           // Function for rendering panel
           function render_panel() {
             element.html("");
-
+            var divHeight=scope.panel.height||scope.row.height;
+            if(!scope.panel.useInitHeight){
+              divHeight = scope.panel.fullHeight;
+            }
             var width = element.parent().width();
-            var height = parseInt(scope.row.height);
+            var height = parseInt(divHeight);
 
              var margin = {top: 40, right: 20, bottom: 60, left: 40};
               width = width - margin.left - margin.right;

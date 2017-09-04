@@ -27,6 +27,7 @@ define([
 
     // Set and populate defaults
     var _d = {
+      panelExpand:false,
       query   : "*:*",
       pinned  : true,
         linkage_id:'a',

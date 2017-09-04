@@ -1,7 +1,7 @@
 <div class="row-fluid container" style="margin-top:10px; width:98%" >
-
 <!-- Rows -->
-  <div class="row-fluid kibana-row" ng-controller="RowCtrl" ng-repeat="(row_name, row) in dashboard.current.rows" ng-style="row_style(row)">
+  <div class="row-fluid kibana-row " ng-controller="RowCtrl" ng-repeat="(row_name, row) in dashboard.current.rows" ng-style="row_style(row)">
+
     <div class="row-control">
       <div class="row-fluid" style="padding:0px;margin:0px;position:relative;">
 
@@ -64,8 +64,13 @@
             </div>
           </div>
           <!-- Content Panel -->
-          <div class="row-fluid " style="position:relative" ng-class="{'dragInProgress':dashboard.panelDragging}" >
-            <kibana-panel type="panel.type" ng-cloak></kibana-panel>
+          <!--<div class="row-fluid ibox-content " style="position:relative" ng-class="{'dragInProgress':dashboard.panelDragging}" >-->
+            <div class="row-fluid  " style="position:relative" ng-class="{'dragInProgress':dashboard.panelDragging}" >
+            <!--<div class="sk-spinner sk-spinner-double-bounce">-->
+              <!--<div class="sk-double-bounce1"></div>-->
+              <!--<div class="sk-double-bounce2"></div>-->
+            <!--</div>-->
+            <kibana-panel type="panel.type"  ng-cloak></kibana-panel>
           </div>
         </div>
 

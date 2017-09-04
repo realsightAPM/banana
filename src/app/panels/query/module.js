@@ -27,6 +27,7 @@ define([
 
     // Set and populate defaults
     var _d = {
+      panelExpand:false,
       query   : "*:*",
       pinned  : true,
         display:'block',

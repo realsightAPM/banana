@@ -16,7 +16,7 @@ define([
     };
     var module = angular.module('kibana.services');
 
-    module.service('panelMove', function(dashboard, $rootScope, alertSrv) {
+    module.service('panelMove', function(dashboard, $rootScope, $translate,alertSrv) {
 
       /* each of these can take event,ui,data parameters */
 

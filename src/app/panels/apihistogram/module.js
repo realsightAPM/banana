@@ -65,6 +65,9 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:true,
+      fullHeight:'700%',
+      useInitHeight:true,
       mode        : 'count',
       queries     : {
         mode        : 'all',
@@ -114,6 +117,20 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
     $scope.init = function() {
       // Hide view options by default
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //   $scope.$emit('render');
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
+
       $scope.options = false;
       $scope.$on('refresh',function(){
         $scope.get_data();
@@ -131,7 +148,22 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
         $scope.panel.auto_int = true;
       }
     };
+    $scope.reSize=function() {
 
+      $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+      $scope.$emit('render');
+      $(window).trigger('resize');
+
+
+    };
       $scope.display=function() {
           if($scope.panel.display === 'none'){
               $scope.panel.display='block';
@@ -564,7 +596,11 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
         // Function for rendering panel
         function render_panel() {
           // IE doesn't work without this
-          elem.css({height:scope.panel.height || scope.row.height});
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
+          elem.css({height:divHeight});
 
           // Populate from the query service
 		   var num_all = 0;
