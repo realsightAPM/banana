@@ -48,11 +48,11 @@ function (angular) {
           '<span class="row-button extra" ng-if="panel.transpose_show">' +
           '<span class="rotate-icon pointer" bs-tooltip="\'{{\'Transpose Rows and Columns\'|translate}}\'" ng-click="flip()"></span>' +
           '</span>' +
-        '<span class="row-button extra" >' +
+
         '<span class="row-button extra " ng-click="reSize()" id="{{$id}}z" ng-show="panel.panelExpand">'+
         '<i class="fa fa-expand"></i>'+
         '</span>'+
-        '</span>' +
+
           '<span ng-repeat="task in panelMeta.modals" class="row-button extra" ng-if="panel.spyable">' +
             '<span bs-modal="task.partial"class="pointer"><i ' +
               'bs-tooltip="task.description" ng-class="task.icon" class="pointer"></i></span>'+
