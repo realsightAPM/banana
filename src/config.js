@@ -152,7 +152,12 @@ function (Settings) {
       'topologyscatter',
       'fisheye',
       'topologyfisheye',
-      'fisheyescatter'
+      'fisheyescatter',
+      'adTopology',
+      'adThreadStates',
+      'adCPUDuration',
+      'adMetricalData',
+      'adStacking'
     ]
   });
 });

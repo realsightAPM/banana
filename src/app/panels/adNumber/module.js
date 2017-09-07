@@ -122,16 +122,13 @@ define([
             if (filterSrv.getSolrFq()) {
               fq = '&' + filterSrv.getSolrFq();
             }
-            if (dashboard.current.anomaly_th) {
-              fq +=  '&fq=anomaly_f:[' + dashboard.current.anomaly_th + '%20TO%20*]';
+            if (_.isUndefined($routeParams.jm_name_s)) {
             } else {
-              fq +=  '&fq=anomaly_f:[' + 0.8 + '%20TO%20*]';
+              fq += '&fq=jm_name_s:' + $routeParams.jm_name_s;
             }
+            fq +=  '&fq=type_s:anomaly';
             // if Show Stats
             var stats = '';
-            if ($scope.panel.show_stats) {
-              stats = '&stats=true&stats.field=' + $scope.panel.stats_field;
-            }
             var wt_json = '&wt=json';
             var rows_limit = '&rows=0'; // for hits, we do not need the actual response doc, so set rows=0
             var promises = [];

@@ -416,7 +416,6 @@ function (angular, app, _, $, kbn) {
                     size: scope.panel.fontsize,
                     color: labelcolor?'#DCDCDC':'#696969'
                   }
-
                 },
               };
             var network = new vis.Network(document.getElementById(idd), data, options);
