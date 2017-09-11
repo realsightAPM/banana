@@ -573,7 +573,7 @@ var option_nodata = {
                     axisLine: {
                         show: false,
                         lineStyle: {
-                            color: '#fff',
+                            color: labelcolor?'#d9e0e7':'#333',
                         }
                     },
                     splitLine: {
@@ -582,18 +582,20 @@ var option_nodata = {
                 },
                 yAxis: [{
                     type: 'category',
+
                     axisTick: {
                         show: false
                     },
                     axisLine: {
                         show: false,
                         lineStyle: {
-                            color: '#fff',
+                            color: labelcolor?'#d9e0e7':'#333',
                         }
                     },
                     data: scope.panel.isEN?['Recharge', 'Purchase', 'Query', 'Business Change', 'Data Modification']:['充值', '购机', '查询', '业务变更', '资料修改']
                 }, {
                     type: 'category',
+
                     axisLine: {
                         show: false
                     },
@@ -625,7 +627,7 @@ var option_nodata = {
                             offset: [0, -2],
                             textStyle: {
                                 fontWeight: 'bold',
-                                color:  '#fff',
+                                color:  labelcolor?'#d9e0e7':'#333',
                                 fontSize:10
                             }
                         }
@@ -1507,7 +1509,7 @@ var option_nodata = {
                         normal: {
                             formatter: scope.panel.isEN?'Execution time':'平均执行时间',
                             textStyle: {
-                                color: '#d9e0e7',
+                                color: labelcolor?'#d9e0e7':'#333',
                                 fontSize: 13
                             }
                         }
@@ -1550,7 +1552,7 @@ var option_nodata = {
                         normal: {
                             formatter: scope.panel.isEN?'Collapse':'崩溃率',
                             textStyle: {
-                                color: '#d9e0e7',
+                                color: labelcolor?'#d9e0e7':'#333',
                                 fontSize: 13
                             }
                         }
@@ -1593,7 +1595,7 @@ var option_nodata = {
                         normal: {
                             formatter: scope.panel.isEN?'HTTP Error':'HTTP错误率',
                             textStyle: {
-                                color: '#d9e0e7',
+                                color: labelcolor?'#d9e0e7':'#333',
                                 fontSize: 13
                             }
                         }
@@ -1636,7 +1638,7 @@ var option_nodata = {
                         normal: {
                             formatter: scope.panel.isEN?'Network Error':'网络错误率',
                             textStyle: {
-                                color: '#d9e0e7',
+                                color: labelcolor?'#d9e0e7':'#333',
                                 fontSize: 13
 
                             }
