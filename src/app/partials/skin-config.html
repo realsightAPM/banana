@@ -12,6 +12,20 @@
                 </a>
                 <div id="collapse0" class=" collapse in">
                     <input type="text" class="input" ng-model='dashboard.current.title'/>
+                  <div class="setings-item">
+                    <span>
+                      {{'Large screen display'|translate}}
+                    </span>
+                    <div class="switch">
+                      <div class="onoffswitch">
+                        <input type="checkbox"  class="onoffswitch-checkbox" ng-checked="dashboard.largeScreen">
+                        <label class="onoffswitch-label" >
+                          <span class="onoffswitch-inner" ng-click="dashboard.largeScreen=!dashboard.largeScreen;dashboard.refresh();"></span>
+                          <span class="onoffswitch-switch" ng-click="dashboard.largeScreen=!dashboard.largeScreen;dashboard.refresh();"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                     <div class="setings-item">
                     <span>
                         {{'Delete dashboard controller'|translate}}

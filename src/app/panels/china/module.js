@@ -1645,14 +1645,14 @@ var option8 = {
 
 			  
               // Populate legend
-              if(elem.is(":visible")){
-                setTimeout(function(){
-                 // scope.legend = plot.getData();
-                  if(!scope.$$phase) {
-                    scope.$apply();
-                  }
-                });
-              }
+              // if(elem.is(":visible")){
+              //   setTimeout(function(){
+              //    // scope.legend = plot.getData();
+              //     if(!scope.$$phase) {
+              //       scope.$apply();
+              //     }
+              //   });
+              // }
 
             } catch(e) {
               elem.text(e);
@@ -1660,32 +1660,9 @@ var option8 = {
           });
         }
 
-        elem.bind("plotclick", function (event, pos, object) {
-          if(object) {
-            scope.build_search(scope.data[object.seriesIndex]);
-            scope.panel.lastColor = object.series.color;
-          }
-        });
 
-        var $tooltip = $('<div>');
-        elem.bind("plothover", function (event, pos, item) {
-          if (item) {
-            var value = scope.panel.chart === 'bar'  ? item.datapoint[1] : item.datapoint[1][0][1];
-            // if (scope.panel.mode === 'count') {
-            //   value = value.toFixed(0);
-            // } else {
-            //   value = value.toFixed(scope.panel.decimal_points);
-            // }
-            $tooltip
-              .html(
-                kbn.query_color_dot(item.series.color, 20) + ' ' +
-                item.series.label + " (" + dashboard.numberWithCommas(value.toFixed(scope.panel.decimal_points)) +")"
-              )
-              .place_tt(pos.pageX, pos.pageY);
-          } else {
-            $tooltip.remove();
-          }
-        });
+
+
 
       }
     };
