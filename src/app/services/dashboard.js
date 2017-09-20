@@ -44,6 +44,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
   ) {
     // A hash of defaults to use when loading a dashboard
     var _dash = {
+      mobile:false,
       title: "",
       language:1,
       style: "dark",
@@ -105,7 +106,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
     // Store a reference to this
     var self = this;
     var filterSrv,querySrv;
-    this.largeScreen=false;
+    this.largeScreen=true;
     this.current = _.clone(_dash);
     this.last = {};
     this.template=[];
@@ -210,6 +211,11 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
     // here before telling the panels to refresh
     this.refresh = function() {
 
+      if(window.innerWidth<500){
+        this.current.mobile =true;
+      }else {
+        this.current.mobile =false;
+      }
         self.current.filterids = filterSrv.ids;
       // Retrieve Solr collections for the dashboard
       kbnIndex.collections(self.current.solr.server).then(function (p) {

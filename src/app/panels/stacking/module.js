@@ -551,6 +551,8 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
     },
 	color:scope.panel.chartColors,
     legend: {
+     type:'scroll',
+      pageIconColor:'#539aca',
 		textStyle:{
 			color:labelcolor?'#DCDCDC':'#696969'
 		},
@@ -733,6 +735,8 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 							},
 							color:scope.panel.chartColors,
 							legend: {
+                type:'scroll',
+                pageIconColor:'#539aca',
 								left:'left',
 								textStyle:{
                                     fontSize:10,

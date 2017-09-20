@@ -434,9 +434,13 @@ function (angular, app, _, $, kbn) {
 
         // Function for rendering panel
         function render_panel() {
-			
+			var fontSize = 20;
 			elem.html("");
-
+          if(window.innerWidth<500){
+            fontSize = 3;
+          }else{
+            fontSize = scope.panel.fontsize
+          }
           // IE doesn't work without this
           var divHeight=scope.panel.height||scope.row.height;
           if(!scope.panel.useInitHeight){
@@ -531,7 +535,7 @@ function (angular, app, _, $, kbn) {
                                       shadowColor : '#fff', //默认透明
                                       shadowBlur: 40,
                                       fontStyle: 'italic',
-                                      fontSize:scope.panel.fontsize
+                                      fontSize:fontSize
                                   }
                               },
                               axisTick: {            // 坐标轴小标记
@@ -591,7 +595,7 @@ function (angular, app, _, $, kbn) {
                               title : {
                                   textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                                       fontWeight: 'bolder',
-                                      fontSize: scope.panel.fontsize+14,
+                                      fontSize: fontSize+14,
                                       fontStyle: 'italic',
                                       color: labelcolor?'#fff':'#696969',
                                       shadowColor : '#fff', //默认透明
@@ -604,7 +608,7 @@ function (angular, app, _, $, kbn) {
                                   textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                                       fontWeight: 'bolder',
                                       color:  color_term,
-                                      fontSize:scope.panel.fontsize+12
+                                      fontSize:fontSize+12
                                   }
                               },
                               data:[{value: scope.apdex, name:scope.panel.title_defined? scope.panel.title:'Health State'}]
@@ -657,7 +661,7 @@ function (angular, app, _, $, kbn) {
                     shadowColor : '#fff', //默认透明
                     shadowBlur: 40,
 					fontStyle: 'italic',
-					fontSize:scope.panel.fontsize
+					fontSize:fontSize
                 }
             },
             axisTick: {            // 坐标轴小标记
@@ -713,7 +717,7 @@ function (angular, app, _, $, kbn) {
             title : {
                 textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                     fontWeight: 'bolder',
-                    fontSize: scope.panel.fontsize+15,
+                    fontSize: fontSize+15,
                     fontStyle: 'italic',
                     color: labelcolor?'#fff':'#696969',
                     shadowColor : '#fff', //默认透明
@@ -726,7 +730,7 @@ function (angular, app, _, $, kbn) {
                 textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                     fontWeight: 'bolder',
                     color: labelcolor?'#fff':'#696969',
-					fontSize:scope.panel.fontsize+10
+					fontSize:fontSize+10
                 }
             },
             data:[{value: 0, name: scope.panel.title_defined? scope.panel.title+'(no data)':'Health State(no data)'}]

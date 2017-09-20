@@ -461,6 +461,11 @@ function (angular, app, _, $, kbn) {
         //   render_panel();
         // });
         angular.element(window).bind('resize', function(){
+          if(window.innerWidth<500){
+            dashboard.current.mobile =true;
+          }else {
+            dashboard.current.mobile =false;
+          }
           render_panel();
         });
 
@@ -476,7 +481,12 @@ function (angular, app, _, $, kbn) {
             elem.css({height:divHeight});
 
           // Make a clone we can operate on.
-		  
+          var showLabel =  scope.panel.labels;
+          if(window.innerWidth<500){
+            showLabel = false;
+          }else{
+            showLabel = scope.panel.labels
+          }
         
 
           if (filterSrv.idsByTypeAndField('pies',scope.panel.field).length > 0) {
@@ -689,6 +699,8 @@ function (angular, app, _, $, kbn) {
       },
       legend: {
       show:scope.panel.eLegend,
+        type:'scroll',
+        pageIconColor:'#539aca',
           orient: scope.panel.arrangement,
           left: 'left',
       top:'1%',
@@ -706,10 +718,10 @@ function (angular, app, _, $, kbn) {
               name:scope.panel.title,
               type: 'pie',
 
-              radius : scope.panel.donut ?['60%','90%']:'90%',
+              radius : scope.panel.donut ?['56%','80%']:'80%',
         label :{
           normal:{
-            show:scope.panel.donut ? false:scope.panel.labels,
+            show:scope.panel.donut ? false:showLabel,
             position:scope.panel.donut ?'center':'inside',
             textStyle:{
               fontSize:scope.panel.fontsize
@@ -772,11 +784,13 @@ function (angular, app, _, $, kbn) {
               color:colors,
               tooltip: {
                   trigger: "item",
-                                  confine:true,
+                  confine:true,
                   formatter: "{a} <br/>{b} : {c} ({d}%)"
                     },
               legend: {
                   show:scope.panel.eLegend,
+                type:'scroll',
+                pageIconColor:'#539aca',
                   x: "left",
                   orient: scope.panel.arrangement,
                   textStyle:{
@@ -788,7 +802,6 @@ function (angular, app, _, $, kbn) {
               label: {
                     normal: {
                       formatter: "{b} ({d}%)",
-
                       textStyle:{
                             fontSize:scope.panel.fontsize
                             }
@@ -808,10 +821,10 @@ function (angular, app, _, $, kbn) {
                 center: ['50%', '60%'],
                 label: {
                   normal: {
-                    show: scope.panel.labels
+                    show: showLabel
                       },
                   emphasis: {
-                    show: scope.panel.labels
+                    show: showLabel
                       }
                     },
                 lableLine: {
@@ -874,7 +887,7 @@ function (angular, app, _, $, kbn) {
                 show:false
                 },
               axisLabel:{
-                show:scope.panel.labels,
+                show:showLabel,
                 textStyle:{
                   color:labelcolor ? '#fff':'#4F4F4F',
                   fontSize:scope.panel.fontsize,
@@ -1212,7 +1225,7 @@ function (angular, app, _, $, kbn) {
               show: false
           },
           axisLabel: {
-        show:scope.panel.labels,
+        show:showLabel,
         textStyle:{
               color:'#24b2f9',
               fontSize:scope.panel.fontsize,

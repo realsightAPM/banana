@@ -17,7 +17,7 @@ div.cs-skin-rotate {
 }
 
 @media screen and (max-width: 30em) {
-	div.cs-skin-rotate { font-size: 1em; width: 200px; }
+	div.cs-skin-rotate { font-size: 1em; width: 110px; }
 }
 
 .cs-skin-rotate > span,
