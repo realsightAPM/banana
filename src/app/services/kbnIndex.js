@@ -24,7 +24,7 @@ function (angular, _, config, moment) {
 
   // TODO: add solr support to query indices
 
-  module.service('kbnIndex', function($http, alertSrv) {
+  module.service('kbnIndex', function($http, $translate) {
     // returns a promise containing an array of all indices matching the index
     // pattern that exist in a given range
     this.indices = function(from,to,pattern,interval) {

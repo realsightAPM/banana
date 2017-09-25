@@ -388,7 +388,12 @@
   "User Behavior Tracker":"用户行为监控仪表盘模板",
   "Network Topology Mapper":"网络拓扑分析仪表盘模板",
   "Topology Mapper":"拓扑分析仪表盘模板（鱼眼）",
-  "Large screen display":"大屏展现"
+  "Large screen display":"大屏展现",
+  "Local default template clear successfully":"本地默认模板清除成功",
+  "Local default template clear failed":"本地默认模板清除失败",
+  "every":"每",
+  "Are you sure you want to remove this":"确定要移除这个",
+  "panel?":"图表吗？"
 
 
 

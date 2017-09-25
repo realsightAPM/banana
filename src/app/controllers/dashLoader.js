@@ -85,7 +85,7 @@ function (angular, _) {
 
         // Reset new dashboard defaults
         $scope.resetNewDefaults();
-      }, function errorCallback(data) {
+      }, function errorCallback() {
         // 请求失败执行代码
         toastr.error($translate.instant('Unable to load default dashboard'), 'RealsightAPM');
       });

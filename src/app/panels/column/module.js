@@ -10,9 +10,10 @@ define([
     'angular',
     'app',
     'underscore',
+    'jquery',
     'config'
   ],
-  function (angular, app, _, config) {
+  function (angular, app, _,$, config) {
     'use strict';
 
     var module = angular.module('kibana.panels.column', []);

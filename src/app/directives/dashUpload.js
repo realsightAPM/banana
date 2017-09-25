@@ -15,7 +15,7 @@ define([
     };
     var module = angular.module('kibana.directives');
 
-    module.directive('dashUpload', function(timer, dashboard, alertSrv) {
+    module.directive('dashUpload', function(timer, dashboard, $translate) {
       return {
         restrict: 'A',
         link: function(scope) {

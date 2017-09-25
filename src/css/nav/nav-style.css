@@ -360,6 +360,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 .nav.nav-tabs li {
   background: none;
   border: none;
+  width:15%;
 }
 body.fixed-nav #wrapper .navbar-static-side,
 body.fixed-nav #wrapper #page-wrapper {
@@ -865,7 +866,6 @@ code {
   min-height: 48px;
 }
 .ibox-content {
-  background-color:#fff;
   color: inherit;
   padding: 15px 20px 20px 20px;
   border-color: #e7eaec;

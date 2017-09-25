@@ -344,7 +344,7 @@ function (angular, app, _, $, kbn) {
                 // TODO: Hard coded to 0 for now. Solr faceting does not provide 'other' value.
                 data: [[k + 1, $scope.hits - sum]], meta: "other", color: '#444'
             });
-
+          $scope.hitData =  $scope.data.length-2;
             $scope.$emit('render');
         });
     }

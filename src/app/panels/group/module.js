@@ -388,7 +388,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
             // Solr facet counts response is in one big array.
             // So no need to get each segment like Elasticsearch does.
-            var entry_time, entries, entry_value;
+
 
               if ($scope.panel.group_field) {
                 // Group By Field is specified
@@ -507,7 +507,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           for(var i1=0;i1<aaa.length;i1++){
             label[i1] = aaa[i1].doclist.docs[ aaa[i1].doclist.numFound-1][legend_name[1]];
             for(var k=0; k<aaa[i1].doclist.numFound;k++ ){
-              var ccc = Date.parse(aaa[i1].doclist.docs[k][scope.time_field]);
+
               timedata[y2]=new Date(Date.parse(aaa[i1].doclist.docs[k][scope.time_field])).pattern("yyyy-MM-dd HH:mm:ss");
               dataAll[y3]=[timedata[y2],aaa[i1].doclist.docs[k][legend_name[0]]];
               y2++;
@@ -550,6 +550,9 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                 },
                 color:scope.panel.chartColors,
                 legend: {
+                  type: 'scroll',
+                  bottom:0,
+                  pageIconColor: '#539aca',
                   textStyle:{
                     color:labelcolor?'#DCDCDC':'#696969'
                   },
@@ -568,7 +571,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                 grid: {
                   left: '3%',
                   right: '4%',
-                  bottom: '3%',
+                  bottom: '10%',
                   containLabel: true
                 },
                 xAxis : [

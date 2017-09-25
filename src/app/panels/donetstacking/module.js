@@ -533,110 +533,138 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
             myChart = echarts.init(document.getElementById(idd));
             var option = {
-   
-   tooltip: {
-        trigger: 'axis',
-		confine:true,
-        axisPointer: {
-            animation: false
-        }
-    },
-	color:scope.panel.chartColors,
-    legend: {
-		textStyle:{
-			color:labelcolor?'#DCDCDC':'#696969'
-		},
-        data:['等待请求数','拒绝请求数','错误请求数']
-    },
-
-     toolbox: {
-        feature: {
-            dataZoom: {
-                yAxisIndex: 'none'
+              baseOption: {
+              tooltip: {
+                trigger: 'axis',
+                confine: true,
+                axisPointer: {
+                  animation: false
+                }
+              },
+              color: scope.panel.chartColors,
+              legend: {
+                type: 'scroll',
+                textStyle: {
+                  color: labelcolor ? '#DCDCDC' : '#696969'
+                },
+                data: ['等待请求数', '拒绝请求数', '错误请求数']
+              },
+              toolbox: {
+                feature: {
+                  dataZoom: {
+                    yAxisIndex: 'none'
+                  },
+                  dataView: {readOnly: false},
+                  restore: {}
+                }
+              },
+              xAxis: [
+                {
+                  type: 'category',
+                  boundaryGap: false,
+                  axisLine: {onZero: true},
+                  axisLabel: {
+                    textStyle: {
+                      color: labelcolor ? '#DCDCDC' : '#696969'
+                    }
+                  },
+                  data: rs_timestamp
+                }
+              ],
+              yAxis: [
+                {
+                  type: 'value',
+                  name: '单位(个)',
+                  min: 0,
+                  nameTextStyle: {
+                    color: labelcolor ? '#DCDCDC' : '#696969'
+                  },
+                  axisLine: {
+                    lineStyle: {
+                      color: '#46474C'
+                    }
+                  },
+                  splitLine: {
+                    lineStyle: {
+                      color: ['#46474C']
+                    }
+                  },
+                  axisLabel: {
+                    textStyle: {
+                      color: labelcolor ? '#DCDCDC' : '#696969'
+                    }
+                  }
+                }
+              ],
+              series: [
+                {
+                  name: '等待请求数',
+                  type: 'line',
+                  stack: '总量',
+                  areaStyle: {
+                    normal: {
+                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: '#8ec6ad'
+                      }, {
+                        offset: 1,
+                        color: '#ffe'
+                      }])
+                    }
+                  },
+                  smooth: true,
+                  data: redirectElapsed
+                },
+                {
+                  name: '拒绝请求数',
+                  type: 'line',
+                  stack: '总量',
+                  areaStyle: {normal: {opacity: 0.6}},
+                  smooth: true,
+                  data: cacheElapsed
+                },
+                {
+                  name: '错误请求数',
+                  type: 'line',
+                  stack: '总量',
+                  areaStyle: {normal: {opacity: 0.6}},
+                  smooth: true,
+                  data: loadEventElapsed
+                }
+              ]
             },
-			dataView: {readOnly: false},
-            restore: {}
-        }
-    },
-	 
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis : [
-        {
-            type : 'category',
-            boundaryGap : false,
-			 axisLine: {onZero: true},
-			 axisLabel:{
-				 textStyle:{
-					 color:labelcolor?'#DCDCDC':'#696969'
-				 }
-			 },
-            data :rs_timestamp
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value',
-			name : '单位(个)',
-			min :0,
-			nameTextStyle:{
-				color:labelcolor?'#DCDCDC':'#696969'
-			},
-			axisLine:{
-				lineStyle:{
-					color:'#46474C'
-				}
-			},
-			splitLine:{
-				lineStyle:{
-					color:['#46474C']
-				}
-			},
-			axisLabel:{
-				 textStyle:{
-					 color:labelcolor?'#DCDCDC':'#696969'
-				 }
-			 }
-        }
-    ],
-    series : [
-        {
-            name:'等待请求数',
-            type:'line',
-            stack: '总量',
-            areaStyle: {normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                    offset: 0,
-                    color: '#8ec6ad'
-                }, {
-                    offset: 1,
-                    color: '#ffe'
-                }])
-            }},
-			smooth:true,
-            data:redirectElapsed
-        },
-		{
-            name:'拒绝请求数',
-            type:'line',
-            stack: '总量',
-            areaStyle: {normal: {opacity:0.6}},
-			smooth:true,
-            data:cacheElapsed
-        },
-		{
-            name:'错误请求数',
-            type:'line',
-            stack: '总量',
-            areaStyle: {normal: {opacity:0.6}},
-			smooth:true,
-            data:loadEventElapsed
-        }
-    ]
+              media: [
+                {
+                  option: {
+                    grid: {
+                      left: '3%',
+                      right: '4%',
+                      bottom: '3%',
+                      containLabel: true
+                    },
+                    legend: {
+                      orient: 'horizontal'
+                    }
+                  }
+                },
+                {
+                  query: {
+                    maxWidth: 500
+                  },
+                  option: {
+                    grid: {
+                      left: '3%',
+                      right: '4%',
+                      bottom: '10%',
+                      containLabel: true
+                    },
+                    legend: {
+                      bottom: '0'
+                    }
+                  }
+                }
+              ]
+
 };
             // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
@@ -662,20 +690,20 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
               myChart = echarts.init(document.getElementById(idd));
               var option1 = {
-
+                baseOption: {
                 tooltip: {
                   trigger: 'axis',
-                  confine:true,
+                  confine: true,
                   axisPointer: {
                     animation: false
                   }
                 },
-                color:scope.panel.chartColors,
+                color: scope.panel.chartColors,
                 legend: {
-                  textStyle:{
-                    color:labelcolor?'#DCDCDC':'#696969'
+                  textStyle: {
+                    color: labelcolor ? '#DCDCDC' : '#696969'
                   },
-                  data:['第0代垃圾回收','第1代垃圾回收','第2代垃圾回收']
+                  data: ['第0代垃圾回收', '第1代垃圾回收', '第2代垃圾回收']
                 },
 
                 toolbox: {
@@ -688,82 +716,110 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                   }
                 },
 
-                grid: {
-                  left: '3%',
-                  right: '4%',
-                  bottom: '3%',
-                  containLabel: true
-                },
-                xAxis : [
+                xAxis: [
                   {
-                    type : 'category',
-                    boundaryGap : false,
+                    type: 'category',
+                    boundaryGap: false,
                     axisLine: {onZero: true},
-                    axisLabel:{
-                      textStyle:{
-                        color:labelcolor?'#DCDCDC':'#696969'
+                    axisLabel: {
+                      textStyle: {
+                        color: labelcolor ? '#DCDCDC' : '#696969'
                       }
                     },
-                    data :rs_timestamp
+                    data: rs_timestamp
                   }
                 ],
-                yAxis : [
+                yAxis: [
                   {
-                    type : 'value',
-                    name : '单位(ms)',
-                    min :0,
-                    nameTextStyle:{
-                      color:labelcolor?'#DCDCDC':'#696969'
+                    type: 'value',
+                    name: '单位(ms)',
+                    min: 0,
+                    nameTextStyle: {
+                      color: labelcolor ? '#DCDCDC' : '#696969'
                     },
-                    axisLine:{
-                      lineStyle:{
-                        color:'#46474C'
+                    axisLine: {
+                      lineStyle: {
+                        color: '#46474C'
                       }
                     },
-                    splitLine:{
-                      lineStyle:{
-                        color:['#46474C']
+                    splitLine: {
+                      lineStyle: {
+                        color: ['#46474C']
                       }
                     },
-                    axisLabel:{
-                      textStyle:{
-                        color:labelcolor?'#DCDCDC':'#696969'
+                    axisLabel: {
+                      textStyle: {
+                        color: labelcolor ? '#DCDCDC' : '#696969'
                       }
                     }
                   }
                 ],
-                series : [
+                series: [
                   {
-                    name:'第0代垃圾回收',
-                    type:'line',
+                    name: '第0代垃圾回收',
+                    type: 'line',
                     stack: '总量',
-                    areaStyle: {normal: {
-                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                        offset: 0,
-                        color: '#8ec6ad'
-                      }, {
-                        offset: 1,
-                        color: '#ffe'
-                      }])
-                    }},
-                    smooth:true,
-                    data:dnsElapsed
-            },
-                  {
-                    name:'第1代垃圾回收',
-                    type:'line',
-                    stack: '总量',
-                    areaStyle: {normal: {opacity:0.6}},
-                    smooth:true,
-                    data:user_cpu
+                    areaStyle: {
+                      normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                          offset: 0,
+                          color: '#8ec6ad'
+                        }, {
+                          offset: 1,
+                          color: '#ffe'
+                        }])
+                      }
+                    },
+                    smooth: true,
+                    data: dnsElapsed
                   },
                   {
-                    name:'第2代垃圾回收',
-                    type:'line',
+                    name: '第1代垃圾回收',
+                    type: 'line',
                     stack: '总量',
-                    areaStyle: {normal: {opacity:0.6}},
-                    smooth:true,
-                    data:sys_cpu
+                    areaStyle: {normal: {opacity: 0.6}},
+                    smooth: true,
+                    data: user_cpu
+                  },
+                  {
+                    name: '第2代垃圾回收',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {normal: {opacity: 0.6}},
+                    smooth: true,
+                    data: sys_cpu
+                  }
+                ]
+              },
+                media: [
+                  {
+                    option: {
+                      grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                      },
+                      legend: {
+                        orient: 'horizontal'
+                      }
+                    }
+                  },
+                  {
+                    query: {
+                      maxWidth: 500
+                    },
+                    option: {
+                      grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '10%',
+                        containLabel: true
+                      },
+                      legend: {
+                        bottom: '0'
+                      }
+                    }
                   }
                 ]
               };

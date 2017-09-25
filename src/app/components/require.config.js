@@ -44,6 +44,15 @@ require.config({
     confirm:                    '../../node_modules/jquery-confirm/js/jquery-confirm',
     // classie:                  '../vendor/nav/classie',
     // selectFx:                  '../vendor/nav/selectFx',
+
+    //pointcloud
+    //three:             '../vendor/pointcloud/libs/three.js/build/three',
+   //  stats:             '../vendor/pointcloud/libs/other/stats.min',
+   //  binaryheap:             '../vendor/pointcloud/libs/other/BinaryHeap',
+   //  tween:             '../vendor/pointcloud/libs/tween/tween.min',
+   // // proj4:             '../vendor/pointcloud/libs/proj4/proj4',
+   //  potree:             '../vendor/pointcloud/libs/potree/potree',
+    //pointcloud
     cookies:                   '../vendor/jquery/jquery.cookie',
     golden:                    '../vendor/goldenlayout',
     nestable:                 '../vendor/jquery/jquery.nestable',
@@ -144,6 +153,14 @@ require.config({
     confirm:                   ['jquery'],
     nestable:                 ['jquery'],
     datatable:                ['jquery','bootstrap'],
+      //pointcloud
+    //three:              ['jquery'],
+    // stats:             ['jquery'],
+    // binaryheap:            ['jquery'],
+    // tween:             ['jquery'],
+    // //proj4:              ['jquery'],
+    // potree:             ['jquery','stats','binaryheap','tween'],
+    //pointcloud
       'jquery-ui':            ['jquery'],
     'jquery.flot':          ['jquery'],
     'jquery.flot.pie':      ['jquery', 'jquery.flot'],

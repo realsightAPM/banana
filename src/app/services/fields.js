@@ -17,7 +17,7 @@ function (angular, _, config) {
   };
   var module = angular.module('kibana.services');
 
-  module.service('fields', function(dashboard, $rootScope, $http, alertSrv) {
+  module.service('fields', function(dashboard, $rootScope, $http, $translate) {
     // Save a reference to this
     var self = this;
 

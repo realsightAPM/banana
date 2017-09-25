@@ -40,11 +40,11 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
   var module = angular.module('kibana.services');
 
   module.service('dashboard', function($routeParams, $http, $rootScope, $injector, $location,$translate,
-    sjsResource, timer, kbnIndex, alertSrv,SweetAlert
+    sjsResource, timer, kbnIndex, alertSrv
   ) {
     // A hash of defaults to use when loading a dashboard
     var _dash = {
-      mobile:false,
+      mobile:window.innerWidth>500?false:true,
       title: "",
       language:1,
       style: "dark",
@@ -107,6 +107,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
     var self = this;
     var filterSrv,querySrv;
     this.largeScreen=true;
+    this.isMobile= window.innerWidth>500?false:true;
     this.current = _.clone(_dash);
     this.last = {};
     this.template=[];
@@ -582,8 +583,8 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         function(result) {
           if(type === 'dashboard') {
             // TODO
-           // self.elasticsearch_load(type,id);
-            //$location.url('/dashboard/solr/'+title+'?server='+self.current.solr.server);
+            self.elasticsearch_load(type,id);
+            $location.url('/dashboard/solr/'+title+'?server='+self.current.solr.server);
           }
           return result;
         },
@@ -998,7 +999,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
           }
         }
       });
-    }
+    };
 
     this.confirm_delete = function(id){
       if(id!=null){
@@ -1037,7 +1038,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
 
       }
 
-    }
+    };
 
     this.numberWithCommas = function(x) {
       if (x) {

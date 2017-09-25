@@ -439,7 +439,7 @@ function (angular, app, _, $, kbn) {
           if(window.innerWidth<500){
             fontSize = 3;
           }else{
-            fontSize = scope.panel.fontsize
+            fontSize = scope.panel.fontsize;
           }
           // IE doesn't work without this
           var divHeight=scope.panel.height||scope.row.height;

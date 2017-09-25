@@ -561,7 +561,7 @@ define([
                   var node_default={};
                   var edges_default=false;
                   var node_default_png=".png";
-                  scope.startTime = new Date(response.data.metadata[0].startTime).pattern("yyyy-MM-dd HH:mm:ss");;
+                  scope.startTime = new Date(response.data.metadata[0].startTime).pattern("yyyy-MM-dd HH:mm:ss");
                   scope.eventName = response.data.metadata[0].application;
                   scope.responseTime = response.data.metadata[0].elapsed;
                   scope.agentID = response.data.metadata[0].agentId;
@@ -659,20 +659,20 @@ define([
                       }
                       callStackNodes.push({id:json.callStack[i1][6], color:{background:callStackNodes_color},widthConstraint: { minimum: 120 },label: json.callStack[i1][10]});
                       callStackEdges.push({from: json.callStack[i1][7], arrows:'to', color:{color:callStackEdges_color},to: json.callStack[i1][6], length: 200,label:json.callStack[i1][14]+'ms'});
-                      if(json.callStack[i1][5]==0){
+                      if(json.callStack[i1][5]===0){
                         call_relationship = "";
-                      }else if(json.callStack[i1][5]==1){
-                        call_relationship = "->"+json.callStack[i1][5]
-                      }else if(json.callStack[i1][5]==2){
-                        call_relationship = "-->"+json.callStack[i1][5]
-                      }else if(json.callStack[i1][5]==3){
-                        call_relationship = "--->"+json.callStack[i1][5]
-                      }else if(json.callStack[i1][5]==4){
-                        call_relationship = "---->"+json.callStack[i1][5]
-                      }else if(json.callStack[i1][5]==5){
-                        call_relationship = "----->"+json.callStack[i1][5]
-                      }else if(json.callStack[i1][5]==6){
-                        call_relationship = "------>"+json.callStack[i1][5]
+                      }else if(json.callStack[i1][5]===1){
+                        call_relationship = "->"+json.callStack[i1][5];
+                      }else if(json.callStack[i1][5]===2){
+                        call_relationship = "-->"+json.callStack[i1][5];
+                      }else if(json.callStack[i1][5]===3){
+                        call_relationship = "--->"+json.callStack[i1][5];
+                      }else if(json.callStack[i1][5]===4){
+                        call_relationship = "---->"+json.callStack[i1][5];
+                      }else if(json.callStack[i1][5]===5){
+                        call_relationship = "----->"+json.callStack[i1][5];
+                      }else if(json.callStack[i1][5]===6){
+                        call_relationship = "------>"+json.callStack[i1][5];
                       }
 
 

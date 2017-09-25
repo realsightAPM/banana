@@ -479,7 +479,9 @@ var myChart;
         function render_panel() {
           var  chartData;
           var colors = [];
-
+          if(myChart) {
+            myChart.dispose();
+          }
           // IE doesn't work without this
           var divHeight=scope.panel.height||scope.row.height;
           if(!scope.panel.useInitHeight){
@@ -551,9 +553,7 @@ var myChart;
 		var idd = scope.$id;
           require(['echarts'], function(ec){
             var echarts = ec;
-            if(myChart) {
-              myChart.dispose();
-            }
+
             // Populate element
             try {
 				

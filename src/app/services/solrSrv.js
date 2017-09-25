@@ -16,7 +16,7 @@ function (angular, _) {
   };
   var module = angular.module('kibana.services');
 
-  module.service('solrSrv', function(dashboard, $http, alertSrv, filterSrv, querySrv) {
+  module.service('solrSrv', function(dashboard, $http, alertSrv, filterSrv, querySrv,$translate) {
     // Save a reference to this
     var self = this;
 

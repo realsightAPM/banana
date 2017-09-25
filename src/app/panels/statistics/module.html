@@ -7,8 +7,13 @@
     </style>
   <!-- START Table -->
 
-    <table st-table="displayedCollection" st-safe-src="data" class="table table-striped">
+    <table st-table="displayedCollection" st-safe-src="data" class="table table-striped table-bordered" >
       <thead>
+      <tr>
+        <th>
+          <input st-search placeholder="global search" class="input-mini form-control" type="search"/>
+        </th>
+      </tr>
       <tr>
         <th st-sort="term">{{'Iterm'|translate}}</th>
         <th st-sort="count">{{'Count'|translate}}</th>
@@ -17,11 +22,7 @@
         <th ng-if="panel.mode === 'statistic'" st-sort="mean">{{'Min'|translate}}</th>
         <th ng-if="panel.mode === 'statistic'" st-sort="mean">{{'Stddev'|translate}}</th>
       </tr>
-      <tr>
-        <th>
-          <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
-        </th>
-      </tr>
+
       </thead>
       <tbody>
       <tr ng-repeat="row in displayedCollection">

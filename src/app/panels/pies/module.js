@@ -26,7 +26,7 @@ function (angular, app, _, $, kbn) {
   var module = angular.module('kibana.panels.pies', []);
   app.useModule(module);
 
-  module.controller('pies', function($scope, $timeout, $translate,timer, querySrv, dashboard, filterSrv,reSize) {
+  module.controller('pies', function($scope, $timeout, $translate,timer, querySrv, dashboard, filterSrv) {
     $scope.panelMeta = {
       exportfile: true,
       editorTabs : [
@@ -485,7 +485,7 @@ function (angular, app, _, $, kbn) {
           if(window.innerWidth<500){
             showLabel = false;
           }else{
-            showLabel = scope.panel.labels
+            showLabel = scope.panel.labels;
           }
         
 
@@ -686,76 +686,150 @@ function (angular, app, _, $, kbn) {
             myChart = echarts.init(document.getElementById(idd));
 
 
-            var option1 = {
-      title : {
-          show:false,
-          x:'center'
-      },
-      color:colors,
-      tooltip : {
-          trigger: 'item',
-          confine:true,
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
-      },
-      legend: {
-      show:scope.panel.eLegend,
-        type:'scroll',
-        pageIconColor:'#539aca',
-          orient: scope.panel.arrangement,
-          left: 'left',
-      top:'1%',
-      bottom:'1%',
+  var option1 = {
+   //baseOption: {
+     title: {
+       show: false,
+       x: 'center'
+     },
+     color: colors,
+     tooltip: {
+       trigger: 'item',
+       confine: true,
+       formatter: "{a} <br/>{b} : {c} ({d}%)"
+     },
+     legend: {
+       show: scope.panel.eLegend,
+       type: 'scroll',
+       pageIconColor: '#539aca',
+       orient: scope.panel.arrangement,
+       left: 'left',
+       top: '1%',
+       bottom: '1%',
 
-      textStyle:{
-        fontSize:scope.panel.fontsize,
-        color:'auto'
-      },
+       textStyle: {
+         fontSize: scope.panel.fontsize,
+         color: 'auto'
+       },
 
-          data: scope.data
-      },
-      series : [
-          {
-              name:scope.panel.title,
-              type: 'pie',
+       data: scope.data
+     },
+     series: [
+       {
+         name: scope.panel.title,
+         type: 'pie',
 
-              radius : scope.panel.donut ?['56%','80%']:'80%',
-        label :{
-          normal:{
-            show:scope.panel.donut ? false:showLabel,
-            position:scope.panel.donut ?'center':'inside',
-            textStyle:{
-              fontSize:scope.panel.fontsize
-            }
-          },
-          emphasis: {
-                      show: scope.panel.donut,
-                      textStyle: {
-                          fontSize: scope.panel.fontsize,
-                          fontWeight: 'bold'
-                      }
-                  }
+         radius: scope.panel.donut ? ['56%', '80%'] : '80%',
+         label: {
+           normal: {
+             show: scope.panel.donut ? false : showLabel,
+             position: scope.panel.donut ? 'center' : 'inside',
+             textStyle: {
+               fontSize: scope.panel.fontsize
+             }
+           },
+           emphasis: {
+             show: scope.panel.donut,
+             textStyle: {
+               fontSize: scope.panel.fontsize,
+               fontWeight: 'bold'
+             }
+           }
 
-        },
-              center: ['60%', '50%'],
-              data:scope.data,
-              itemStyle: {
-          normal: {
-            color: function(params) {
-              var colorList = colors;
-              return colorList[params.dataIndex];
-              },
-            shadowColor: '#fff',
-            barBorderRadius: 5
+         },
+         center: ['60%', '50%'],
+         data: scope.data,
+         itemStyle: {
+           normal: {
+             color: function (params) {
+               var colorList = colors;
+               return colorList[params.dataIndex];
+             },
+             shadowColor: '#fff',
+             barBorderRadius: 5
 
-              },
-                  emphasis: {
-                      shadowBlur: 10,
-                      shadowOffsetX: 0,
-                      shadowColor: 'rgba(0, 0, 0, 0.5)'
-                  }
-              }
-          }
-      ]
+           },
+           emphasis: {
+             shadowBlur: 10,
+             shadowOffsetX: 0,
+             shadowColor: 'rgba(0, 0, 0, 0.5)'
+           }
+         }
+       }
+     ]
+   //},
+    // media: [
+    //   {
+    //     option: {
+    //       legend: {
+    //         right: 'center',
+    //         bottom: 0,
+    //         orient: 'horizontal'
+    //       },
+    //       series: [
+    //         {
+    //           radius: [30, '50%'],
+    //           center: ['75%', '50%']
+    //         }
+    //       ]
+    //     }
+    //   },
+    //   {
+    //     query: {
+    //       minAspectRatio: 1
+    //     },
+    //     option: {
+    //       legend: {
+    //         right: 'center',
+    //         bottom: 0,
+    //         orient: 'horizontal'
+    //       },
+    //       series: [
+    //         {
+    //           radius: [30, '50%'],
+    //           center: ['75%', '50%']
+    //         }
+    //       ]
+    //     }
+    //   },
+    //   {
+    //     query: {
+    //       maxAspectRatio: 1
+    //     },
+    //     option: {
+    //       legend: {
+    //         right: 'center',
+    //         bottom: 0,
+    //         orient: 'horizontal'
+    //       },
+    //       series: [
+    //         {
+    //           radius: [30, '50%'],
+    //           center: ['50%', '70%']
+    //         }
+    //       ]
+    //     }
+    //   },
+    //   {
+    //     query: {
+    //       maxWidth: 500
+    //     },
+    //     option: {
+    //       legend: {
+    //         right: 10,
+    //         top: '15%',
+    //         orient: 'vertical'
+    //       },
+    //       series: [
+    //
+    //         {
+    //           radius: [30, '50%'],
+    //           center: ['50%', '75%']
+    //         }
+    //       ]
+    //     }
+    //   }
+    // ]
     };
 
 
@@ -1521,7 +1595,7 @@ function (angular, app, _, $, kbn) {
 
                     color: ['#178ad9'],
                     center: [x, '50%'],
-                    radius: '65%',
+                    radius: window.innerWidth>500?'65%':'45%',
 
                     type: 'liquidFill',
                     shape:'path://M229.844,151.547v-166.75c0-11.92-9.662-21.582-21.58-21.582s-21.581,9.662-21.581,21.582v166.75c-9.088,6.654-14.993,17.397-14.993,29.524c0,20.2,16.374,36.575,36.574,36.575c20.199,0,36.574-16.375,36.574-36.575C244.838,168.944,238.932,158.201,229.844,151.547z',

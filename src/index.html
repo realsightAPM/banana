@@ -21,18 +21,7 @@
     <!-- load the root require context -->
 
 
-    <!--</script>-->
-    <script src="vendor/go.js"></script>
-    <script src="vendor/vis.js"></script>
-    <script src="vendor/vizceral.js"></script>
-    <script src="vendor/pdf/jspdf.js"></script>
-    <script src="vendor/nav/classie.js"></script>
-    <script src="vendor/nav/selectFx.js"></script>
-    <!--<script src="vendor/nav/toastr.min.js"></script>-->
-    <script src="vendor/require/require.js"></script>
-    <script src="app/components/require.config.js"></script>
-    <!--<script src="vendor/jquery/jquery.cookie.js"></script>-->
-    <script>require(['app'], function () {})</script>
+
 
     <style>
     </style>
@@ -206,8 +195,8 @@
       <div class="navbar navbar-static-top" >
         <div class="navbar-inner">
           <div class="container-fluid">
-            <img src="img/aaaaa.png" data-placement="left" style="float:left;margin-top:4px" ng-if="dashboard.current.mobile">
-            <img src="img/rsapm_logo.png" data-placement="left" style="float:left;margin-top:4px" ng-if="!dashboard.current.mobile">
+            <img src="img/aaaaa.png" data-placement="left" style="float:left;margin-top:4px" ng-if="dashboard.isMobile" ng-cloak>
+            <img src="img/rsapm_logo.png" data-placement="left" style="float:left;margin-top:4px" ng-if="!dashboard.isMobile" ng-cloak>
             <!--<span class="brand" style = "text-align:center;margin-top:4px">-->
 
                <!--&nbsp;&nbsp;&nbsp;&nbsp; {{dashboard.current.title}}-->
@@ -217,7 +206,7 @@
               <option value="cn">简体中文</option>
               <option value="en">English</option>
             </select>
-            <ul class="nav  navbar-right" style="float:right;margin-right:20px;margin-top: 4px" ng-click="dashboard.clear_cookie()">
+            <ul class="nav  navbar-right" style="float:right;margin-right:30px;margin-top: 4px" ng-click="dashboard.clear_cookie()">
               <li>
                 <a >
                   <i class="fa fa-sign-out"></i> {{'Logout'|translate}}
@@ -254,6 +243,24 @@
     <!--&lt;!&ndash; Custom and plugin javascript &ndash;&gt;-->
     <!--<script src="vendor/nav/inspinia.js"></script>-->
     <!--<script src="vendor/nav/plugins/pace/pace.min.js"></script>-->
+    <!--</script>-->
+    <script src="vendor/go.js"></script>
+    <script src="vendor/vis.js"></script>
+    <script src="vendor/vizceral.js"></script>
+    <!--<script src="vendor/pointcloud/libs/three.js/build/three.js"></script>-->
+    <!--<script src="vendor/pointcloud/libs/proj4/proj4.js"></script>-->
+    <!--<script src="vendor/pointcloud/libs/tween/tween.min.js"></script>-->
+    <!--<script src="vendor/pointcloud/libs/three.js/build/three.js"></script>-->
+    <!--<script src="vendor/pointcloud/libs/three.js/build/three.js"></script>-->
+    <script src="vendor/pdf/jspdf.js"></script>
+    <script src="vendor/nav/classie.js"></script>
+    <script src="vendor/nav/selectFx.js"></script>
+    <!--<script src="vendor/nav/toastr.min.js"></script>-->
+    <script src="vendor/require/require.js"></script>
+    <script src="app/components/require.config.js"></script>
+    <!--<script src="vendor/jquery/jquery.cookie.js"></script>-->
+    <script>require(['app'], function () {})</script>
+
   </body>
 
 </html>

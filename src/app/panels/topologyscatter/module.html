@@ -32,7 +32,7 @@
       </a>
     </span>
 
-  <form  class="form-inline bordered histogram-options ibox-content" ng-show="options" id="ibox1">
+  <form  class="form-inline bordered histogram-options ibox1-content" ng-show="options" id="ibox1">
 
     <div class="sk-spinner sk-spinner-double-bounce">
       <div class="sk-double-bounce1"></div>
@@ -68,12 +68,12 @@
       <li role="presentation" class="active"><a href="#resource_topology" role="tab" data-toggle="tab" > {{'Resource Topology'|translate}}</a></li>
       <li role="presentation"><a href="#resource_consumption" role="tab" data-toggle="tab">{{'Resource Consumption'|translate}}</a></li>
       <li role="presentation"><a href="#method_consumption" role="tab" data-toggle="tab">{{'MethodTrack'|translate}}</a></li>
-
+      <li role="presentation"><a href="#call_consumption" role="tab" data-toggle="tab">{{'CallStack'|translate}}</a></li>
     </ul>
     <div class="tab-content" >
       <div role="tabpanel" class="tab-pane active" id="resource_topology">
-        <div  style="width:30%;height:600px;display: inline-block"><label style="color:#1babf4;margin-left:50%;font-size:16px" class="small">{{'Topology'|translate}} </label> <div id='{{$id}}a' style="height:100%;"> </div></div>
-        <div  style="width:69%;height:600px;display: inline-block"><label style="color:#1babf4;margin-left:50%;font-size:16px" class="small">{{'CallStack'|translate}} </label> <div></div><div id='{{$id}}e' style="height:100%;"> </div></div>
+        <div  style="width:100%;height:600px;display: inline-block"><label style="color:#1babf4;margin-left:50%;font-size:16px" class="small">{{'Topology'|translate}} </label> <div id='{{$id}}a' style="height:100%;"> </div></div>
+
       </div>
       <div role="tabpanel" class="tab-pane" id="resource_consumption">
         <div id='{{$id}}b' style="width:415px;height:400px;display: inline-block"></div>
@@ -139,6 +139,9 @@
           </tr>
           </tfoot>
         </table>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="call_consumption">
+        <div  style="width:100%;height:600px;display: inline-block"><label style="color:#1babf4;margin-left:50%;font-size:16px" class="small">{{'CallStack'|translate}} </label> <div></div><div id='{{$id}}e' style="height:100%;"> </div></div>
       </div>
 
     </div>

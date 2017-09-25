@@ -158,7 +158,7 @@ define([
         '**'
 
       ]);
-    }])
+    }]);
 
     var apps_deps = [
       'elasticjs.service',

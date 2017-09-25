@@ -6,7 +6,7 @@ function (angular) {
 
   angular
     .module('kibana.directives')
-    .directive('kibanaPanel', function($compile,reSize) {
+    .directive('kibanaPanel', function($compile) {
       // var container = '<div class="panelCont animated fadeInLeft ibox-content" >'+
       //   '</div>';
       var container = '<div class="ibox1 panelCont animated fadeInLeft " style="margin-top:10px"><div class="ibox1-content"></div></div>';

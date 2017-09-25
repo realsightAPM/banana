@@ -284,7 +284,7 @@ define([
       return {
         restrict: 'A',
         link: function(scope, elem) {
-          var myChart;
+
           // Receive render events
           scope.$on('render',function(){
             render_panel();
@@ -318,7 +318,7 @@ define([
             }
             var cloneData = scope.data;
             cloneData.scatter.dotList.reverse();
-            var idd = scope.$id;
+
             var labelcolor = false;
             var d3_label_color = "black";
             if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
@@ -335,7 +335,7 @@ define([
 
             if(scope.panel.chart === 'network') {
 
-              var time ;
+
               var timeData = [];
               var max_data=0;
               // 获取fisheye图表数据
@@ -354,10 +354,10 @@ define([
               }
               //timeData.sort();
               //x轴为时间，y轴为对应值，radius函数返回点大小，color函数返回点颜色
-              x=function(d){return d.time;}
-              y=function(d){return d.value;}
-              radius=function(d){return d.radius;}
-              color=function(d){return d.status;}
+              x=function(d){return d.time;};
+              y=function(d){return d.value;};
+              radius=function(d){return d.radius;};
+              color=function(d){return d.status;};
               position=function(dot){
                 dot .attr("cx", function(d) { return xScale(x(d)); })
                   .attr("cy", function(d) { return yScale(y(d)); })
