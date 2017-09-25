@@ -109,6 +109,12 @@ define([
         .when('/alert', {
           templateUrl: 'app/partials/alert.html'
         })
+        .when('/users', {
+          templateUrl: 'app/partials/users.html'
+        })
+        .when('/users/:userId', {
+          templateUrl: 'app/partials/user_info.html'
+        })
         .otherwise({
           redirectTo: 'dashboard'
         });
