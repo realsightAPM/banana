@@ -156,8 +156,11 @@ function (Settings) {
       'adTopology',
       'adThreadStates',
       'adCPUDuration',
-      'adMetricalData',
-      'adStacking'
+      'adThreadMetricalData',
+      'adMemoryMetricalData',
+      'adMemoryStacking',
+      'adStacking',
+      'apiaveguage'
     ]
   });
 });

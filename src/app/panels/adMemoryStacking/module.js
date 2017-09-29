@@ -20,12 +20,12 @@ define([
     function (angular, app, _, $, kbn) {
       'use strict';
       var DEBUG = false;
-      console.log('adStacking DEBUG : ' + DEBUG);
+      console.log('adMemoryStacking DEBUG : ' + DEBUG);
 
-      var module = angular.module('kibana.panels.adStacking', []);
+      var module = angular.module('kibana.panels.adMemoryStacking', []);
       app.useModule(module);
 
-      module.controller('adStacking', function($scope, $http,$sce,$timeout, $routeParams, $translate,timer, querySrv, dashboard, filterSrv) {
+      module.controller('adMemoryStacking', function($scope, $http,$sce,$timeout, $routeParams, $translate,timer, querySrv, dashboard, filterSrv) {
         $scope.panelMeta = {
           exportfile: true,
           editorTabs : [
@@ -136,16 +136,16 @@ define([
           if (filterSrv.getSolrFq()) {
             fq = '&' + filterSrv.getSolrFq();
           }
-          fq = '&fq=result_s:jm_thread_ad';
+          fq = '&fq=result_s:jm_memory_ad';
           if (_.isUndefined($routeParams.jm_name_s)) {
           } else {
             fq += '&fq=jm_name_s:' + $routeParams.jm_name_s;
           }
-          if (_.isUndefined($routeParams.threadid)) {
+          if (_.isUndefined($routeParams.memoryid)) {
           } else {
-            fq += '&fq=id:' + $routeParams.threadid;
+            fq += '&fq=id:' + $routeParams.memoryid;
           }
-          var fl = '&fl=cpu_duration';
+          var fl = '&fl=memory_info';
           var wt_json = '&wt=' + filetype;
           var rows_limit = '&rows=' + $scope.panel.max_rows; // for terms, we do not need the actual response doc, so set rows=0
           var facet = '';
@@ -154,14 +154,10 @@ define([
         };
 
         $scope.exportfile = function(filetype) {
-
           var query = this.build_query(filetype, true);
-
           $scope.sjs.client.server(dashboard.current.solr.server + dashboard.current.solr.core_name);
-
           var request = $scope.sjs.Request().indices(dashboard.indices),
             response;
-
           request.setQuery(query);
 
           response = request.doSearch();
@@ -229,15 +225,14 @@ define([
             $scope.panelMeta.loading = false;
             if (DEBUG) { console.log(results);}
             $scope.data = [];
-            var cpu_durations = eval('('+results.response.docs[0].cpu_duration+')');
+            var memory_info = eval('('+results.response.docs[0].memory_info+')');
             if (DEBUG) {
-              console.log(cpu_durations);
+              console.log(memory_info);
             }
-            for (var index in cpu_durations) {
+            for (var index in memory_info) {
               var slice = {
-                name: cpu_durations[index].name,
-                duration: cpu_durations[index].duration,
-                stack_trace: cpu_durations[index].stack_trace
+                name: memory_info[index].name,
+                size: memory_info[index].size,
               };
               $scope.data.push(slice);
             }
@@ -282,7 +277,7 @@ define([
         };
       });
 
-      module.directive('adstackingChart', function(querySrv,dashboard,filterSrv) {
+      module.directive('admemorystackingChart', function(querySrv,dashboard,filterSrv) {
         return {
           restrict: 'A',
           link: function(scope, elem) {
@@ -313,9 +308,9 @@ define([
               var durations = {};
               for (var index in scope.data) {
                 if (durations[scope.data[index].name]) {
-                  durations[scope.data[index].name] += scope.data[index].duration;
+                  durations[scope.data[index].name] += scope.data[index].size;
                 } else {
-                  durations[scope.data[index].name] = scope.data[index].duration;
+                  durations[scope.data[index].name] = scope.data[index].size;
                 }
               }
               var sort_indexs=Object.keys(durations).sort(function(a,b){return durations[a]-durations[b]});
@@ -391,7 +386,7 @@ define([
                 var option = {
                   tooltip: {
                     formatter: function (params) {
-                      return params.seriesName + ': ' + params.data + ' ms';
+                      return params.seriesName + ': ' + params.data + ' byte';
                     }
                   },
                   grid: {

@@ -130,23 +130,24 @@ define([
              */
             $scope.build_query = function(filetype) {
               // Build Solr query
-              var fq = '';
+              var fq = '&fq=result_s:jm_thread_ad';
               if (filterSrv.getSolrFq()) {
-                fq = '&' + filterSrv.getSolrFq();
+                fq += '&' + filterSrv.getSolrFq();
               }
               if (_.isUndefined($routeParams.jm_name_s)) {
               } else {
                 fq += '&fq=jm_name_s:' + $routeParams.jm_name_s;
               }
-              if (_.isUndefined($routeParams.id)) {
+              if (_.isUndefined($routeParams.threadid)) {
               } else {
-                fq += '&fq=id:' + $routeParams.id;
+                fq += '&fq=id:' + $routeParams.threadid;
               }
+              var fl = '&fl=states_list';
               var wt_json = '&wt=' + filetype;
               var rows_limit = '&rows=' + $scope.panel.max_rows; // for terms, we do not need the actual response doc, so set rows=0
               var facet = '';
               var sort = '&sort=rs_timestamp%20asc'
-              return querySrv.getORquery() + wt_json + rows_limit + fq + sort + facet + ($scope.panel.queries.custom !== null ? $scope.panel.queries.custom : '');
+              return querySrv.getORquery() + wt_json + rows_limit + fq + fl + sort + facet + ($scope.panel.queries.custom !== null ? $scope.panel.queries.custom : '');
             };
 
             $scope.exportfile = function(filetype) {

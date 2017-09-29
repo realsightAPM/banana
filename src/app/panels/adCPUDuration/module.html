@@ -1,0 +1,42 @@
+<div ng-controller='adCPUDuration' ng-init="init()">
+  <div ng-style="{'display':panel.display }">
+    <style type="text/css">
+      table td {
+        word-break: break-all;
+      }
+    </style>
+  <!-- START Table -->
+
+    <table st-table="displayedCollection" st-safe-src="data" class="table table-striped">
+      <thead>
+      <tr>
+        <th st-sort="duration" st-skip-natural="true"> {{'CPU_Time'|translate}}</th>
+        <th st-sort="thread">{{'Thread'|translate}}</th>
+        <th st-sort="stack_trace">{{'stack trace'|translate}}</th>
+      </tr>
+      <tr>
+        <th colspan="12">
+          <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="row in displayedCollection">
+        <td>{{row.duration}}</td>
+        <td>{{row.name}}</td>
+        <td>{{row.stack_trace}}</td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="10">
+          <div st-pagination="" st-items-by-page="panel.itemsByPage" st-displayed-pages="panel.displayPage" class="pagination pull-right"></div>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  <!-- END Table -->
+  <!-- Dummy div for testing color name -->
+  <div id="colorTest"></div>
+</div>
+</div>
