@@ -121,6 +121,7 @@
 
             </div>
 
+
             <ul class="nav  navbar-right" style="float:right;margin-right:20px;margin-top: 4px" ng-click="dashboard.clear_cookie()">
               <li>
                 <a >
@@ -195,8 +196,16 @@
       <div class="navbar navbar-static-top" >
         <div class="navbar-inner">
           <div class="container-fluid">
+            <div class="dropdown">
             <img src="img/aaaaa.png" data-placement="left" style="float:left;margin-top:4px" ng-if="dashboard.isMobile" ng-cloak>
-            <img src="img/rsapm_logo.png" data-placement="left" style="float:left;margin-top:4px" ng-if="!dashboard.isMobile" ng-cloak>
+            <img src="img/rsapm_logo.png" data-placement="left"  style="float:left;margin-top:4px" ng-if="!dashboard.isMobile" ng-cloak>
+              <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" style="float:left;margin-left: 5px;margin-top: 8px;background: rgba(57, 70, 86, 0);border-color: rgba(57, 70, 86, 0.05);">
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="float:right;margin-left:210px;margin-top: 10px">
+                <li ng-repeat="term in dashboard.template" role="presentation"  ><i  ng-click="dashboard.confirm_delete(term)" style="display: inline-block" class="fa fa-remove" ng-show="dashboard.current.hide_head"></i><a href="#!dashboard" style='text-decoration:none;cursor:pointer;display: inline-block;line-height:50px'  ng-click="dashboard.solr_load('dashboard',term)" ><i class="fa fa-dashboard"></i>{{term}}</a></li>
+              </ul>
+            </div>
             <!--<span class="brand" style = "text-align:center;margin-top:4px">-->
 
                <!--&nbsp;&nbsp;&nbsp;&nbsp; {{dashboard.current.title}}-->
@@ -213,10 +222,18 @@
                 </a>
               </li>
             </ul>
+            <!--<div class="dropdown">-->
+              <!--<button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" style="float:right;margin-right:30px;margin-top: 4px">-->
+                <!--主题-->
+                <!--<span class="caret"></span>-->
+              <!--</button>-->
+              <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="float:right;margin-left:70%;margin-top: 4px">-->
+                <!--<li ng-repeat="term in dashboard.template" role="presentation"  ><i  ng-click="dashboard.confirm_delete(term)" style="display: inline-block" class="fa fa-remove" ng-show="dashboard.current.hide_head"></i><a href="#!dashboard" style='text-decoration:none;cursor:pointer;display: inline-block;'  ng-click="dashboard.solr_load('dashboard',term)" ><i class="fa fa-dashboard"></i>{{term}}</a></li>-->
+              <!--</ul>-->
+            <!--</div>-->
           </div>
         </div>
       </div>
-
 
 
 
@@ -247,12 +264,14 @@
     <script src="vendor/go.js"></script>
     <script src="vendor/vis.js"></script>
     <script src="vendor/vizceral.js"></script>
+    <script src="vendor/pointcloud/libs/three.js/build/three.js"></script>
+    <script src="vendor/pointcloud/libs/proj4/proj4-src.js"></script>
+    <script src="vendor/pointcloud/libs/tween/Tween.js"></script>
+    <script src="vendor/pointcloud/libs/potree/potree.js"></script>
+
     <!--<script src="vendor/pointcloud/libs/three.js/build/three.js"></script>-->
-    <!--<script src="vendor/pointcloud/libs/proj4/proj4.js"></script>-->
-    <!--<script src="vendor/pointcloud/libs/tween/tween.min.js"></script>-->
     <!--<script src="vendor/pointcloud/libs/three.js/build/three.js"></script>-->
-    <!--<script src="vendor/pointcloud/libs/three.js/build/three.js"></script>-->
-    <script src="vendor/pdf/jspdf.js"></script>
+    <script src="vendor/pdf/jspdf.debug.js"></script>
     <script src="vendor/nav/classie.js"></script>
     <script src="vendor/nav/selectFx.js"></script>
     <!--<script src="vendor/nav/toastr.min.js"></script>-->

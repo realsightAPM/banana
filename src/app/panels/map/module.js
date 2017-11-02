@@ -113,6 +113,15 @@ function (angular, app, _, $, worldmap) {
 
     };
 
+    //快捷键+控制放大缩小panel
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        $scope.reSize();
+      }
+
+
+    };
+
     $scope.set_refresh = function (state) {
       $scope.refresh = state;
       // if 'count' mode is selected, set decimal_points to zero automatically.

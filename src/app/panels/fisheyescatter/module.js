@@ -143,6 +143,15 @@ define([
 
       };
 
+      //快捷键+控制放大缩小panel
+      $scope.zoomOut=function() {
+        if(window.event.keyCode===107){
+          $scope.reSize();
+        }
+
+
+      };
+
       $scope.display=function() {
         if($scope.panel.display === 'none'){
           $scope.panel.display='block';

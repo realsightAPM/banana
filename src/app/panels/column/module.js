@@ -20,7 +20,7 @@ define([
 
     app.useModule(module);
 
-    module.controller('column', function($scope, $rootScope, $timeout) {
+    module.controller('column', function($scope, $rootScope,dashboard, $timeout) {
       $scope.panelMeta = {
         status  : "Stable",
         description : ""
@@ -71,10 +71,20 @@ define([
         ibox.toggleClass('fullscreen');
         $scope.panel.fullHeight = ibox[0].offsetHeight-60;
         $scope.$emit('render');
+        dashboard.refresh();
         $(window).trigger('resize');
 
 
       };
+      //快捷键+控制放大缩小panel
+      $scope.zoomOut=function() {
+        if(window.event.keyCode===107){
+          $scope.reSize();
+        }
+
+
+      };
+
       $scope.send_render = function() {
         $scope.$broadcast('render');
       };

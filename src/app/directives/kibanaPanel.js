@@ -9,10 +9,10 @@ function (angular) {
     .directive('kibanaPanel', function($compile) {
       // var container = '<div class="panelCont animated fadeInLeft ibox-content" >'+
       //   '</div>';
-      var container = '<div class="ibox1 panelCont animated fadeInLeft " style="margin-top:10px"><div class="ibox1-content"></div></div>';
+      var container = '<div class="ibox1 panelCont animated fadeInLeft " style="margin-top:10px;"  ><div class="ibox1-content" ></div></div>';
       var editorTemplate =
 
-        '<div class="row-fluid panel-extra "><div class="panel-extra-container">' +
+        '<div class="row-fluid panel-extra " ><div class="panel-extra-container">' +
 
           '<span class="extra row-button" ng-hide="panel.draggable == false">' +
             '<span class="row-text pointer" bs-tooltip="\'{{\'Drag here to move\'|translate}}\'"'+

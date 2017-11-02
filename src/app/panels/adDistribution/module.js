@@ -211,6 +211,15 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
     };
 
+    //快捷键+控制放大缩小panel
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        $scope.reSize();
+      }
+
+
+    };
+
     $scope.build_query = function(filetype, isForExport) {
       // Build Solr query
       var fq = '';

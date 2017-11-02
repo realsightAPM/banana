@@ -128,6 +128,15 @@ define([
 
 
           };
+          //快捷键+控制放大缩小panel
+          $scope.zoomOut=function() {
+            if(window.event.keyCode===107){
+              $scope.reSize();
+            }
+
+
+          };
+
             $scope.testMultivalued = function() {
                 if($scope.panel.field && $scope.fields.typeList[$scope.panel.field] && $scope.fields.typeList[$scope.panel.field].schema.indexOf("M") > -1) {
                     $scope.panel.error = "Can't proceed with Multivalued field";

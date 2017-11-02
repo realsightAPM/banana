@@ -154,7 +154,8 @@ function (Settings) {
       'topologyfisheye',
       'fisheyescatter',
       'infoalarm',
-      'viz'
+      'viz',
+      'pointcloud'
     ]
   });
 });

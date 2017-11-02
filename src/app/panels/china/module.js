@@ -121,6 +121,15 @@ function (angular, app, _, $, kbn) {
 
 
     };
+
+    //快捷键+控制放大缩小panel
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        $scope.reSize();
+      }
+
+
+    };
     
     $scope.testMultivalued = function() {
       if($scope.panel.field && $scope.fields.typeList[$scope.panel.field] && $scope.fields.typeList[$scope.panel.field].schema.indexOf("M") > -1) {
@@ -432,7 +441,6 @@ function (angular, app, _, $, kbn) {
 
         // Function for rendering panel
         function render_panel() {
-          var myChart;
           var  chartData;
           var renderBrushed =function(){};
           var colors = [];
@@ -498,8 +506,8 @@ function (angular, app, _, $, kbn) {
 
         require(['echarts'], function(ec){
           var echarts = ec;
-          if(myChart) {
-            myChart.dispose();
+          if(scope.myChart) {
+            scope.myChart.dispose();
           }
             // Populate element
             try {
@@ -607,7 +615,7 @@ function (angular, app, _, $, kbn) {
 
 	      if(scope.panel.chart === 'china_map'){
 		
-		 myChart = echarts.init(document.getElementById(idd));
+		 scope.myChart = echarts.init(document.getElementById(idd));
 		
 
 
@@ -725,8 +733,8 @@ var option7 = {
 };
 		
 		 if(arrlabel.length===0){
-				myChart.setOption(option_nodata);}else{
-					myChart.setOption(option7);
+				scope.myChart.setOption(option_nodata);}else{
+					scope.myChart.setOption(option7);
 				}
 		
 		
@@ -736,7 +744,7 @@ var option7 = {
 		    if(scope.panel.chart === 'bmap'){
 	
 	
-	 myChart = echarts.init(document.getElementById(idd));
+	 scope.myChart = echarts.init(document.getElementById(idd));
 	
 
 
@@ -1077,8 +1085,8 @@ var option8 = {
     ]
 };
 	 if(arrlabel.length===0){
-				myChart.setOption(option_nodata);}else{
-					myChart.setOption(option8);
+				scope.myChart.setOption(option_nodata);}else{
+					scope.myChart.setOption(option8);
 				}
 	
 		}		
@@ -1086,7 +1094,7 @@ var option8 = {
 
         if(scope.panel.chart === 'cmap'){
 
-             myChart= echarts.init(document.getElementById(idd));
+             scope.myChart= echarts.init(document.getElementById(idd));
 
 
             var data = arrdata;
@@ -1386,13 +1394,13 @@ var option8 = {
               });
             };
 
-          myChart.on('brushselected', renderBrushed);
+          scope.myChart.on('brushselected', renderBrushed);
 
-          myChart.setOption(option);
+          scope.myChart.setOption(option);
 
 
           setTimeout(function () {
-              myChart.dispatchAction({
+              scope.myChart.dispatchAction({
                   type: 'brush',
                   areas: [
                       {
@@ -1409,7 +1417,7 @@ var option8 = {
 
                 if(scope.panel.chart === 'zmap'){
 
-                     myChart= echarts.init(document.getElementById(idd));
+                     scope.myChart= echarts.init(document.getElementById(idd));
                     var data11 = arrdata;
                     convertData = function (data) {
                         var res = [];
@@ -1708,20 +1716,20 @@ var option8 = {
                     });
                   };
 
-                    myChart.on('brushselected', renderBrushed);
+                    scope.myChart.on('brushselected', renderBrushed);
                   if(scope.panel.clickEnable){
-                    myChart.on('click', function () {
+                    scope.myChart.on('click', function () {
                       // 点击联动
                       dashboard.page_switch('App_Demo_User');
 
                     });
                   }
 
-                    myChart.setOption(option11);
+                    scope.myChart.setOption(option11);
 
 
                     setTimeout(function () {
-                        myChart.dispatchAction({
+                        scope.myChart.dispatchAction({
                             type: 'brush',
                             areas: [
                                 {

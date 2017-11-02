@@ -158,6 +158,15 @@ define([
 
       };
 
+      //快捷键+控制放大缩小panel
+      $scope.zoomOut=function() {
+        if(window.event.keyCode===107){
+          $scope.reSize();
+        }
+
+
+      };
+
       $scope.set_interval = function(interval) {
         if(interval !== 'auto') {
           $scope.panel.auto_int = false;

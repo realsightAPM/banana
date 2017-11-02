@@ -47,11 +47,11 @@ require.config({
 
     //pointcloud
     //three:             '../vendor/pointcloud/libs/three.js/build/three',
-   //  stats:             '../vendor/pointcloud/libs/other/stats.min',
-   //  binaryheap:             '../vendor/pointcloud/libs/other/BinaryHeap',
-   //  tween:             '../vendor/pointcloud/libs/tween/tween.min',
-   // // proj4:             '../vendor/pointcloud/libs/proj4/proj4',
-   //  potree:             '../vendor/pointcloud/libs/potree/potree',
+    stats:             '../vendor/pointcloud/libs/other/stats',
+    binaryheap:             '../vendor/pointcloud/libs/other/BinaryHeap',
+    //tween:             '../vendor/pointcloud/libs/tween/tween.min',
+   // proj4:             '../vendor/pointcloud/libs/proj4/proj4',
+    //potree:             '../vendor/pointcloud/libs/potree/potree',
     //pointcloud
     cookies:                   '../vendor/jquery/jquery.cookie',
     golden:                    '../vendor/goldenlayout',
@@ -155,11 +155,11 @@ require.config({
     datatable:                ['jquery','bootstrap'],
       //pointcloud
     //three:              ['jquery'],
-    // stats:             ['jquery'],
-    // binaryheap:            ['jquery'],
-    // tween:             ['jquery'],
-    // //proj4:              ['jquery'],
-    // potree:             ['jquery','stats','binaryheap','tween'],
+    stats:             ['jquery'],
+    binaryheap:            ['jquery'],
+    //tween:             ['jquery'],
+    //proj4:              ['jquery'],
+   // potree:             ['jquery','stats','binaryheap'],
     //pointcloud
       'jquery-ui':            ['jquery'],
     'jquery.flot':          ['jquery'],

@@ -129,6 +129,15 @@ function (angular, app, _, $, kbn) {
 
     };
 
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        //小键盘+放大缩小指定仪表盘
+        $scope.reSize();
+      }
+
+
+    };
+
 
 
 
@@ -154,6 +163,14 @@ function (angular, app, _, $, kbn) {
               $scope.panel.icon="icon-caret-up";
           }
       };
+
+    $scope.noNumbers = function (e){
+      var keynum;
+      var keychar;
+      keynum = window.event ? e.keyCode : e.which;
+      keychar = String.fromCharCode(keynum);
+      alert(keynum+':'+keychar);
+    };
     /**
      *
      *

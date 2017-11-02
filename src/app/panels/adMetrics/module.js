@@ -208,6 +208,14 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
 
     };
+    //快捷键+控制放大缩小panel
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        $scope.reSize();
+      }
+
+
+    };
 
     $scope.goToUrl=function(path) {    //此方法可以改变location地址；
       if (DEBUG) {console.log(path);}

@@ -111,6 +111,7 @@ function (angular, app, _, $, kbn) {
 
     $scope.reSize=function() {
 
+
       $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
 
       var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
@@ -119,8 +120,18 @@ function (angular, app, _, $, kbn) {
       $('body').toggleClass('fullscreen-ibox1-mode');
       button.toggleClass('fa-expand').toggleClass('fa-compress');
       ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
       $scope.$emit('render');
       $(window).trigger('resize');
+
+
+    };
+
+    //快捷键+控制放大缩小panel
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        $scope.reSize();
+      }
 
 
     };
