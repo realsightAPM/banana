@@ -48,6 +48,7 @@ define([
                 mode    : 'statistic', // mode to tell which number will be used to plot the chart.
                 field   : '',
                 stats_field : '',
+                stats_type: '',
                 decimal_points : 0, // The number of digits after the decimal point
                 exclude : [],
                 missing : false,
@@ -83,7 +84,6 @@ define([
               displayPage: 10,
             };
             _.defaults($scope.panel,_d);
-
 
             $scope.init = function () {
                 $scope.hits = 0;
@@ -137,10 +137,16 @@ define([
 
                 if ($scope.panel.mode === 'count') {
                     facet = '&facet=true&facet.field=' + $scope.panel.field + '&facet.limit=' + $scope.panel.size + '&facet.missing=true';
-                } else {
-                    facet = '&stats=true&stats.facet=' + $scope.panel.field + '&stats.field=' + $scope.panel.stats_field + '&facet.missing=true';
+                    facet += '&f.' + $scope.panel.field + '.facet.sort=' + ($scope.panel.sortBy || 'count');
                 }
-                facet += '&f.' + $scope.panel.field + '.facet.sort=' + ($scope.panel.sortBy || 'count');
+                if ($scope.panel.mode === 'statistic') {
+                    facet = '&stats=true&stats.facet=' + $scope.panel.field + '&stats.field=' + $scope.panel.stats_field + '&facet.missing=true';
+                    facet += '&f.' + $scope.panel.field + '.facet.sort=' + ($scope.panel.sortBy || 'count');
+                }
+                if ($scope.panel.mode === 'npm_overview') {
+                    fq = fq + '&fq=type:' + $scope.panel.stats_type;
+                    rows_limit = '&rows=100000'
+                }
 
                 var exclude_length = $scope.panel.exclude.length;
                 var exclude_filter = '';
@@ -197,7 +203,6 @@ define([
             };
 
             $scope.get_data = function() {
-              console.log("Get Data");
               // Make sure we have everything for the request to complete
               if (dashboard.indices.length === 0) {
                 return;
@@ -219,7 +224,6 @@ define([
 
               // Set the panel's query
               $scope.panel.queries.query = query;
-
               request.setQuery(query);
               results = request.doSearch();
               // Populate scope when we have results
@@ -228,6 +232,8 @@ define([
                 $scope.panelMeta.loading = false;
                 $scope.hits = response.response.numFound;
                 $scope.data = [];
+                $scope.datasrc = [];
+                $scope.datadst = [];
                 $scope.yaxis_min = null;
                 // this callback will be called asynchronously
                 // when the response is available
@@ -238,11 +244,12 @@ define([
                     var slice = {
                       term: temp_data[i],
                       count: temp_data[i+1],
+                      mode: $scope.panel.mode
                     };
                     $scope.data.push(slice);
                   }
                 }
-                else {
+                if ($scope.panel.mode === 'statistic'){
                   _.each(response.stats.stats_fields[$scope.panel.stats_field].facets[$scope.panel.field], function (stats_obj, facet_field) {
                     //var slice = {label: facet_field, data: [[k, stats_obj['mean'], stats_obj['count'], stats_obj['max'], stats_obj['min'], stats_obj['stddev'], facet_field]], actions: true};
                     var slice = {
@@ -253,10 +260,38 @@ define([
                       max: stats_obj['max'],
                       min: stats_obj['min'],
                       stddev: stats_obj['stddev'],
-                      actions: true
+                      actions: true,
+                      mode: $scope.panel.mode
                     };
                     $scope.data.push(slice);
                   });
+                }
+                if ($scope.panel.mode === 'npm_overview') {
+                  console.log('npm_overview');
+                  var info = {}
+                  var temp_data = response.response.docs
+                  for (var i = 0; i < temp_data.length; i++) {
+                    var key = temp_data[i][$scope.panel.stats_field]
+                    if (!info.hasOwnProperty(key)) {
+                      info[key] = {};
+                      info[key]['count'] = 0
+                      info[key]['ip'] = key;
+                      info[key]['through_put_up'] = 0;
+                      info[key]['through_put_down'] = 0;
+                      info[key]['retransmission'] = 0;
+                      info[key]['dup_ack'] = 0;
+                      info[key]['reset'] = 0;
+                    }
+                    info[key]['count'] += 1;
+                    info[key]['through_put_up'] += temp_data[i]['through_put_up'];
+                    info[key]['through_put_down'] += temp_data[i]['through_put_down'];
+                    info[key]['retransmission'] += temp_data[i]['retransmission'];
+                    info[key]['dup_ack'] += temp_data[i]['dup_ack'];
+                    info[key]['reset'] += temp_data[i]['reset'];
+                  }
+                  for(var item in info){
+                    $scope.data.push(info[item]);
+                  }
                 }
               }, function errorCallback() {
                 // called asynchronously if an error occurs

@@ -379,11 +379,7 @@ define([
                   hits = 0;
                   $scope.hits = 0;
                 }
-
-
                 $scope.data[i] = results[index].response.docs;
-
-
                 i++;
               });
 
@@ -495,32 +491,47 @@ define([
             var barData = [];
             var barDataLabel=[];
             var repeat={};
-            var barLabel = scope.panel.value_field.split(" ");
+            var values = []
+            var barLabel = scope.panel.value_field.split(" ")[1];
             //repeat[0]=chartData[0][0][barLabel[1]] ;
             // barData[0] = chartData[0][i0][scope.panel.value_sort];
             // barDataLabel[0] = chartData[0][0][barLabel[1]];
             // repeat[]
               var i1=0;
-            for (var i =0;i<chartData[0].length;i++){
-                if(i1===10){
-                  break;
+
+            for (var i = 0; i < chartData[0].length; i++) {
+                var key = chartData[0][i][barLabel]
+                var count = chartData[0][i]['count'];
+                if(!repeat.hasOwnProperty(key)) {
+                  repeat[key] = 0
                 }
-              if(!repeat[chartData[0][i][barLabel[1]]]){
-                repeat[chartData[0][i][barLabel[1]]]=1;
-                //repeat.push(chartData[0][i][barLabel[1]]);
-                barData[i1] = chartData[0][i][scope.panel.value_sort];
-                barDataLabel[i1] = chartData[0][i][barLabel[1]];
-                barDataLabel[i1] = barDataLabel[i1].replace(/[\r\n]/g,"");
-
-                i1++;
-              }
-
-
+                repeat[key] += count;
             }
+
+            var items = Object.keys(repeat).map(function(key) {
+              return [key, repeat[key]];
+            });
+
+              // Sort the array based on the second element
+            items.sort(function(first, second) {
+              return second[1] - first[1];
+            });
+
+              // Create a new array with only the first 5 items
+            var top = items.slice(0, 10)
+            for (var i in top){
+              barData.push(top[i][1]);
+              var label = top[i][0].replace(/[\r\n]/g, "");
+              barDataLabel.push(label);
+            }
+
+          //barData[i1] = chartData[0][i][scope.panel.value_sort];
+          //barDataLabel[i1] = chartData[0][i][barLabel[1]];
+          //barDataLabel[i1] = barDataLabel[i1].replace(/[\r\n]/g, "");
+
+            //console.log(barData);
             barData.reverse();
             barDataLabel.reverse();
-
-
 
             var option_nodata = {
               series: [{
@@ -560,7 +571,6 @@ define([
               }
               // Populate element
               try {
-
                 var labelcolor = false;
                 if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
                   labelcolor = true;

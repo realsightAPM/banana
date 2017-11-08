@@ -90,6 +90,7 @@ require.config({
 
     vis:                    '../../node_modules/vis/dist/vis',
     vizceral:                    '../../node_modules/vizceral/dist/vizceral',
+      'angular-storage':                  '../../node_modules/ngstorage/ngStorage',
     //gojs:                     '../../src/vendor/go',
     // d3transform:                    '../vendor/d3/d3-transform',
     // extarray:                     '../vendor/d3/extarray',
@@ -186,7 +187,7 @@ require.config({
     'angular-smart-table':             ['angular'],
     'angular-translate' : ['angular'],
     'angular-translate-loader-static-files':['angular','angular-translate'],
-
+      ngStorage:['angular'],
     timepicker:             ['jquery', 'bootstrap'],
     datepicker:             ['jquery', 'bootstrap'],
 

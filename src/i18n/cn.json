@@ -393,7 +393,14 @@
   "Local default template clear failed":"本地默认模板清除失败",
   "every":"每",
   "Are you sure you want to remove this":"确定要移除这个",
-  "panel?":"图表吗？"
+  "panel?":"图表吗？",
+  "ip":"IP",
+  "through_put_up":"上行吞吐量",
+  "through_put_down":"下行吞吐量",
+  "reset":"TCP复位",
+  "out_of_order":"TCP乱序",
+  "retransmission":"TCP重传",
+  "duplicate":"TCP重复ACK"
 
 
 

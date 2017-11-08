@@ -260,15 +260,13 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
             );
 
             var facet = $scope.sjs.DateHistogramFacet(0);
-            if ($scope.panel.mode === 'count' || $scope.panel.mode === 'counts') {
-                facet = facet.field(filterSrv.getTimeField());
-            } else {
-                if (_.isNull($scope.panel.value_field)) {
-                    $scope.panel.error = "In " + $scope.panel.mode + " mode a field must be specified";
-                    return;
-                }
-                facet = facet.keyField(filterSrv.getTimeField()).valueField($scope.panel.value_field);
+
+            if (_.isNull($scope.panel.value_field)) {
+                $scope.panel.error = "In " + $scope.panel.mode + " mode a field must be specified";
+                return;
             }
+            facet = facet.keyField(filterSrv.getTimeField()).valueField($scope.panel.value_field);
+
             facet = facet.interval(_interval).facetFilter($scope.sjs.QueryFilter(query));
             request = request.facet(facet).size(0);
 
@@ -306,7 +304,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
         var values_mode_query = '';
 
         // For mode = value
-        if ($scope.panel.mode === 'values' || $scope.panel.mode === 'value') {
+        if ($scope.panel.mode === 'values' || $scope.panel.mode === 'value' || $scope.panel.mode === 'sum' || $scope.panel.mode === 'mean' || $scope.panel.mode === 'count') {
             if (!$scope.panel.value_field) {
                 $scope.panel.error = "In " + $scope.panel.mode + " mode a field must be specified";
                 return;
@@ -323,7 +321,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
         }
 
         var mypromises = [];
-        if ($scope.panel.mode === 'value' || $scope.panel.mode === 'counts') {
+        if ($scope.panel.mode === 'value' || $scope.panel.mode === 'counts' || $scope.panel.mode === 'sum' || $scope.panel.mode === 'mean' || $scope.panel.mode === 'count') {
             var arr_id = [0];
             _.each(arr_id, function () {
                 var temp_q = 'q=' + $scope.panel.value_field + '%3A%5B' + '*' + '%20TO%20' + '*' + '%5D' + wt_json + sort_s + rows_limit + fq + facet + values_mode_query;
@@ -376,20 +374,50 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                         hits = 0;
                     } else {
                         time_series = $scope.data[i].time_series;
-                        // Bug fix for wrong event count:
-                        //   Solr don't need to accumulate hits count since it can get total count from facet query.
-                        //   Therefore, I need to set hits and $scope.hits to zero.
-                        // hits = $scope.data[i].hits;
                         hits = 0;
                         $scope.hits = 0;
                     }
-
-                    $scope.data[i] = results[index].response.docs;
-
-
-                    i++;
+                    if ($scope.panel.mode === 'value') {
+                      $scope.data[i] = results[index].response.docs;
+                      i++;
+                    }
+                    else {
+                      var before_key = ""
+                      var count = 0;
+                      var sum = 0;
+                      var datas = results[index].response.docs;
+                      $scope.data[i] = [];
+                      var k = 0;
+                      for(var j in datas){
+                        var val = datas[j][$scope.panel.value_field];
+                        var key = datas[j][$scope.panel.value_sort];
+                        if (key != before_key){
+                          if(before_key != ''){
+                            var slice = {}
+                            if($scope.panel.mode === 'sum') {
+                              slice[$scope.panel.value_field] = sum;
+                            }
+                            else if ($scope.panel.mode === 'mean') {
+                              slice[$scope.panel.value_field] = sum/count;
+                            }
+                            else if ($scope.panel.mode === 'count') {
+                              slice[$scope.panel.value_field] = count;
+                            }
+                            slice[$scope.panel.value_sort] = before_key;
+                            $scope.data[i].push(slice);
+                            k++;
+                          }
+                          before_key = key;
+                          count = 1;
+                          sum = val;
+                        }
+                        else {
+                          count = count + 1;
+                          sum = sum + val;
+                        }
+                      }
+                    }
                 });
-
                 // Tell the histogram directive to render.
                 $scope.$emit('render');
                 // }

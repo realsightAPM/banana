@@ -464,7 +464,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
     return {
       restrict: 'A',
       link: function(scope, elem) {
-var myChart;
+        var myChart;
         // Receive render events
         scope.$on('render',function(){
           render_panel();

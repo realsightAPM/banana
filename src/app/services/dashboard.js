@@ -838,71 +838,23 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
 
     };
     this.save_pdf = function() {
+
       $(".theme-config-box").toggleClass("show");
-        var background_color = '#272b30';
-          if(self.current.style === 'blue'){
-              background_color = '#5bc0de';
-          }else if(self.current.style === 'light'){
-              background_color = '#fff';
-          }
-              html2canvas(document.getElementById("bodyContent"), {
-              background:background_color,
 
-              // 渲染完成时调用，获得 canvas
-              onrendered: function(canvas) {
-                  var h =document.body.scrollHeight;
-                  // 从 canvas 提取图片数据
-                  var imgData = canvas.toDataURL('image/png');
-                  var doc = new jsPDF("p", "mm", "a3");
-                  //                               |
-                  // |—————————————————————————————|
-                  // A0 841×1189
-                  // A1 594×841
-                  // A2 420×594
-                  // A3 297×420
-                  // A4 210×297
-                  // A5 148×210
-                  // A6 105×148
-                  // A7 74×105
-                  // A8 52×74
-                  // A9 37×52
-                  // A10 26×37
-                  //     |——|———————————————————————————|
-                  //                                 |——|——|
-                  //                                 |     |
-                doc.addImage(imgData, 'PNG', 0, 0,297,h/5.5);
-                if(h>2340){
-                  doc.addPage();
-                  doc.addImage(imgData, 'PNG', 0, -425,297,h/5.5);
-                }
-                if(h>4680){
-                  doc.addPage();
-                  doc.addImage(imgData, 'PNG', 0, -850,297,h/5.5);
-                }
-                if(h>7020){
-                  doc.addPage();
-                  doc.addImage(imgData, 'PNG', 0, -1275,297,h/5.5);
-                }
-                doc.save('content.pdf');
-              }
-          });
-      };
-
-    this.save_pdf_f2 = function() {
       var background_color = '#272b30';
       if(self.current.style === 'blue'){
         background_color = '#5bc0de';
       }else if(self.current.style === 'light'){
         background_color = '#fff';
       }
-      html2canvas(document.getElementById("bodyContent"), {
+      setTimeout(function () { html2canvas(document.body, {
         background:background_color,
 
         // 渲染完成时调用，获得 canvas
         onrendered: function(canvas) {
           var h =document.body.scrollHeight;
           // 从 canvas 提取图片数据
-          var imgData = canvas.toDataURL('image/png');
+          var imgData = canvas.toDataURL('image/jpeg');
           var doc = new jsPDF("p", "mm", "a3");
           //                               |
           // |—————————————————————————————|
@@ -920,22 +872,74 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
           //     |——|———————————————————————————|
           //                                 |——|——|
           //                                 |     |
-          doc.addImage(imgData, 'PNG', 0, 0,297,h/5.5);
+          doc.addImage(imgData, 'JPEG', 0, 0,297,h/5.5);
           if(h>2340){
             doc.addPage();
-            doc.addImage(imgData, 'PNG', 0, -425,297,h/5.5);
+            doc.addImage(imgData, 'JPEG', 0, -425,297,h/5.5);
           }
           if(h>4680){
             doc.addPage();
-            doc.addImage(imgData, 'PNG', 0, -850,297,h/5.5);
+            doc.addImage(imgData, 'JPEG', 0, -850,297,h/5.5);
           }
           if(h>7020){
             doc.addPage();
-            doc.addImage(imgData, 'PNG', 0, -1275,297,h/5.5);
+            doc.addImage(imgData, 'JPEG', 0, -1275,297,h/5.5);
           }
-          doc.save('content.pdf');
+          doc.save('RealSight.pdf');
         }
-      });
+      });}, 2000);
+    };
+
+    this.save_pdf_f2 = function() {
+
+      var background_color = '#272b30';
+      if(self.current.style === 'blue'){
+        background_color = '#5bc0de';
+      }else if(self.current.style === 'light'){
+        background_color = '#fff';
+      }
+      setTimeout(function () { html2canvas(document.body, {
+        background:background_color,
+
+        // 渲染完成时调用，获得 canvas
+        onrendered: function(canvas) {
+          var h =document.body.scrollHeight;
+          // 从 canvas 提取图片数据
+          var imgData = canvas.toDataURL('image/jpeg');
+          var doc = new jsPDF("p", "mm", "a3");
+          //                               |
+          // |—————————————————————————————|
+          // A0 841×1189
+          // A1 594×841
+          // A2 420×594
+          // A3 297×420
+          // A4 210×297
+          // A5 148×210
+          // A6 105×148
+          // A7 74×105
+          // A8 52×74
+          // A9 37×52
+          // A10 26×37
+          //     |——|———————————————————————————|
+          //                                 |——|——|
+          //                                 |     |
+          doc.addImage(imgData, 'JPEG', 0, 0,297,h/5.5);
+          if(h>2340){
+            doc.addPage();
+            doc.addImage(imgData, 'JPEG', 0, -425,297,h/5.5);
+          }
+          if(h>4680){
+            doc.addPage();
+            doc.addImage(imgData, 'JPEG', 0, -850,297,h/5.5);
+          }
+          if(h>7020){
+            doc.addPage();
+            doc.addImage(imgData, 'JPEG', 0, -1275,297,h/5.5);
+          }
+          doc.save('RealSight.pdf');
+        }
+      });}, 2000);
+
     };
 
     this.save_gist = function(title,dashboard) {

@@ -5,7 +5,6 @@ define([
     'angular',
     'jquery',
     'underscore',
-
     'require',
     'cookies',
     'elasticjs',
@@ -21,13 +20,13 @@ define([
     'angular-translate',
     'angular-translate-loader-static-files',
     'angular-sweetalert',
-  'metisMenu',
-  'slimscroll',
-  'inspinia',
-  'pace',
+    'metisMenu',
+    'slimscroll',
+    'inspinia',
+    'pace',
     'sweetalert',
-  'nestable'
-
+    'nestable',
+    'angular-storage'
   ],
   function (angular, $, _, appLevelRequire) {
 
@@ -166,6 +165,7 @@ define([
       '$strap.directives',
       'ngSanitize',
       'ngDragDrop',
+      'ngStorage',
       'ngMaterial',
       'smart-table',
       'kibana',
