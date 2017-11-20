@@ -32,32 +32,37 @@ define([
   function (angular, $, _, appLevelRequire) {
 
     "use strict";
-    var username = $.cookie('rtd_username');
-    var password = $.cookie('rtd_password');
-    var realUsername = "";
-    var realPassword = "";
-    $.ajaxSettings.async = false;
-    $.getJSON('assets/json/login.json', function(data){
-      realUsername =data.username;
-      realPassword = data.password;
-    });
-    $.ajaxSettings.async = true;
-    //var a = sessionStorage.getItem(realUsername);
-    //if(username==realUsername&&password==realPassword){
-    //self.current.headHide = false;
+    /*
+    登录页
 
-    // if(typeof(username)=="undefined"){
-    //     window.location.href = window.location.origin+window.location.pathname+"login.html";
+    // var username = $.cookie('rtd_username');
+    // var password = $.cookie('rtd_password');
+    // var realUsername = "";
+    // var realPassword = "";
+    // $.ajaxSettings.async = false;
+    // $.getJSON('assets/json/login.json', function(data){
+    //   realUsername =data.username;
+    //   realPassword = data.password;
+    // });
+    // $.ajaxSettings.async = true;
+    // //var a = sessionStorage.getItem(realUsername);
+    // //if(username==realUsername&&password==realPassword){
+    // //self.current.headHide = false;
+    //
+    // // if(typeof(username)=="undefined"){
+    // //     window.location.href = window.location.origin+window.location.pathname+"login.html";
+    // // }
+    // if(username!==realUsername||password!==realPassword){
+    //
+    //   sessionStorage.setItem("goalUrl",window.location.hash);
+    //
+    //   window.location.href = window.location.origin+window.location.pathname.replace("index.html","")+"login.html";
     // }
-    if(username!==realUsername||password!==realPassword){
+    // [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
+    //   new SelectFx(el);
+    // } );
 
-      sessionStorage.setItem("goalUrl",window.location.hash);
-
-      window.location.href = window.location.origin+window.location.pathname.replace("index.html","")+"login.html";
-    }
-    [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
-      new SelectFx(el);
-    } );
+     */
     var app = angular.module('kibana', ['ngRoute', 'ngSanitize','pascalprecht.translate','oitozero.ngSweetAlert']),
       // we will keep a reference to each module defined before boot, so that we can
       // go back and allow it to define new features later. Once we boot, this will be false

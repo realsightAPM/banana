@@ -13,20 +13,20 @@
                 <div id="collapse0" class=" collapse in">
                     <input type="text" class="input" ng-model='dashboard.current.title'/>
                   <!--大屏-->
-                  <div class="setings-item">
-                    <span>
-                      {{'Large screen display'|translate}}
-                    </span>
-                    <div class="switch">
-                      <div class="onoffswitch">
-                        <input type="checkbox"  class="onoffswitch-checkbox" ng-checked="dashboard.largeScreen">
-                        <label class="onoffswitch-label" >
-                          <span class="onoffswitch-inner" ng-click="dashboard.largeScreen=!dashboard.largeScreen;dashboard.refresh();"></span>
-                          <span class="onoffswitch-switch" ng-click="dashboard.largeScreen=!dashboard.largeScreen;dashboard.refresh();"></span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
+                  <!--<div class="setings-item">-->
+                    <!--<span>-->
+                      <!--{{'Large screen display'|translate}}-->
+                    <!--</span>-->
+                    <!--<div class="switch">-->
+                      <!--<div class="onoffswitch">-->
+                        <!--<input type="checkbox"  class="onoffswitch-checkbox" ng-checked="dashboard.largeScreen">-->
+                        <!--<label class="onoffswitch-label" >-->
+                          <!--<span class="onoffswitch-inner" ng-click="dashboard.largeScreen=!dashboard.largeScreen;dashboard.refresh();"></span>-->
+                          <!--<span class="onoffswitch-switch" ng-click="dashboard.largeScreen=!dashboard.largeScreen;dashboard.refresh();"></span>-->
+                        <!--</label>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
                     <div class="setings-item">
                     <span>
                         {{'Delete dashboard controller'|translate}}
@@ -87,10 +87,10 @@
                         </div>
                     </div>
 
-                  <!--<select class="language-switching" ng-controller="LanguageSwitchingCtrl" ng-model="cur_lang"        ng-change="switching(cur_lang)">-->
-                    <!--<option value="en">English</option>-->
-                    <!--<option value="cn">简体中文</option>-->
-                  <!--</select>-->
+                  <select class="language-switching" ng-controller="LanguageSwitchingCtrl" ng-model="cur_lang"        ng-change="switching(cur_lang)">
+                    <option value="en">English</option>
+                    <option value="cn">简体中文</option>
+                  </select>
                 </div>
             </div>
 
@@ -258,16 +258,20 @@
 
 
 
-          <!--<div class="setings-item defaultBlue-skin" style="cursor:pointer" ng-click="dashboard.clear_cookie()">-->
+          <div class="setings-item defaultBlue-skin" style="cursor:pointer" ng-click="dashboard.clear_cookie()">
 
-            <!--<i class="icon-signout icon-2x" ></i>-->
+            <i class="icon-signout icon-2x" ></i>
 
-                         <!--<a class="s-skin-0" >-->
-                           <!--{{'Logout'|translate}}-->
-                         <!--</a>-->
+                         <a class="s-skin-0" >
+                           {{'Logout'|translate}}
+                         </a>
 
 
-          <!--</div>-->
+          </div>
+
+          <div id="screenFull" ng-show=0 class="setings-item defaultBlue-skin" style="cursor:pointer" ng-click="dashboard.screenFull()">
+
+          </div>
 
             <!-- <a data-placement="bottom" bs-popover="'app/panels/timepicker/refreshctrl.html'">Time-series dashboard</a>-->
 
@@ -411,6 +415,10 @@
 
             $('#clearDefault').click();
         }
+      if(event.keyCode == '16' && key_number =='107'){
+
+        $('#screenFull').click();
+      }
         key_number =event.keyCode;
 
     });

@@ -12,7 +12,8 @@ define([
   'cookies',
   'toastr',
     'confirm',
-  'sweetalert'
+  'sweetalert',
+  'screenfull'
 ],
 function (angular, $, kbn, _, config, moment, Modernizr) {
   'use strict';
@@ -364,6 +365,15 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
               return false;
           });
       };
+
+    this.screenFull = function() {
+      const elem = document.getElementsByName('iframe1');
+      if (screenfull.enabled) {
+        screenfull.request(elem);
+      } else {
+        // Ignore or do something else
+      }
+    };
 
     this.is_gist = function(string) {
       if(!_.isUndefined(string) && string !== '' && !_.isNull(string.match(gist_pattern))) {

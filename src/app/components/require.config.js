@@ -42,6 +42,8 @@ require.config({
     pace:                     '../vendor/nav/plugins/pace/pace',
     toastr:                    '../vendor/nav/toastr.min',
     confirm:                    '../../node_modules/jquery-confirm/js/jquery-confirm',
+
+    screenfull:                    '../../node_modules/screenfull/dist/screenfull',
     // classie:                  '../vendor/nav/classie',
     // selectFx:                  '../vendor/nav/selectFx',
 
