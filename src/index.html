@@ -13,20 +13,13 @@
     <link rel="stylesheet" href="css/normalize.min.css">
     <link rel="stylesheet" href="css/rotate.css">
     <link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
-    <!--<link rel="stylesheet" href="css/bootstrap.css">-->
-
-    <!-- <link rel="stylesheet" href="css/kagi.css">-->
 	  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
-    <!--<link rel="realsight-touch-icon" href="img/realsight-touch-icon.png">-->
-    <!-- load the root require context -->
-
     <style>
     </style>
 
   </head>
 
   <body ng-cloak  >
-
     <link rel="stylesheet" ng-href="css/bootstrap.{{dashboard.current.style||'dark'}}.min.css">
     <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
@@ -50,37 +43,13 @@
 
     </audio>
 
-    <!--<div class="navbar navbar-static-top" ng-hide = "dashboard.current.hide_head ">-->
-      <!--<div class="navbar-inner">-->
-        <!--<div class="container-fluid">-->
-          <!--<img src="img/rsapm_logo.png" data-placement="left" style="float:left;margin-top:4px">-->
-          <!--<span class="brand" style = "text-align:center;margin-top:4px">-->
-
-               <!--&nbsp;&nbsp;&nbsp;&nbsp; {{dashboard.current.title}}-->
-          <!--</span>-->
-
-
-
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-
-
     <div id="wrapper"  ng-show="!dashboard.largeScreen">
-
       <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
           <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
               <div class="dropdown profile-element">
                 <img src="img/rsapm_logo.png" class="img-circle" data-placement="left" >
-                <!--<a data-toggle="dropdown" class="dropdown-toggle" >-->
-
-                <!--<span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong>-->
-                <!--</span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>-->
-                <!--<ul class="dropdown-menu animated fadeInRight m-t-xs">-->
-                <!--<li><a href="#">Logout</a></li>-->
-                <!--</ul>-->
               </div>
               <div class="logo-element">
                 <img src="img/apm-logo.png"  data-placement="left" >
@@ -110,12 +79,6 @@
           <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
               <a class="navbar-minimalize minimalize-styl-2 " style="cursor:pointer;color: #fff" ><i class="fa fa-ravelry"></i> </a>
-              <!--<form role="search" class="navbar-form-custom" method="post" action="#">-->
-              <!--<div class="form-group">-->
-              <!--<input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">-->
-              <!--</div>-->
-              <!--</form>-->
-
             </div>
 
             <ul class="nav  navbar-right" style="float:right;margin-right:20px;margin-top: 4px" ng-click="dashboard.clear_cookie()">
@@ -131,38 +94,11 @@
               <option value="cn">简体中文</option>
               <option value="en">English</option>
             </select>
-
-            <!--<select id="language" class="cs-select cs-skin-slide">-->
-            <!--<option  value="cn" data-class="icon-camera">简体中文</option>-->
-            <!--<option  value="en" data-class="icon-money">English</option>-->
-
-            <!--</select>-->
-            <!--<select style="float:right;margin-right:8.5%"  ng-controller="LanguageSwitchingCtrl" ng-model="cur_lang"  ng-change="switching(cur_lang)">-->
-            <!--<option value="en">English</option>-->
-            <!--<option value="cn">简体中文</option>-->
-            <!--</select>-->
-
-
           </nav>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
 
-          <div id="bodyContent"  >
-            <!--<div class="navbar navbar-static-top" ng-hide = "dashboard.current.hide_head ">-->
-            <!--<div class="navbar-inner">-->
-            <!--<div class="container-fluid">-->
-            <!--<img src="img/rsapm_logo.png" data-placement="left" style="float:left;margin-top:4px">-->
-            <!--<span class="brand" style = "text-align:center;margin-top:4px">-->
-
-            <!--&nbsp;&nbsp;&nbsp;&nbsp; {{dashboard.current.title}}-->
-            <!--</span>-->
-
-
-
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-
+          <div id="bodyContent" >
             <div class="container-fluid main"  ng-if="!dashboard.largeScreen">
               <div class="row-fluid">
           <span  style="position:absolute; left:50%; top:50%; margin:-25px 0 0 -25px ;" ng-show="dashboard.current.load">
@@ -189,16 +125,11 @@
 
 
     <div  ng-show="dashboard.largeScreen" style="background: #fff">
-      <div class="navbar navbar-static-top" >
+      <!--div class="navbar navbar-static-top" >
         <div class="navbar-inner">
           <div class="container-fluid">
             <img src="img/aaaaa.png" data-placement="left" style="float:left;margin-top:4px" ng-if="dashboard.isMobile" ng-cloak>
             <img src="img/rsapm_logo.png" data-placement="left" style="float:left;margin-top:4px" ng-if="!dashboard.isMobile" ng-cloak>
-            <!--<span class="brand" style = "text-align:center;margin-top:4px">-->
-
-               <!--&nbsp;&nbsp;&nbsp;&nbsp; {{dashboard.current.title}}-->
-          <!--</span>-->
-
             <select class="cs-select cs-skin-rotate" id="language" ng-if="dashboard.largeScreen">
               <option value="cn">简体中文</option>
               <option value="en">English</option>
@@ -212,10 +143,7 @@
             </ul>
           </div>
         </div>
-      </div>
-
-
-
+      </div-->
 
       <div class="container-fluid main" ng-if="dashboard.largeScreen">
         <div class="row-fluid">
@@ -227,36 +155,15 @@
       </div>
     </div>
 
-
-
-
     <div ng-include="'app/partials/skin-config.html'" class="ng-scope" ></div>
-    <!-- Mainly scripts -->
-    <!--<script src="vendor/nav/jquery-3.1.1.min.js"></script>-->
-    <!--<script src="vendor/nav/toastr.min.js"></script>-->
-    <!--<script src="vendor/nav/plugins/metisMenu/jquery.metisMenu.js"></script>-->
-    <!--<script src="vendor/nav/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
-
-    <!--&lt;!&ndash; Custom and plugin javascript &ndash;&gt;-->
-    <!--<script src="vendor/nav/inspinia.js"></script>-->
-    <!--<script src="vendor/nav/plugins/pace/pace.min.js"></script>-->
-    <!--</script>-->
     <script src="vendor/go.js"></script>
     <script src="vendor/vis.js"></script>
     <script src="vendor/vizceral.js"></script>
-    <!--script src="../node_modules/ngstorage/ngStorage.js"></script-->
-    <!--<script src="vendor/pointcloud/libs/three.js/build/three.js"></script>-->
-    <!--<script src="vendor/pointcloud/libs/proj4/proj4.js"></script>-->
-    <!--<script src="vendor/pointcloud/libs/tween/tween.min.js"></script>-->
-    <!--<script src="vendor/pointcloud/libs/three.js/build/three.js"></script>-->
-    <!--<script src="vendor/pointcloud/libs/three.js/build/three.js"></script>-->
     <script src="vendor/pdf/jspdf.js"></script>
     <script src="vendor/nav/classie.js"></script>
     <script src="vendor/nav/selectFx.js"></script>
-    <!--<script src="vendor/nav/toastr.min.js"></script>-->
     <script src="vendor/require/require.js"></script>
     <script src="app/components/require.config.js"></script>
-    <!--<script src="vendor/jquery/jquery.cookie.js"></script>-->
     <script>require(['app'], function () {})</script>
 
   </body>

@@ -31,6 +31,7 @@ define([
   function (angular, $, _, appLevelRequire) {
 
     "use strict";
+    /*
     var username = $.cookie('rtd_username');
     var password = $.cookie('rtd_password');
     var realUsername = "";
@@ -57,6 +58,7 @@ define([
     [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
       new SelectFx(el);
     } );
+    */
     var app = angular.module('kibana', ['ngRoute', 'ngSanitize','pascalprecht.translate','oitozero.ngSweetAlert']),
       // we will keep a reference to each module defined before boot, so that we can
       // go back and allow it to define new features later. Once we boot, this will be false
