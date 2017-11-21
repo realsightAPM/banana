@@ -117,6 +117,7 @@ function (angular, app, _, $, worldmap) {
     $scope.zoomOut=function() {
       if(window.event.keyCode===107){
         $scope.reSize();
+
       }
 
 

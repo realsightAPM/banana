@@ -1,4 +1,4 @@
-<div ng-controller='topology' ng-init="init()" style="overflow-x:hidden;">
+<div ng-controller='topology' ng-init="init()" style="overflow-x:hidden;outline:0;" tabindex="-1" ng-keyup="zoomOut();">
 
 <style>
     table.tableSection {
@@ -57,7 +57,7 @@
     <button class="button button-large button-plain button-borderless " ng-click="dashboard.refresh()"><i class="icon icon-check"></i></button>
   </form>
 
-      <div style="overflow:hidden" ng-style="{'display':panel.display}"  topology-chart params="{{panel}}" style="+position:relative;outline:0;" class="pointer " ng-style="{'floatleft':panel.counter_pos == 'right'}" id='{{$id}}' tabindex="-1" ng-keyup="zoomOut();"></div>
+      <div style="overflow:hidden" ng-style="{'display':panel.display}"  topology-chart params="{{panel}}" style="+position:relative;outline:0;" class="pointer " ng-style="{'floatleft':panel.counter_pos == 'right'}" id='{{$id}}' ></div>
 
 
 

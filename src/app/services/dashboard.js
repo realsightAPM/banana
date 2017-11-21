@@ -163,6 +163,13 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
           }
           //$('#saveFile').click();
         }
+        if(window.event.keyCode ===39){
+          //小键盘-删除下钻
+
+            self.screenFull();
+
+          //$('#saveFile').click();
+        }
         // if(window.event.keyCode ===106){
         //   //小键盘*刷新仪表盘
         //   self.refresh();
@@ -367,9 +374,9 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       };
 
     this.screenFull = function() {
-      const elem = document.getElementsByName('iframe1');
+      const elem = document.getElementById('iframe1');
       if (screenfull.enabled) {
-        screenfull.request(elem);
+        screenfull.request(elem[0]);
       } else {
         // Ignore or do something else
       }
