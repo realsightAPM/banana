@@ -190,9 +190,9 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
     var route = function() {
       // Is there a dashboard type and id in the URL?
 
-      setTimeout(function() {
-        self.solr_list('*:*',100);
-      }, 3000);
+      // setTimeout(function() {
+      //   self.solr_list('*:*',100);
+      // }, 3000);
 
       if(!(_.isUndefined($routeParams.kbnType)) && !(_.isUndefined($routeParams.kbnId))) {
         var _type = $routeParams.kbnType;
