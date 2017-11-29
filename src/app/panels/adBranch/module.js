@@ -40,7 +40,6 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
   'use strict';
   var module = angular.module('kibana.panels.adBranch', []);
   app.useModule(module);
-
   var DEBUG = false;
   console.log('adBranch DEBUG : ' + DEBUG);
   module.controller('adBranch', function($scope, $q, $http, $routeParams, $location, querySrv, dashboard, filterSrv) {
