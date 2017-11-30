@@ -33,8 +33,7 @@ define([
     'jquery',
     'underscore',
     'kbn',
-    'moment',
-    'gojs',
+    'moment'
   ],
   function (angular, app, $, _, kbn, moment, go, timeSeries) {
     'use strict';
