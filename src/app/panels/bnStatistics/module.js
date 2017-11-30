@@ -25,11 +25,11 @@ define([
         var module = angular.module('kibana.panels.bnStatistics', []);
         app.useModule(module);
 
-        module.controller('bnStatistics', function($scope, $timeout, $filter, $routeParams, timer, querySrv, dashboard, filterSrv) {
+        module.controller('bnStatistics', function($scope, $translate,$timeout, $filter, $routeParams, timer, querySrv, dashboard, filterSrv) {
             $scope.panelMeta = {
                 exportfile: true,
                 editorTabs : [
-                    {title:'Queries', src:'app/partials/querySelect.html'}
+                    {title:$translate.instant('Queries'), src:'app/partials/querySelect.html'}
                 ],
                 status  : "Stable",
                 description : "Displays the results of a Solr facet as a pie chart, bar chart, or a table. Newly added functionality displays min/max/mean/sum of a stats field, faceted by the Solr facet field, again as a pie chart, bar chart or a table."
@@ -192,6 +192,7 @@ define([
                 $scope.panel.bn_name = $routeParams.res_id;
               }
               fq += '&fq=bn_name_s:' + $scope.panel.bn_name;
+              fq +='&sort=timestamp_l%20desc';
               return fq;
             };
 

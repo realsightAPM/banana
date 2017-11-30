@@ -155,7 +155,8 @@ function (Settings) {
       'fisheyescatter',
       'infoalarm',
       'viz',
-      'pointcloud'
+      'pointcloud',
+      'bnStatistics'
     ]
   });
 });
