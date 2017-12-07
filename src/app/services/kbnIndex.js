@@ -4,18 +4,27 @@ define([
   'angular',
   'underscore',
   'config',
-  'moment'
+  'moment',
+    'jquery',
+    'toastr'
 ],
 function (angular, _, config, moment) {
   'use strict';
-
+  var toastr = require('toastr');
+  toastr.options = {
+    closeButton: true,
+    progressBar: true,
+    showMethod: 'slideDown',
+    showEasing: "swing",
+    timeOut: 3000
+  };
   var DEBUG = false; // DEBUG mode
 
   var module = angular.module('kibana.services');
 
   // TODO: add solr support to query indices
 
-  module.service('kbnIndex', function($http, alertSrv) {
+  module.service('kbnIndex', function($http, $translate) {
     // returns a promise containing an array of all indices matching the index
     // pattern that exist in a given range
     this.indices = function(from,to,pattern,interval) {
@@ -78,7 +87,7 @@ function (angular, _, config, moment) {
       }, function errorCallback(response) {
         // called asynchronously if an error occurs
         // or server returns response with an error status.
-        alertSrv.set('Error',"Could not retrieve collections from Solr (error status = "+response.status+")");
+        toastr.error($translate.instant('Collection not found at Solr'), 'RealsightAPM');
         console.debug('kbnIndex: error data = ',response.data);
       });
       /*
@@ -134,11 +143,9 @@ function (angular, _, config, moment) {
         method: "GET"
       }).error(function(data, status) {
         if(status === 0) {
-          alertSrv.set('Error',"Could not contact Solr at "+config.solr+
-            ". Please ensure that Solr is reachable from your system." ,'error');
+          toastr.error($translate.instant('Could not contact Solr,please ensure that Solr is reachable from your system.'), 'RealsightAPM');
         } else {
-          alertSrv.set('Error',"Could not reach "+config.solr+". If you"+
-          " are using a proxy, ensure it is configured correctly",'error');
+          toastr.error($translate.instant('Could not contact Solr,please ensure that Solr is reachable from your system.'), 'RealsightAPM');
         }
       });
 

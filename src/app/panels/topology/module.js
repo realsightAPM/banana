@@ -38,6 +38,9 @@ function (angular, app, _, $, kbn) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:true,
+      fullHeight:'700%',
+      useInitHeight:true,
       queries     : {
         mode        : 'all',
         ids         : [],
@@ -52,6 +55,9 @@ function (angular, app, _, $, kbn) {
       missing : false,
       other   : false,
       size    : 10000,
+      callerRange:1,
+      calleeRange:1,
+      options:false,
       sortBy  : 'count',
       order   : 'descending',
       fontsize   : 12,
@@ -86,9 +92,22 @@ function (angular, app, _, $, kbn) {
     _.defaults($scope.panel,_d);
 
     $scope.init = function () {
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //   $scope.$emit('render');
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
       $scope.hits = 0;
       //$scope.testMultivalued();
-
+      $scope.options = false;
       // Start refresh timer if enabled
       if ($scope.panel.refresh.enable) {
         $scope.set_timer($scope.panel.refresh.interval);
@@ -100,7 +119,34 @@ function (angular, app, _, $, kbn) {
       
       $scope.get_data();
     };
+    $scope.reSize=function() {
 
+
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+
+        $scope.$emit('render');
+
+
+
+
+
+    };
+
+    //快捷键+控制放大缩小panel
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        $scope.reSize();
+      }
+
+
+    };
     $scope.testMultivalued = function() {
       if($scope.panel.field && $scope.fields.typeList[$scope.panel.field] && $scope.fields.typeList[$scope.panel.field].schema.indexOf("M") > -1) {
         $scope.panel.error = "Can't proceed with Multivalued field";
@@ -112,7 +158,7 @@ function (angular, app, _, $, kbn) {
         return;
       }
     };
-      $scope.display=function() {
+    $scope.display=function() {
           if($scope.panel.display === 'none'){
               $scope.panel.display='block';
               $scope.panel.icon="icon-caret-down";
@@ -246,12 +292,14 @@ function (angular, app, _, $, kbn) {
     $scope.get_data = function() {
 
       //同id 图表刷新，图表自身点击不刷新，时间选择全局刷新，更换应用刷新
-      if((($scope.panel.linkage_id === dashboard.current.linkage_id)&&dashboard.current.network_force_refresh)||dashboard.current.enable_linkage) {
-        $scope.query_url = "http://" + $scope.panel.HbaseIP + "/getServerMapData.pinpoint?applicationName="+dashboard.current.network_app_name+"&from=" + dashboard.current.timefrom + "&to=" + dashboard.current.timeto + "&callerRange=1&calleeRange=1&serviceTypeName=TOMCAT";
+      if((($scope.panel.linkage_id === dashboard.current.linkage_id)&&dashboard.topology.network_force_refresh)||dashboard.current.enable_linkage) {
+        // $scope.panelMeta.loading = true;
+        $scope.query_url = "http://" + $scope.panel.HbaseIP + "/getServerMapData.pinpoint?applicationName="+dashboard.current.network_app_name+"&from=" + dashboard.current.timefrom + "&to=" + dashboard.current.timeto + "&callerRange="+$scope.panel.callerRange+"&calleeRange="+$scope.panel.calleeRange+"&serviceTypeName=TOMCAT";
         $.getJSON($scope.query_url, function (json) {
           $scope.data = json;
-          dashboard.current.hbasedata = json;
-          dashboard.current.network_force_refresh = false;
+          dashboard.topology.hbasedata = json;
+
+
           $scope.$emit('render');
         });
       }
@@ -287,6 +335,12 @@ function (angular, app, _, $, kbn) {
       }
     };
 
+    $scope.confirm_refresh = function () {
+      $scope.get_data();
+      // if 'count' mode is selected, set decimal_points to zero automatically.
+      $scope.$emit('render');
+    };
+
     $scope.close_edit = function() {
       // Start refresh timer if enabled
       if ($scope.panel.refresh.enable) {
@@ -319,8 +373,10 @@ function (angular, app, _, $, kbn) {
   module.directive('topologyChart', function(querySrv,dashboard,filterSrv) {
     return {
       restrict: 'A',
+
       link: function(scope, elem) {
         var myChart;
+
         // Receive render events
         scope.$on('render',function(){
           render_panel();
@@ -330,13 +386,16 @@ function (angular, app, _, $, kbn) {
         angular.element(window).bind('resize', function(){
           render_panel();
         });
-
         // Function for rendering panel
         function render_panel() {
           var colors = [];
 
           // IE doesn't work without this
-            elem.css({height:scope.panel.height||scope.row.height});
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
+          elem.css({height:divHeight});
 
           // Make a clone we can operate on.
 
@@ -375,8 +434,13 @@ function (angular, app, _, $, kbn) {
 
            // $.getJSON("vendor/echarts/test.json", function (json) {
               for (var i1 = 0;i1<json.applicationMapData.nodeDataArray.length;i1++){
+                if(json.applicationMapData.nodeDataArray[i1].histogram.Error>0){
+                  nodes.push({id:json.applicationMapData.nodeDataArray[i1].key, label: json.applicationMapData.nodeDataArray[i1].applicationName, image: dir + json.applicationMapData.nodeDataArray[i1].category+'_ERROR.png', shape: 'image'});
+                }else{
+                  nodes.push({id:json.applicationMapData.nodeDataArray[i1].key, label: json.applicationMapData.nodeDataArray[i1].applicationName, image: dir + json.applicationMapData.nodeDataArray[i1].category+'.png', shape: 'image'});
+                }
                // var url = "data:image/svg+xml;charset=utf-8,"+ encodeURIComponent(svg[json.applicationMapData.nodeDataArray[i1].category]);
-                nodes.push({id:json.applicationMapData.nodeDataArray[i1].key, label: json.applicationMapData.nodeDataArray[i1].applicationName, image: dir + json.applicationMapData.nodeDataArray[i1].category+'.png', shape: 'image'});
+
               }
               for (var i2 = 0;i2<json.applicationMapData.linkDataArray.length;i2++){
 
@@ -416,8 +480,14 @@ function (angular, app, _, $, kbn) {
                     size: scope.panel.fontsize,
                     color: labelcolor?'#DCDCDC':'#696969'
                   }
+
                 },
               };
+
+
+
+
+
             var network = new vis.Network(document.getElementById(idd), data, options);
             network.on('click', function (params) {
               if(params.nodes.length>0){
@@ -427,12 +497,12 @@ function (angular, app, _, $, kbn) {
                 dashboard.current.topology_click=true;
                 dashboard.current.network_bar_show =true;
                 scope.panel.isrefresh = false;
-
+                dashboard.topology.network_force_refresh = false;
                 dashboard.refresh();
               }
 
             });
-            // var bb = network.getSelection();
+                     // var bb = network.getSelection();
             // var cc= bb;
            // });
           }

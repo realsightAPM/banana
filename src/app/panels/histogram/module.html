@@ -1,4 +1,4 @@
-<div ng-controller='histogram' ng-init="init()" style="min-height:{{panel.height || row.height}}">
+<div ng-controller='histogram' ng-init="init()" style="min-height:{{panel.height || row.height}};overflow-x:hidden;outline:0;"  tabindex="-1" ng-keyup="zoomOut();">
   <style>
     .histogram-legend {
       display:inline-block;

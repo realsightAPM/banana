@@ -10,16 +10,17 @@ define([
     'angular',
     'app',
     'underscore',
+    'jquery',
     'config'
   ],
-  function (angular, app, _, config) {
+  function (angular, app, _,$, config) {
     'use strict';
 
     var module = angular.module('kibana.panels.column', []);
 
     app.useModule(module);
 
-    module.controller('column', function($scope, $rootScope, $timeout) {
+    module.controller('column', function($scope, $rootScope,dashboard, $timeout) {
       $scope.panelMeta = {
         status  : "Stable",
         description : ""
@@ -27,6 +28,7 @@ define([
 
       // Set and populate defaults
       var _d = {
+        panelExpand:true,
         display:'block',
         icon:"icon-caret-down",
         panels : []
@@ -56,6 +58,31 @@ define([
           $scope.panel.display='none';
           $scope.panel.icon="icon-caret-up";
         }
+      };
+      $scope.reSize=function() {
+
+        $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+        var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+        var button = $('#'+$scope.$id+'z').find('i');
+        //var aaa = '#'+$scope.$id+'z';
+        $('body').toggleClass('fullscreen-ibox1-mode');
+        button.toggleClass('fa-expand').toggleClass('fa-compress');
+        ibox.toggleClass('fullscreen');
+        $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+        $scope.$emit('render');
+        dashboard.refresh();
+        $(window).trigger('resize');
+
+
+      };
+      //快捷键+控制放大缩小panel
+      $scope.zoomOut=function() {
+        if(window.event.keyCode===107){
+          $scope.reSize();
+        }
+
+
       };
 
       $scope.send_render = function() {

@@ -40,9 +40,12 @@
     }
     </style>
   <!-- START Pie or bar chart -->
- 
 
-  <div style="overflow:hidden" ng-style="{'display':panel.display}"  adtopology-chart params="{{panel}}" style="position:relative" class="pointer " ng-style="{'floatleft':panel.counter_pos == 'right'}" id='{{$id}}'></div>
+  <div ng-show={{panel.imgVar}} >
+    <img src="http://localhost:63342/banana/src/img/xzycd.png" />
+  </div>
+
+  <div style="overflow:hidden" ng-show={{panel.echartVar}} ng-style="{'display':panel.display}"  adtopology-chart params="{{panel}}" style="position:relative" class="pointer " ng-style="{'floatleft':panel.counter_pos == 'right'}" id='{{$id}}'></div>
 
   <!-- END Pie or Bar chart -->
 

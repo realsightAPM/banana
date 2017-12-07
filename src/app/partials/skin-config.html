@@ -12,9 +12,24 @@
                 </a>
                 <div id="collapse0" class=" collapse in">
                     <input type="text" class="input" ng-model='dashboard.current.title'/>
+                  <!--大屏-->
+                  <!--<div class="setings-item">-->
+                    <!--<span>-->
+                      <!--{{'Large screen display'|translate}}-->
+                    <!--</span>-->
+                    <!--<div class="switch">-->
+                      <!--<div class="onoffswitch">-->
+                        <!--<input type="checkbox"  class="onoffswitch-checkbox" ng-checked="dashboard.largeScreen">-->
+                        <!--<label class="onoffswitch-label" >-->
+                          <!--<span class="onoffswitch-inner" ng-click="dashboard.largeScreen=!dashboard.largeScreen;dashboard.refresh();"></span>-->
+                          <!--<span class="onoffswitch-switch" ng-click="dashboard.largeScreen=!dashboard.largeScreen;dashboard.refresh();"></span>-->
+                        <!--</label>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
                     <div class="setings-item">
                     <span>
-                        {{'Head hide'|translate}}
+                        {{'Delete dashboard controller'|translate}}
                     </span>
 
                         <div class="switch">
@@ -86,7 +101,7 @@
                 </a>
                 <div id="collapse1" class=" collapse in">
                     <!-- <div  style='text-decoration:none;cursor:pointer' ng-click="dashboard.is_refresh() "><i class="icon icon-picture"></i>&nbsp;&nbsp;Skins</div>-->
-                    <div class="setings-item default-skin" style="cursor:pointer" ng-click="dashboard.current.style='dark';dashboard.color_change()">
+                    <div class="setings-item defaultBlue-skin" style="cursor:pointer" ng-click="dashboard.current.style='dark';dashboard.color_change()">
                     <span class="skin-name ">
                          <a class="s-skin-0" style='text-decoration:none;'>
                             {{'Default'|translate}}   <i class="icon-ok-sign" style='float:right;' ng-click="dashboard.is_refresh()"></i>
@@ -94,6 +109,14 @@
 
                     </span>
                     </div>
+                  <div class="setings-item default-skin" style="cursor:pointer" ng-click="dashboard.current.style='black';dashboard.color_change()">
+                    <span class="skin-name ">
+                         <a class="s-skin-0" style='text-decoration:none;'>
+                            {{'Black'|translate}}   <i class="icon-ok-sign" style='float:right;' ng-click="dashboard.is_refresh()"></i>
+                         </a>
+
+                    </span>
+                  </div>
                     <div class="setings-item blue-skin"  style="cursor:pointer" ng-click="dashboard.current.style='blue';dashboard.color_change()">
                     <span class="skin-name " >
                         <a  class="s-skin-1" style='text-decoration:none;' >
@@ -130,18 +153,18 @@
                     <input type="text" class="input" placeholder="e.g. &defType=lucid&qt=lucid&df=message&..." ng-model="dashboard.current.solr.global_params">
                 </div>
             </div>
-            <div >
-                <a data-toggle="collapse" class="aaa4" style='text-decoration:none;' data-parent="#accordion" href="#collapseSix">
-                    &nbsp;<i class="icon icon-folder-open"></i>
-                    &nbsp;&nbsp;{{'Collection select'|translate}}<i class="icon-angle-left4" style='float:right;'></i>
-                </a>
+          <!-- <div >
+               <a data-toggle="collapse" class="aaa4" style='text-decoration:none;' data-parent="#accordion" href="#collapseSix">
+                   &nbsp;<i class="icon icon-folder-open"></i>
+                   &nbsp;&nbsp;{{'Collection select'|translate}}<i class="icon-angle-left4" style='float:right;'></i>
+               </a>
 
-                <div id="collapseSix" class=" collapse">
+               <div id="collapseSix" class=" collapse">
 
-                    <select class="span2" ng-model="dashboard.current.solr.core_name" ng-change="dashboard.refresh()" ng-options="c as c for c in dashboard.current.solr.core_list"></select>
+                   <select class="span2" ng-model="dashboard.current.solr.core_name" ng-change="dashboard.refresh()" ng-options="c as c for c in dashboard.current.solr.core_list"></select>
 
-                </div>
-            </div>
+               </div>
+           </div>-->
             <div >
                 <a data-toggle="collapse" class="aaa5" style='text-decoration:none;' data-parent="#accordion" href="#collapseTwo">
                     &nbsp;<i class="icon icon-flag"></i>
@@ -167,18 +190,16 @@
 
                 <div id="collapseThree" class=" collapse">
                     <li id="saveFile"  ng-click="dashboard.to_file() "><i class="icon-download"></i> <label  class="small">{{'Export to File'|translate}} </label></li>
-                    <li id="savePdf" ng-click="dashboard.save_pdf() "><i class="icon-download-alt"></i> <label  class="small"> {{'Export to PDF'|translate}}</label></li>
+                    <li  ng-click="dashboard.save_pdf() "><i class="icon-download-alt"></i> <label  class="small"> {{'Export to PDF'|translate}}</label></li>
+                  <li id="savePdf" ng-click="dashboard.save_pdf_f2() " ng-show="0"></li>
                     <li id="setDefault" ng-show="dashboard.current.loader.save_default" ng-click="dashboard.set_default()"><i class="icon-bookmark"></i>  <label class="small" >{{'Set as Browser Default'|translate}}</label></li>
                     <li id="clearDefault" ng-show="dashboard.current.loader.save_default" ng-click="dashboard.purge_default()"><i class="icon-ban-circle"></i> <label class="small">{{'Clear Browser Default'|translate}}</label></li>
 
                 </div>
             </div>
-            <div >
-                <a ng-controller='dashLoader' ng-init="init()" ng-include="'app/partials/dashLoader.html'"></a>
-
-
-
-            </div>
+            <!--<div >-->
+                <!--<a ng-controller='dashLoader' ng-init="init()" ng-include="'app/partials/dashLoader.html'"></a>-->
+            <!--</div>-->
             <div >
                 <a data-toggle="collapse" class="aaa8" style='text-decoration:none;' data-parent="#accordion" href="#collapseFive">
                     &nbsp;<i class="icon icon-folder-open"></i>
@@ -191,6 +212,67 @@
 
                 </div>
             </div>
+          <div >
+            <a data-toggle="collapse"  class="aaa11" style='text-decoration:none;' data-parent="#accordion" href="#collapseNine">
+              &nbsp;<i class="icon icon-cog"></i>
+              &nbsp;&nbsp;{{'Template Setting'|translate}}<i class="icon-angle-left11" style='float:right;'></i>
+            </a>
+
+            <div id="collapseNine" class="panel-collapse collapse ">
+              <label name="registerDiv" class="small"><span >{{'Template Address'|translate}}</span></label>
+              <input type="text" class="input" ng-model="dashboard.current.template_server">
+              <button type="button" class="btn btn-success" ng-click="dashboard.solr_list('*:*',100)">{{'Confirm'|translate}}</button>
+            </div>
+          </div>
+
+          <div>
+            <a  style='text-decoration:none;cursor:pointer;' ng-click="dashboard.confirm()"   >&nbsp;<i class="icon-cloud-upload"></i> &nbsp;&nbsp;{{'Save Template'|translate}} </a>
+          </div>
+
+          <!--大屏显示-->
+          <div ng-if="dashboard.largeScreen">
+            <a data-toggle="collapse" class="aaa10" style='text-decoration:none;' data-parent="#accordion" href="#collapseEight">
+              &nbsp;<i class="icon icon-cloud-download"></i>
+              &nbsp;&nbsp;{{'Template Select'|translate}}<i class="icon-angle-left10" style='float:right;'></i>
+            </a>
+
+            <div id="collapseEight" class=" collapse">
+              &nbsp;<i class="icon icon-upload"></i>  <select class="span2" ng-model="dashboard.current.templatename" ng-change="dashboard.solr_load('dashboard',dashboard.current.templatename)" ng-options="f for f in dashboard.template"><option  value="">{{'Please select template to load'|translate}}</option></select>
+
+
+            </div>
+          </div>
+
+          <div ng-if="dashboard.largeScreen">
+            <a data-toggle="collapse" class="aaa9" style='text-decoration:none;' data-parent="#accordion" href="#collapseSeven">
+              &nbsp;<i class="icon icon-cloud"></i>
+              &nbsp;&nbsp;{{'Template Delete'|translate}}<i class="icon-angle-left9" style='float:right;'></i>
+            </a>
+
+            <div id="collapseSeven" class=" collapse">
+
+              <i class="icon icon-minus"></i>   <select class="span2" ng-model="dashboard.current.template_delete_name" ng-change="dashboard.confirm_delete(dashboard.current.template_delete_name)" ng-options="f for f in dashboard.template"><option  value="">{{'Please select template to delete'|translate}}</option></select>
+
+            </div>
+          </div>
+
+
+
+          <div class="setings-item defaultBlue-skin" style="cursor:pointer" ng-click="dashboard.clear_cookie()">
+
+            <i class="icon-signout icon-2x" ></i>
+
+                         <a class="s-skin-0" >
+                           {{'Logout'|translate}}
+                         </a>
+
+
+          </div>
+
+          <div id="screenFull" ng-show=1 class="setings-item defaultBlue-skin" style="cursor:pointer" ng-click="dashboard.screenFull()">
+
+          </div>
+
             <!-- <a data-placement="bottom" bs-popover="'app/panels/timepicker/refreshctrl.html'">Time-series dashboard</a>-->
 
             <!--<div class="setings-item light-skin" style="cursor:pointer" ng-click="dashboard.current.style='flatlight'">
@@ -317,6 +399,10 @@
 
             $('#savePdf').click();
         }
+       if( event.keyCode =='106'){
+
+            $('#dropdownMenu1').click();
+       }
         if(event.keyCode == '16' && key_number =='70'){
 
             $('#saveFile').click();
@@ -329,6 +415,7 @@
 
             $('#clearDefault').click();
         }
+
         key_number =event.keyCode;
 
     });
@@ -392,5 +479,14 @@
     })
     $('.aaa8').on('click',function(){
         $('.icon-angle-left8').toggleClass('active');
+    })
+    $('.aaa9').on('click',function(){
+      $('.icon-angle-left9').toggleClass('active');
+    })
+    $('.aaa10').on('click',function(){
+      $('.icon-angle-left10').toggleClass('active');
+    })
+    $('.aaa11').on('click',function(){
+      $('.icon-angle-left11').toggleClass('active');
     })
 </script>

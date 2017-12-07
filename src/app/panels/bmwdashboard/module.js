@@ -65,6 +65,9 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:true,
+      fullHeight:'700%',
+      useInitHeight:true,
       mode        : 'value',
       queries     : {
         mode        : 'all',
@@ -120,6 +123,20 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
     $scope.init = function() {
       // Hide view options by default
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //   $scope.$emit('render');
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
+
       $scope.options = false;
       $scope.$on('refresh',function(){
         $scope.get_data();
@@ -136,6 +153,32 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
       } else {
         $scope.panel.auto_int = true;
       }
+    };
+
+    $scope.reSize=function() {
+
+      $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+      $scope.$emit('render');
+      $(window).trigger('resize');
+
+
+    };
+
+    //快捷键+控制放大缩小panel
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        $scope.reSize();
+      }
+
+
     };
 
       $scope.display=function() {
@@ -490,7 +533,11 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           var colors = [];
 
           // IE doesn't work without this
-          elem.css({height:scope.panel.height||scope.row.height});
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
+          elem.css({height:divHeight});
 
           // Make a clone we can operate on.
 		  

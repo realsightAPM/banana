@@ -25,6 +25,7 @@ function (angular, app, _, require) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:false,
       status  : "Stable",
       mode    : "markdown",
         display:'block',

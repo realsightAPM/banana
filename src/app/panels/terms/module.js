@@ -38,6 +38,9 @@ function (angular, app, _, $, kbn) {
     };
     // Set and populate defaults
     var _d = {
+      panelExpand:false,
+      fullHeight:'700%',
+      useInitHeight:true,
       queries     : {
         mode        : 'all',
         ids         : [],
@@ -84,7 +87,19 @@ function (angular, app, _, $, kbn) {
     $scope.init = function () {
       $scope.hits = 0;
       //$scope.testMultivalued();
-
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //   $scope.$emit('render');
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
       // Start refresh timer if enabled
       if ($scope.panel.refresh.enable) {
         $scope.set_timer($scope.panel.refresh.interval);
@@ -329,7 +344,7 @@ function (angular, app, _, $, kbn) {
                 // TODO: Hard coded to 0 for now. Solr faceting does not provide 'other' value.
                 data: [[k + 1, $scope.hits - sum]], meta: "other", color: '#444'
             });
-
+          $scope.hitData =  $scope.data.length-2;
             $scope.$emit('render');
         });
     }
@@ -425,7 +440,11 @@ function (angular, app, _, $, kbn) {
           var colors = [];
 
           // IE doesn't work without this
-          elem.css({height:scope.panel.height||scope.row.height});
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
+          elem.css({height:divHeight});
 
           // Make a clone we can operate on.
 		  
@@ -495,7 +514,7 @@ function (angular, app, _, $, kbn) {
           require(['jquery.flot.pie'], function(){
 
 				var labelcolor = false;
-					if (dashboard.current.style === 'dark'){
+            if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
             labelcolor = true;
           }
         // Add plot to scope so we can build out own legend

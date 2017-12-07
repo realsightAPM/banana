@@ -1,4 +1,4 @@
-<div ng-controller='map' ng-init="init()">
+<div ng-controller='map' ng-init="init()" style="overflow-x:hidden;outline:0;" tabindex="-1" ng-keyup="zoomOut();">
   <style>
     .jvectormap-label {
         position: absolute;
@@ -60,6 +60,6 @@
     }
   </style>
   <div ng-style="{'display':panel.display}">
-  <div  class="jvectormap " map params="{{panel}}" ng-style="{height:panel.height || row.height}"></div>
+  <div  class="jvectormap " map params="{{panel}}" ng-style="{height:panel.height || row.height}" ></div>
 </div>
 </div>

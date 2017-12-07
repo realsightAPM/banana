@@ -82,12 +82,16 @@ define([
             interval: 2
           },
           max_rows : 1000,
-          top : 10
+          top : 10,
+          imgVar : true,
+          echartVar : false
         };
 
         _.defaults($scope.panel,_d);
 
         $scope.init = function () {
+          $scope.panel.imgVar = true;
+          $scope.panel.echartVar = false;
           $scope.hits = 0;
           //$scope.testMultivalued();
 
@@ -239,6 +243,8 @@ define([
                 duration: cpu_durations[index].duration,
                 stack_trace: cpu_durations[index].stack_trace
               };
+              $scope.panel.imgVar = false;
+              $scope.panel.echartVar = true;
               $scope.data.push(slice);
             }
             if (DEBUG) console.log($scope.data);
@@ -312,6 +318,7 @@ define([
               }
               var durations = {};
               for (var index in scope.data) {
+
                 if (durations[scope.data[index].name]) {
                   durations[scope.data[index].name] += scope.data[index].duration;
                 } else {

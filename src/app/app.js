@@ -17,16 +17,53 @@ define([
     'angular-route',
     'angular-material',
     'angular-smart-table',
-
-
     'extend-jquery',
     'angular-translate',
-    'angular-translate-loader-static-files'
+    'angular-translate-loader-static-files',
+    'angular-sweetalert',
+  'metisMenu',
+  'slimscroll',
+  'inspinia',
+  'pace',
+    'sweetalert',
+  'nestable'
+
   ],
   function (angular, $, _, appLevelRequire) {
-    "use strict";
 
-    var app = angular.module('kibana', ['ngRoute', 'ngSanitize','pascalprecht.translate']),
+    "use strict";
+    /*
+    登录页
+
+    // var username = $.cookie('rtd_username');
+    // var password = $.cookie('rtd_password');
+    // var realUsername = "";
+    // var realPassword = "";
+    // $.ajaxSettings.async = false;
+    // $.getJSON('assets/json/login.json', function(data){
+    //   realUsername =data.username;
+    //   realPassword = data.password;
+    // });
+    // $.ajaxSettings.async = true;
+    // //var a = sessionStorage.getItem(realUsername);
+    // //if(username==realUsername&&password==realPassword){
+    // //self.current.headHide = false;
+    //
+    // // if(typeof(username)=="undefined"){
+    // //     window.location.href = window.location.origin+window.location.pathname+"login.html";
+    // // }
+    // if(username!==realUsername||password!==realPassword){
+    //
+    //   sessionStorage.setItem("goalUrl",window.location.hash);
+    //
+    //   window.location.href = window.location.origin+window.location.pathname.replace("index.html","")+"login.html";
+    // }
+    // [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
+    //   new SelectFx(el);
+    // } );
+
+     */
+    var app = angular.module('kibana', ['ngRoute', 'ngSanitize','pascalprecht.translate','oitozero.ngSweetAlert']),
       // we will keep a reference to each module defined before boot, so that we can
       // go back and allow it to define new features later. Once we boot, this will be false
       pre_boot_modules = [],
@@ -78,6 +115,24 @@ define([
         .when('/dashboard/:kbnType/:kbnId/:params', {
           templateUrl: 'app/partials/dashboard.html'
         })
+        .when('/demo',{
+          templateUrl: 'app/partials/demo.html',
+        })
+        .when('/demo1',{
+        templateUrl: 'app/partials/demo1.html',
+      })
+        .when('/template_demo',{
+          templateUrl: 'app/partials/template_demo.html',
+        })
+        .when('/demo2',{
+          templateUrl: 'app/partials/demo2.html',
+        })
+        .when('/demo3',{
+          templateUrl: 'app/partials/demo3.html',
+        })
+        .when('/demo4',{
+          templateUrl: 'app/partials/demo4.html',
+        })
         .otherwise({
           redirectTo: 'dashboard'
         });
@@ -99,6 +154,16 @@ define([
       $translateProvider.preferredLanguage(lang);
     }]);
 
+    app.config(['$qProvider', function ($qProvider) {
+      $qProvider.errorOnUnhandledRejections(false);
+    }]);
+
+    app.config(['$sceDelegateProvider', function($sceDelegateProvider) {
+      $sceDelegateProvider.resourceUrlWhitelist([
+        '**'
+
+      ]);
+    }]);
 
     var apps_deps = [
       'elasticjs.service',

@@ -388,26 +388,26 @@ define([
                   right: 10,
                   pieces: [{
                     gt: 0,
-                    lte: 0.50,
+                    lte: 25.0,
                     color: '#096'
                   }, {
-                    gt: 0.50,
-                    lte: 0.90,
+                    gt: 25.0,
+                    lte: 50.0,
                     color: '#ffde33'
                   }, {
-                    gt: 0.90,
-                    lte: 1.50,
+                    gt: 50.0,
+                    lte: 70.0,
                     color: '#ff9933'
                   }, {
-                    gt: 1.50,
-                    lte: 2.50,
+                    gt: 70.0,
+                    lte: 80.0,
                     color: '#cc0033'
                   }, {
-                    gt: 2.50,
-                    lte: 3.50,
+                    gt: 80.0,
+                    lte: 90.0,
                     color: '#660099'
                   }, {
-                    gt: 3.50,
+                    gt: 90.0,
                     color: '#7e0023'
                   }],
                   outOfRange: {
@@ -422,15 +422,15 @@ define([
                   markLine: {
                     silent: true,
                     data: [{
-                      yAxis: 0.5
+                      yAxis: 25.0
                     }, {
-                      yAxis: 0.9
+                      yAxis: 50.0
                     }, {
-                      yAxis: 1.5
+                      yAxis: 70.0
                     }, {
-                      yAxis: 2.5
+                      yAxis: 80.0
                     }, {
-                      yAxis: 3.5
+                      yAxis: 90.0
                     }]
                   },
                   hoverAnimation: false,

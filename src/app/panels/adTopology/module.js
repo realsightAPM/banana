@@ -83,12 +83,16 @@ function (angular, app, _, $, kbn) {
         enable: false,
         interval: 2
       },
-      max_rows : 1000
+      max_rows : 1000,
+      imgVar : true,
+      echartVar : false
     };
 
     _.defaults($scope.panel,_d);
 
     $scope.init = function () {
+      $scope.panel.imgVar = true;
+      $scope.panel.echartVar = false;
       $scope.hits = 0;
       //$scope.testMultivalued();
 
@@ -141,9 +145,9 @@ function (angular, app, _, $, kbn) {
       } else {
         fq += '&fq=jm_name_s:' + $routeParams.jm_name_s;
       }
-      if (_.isUndefined($routeParams.id)) {
+      if (_.isUndefined($routeParams.threadid)) {
       } else {
-        fq += '&fq=id:' + $routeParams.id;
+        fq += '&fq=id:' + $routeParams.threadid;
       }
       var wt_json = '&wt=' + filetype;
       var rows_limit = '&rows=' + $scope.panel.max_rows; // for terms, we do not need the actual response doc, so set rows=0
@@ -231,6 +235,11 @@ function (angular, app, _, $, kbn) {
         for (var index in results.response.docs) {
           var doc = results.response.docs[index];
           $scope.data.push(doc);
+
+        }
+        if ($scope.data[0].graph) {
+          $scope.panel.imgVar = false;
+          $scope.panel.echartVar = true;
         }
         if (DEBUG) console.log($scope.data);
         $scope.$emit('render');
@@ -293,37 +302,47 @@ function (angular, app, _, $, kbn) {
 
           var colors = [];
           // IE doesn't work without this
-          elem.css({height:scope.panel.height||scope.row.height});
+          elem.css({height: scope.panel.height || scope.row.height});
 
-          if (filterSrv.idsByTypeAndField('pies',scope.panel.field).length > 0) {
+          if (filterSrv.idsByTypeAndField('pies', scope.panel.field).length > 0) {
             colors.push(scope.panel.lastColor);
           } else {
             colors = scope.panel.chartColors;
           }
 
           var idd = scope.$id;
-          if (DEBUG) { console.log(idd);}
-          var labelcolor = false;
-          if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
-              labelcolor = true;
+          if (DEBUG) {
+            console.log(idd);
           }
-                // Add plot to scope so we can build out own legend
+          var labelcolor = false;
+          if (dashboard.current.style === 'dark' || dashboard.current.style === 'black') {
+            labelcolor = true;
+          }
+          // Add plot to scope so we can build out own legend
           var nodes = [];
           var edges = [];
           var dir = 'nodestyle/';
           var json = [];
-          if(scope.panel.chart === 'sub_graph') {
+          if (scope.panel.chart === 'sub_graph') {
             json = eval('(' + scope.data[0].sub_graph + ')');
           } else {
             json = eval('(' + scope.data[0].graph + ')');
           }
-          if (DEBUG) { console.log(scope.data[0]);}
-          if (DEBUG) { console.log(json);}
-          for (var index in json.nodes){
-            nodes.push({id:json.nodes[index].name.id, label: json.nodes[index].name.name, image: dir + json.nodes[index].name.type+'.png', shape: 'image'});
-          }
-          for (var index in json.links){
-            edges.push({from: json.links[index].source.id, arrows:'to', to: json.links[index].target.id,label:''});
+          if (DEBUG) console.log(scope.data[0]);
+          if (DEBUG) console.log(json);
+          if (json) {
+
+            for (var index in json.nodes) {
+              nodes.push({
+                id: json.nodes[index].name.id,
+                label: json.nodes[index].name.name,
+                image: dir + json.nodes[index].name.type + '.png',
+                shape: 'image'
+              });
+            }
+            for (var index in json.links) {
+              edges.push({from: json.links[index].source.id, arrows: 'to', to: json.links[index].target.id, label: ''});
+            }
           }
           if (DEBUG) {console.log(nodes);}
           if (DEBUG) {console.log(edges);}

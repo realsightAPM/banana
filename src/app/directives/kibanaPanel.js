@@ -7,84 +7,108 @@ function (angular) {
   angular
     .module('kibana.directives')
     .directive('kibanaPanel', function($compile) {
-      var container = '<div class="panelCont animated fadeInLeft" ></div>';
-
+      // var container = '<div class="panelCont animated fadeInLeft ibox-content" >'+
+      //   '</div>';
+      var container = '<div class="ibox1 panelCont animated fadeInLeft " style="margin-top:10px;"  ><div class="ibox1-content" ></div></div>';
       var editorTemplate =
 
-        '<div class="row-fluid panel-extra"><div class="panel-extra-container">' +
+        '<div class="row-fluid panel-extra " ><div class="panel-extra-container">' +
 
-          '<span class="extra row-button" ng-hide="panel.draggable == false">' +
-            '<span class="row-text pointer" bs-tooltip="\'{{\'Drag here to move\'|translate}}\'"'+
-            ' data-drag=true data-jqyoui-options="{revert: \'invalid\',helper:\'clone\'}"'+
-            ' jqyoui-draggable="'+
-            '{'+
-              'animate:false,'+
-              'mutate:false,'+
-              'index:{{$index}},'+
-              'onStart:\'panelMoveStart\','+
-              'onStop:\'panelMoveStop\''+
-              '}"  ng-model="row.panels">{{panel.type}}</span>'+
-          '</span>' +
-          '<span class="extra row-button" ng-if="panel.draggable == false">' +
-            '<span class="row-text">{{panel.type}}</span>'+
-          '</span>' +
+        // '<span class="extra row-button" ng-hide="panel.draggable == false">' +
+        //   '<span class="row-text pointer" bs-tooltip="\'{{\'Drag here to move\'|translate}}\'"'+
+        //   ' data-drag=true data-jqyoui-options="{revert: \'invalid\',helper:\'clone\'}"'+
+        //   ' jqyoui-draggable="'+
+        //   '{'+
+        //     'animate:false,'+
+        //     'mutate:false,'+
+        //     'index:{{$index}},'+
+        //     'onStart:\'panelMoveStart\','+
+        //     'onStop:\'panelMoveStop\''+
+        //     '}"  ng-model="row.panels">{{panel.type}}</span>'+
+        // '</span>' +
+        // '<span class="extra row-button" ng-if="panel.draggable == false">' +
+        //   '<span class="row-text">{{panel.type}}</span>'+
+        // '</span>' +
 
-          '<span class="extra row-button" ng-if="panel.editable != false">' +
-            '<span confirm-click="row.panels = _.without(row.panels,panel)" '+
-            'confirmation="Are you sure you want to remove this {{panel.type}} panel?" class="pointer">'+
-            '<i class="icon-remove pointer" bs-tooltip="\'{{\'Remove\'|translate}}\'"></i></span>'+
-          '</span>' +
+        '<span class="extra row-button" ng-if="panel.editable != false">' +
+        '<span confirm-click="row.panels = _.without(row.panels,panel)" '+
+        'confirmation="\'{{\'Are you sure you want to remove this\'|translate}}\' {{panel.type}} \'{{\'panel?\'|translate}}\'" class="pointer">'+
+        '<i class="icon-remove pointer" bs-tooltip="\'{{\'Remove\'|translate}}\'"></i></span>'+
+        '</span>' +
 
-          '<span class="row-button extra" ng-if="panel.editable != false">' +
-            '<span bs-modal="\'app/partials/paneleditor.html\'" class="pointer">'+
-            '<i class="icon-wrench pointer" bs-tooltip="\'{{\'Configure\'|translate}}\'"></i></span>'+
-          '</span>' +
+        '<span class="row-button extra" ng-if="panel.editable != false">' +
+        '<span bs-modal="\'app/partials/paneleditor.html\'" class="pointer">'+
+        '<i class="icon-wrench pointer" bs-tooltip="\'{{\'Configure\'|translate}}\'"></i></span>'+
+        '</span>' +
 
         '<span class="row-button extra" ng-if="panel.editable != false">' +
         '<i ng-click="display()" class="pointer" ng-class=panel.icon bs-tooltip="\'{{\'Display\'|translate}}\'"></i>'+
         '</span>' +
 
-          '<span class="row-button extra" ng-if="panel.transpose_show">' +
-          '<span class="rotate-icon pointer" bs-tooltip="\'{{\'Transpose Rows and Columns\'|translate}}\'" ng-click="flip()"></span>' +
-          '</span>' +
+        '<span class="row-button extra" ng-if="panel.transpose_show">' +
+        '<span class="rotate-icon pointer" bs-tooltip="\'{{\'Transpose Rows and Columns\'|translate}}\'" ng-click="flip()"></span>' +
+        '</span>' +
 
-          '<span ng-repeat="task in panelMeta.modals" class="row-button extra" ng-if="panel.spyable">' +
-            '<span bs-modal="task.partial"class="pointer"><i ' +
-              'bs-tooltip="task.description" ng-class="task.icon" class="pointer"></i></span>'+
-          '</span>' +
+        '<span class="row-button extra " ng-click="reSize()" id="{{$id}}z" ng-show="panel.panelExpand">'+
+        '<i class="fa fa-expand"></i>'+
+        '</span>'+
 
-          '<span class="dropdown row-button extra" bs-tooltip="\'{{\'Export\'|translate}}\'" data-placement="bottom" ng-if="panelMeta.exportfile">' +
-            '<span class="pointer" class="dropdown-toggle" data-toggle="dropdown">' +
-                '<i class="icon-save" class="pointer"></i>' +
-            '</span>' +
-            '<ul class="dropdown-menu" style="padding:10px; left:-150px;">' +
-          '<h5>Number of Rows</h5><form><input type="number" value="panel.exportSize" ng-model="panel.exportSize" placeholder="{{panel.size * panel.pages}}"/>' +
-          '<div ng-if="panel.type==\'table\'"><input type="checkbox" ng-model="panel.exportAll"/> All Fields <tip>If this option is checked, all fields in the Solr schema will be exported. Otherwise, only the fields that you have selected to appear in your Table view will be exported</tip></div></form>' +
-                '<li>' +
-                    '<h5>Export to File</h5>' +
-                        '<ul class="unstyled">' +
-                            '<li><a class="link" ng-click="exportfile(\'csv\')"><i class="icon-file"></i> CSV</a></li>' +
-                            '<li><a class="link" ng-click="exportfile(\'xml\')"><i class="icon-file"></i> XML</a></li>' +
-                            '<li><a class="link" ng-click="exportfile(\'json\')"><i class="icon-file"></i> JSON</a></li>' +
-                        '</ul>' +
-                '</li>' +
-            '</ul>' +
-          '</span>' +
+        '<span ng-repeat="task in panelMeta.modals" class="row-button extra" ng-if="panel.spyable">' +
+        '<span bs-modal="task.partial"class="pointer"><i ' +
+        'bs-tooltip="task.description" ng-class="task.icon" class="pointer"></i></span>'+
+        '</span>' +
+
+        //单个图表数据导出功能
+        // '<span class="dropdown row-button extra" bs-tooltip="\'{{\'Export\'|translate}}\'" data-placement="bottom" ng-if="panelMeta.exportfile">' +
+        //   '<span class="pointer" class="dropdown-toggle" data-toggle="dropdown">' +
+        //       '<i class="icon-save" class="pointer"></i>' +
+        //   '</span>' +
+        //   '<ul class="dropdown-menu" style="padding:10px; left:-150px;">' +
+        // '<h5>Number of Rows</h5><form><input type="number" value="panel.exportSize" ng-model="panel.exportSize" placeholder="{{panel.size * panel.pages}}"/>' +
+        // '<div ng-if="panel.type==\'table\'"><input type="checkbox" ng-model="panel.exportAll"/> All Fields <tip>If this option is checked, all fields in the Solr schema will be exported. Otherwise, only the fields that you have selected to appear in your Table view will be exported</tip></div></form>' +
+        //       '<li>' +
+        //           '<h5>Export to File</h5>' +
+        //               '<ul class="unstyled">' +
+        //                   '<li><a class="link" ng-click="exportfile(\'csv\')"><i class="icon-file"></i> CSV</a></li>' +
+        //                   '<li><a class="link" ng-click="exportfile(\'xml\')"><i class="icon-file"></i> XML</a></li>' +
+        //                   '<li><a class="link" ng-click="exportfile(\'json\')"><i class="icon-file"></i> JSON</a></li>' +
+        //               '</ul>' +
+        //       '</li>' +
+        //   '</ul>' +
+        // '</span>' +
 
 //          '<span ng-repeat="dropdown in panelMeta.dropdowns" class="row-button extra">' +
 //            '<span class="dropdown" data-placement="bottom" bs-tooltip="dropdown.description"><a href="#" class="dropdown-toggle" data-toggle="dropdown" bs-dropdown="dropdown.list"><i ' +
 //              'ng-class="dropdown.icon" class="pointer"></i></a></span>'+
 //          '</span>' +
 
-          '<span class="row-button extra" ng-if="panelMeta.loading == true">' +
-            '<span>'+
-              '<i class="icon-spinner smaller icon-spin icon-large"></i>' +
-            '</span>'+
-          '</span>' +
+        '<span class="row-button extra"   ng-show="panelMeta.loading">' +
+        '<span>'+
+        '<i class="icon-spinner smaller icon-spin icon-large"></i>' +
+        '</span>'+
+        '</span>' +
 
-          '<span class="row-button row-text panel-title" ng-if="panel.title">' +
-            '{{panel.title}}' +
-          '</span>'+
+
+
+        '<span class="row-text pointer" bs-tooltip="\'{{\'Drag here to move\'|translate}}\'"'+
+        ' data-drag=true data-jqyoui-options="{revert: \'invalid\',helper:\'clone\'}"'+
+        ' jqyoui-draggable="'+
+        '{'+
+        'animate:false,'+
+        'mutate:false,'+
+        'index:{{$index}},'+
+        'onStart:\'panelMoveStart\','+
+        'onStop:\'panelMoveStop\''+
+        '}"  ng-model="row.panels">{{panel.title}}</span>'+
+
+        '<span class="row-button row-text panel-title" ng-if="panel.draggable == false">' +
+        '<span class="row-text">{{panel.title}}</span>'+
+        '</span>' +
+
+
+        // '<span class="row-button row-text panel-title" ng-if="panel.title">' +
+        //   '{{panel.title}}' +
+        // '</span>'+
 
         '</div></div>';
       return {

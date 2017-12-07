@@ -1,13 +1,22 @@
 define([
   'angular',
-  'underscore'
+  'underscore',
+    'jquery',
+    'toastr'
 ],
 function (angular, _) {
   'use strict';
-
+  var toastr = require('toastr');
+  toastr.options = {
+    closeButton: true,
+    progressBar: true,
+    showMethod: 'slideDown',
+    showEasing: "swing",
+    timeOut: 3000
+  };
   var module = angular.module('kibana.services');
 
-  module.service('solrSrv', function(dashboard, $http, alertSrv, filterSrv, querySrv) {
+  module.service('solrSrv', function(dashboard, $http, alertSrv, filterSrv, querySrv,$translate) {
     // Save a reference to this
     var self = this;
 
@@ -22,7 +31,7 @@ function (angular, _) {
     this.calcTopFieldValues = function(fields) {
       // Check if we are calculating too many fields and show warning
       if (fields.length > self.MAX_NUM_CALC_FIELDS) {
-        alertSrv.set('Warning', 'There are too many fields being calculated for top values (' + fields.length + '). This will significantly impact system performance.', 'info', 5000);
+        toastr.warning($translate.instant('There are too many fields being calculated for top values'), 'RealsightAPM');
       }
       // Construct Solr query
       var fq = '';
@@ -41,10 +50,9 @@ function (angular, _) {
           url: dashboard.current.solr.server + dashboard.current.solr.core_name + query,
         }).error(function(data, status) {
           if(status === 0) {
-            alertSrv.set('Error', 'Could not contact Solr at '+dashboard.current.solr.server+
-              '. Please ensure that Solr is reachable from your system.' ,'error');
+            toastr.error($translate.instant('Could not contact Solr,please ensure that Solr is reachable from your system.'), 'RealsightAPM');
           } else {
-            alertSrv.set('Error','Could not retrieve facet data from Solr (Error status = '+status+')','error');
+            toastr.error($translate.instant('Could not retrieve facet data from Solr'), 'RealsightAPM');
           }
         });
 

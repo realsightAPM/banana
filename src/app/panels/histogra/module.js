@@ -65,6 +65,9 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:true,
+      fullHeight:'700%',
+      useInitHeight:true,
       mode        : 'count',
       queries     : {
         mode        : 'all',
@@ -113,7 +116,19 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
     $scope.init = function() {
       // Hide view options by default
       $scope.options = false;
-
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //   $scope.$emit('render');
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
       // Start refresh timer if enabled
       if ($scope.panel.refresh.enable) {
         $scope.set_timer($scope.panel.refresh.interval);
@@ -134,6 +149,32 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
       } else {
         timer.cancel($scope.refresh_timer);
       }
+    };
+
+    $scope.reSize=function() {
+
+      $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+      $scope.$emit('render');
+      $(window).trigger('resize');
+
+
+    };
+
+    //快捷键+控制放大缩小panel
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        $scope.reSize();
+      }
+
+
     };
 
     $scope.realtime = function() {
@@ -527,41 +568,13 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
         // Function for rendering panel
         function render_panel() {
           // IE doesn't work without this
-          elem.css({height:scope.panel.height || scope.row.height});
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
+          elem.css({height:divHeight});
 
-          Date.prototype.pattern = function (fmt) {
-            var o = {
-              "M+" : this.getMonth() + 1, //月份
-              "d+" : this.getDate(), //日
-              "h+" : this.getHours() % 12 === 0 ? 12 : this.getHours() % 12, //小时
-              "H+" : this.getHours(), //小时
-              "m+" : this.getMinutes(), //分
-              "s+" : this.getSeconds(), //秒
-              "q+" : Math.floor((this.getMonth() + 3) / 3), //季度
-              "S" : this.getMilliseconds() //毫秒
-            };
-            var week = {
-              "0" : "/u65e5",
-              "1" : "/u4e00",
-              "2" : "/u4e8c",
-              "3" : "/u4e09",
-              "4" : "/u56db",
-              "5" : "/u4e94",
-              "6" : "/u516d"
-            };
-            if (/(y+)/.test(fmt)) {
-              fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            }
-            if (/(E+)/.test(fmt)) {
-              fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f" : "/u5468") : "") + week[this.getDay() + ""]);
-            }
-            for (var k in o) {
-              if (new RegExp("(" + k + ")").test(fmt)) {
-                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-              }
-            }
-            return fmt;
-          };
+
 
 
 

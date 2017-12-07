@@ -1,12 +1,21 @@
 define([
-    'angular'
+    'angular',
+    'jquery',
+    'toastr'
   ],
   function(angular) {
     'use strict';
-
+    var toastr = require('toastr');
+    toastr.options = {
+      closeButton: true,
+      progressBar: true,
+      showMethod: 'slideDown',
+      showEasing: "swing",
+      timeOut: 3000
+    };
     var module = angular.module('kibana.directives');
 
-    module.directive('dashUpload', function(timer, dashboard, alertSrv) {
+    module.directive('dashUpload', function(timer, dashboard, $translate) {
       return {
         restrict: 'A',
         link: function(scope) {
@@ -18,7 +27,7 @@ define([
                   dashboard.dash_load(JSON.parse(e.target.result));
                   scope.$apply();
                 } catch (err) {
-                  alertSrv.set('Loading Error', 'The file isn\'t valid JSON file', 'error',5000);
+                  toastr.error($translate.instant('The file is not valid json file'), 'RealsightAPM');
                   dashboard.refresh();
                 }
               };
@@ -35,7 +44,7 @@ define([
             // Something
             document.getElementById('dashupload').addEventListener('change', file_selected, false);
           } else {
-            alertSrv.set('Oops', 'Sorry, the HTML5 File APIs are not fully supported in this browser.', 'error');
+            toastr.warning($translate.instant('HTML5 File APIs are not fully supported in this browser'), 'RealsightAPM');
           }
         }
       };

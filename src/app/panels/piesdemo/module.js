@@ -38,6 +38,7 @@ function (angular, app, _, $, kbn) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:true,
       queries     : {
         mode        : 'all',
         ids         : [],
@@ -58,7 +59,8 @@ function (angular, app, _, $, kbn) {
       donut   : false,
       tilt    : false,
       display:'block',
-
+      fullHeight:'700%',
+      useInitHeight:true,
       icon:"icon-caret-down",
       labels  : true,
 	  ylabels :true,
@@ -86,7 +88,40 @@ function (angular, app, _, $, kbn) {
     $scope.init = function () {
       $scope.hits = 0;
       //$scope.testMultivalued();
+      // $('.close-link').on('click', function () {
+      //
+      //   var content = $(this).closest('div.ibox1');
+      //   content.remove();
+      //
+      // });
 
+
+      // Fullscreen ibox function
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
+
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //   $scope.$emit('render');
+      //
+      //
+      //
+      // });
       // Start refresh timer if enabled
       if ($scope.panel.refresh.enable) {
         $scope.set_timer($scope.panel.refresh.interval);
@@ -110,6 +145,32 @@ function (angular, app, _, $, kbn) {
         return;
       }
     };
+
+    $scope.reSize=function() {
+
+      $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+      $scope.$emit('render');
+      $(window).trigger('resize');
+
+
+    };
+    //快捷键+控制放大缩小panel
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        $scope.reSize();
+      }
+
+
+    };
+
       $scope.display=function() {
           if($scope.panel.display==='none'){
               $scope.panel.display='block';
@@ -121,6 +182,12 @@ function (angular, app, _, $, kbn) {
               $scope.panel.icon="icon-caret-up";
           }
       };
+
+    // $scope.reSize=function() {
+    //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+    //   $scope.$emit('render');
+    //
+    // };
     /**
      *
      *
@@ -392,7 +459,7 @@ function (angular, app, _, $, kbn) {
 
   });
 
-  module.directive('piesdemoChart', function(querySrv,dashboard,filterSrv) {
+  module.directive('piesdemoChart', function(querySrv,dashboard,filterSrv,$translate) {
     return {
       restrict: 'A',
       link: function(scope, elem) {
@@ -413,7 +480,11 @@ function (angular, app, _, $, kbn) {
           var colors = [];
 
           // IE doesn't work without this
-            elem.css({height:scope.panel.height||scope.row.height});
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
+          elem.css({height:divHeight});
 
           // Make a clone we can operate on.
 		  
@@ -424,7 +495,11 @@ function (angular, app, _, $, kbn) {
           } else {
             colors = scope.panel.chartColors;
           }
-		 
+          if(window.localStorage.lang=='cn'){
+            scope.panel.isEN=false;
+          }else if(window.localStorage.lang=='en'){
+            scope.panel.isEN=true;
+          }
 var option_nodata = {  
     series: [{
        
@@ -466,7 +541,7 @@ var option_nodata = {
             // Populate element
             try {
 				 var labelcolor = false;
-					if (dashboard.current.style === 'dark'){
+              if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
 							labelcolor = true;
 						}
               // Add plot to scope so we can build out own legend
@@ -488,7 +563,7 @@ var option_nodata = {
                         color: 'auto',
                         fontSize:8
                     },
-                    data: ['响应平均值', '响应最大值']
+                    data: scope.panel.isEN?['Average response','Max response']:['响应平均值', '响应最大值']
                 },
                 grid: {
                     top:'4%',
@@ -506,7 +581,7 @@ var option_nodata = {
                     axisLine: {
                         show: false,
                         lineStyle: {
-                            color: '#fff',
+                            color: labelcolor?'#d9e0e7':'#333',
                         }
                     },
                     splitLine: {
@@ -515,18 +590,20 @@ var option_nodata = {
                 },
                 yAxis: [{
                     type: 'category',
+
                     axisTick: {
                         show: false
                     },
                     axisLine: {
                         show: false,
                         lineStyle: {
-                            color: '#fff',
+                            color: labelcolor?'#d9e0e7':'#333',
                         }
                     },
-                    data: ['充值', '购机', '查询', '业务变更', '资料修改']
+                    data: scope.panel.isEN?['Recharge', 'Purchase', 'Query', 'Business Change', 'Data Modification']:['充值', '购机', '查询', '业务变更', '资料修改']
                 }, {
                     type: 'category',
+
                     axisLine: {
                         show: false
                     },
@@ -542,23 +619,23 @@ var option_nodata = {
                     splitLine: {
                         show: false
                     },
-                    data: ['充值', '购机', '查询', '业务变更', '资料修改']
+                    data: scope.panel.isEN?['Recharge', 'Purchase', 'Query', 'Business Change', 'Data Modification']:['充值', '购机', '查询', '业务变更', '资料修改']
                 },
 
                 ],
                 series: [{
-                    name: '响应最大值',
+                    name: scope.panel.isEN?'Max response':'响应最大值',
                     type: 'bar',
                     yAxisIndex: 1,
                     label: {
                         normal: {
                             show: true,
-                            formatter: '最大'+'{c}'+'ms',
+                            formatter: scope.panel.isEN?'Max':'最大'+'{c}'+'ms',
                             position: 'right',
                             offset: [0, -2],
                             textStyle: {
                                 fontWeight: 'bold',
-                                color:  '#fff',
+                                color:  labelcolor?'#d9e0e7':'#333',
                                 fontSize:10
                             }
                         }
@@ -576,7 +653,7 @@ var option_nodata = {
                     barCategoryGap: '50%',
                     data: [800, 1100, 1182, 1330, 1600]
                 }, {
-                    name: '响应平均值',
+                    name: scope.panel.isEN?'Average response':'响应平均值',
                     type: 'bar',
                     label: {
                         normal: {
@@ -650,7 +727,7 @@ var option_nodata = {
                                 fontSize:16
                             },
                         },
-                        data : ['13年', '14年', '15年', '16年', '17年预计'],
+                        data : scope.panel.isEN?['2013', '2014', '2015', '2016', '2017']:['13年', '14年', '15年', '16年', '17年预计'],
                         axisTick: {
                             alignWithLabel: true
                         }
@@ -672,7 +749,7 @@ var option_nodata = {
                 ],
                 series : [
                     {
-                        name:'业务量',
+                        name:scope.panel.isEN?'Traffic':'业务量',
                         type:'bar',
                         barWidth: '60%',
                         label:{
@@ -744,7 +821,7 @@ var option_nodata = {
                           trigger: 'axis'
                       },
                       legend: {
-                          data:['购机','充值'],
+                          data:scope.panel.isEN?['Purchase','Recharge']:['购机','充值'],
                           right:'10%',
                           textStyle:{
                               color:'#fff',
@@ -769,7 +846,7 @@ var option_nodata = {
                                   fontSize:16
                               },
                           },
-                          data: ['13年','14年','15年','16年','17年']
+                          data: scope.panel.isEN?['2013','2014','2015','2016','2017']:['13年','14年','15年','16年','17年']
                       },
                       yAxis: {
                           type: 'value',
@@ -789,13 +866,13 @@ var option_nodata = {
                       },
                       series: [
                           {
-                              name:'购机',
+                              name:scope.panel.isEN?'Purchase':'购机',
                               type:'line',
 
                               data:[70, 82, 99,111, 124]
                           },
                           {
-                              name:'充值',
+                              name:scope.panel.isEN?'Recharge':'充值',
                               type:'line',
 
                               data:[60, 82, 102, 130, 140]
@@ -848,7 +925,7 @@ var option_nodata = {
                                       fontSize:16
                                   },
                               },
-                              data : ['13年', '14年', '15年', '16年', '17年预计'],
+                              data : scope.panel.isEN?['2013','2014','2015','2016','2017']:['13年','14年','15年','16年','17年'],
                               axisTick: {
                                   alignWithLabel: true
                               }
@@ -870,7 +947,7 @@ var option_nodata = {
                       ],
                       series : [
                           {
-                              name:'访问量',
+                              name:scope.panel.isEN?'Access':'访问量',
                               type:'bar',
                               barWidth: '60%',
                               label:{
@@ -1180,7 +1257,7 @@ var option_nodata = {
                             textStyle: {
                                 color: '#ffd285',
                             },
-                            data: ['每月访问量']
+                            data: scope.panel.isEN?['Monthly visits']:['每月访问量']
                         },
                         grid: {
                             left: '1%',
@@ -1211,7 +1288,7 @@ var option_nodata = {
                                 }
                             },
                             boundaryGap: false,
-                            data: ['1月', '2月', '3月', '4月','5月']
+                            data: scope.panel.isEN?['January','February','March','April','May']:['1月', '2月', '3月', '4月','5月']
                         },
                         yAxis: {
                             "axisLine": {
@@ -1237,7 +1314,7 @@ var option_nodata = {
                             type: 'value'
                         },
                         series: [{
-                            name: '每月访问量',
+                            name: scope.panel.isEN?'Monthly visits':'每月访问量',
                             smooth: true,
                             type: 'line',
                             symbolSize: 8,
@@ -1274,7 +1351,7 @@ var option_nodata = {
                                     },
                                     label: {
                                         normal: {
-                                            formatter: '\n5月访问量',
+                                            formatter: scope.panel.isEN?'\nMay visits':'\n5月访问量',
                                             textStyle: {
                                                 color: '#fe8b53',
                                                 fontSize: 14
@@ -1313,7 +1390,7 @@ var option_nodata = {
                                     },
                                     label: {
                                         normal: {
-                                            formatter: '\n4月访问量',
+                                            formatter: scope.panel.isEN?'April visits':'\n4月访问量',
                                             textStyle: {
                                                 color: '#ffd285',
                                                 fontSize: 14
@@ -1369,7 +1446,7 @@ var option_nodata = {
                                             textStyle: {
                                                 color: '#ff733f',
                                             },
-                                            formatter: '\n环比下降'
+                                            formatter: scope.panel.isEN?'\nChain decline':'\n环比下降'
                                         }
                                     }
                                 }]
@@ -1388,7 +1465,7 @@ var option_nodata = {
 	myChart = echarts.init(document.getElementById(idd));
 	var option5 = {
         title:{
-            text: '性能评分',
+            text: scope.panel.isEN?'Score':'性能评分',
             top:'32%',
             left:'5%',
             textStyle:{
@@ -1414,7 +1491,7 @@ var option_nodata = {
                 normal: {
                     position: 'inside',
                     distance: 20,
-                    formatter: "92分",
+                    formatter:  scope.panel.isEN?"92":"92分",
                     textStyle: {
                         color: '#178ad9',
                         fontSize: 32
@@ -1438,9 +1515,9 @@ var option_nodata = {
                     value: 10,
                     label: {
                         normal: {
-                            formatter: '平均执行时间',
+                            formatter: scope.panel.isEN?'Execution time':'平均执行时间',
                             textStyle: {
-                                color: '#d9e0e7',
+                                color: labelcolor?'#d9e0e7':'#333',
                                 fontSize: 13
                             }
                         }
@@ -1481,9 +1558,9 @@ var option_nodata = {
                     value: 10,
                     label: {
                         normal: {
-                            formatter: '崩溃率',
+                            formatter: scope.panel.isEN?'Collapse':'崩溃率',
                             textStyle: {
-                                color: '#d9e0e7',
+                                color: labelcolor?'#d9e0e7':'#333',
                                 fontSize: 13
                             }
                         }
@@ -1524,9 +1601,9 @@ var option_nodata = {
                     value: 100,
                     label: {
                         normal: {
-                            formatter: 'HTTP错误率',
+                            formatter: scope.panel.isEN?'HTTP Error':'HTTP错误率',
                             textStyle: {
-                                color: '#d9e0e7',
+                                color: labelcolor?'#d9e0e7':'#333',
                                 fontSize: 13
                             }
                         }
@@ -1567,9 +1644,9 @@ var option_nodata = {
                     value: 10,
                     label: {
                         normal: {
-                            formatter: '网络错误率',
+                            formatter: scope.panel.isEN?'Network Error':'网络错误率',
                             textStyle: {
-                                color: '#d9e0e7',
+                                color: labelcolor?'#d9e0e7':'#333',
                                 fontSize: 13
 
                             }
@@ -1647,7 +1724,7 @@ var option_nodata = {
             textStyle: {
                 color: '#ffd285',
             },
-            data: ['每日访问量']
+            data: scope.panel.isEN?['Daily visits']:['每日访问量']
         },
         grid: {
             left: '1%',
@@ -1678,7 +1755,7 @@ var option_nodata = {
                 }
             },
             boundaryGap: false,
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            data: scope.panel.isEN?['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']:['周一', '周二', '周三', '周四', '周五', '周六', '周日']
         },
         yAxis: {
             "axisLine": {
@@ -1704,7 +1781,7 @@ var option_nodata = {
             type: 'value'
         },
         series: [{
-            name: '每日访问量',
+            name: scope.panel.isEN?'Daily visits':'每日访问量',
             smooth: true,
             type: 'line',
             symbolSize: 8,
@@ -1741,7 +1818,7 @@ var option_nodata = {
                     },
                     label: {
                         normal: {
-                            formatter: '\n今日访问量',
+                            formatter: scope.panel.isEN?'\nNow traffic':'\n今日访问量',
                             textStyle: {
                                 color: '#fe8b53',
                                 fontSize: 14
@@ -1780,7 +1857,7 @@ var option_nodata = {
                     },
                     label: {
                         normal: {
-                            formatter: '\n昨日访问量',
+                            formatter: scope.panel.isEN?'Yesterday visit':'\n昨日访问量',
                             textStyle: {
                                 color: '#ffd285',
                                 fontSize: 14
@@ -1836,7 +1913,7 @@ var option_nodata = {
                             textStyle: {
                                 color: '#ff733f',
                             },
-                            formatter: '\n环比上涨'
+                            formatter:scope.panel.isEN?'\nRing up':'\n环比上涨'
                         }
                     }
                 }]
@@ -1893,7 +1970,7 @@ var option_nodata = {
                             textStyle: {
                                 color: '#ffd285',
                             },
-                            data: ['每周访问量']
+                            data: scope.panel.isEN?['Weekly visits']:['每周访问量']
                         },
                         grid: {
                             left: '1%',
@@ -1924,7 +2001,7 @@ var option_nodata = {
                                 }
                             },
                             boundaryGap: false,
-                            data: ['第一周', '第二周', '第三周', '第四周']
+                            data: scope.panel.isEN?['First week','Second week','Third week','Fourth week']:['第一周', '第二周', '第三周', '第四周']
                         },
                         yAxis: {
                             "axisLine": {
@@ -1950,7 +2027,7 @@ var option_nodata = {
                             type: 'value'
                         },
                         series: [{
-                            name: '每周访问量',
+                            name: scope.panel.isEN?'Weekly visits':'每周访问量',
                             smooth: true,
                             type: 'line',
                             symbolSize: 8,
@@ -1987,7 +2064,7 @@ var option_nodata = {
                                     },
                                     label: {
                                         normal: {
-                                            formatter: '\n这周访问量',
+                                            formatter: scope.panel.isEN?'\nThis week visits':'\n这周访问量',
                                             textStyle: {
                                                 color: '#fe8b53',
                                                 fontSize: 14
@@ -2026,7 +2103,7 @@ var option_nodata = {
                                     },
                                     label: {
                                         normal: {
-                                            formatter: '\n上周访问量',
+                                            formatter: scope.panel.isEN?'Last week visits':'\n上周访问量',
                                             textStyle: {
                                                 color: '#ffd285',
                                                 fontSize: 14
@@ -2082,7 +2159,7 @@ var option_nodata = {
                                             textStyle: {
                                                 color: '#ff733f',
                                             },
-                                            formatter: '\n环比下降'
+                                            formatter: scope.panel.isEN?'\nChain decline':'\n环比下降'
                                         }
                                     }
                                 }]

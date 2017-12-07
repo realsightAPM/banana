@@ -36,6 +36,8 @@ define([
 
       // Set and populate defaults
       var _d = {
+        fullHeight:'700%',
+        useInitHeight:true,
         status: "Stable",
           display:'block',
           icon:"icon-caret-down",
@@ -66,6 +68,20 @@ define([
 
       $scope.init = function() {
         $scope.Math = Math;
+
+        // $('.fullscreen-link').on('click', function () {
+        //   var ibox = $(this).closest('div.ibox1');
+        //   var button = $(this).find('i');
+        //
+        //   $('body').toggleClass('fullscreen-ibox1-mode');
+        //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+        //   ibox.toggleClass('fullscreen');
+        //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+        //
+        //
+        //   $(window).trigger('resize');
+        //
+        // });
         // Solr
         $scope.sjs = $scope.sjs || sjsResource(dashboard.current.solr.server + dashboard.current.solr.core_name); // jshint ignore:line
 

@@ -60,6 +60,9 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
     // Set and populate defaults
       _d = {
+        panelExpand:true,
+        fullHeight:'700%',
+        useInitHeight:true,
           mode: 'value',
           queries: {
               mode: 'all',
@@ -121,6 +124,19 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
     _.defaults($scope.panel,_d);
 
     $scope.init = function() {
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //   $scope.$emit('render');
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
       // Hide view options by default
       $scope.options = false;
       $scope.$on('refresh',function(){
@@ -128,6 +144,32 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
       });
 
       $scope.get_data();
+
+    };
+
+    $scope.reSize=function() {
+
+      $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+      $scope.$emit('render');
+      $(window).trigger('resize');
+
+
+    };
+
+    //快捷键+控制放大缩小panel
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        $scope.reSize();
+      }
+
 
     };
 
@@ -445,7 +487,11 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           var colors = [];
 
           // IE doesn't work without this
-          elem.css({height:scope.panel.height||scope.row.height});
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
+          elem.css({height:divHeight});
 
           // Make a clone we can operate on.
 		  
@@ -471,45 +517,13 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 		  var sum_warning = 0;
 
 
-            Date.prototype.pattern = function (fmt) {
-                var o = {
-                    "M+" : this.getMonth() + 1, //月份
-                    "d+" : this.getDate(), //日
-                    "h+" : this.getHours(), //小时
-                    "H+" : this.getHours(), //小时
-                    "m+" : this.getMinutes(), //分
-                    "s+" : this.getSeconds(), //秒
-                    "q+" : Math.floor((this.getMonth() + 3) / 3), //季度
-                    "S" : this.getMilliseconds() //毫秒
-                };
-                var week = {
-                    "0" : "/u65e5",
-                    "1" : "/u4e00",
-                    "2" : "/u4e8c",
-                    "3" : "/u4e09",
-                    "4" : "/u56db",
-                    "5" : "/u4e94",
-                    "6" : "/u516d"
-                };
-                if (/(y+)/.test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-                }
-                if (/(E+)/.test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f" : "/u5468") : "") + week[this.getDay() + ""]);
-                }
-                for (var k in o) {
-                    if (new RegExp("(" + k + ")").test(fmt)) {
-                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-                    }
-                }
-                return fmt;
-            };
+
 
 		  for (var i =0;i<chartData[0].length;i++){
 			  sum_data++;
 			  selecttime[i] =Date.parse(chartData[0][i][scope.panel.value_sort]);
 			  secondtime = new Date(selecttime[i]);
-			  rs_timestamp[i] = secondtime.pattern("yyyy-MM-dd hh:mm:ss");
+			  rs_timestamp[i] = secondtime.pattern("yyyy-MM-dd HH:mm:ss");
 			  valuedata[i] = {name:chartData[0][i][scope.panel.value_category],value:chartData[0][i][scope.panel.value_field]};
 			  if(maxdata<chartData[0][i][scope.panel.value_field]){
 				   maxdata=chartData[0][i][scope.panel.value_field];
@@ -575,7 +589,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 				
 				 var labelcolor = false;
 				 var isspan = false;
-					if (dashboard.current.style === 'dark'){
+              if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
 							labelcolor = true;
 						}
                 if (scope.panel.span <5){

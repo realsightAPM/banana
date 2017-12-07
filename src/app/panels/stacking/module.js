@@ -58,6 +58,9 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:true,
+      fullHeight:'700%',
+      useInitHeight:true,
       mode        : 'value',
       queries     : {
         mode        : 'all',
@@ -104,6 +107,19 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
     $scope.init = function() {
       // Hide view options by default
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //   $scope.$emit('render');
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
       $scope.options = false;
       $scope.$on('refresh',function(){
         $scope.get_data();
@@ -120,6 +136,30 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
       } else {
         $scope.panel.auto_int = true;
       }
+    };
+    $scope.reSize=function() {
+
+      $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+      $scope.$emit('render');
+      $(window).trigger('resize');
+
+
+    };
+    //快捷键+控制放大缩小panel
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        $scope.reSize();
+      }
+
+
     };
 
       $scope.display=function() {
@@ -424,7 +464,11 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           var colors = [];
 
           // IE doesn't work without this
-          elem.css({height:scope.panel.height||scope.row.height});
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
+          elem.css({height:divHeight});
 
           // Make a clone we can operate on.
 		  
@@ -440,7 +484,11 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
             colors = scope.panel.chartColors;
           }
 		 
-		
+		      if(window.localStorage.lang==='cn'){
+            scope.panel.isEN=false;
+          }else if(window.localStorage.lang==='en'){
+            scope.panel.isEN=true;
+          }
 		 
 		      var domElapsed = [];
           var rs_timestamp = [];
@@ -463,45 +511,11 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           var sum_tcpElapsed = 0;
           var sum_requestElapsed = 0;
           var sum_responseElapsed = 0;
-          Date.prototype.pattern = function (fmt) {
-            var o = {
-                "M+" : this.getMonth() + 1, //月份
-                "d+" : this.getDate(), //日
-                "h+" : this.getHours() % 12 === 0 ? 12 : this.getHours() % 12, //小时
-                "H+" : this.getHours(), //小时
-                "m+" : this.getMinutes(), //分
-                "s+" : this.getSeconds(), //秒
-                "q+" : Math.floor((this.getMonth() + 3) / 3), //季度
-                "S" : this.getMilliseconds() //毫秒
-            };
-            var week = {
-                "0" : "/u65e5",
-                "1" : "/u4e00",
-                "2" : "/u4e8c",
-                "3" : "/u4e09",
-                "4" : "/u56db",
-                "5" : "/u4e94",
-                "6" : "/u516d"
-            };
-            if (/(y+)/.test(fmt)) {
-                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            }
-            if (/(E+)/.test(fmt)) {
-                fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f" : "/u5468") : "") + week[this.getDay() + ""]);
-            }
-            for (var k in o) {
-                if (new RegExp("(" + k + ")").test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-                }
-            }
-            return fmt;
-          };
-
 
           for (var i =0;i<chartData[0].length;i++){
             selecttime[i] =Date.parse(chartData[0][i].rs_timestamp);
             secondtime = new Date(Date.parse(chartData[0][i].rs_timestamp));
-            rs_timestamp[i] = secondtime.pattern("yyyy-MM-dd hh:mm:ss");
+            rs_timestamp[i] = secondtime.pattern("yyyy-MM-dd HH:mm:ss");
             redirectElapsed[i] = chartData[0][i].redirectElapsed;
             cacheElapsed[i] = chartData[0][i].cacheElapsed;
             loadEventElapsed[i] = chartData[0][i].loadEventElapsed;
@@ -526,7 +540,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
 
 				  var labelcolor = false;
-          if (dashboard.current.style === 'dark'){
+            if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
             labelcolor = true;
           }
               // Add plot to scope so we can build out own legend
@@ -536,149 +550,178 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
             }
             myChart = echarts.init(document.getElementById(idd));
             var option = {
-   
-   tooltip: {
-        trigger: 'axis',
-		confine:true,
-        axisPointer: {
-            animation: false
-        }
-    },
-	color:scope.panel.chartColors,
-    legend: {
-		textStyle:{
-			color:labelcolor?'#DCDCDC':'#696969'
-		},
-        data:scope.panel.isEN?['Redirect Time','Cache Time','DNS Time','Connection Time','Request Time','Response Time','Page Load Time','Event Load Time']:['HTTP重定向时间','缓存时间','DNS查询时间','建立连接时间','请求连接时间','服务器响应时间','页面加载时间','事务加载时间']
-    },
-     toolbox: {
-        feature: {
-            dataZoom: {
-                yAxisIndex: 'none'
-            },
-			dataView: {readOnly: false},
-            restore: {}
-        }
-    },
-	 
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis : [
-        {
-            type : 'category',
-            boundaryGap : false,
-			 axisLine: {onZero: true},
-			 axisLabel:{
-				 textStyle:{
-					 color:labelcolor?'#DCDCDC':'#696969'
-				 }
-			 },
-            data :rs_timestamp
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value',
-			name : scope.panel.isEN?'Time(ms)':'时间(ms)',
-			min :0,
-			nameTextStyle:{
-				color:labelcolor?'#DCDCDC':'#696969'
-			},
-			axisLine:{
-				lineStyle:{
-					color:'#46474C'
-				}
-			},
-			splitLine:{
-				lineStyle:{
-					color:['#46474C']
-				}
-			},
-			axisLabel:{
-				 textStyle:{
-					 color:labelcolor?'#DCDCDC':'#696969'
-				 }
-			 }
-        }
-    ],
-    series : [
-        {
-            name:scope.panel.isEN?'HTTP Redirect Time':'HTTP重定向时间',
-            type:'line',
-            stack: '总量',
-            areaStyle: {normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                    offset: 0,
-                    color: '#8ec6ad'
-                }, {
-                    offset: 1,
-                    color: '#ffe'
-                }])
-            }},
-			smooth:true,
-            data:redirectElapsed
-        },
-		{
-            name:scope.panel.isEN?'Cache Time':'缓存时间',
-            type:'line',
-            stack: '总量',
-            areaStyle: {normal: {opacity:0.6}},
-			smooth:true,
-            data:cacheElapsed
-        },
-		{
-            name:scope.panel.isEN?'DNS Time':'DNS查询时间',
-            type:'line',
-            stack: '总量',
-            areaStyle: {normal: {opacity:0.6}},
-			smooth:true,
-            data:dnsElapsed
-        },
-		{
-            name:scope.panel.isEN?'Connection Time':'建立连接时间',
-            type:'line',
-            stack: '总量',
-            areaStyle: {normal: {opacity:0.6}},
-			smooth:true,
-            data:tcpElapsed
-        },
-		{
-            name:scope.panel.isEN?'Request Time':'请求连接时间',
-            type:'line',
-            stack: '总量',
-            areaStyle: {normal: {opacity:0.6}},
-			smooth:true,
-            data:requestElapsed
-        },
-		{
-            name:scope.panel.isEN?'Response Time':'服务器响应时间',
-            type:'line',
-            stack: '总量',
-            areaStyle: {normal: {opacity:0.6}},
-			smooth:true,
-            data:responseElapsed
-        },
-		{
-            name:scope.panel.isEN?'Page Load Time':'页面加载时间',
-            type:'line',
-            stack: '总量',
-            areaStyle: {normal: {opacity:0.6}},
-			smooth:true,
-            data:domElapsed
-        },
-		{
-            name:scope.panel.isEN?'Event Load Time':'事务加载时间',
-            type:'line',
-            stack: '总量',
-            areaStyle: {normal: {opacity:0.6}},
-			smooth:true,
-            data:loadEventElapsed
-        }
-    ]
+              baseOption: {
+                tooltip: {
+                  trigger: 'axis',
+                  confine: true,
+                  axisPointer: {
+                    animation: false
+                  }
+                },
+                color: scope.panel.chartColors,
+                legend: {
+                  type: 'scroll',
+                  pageIconColor: '#539aca',
+                  textStyle: {
+                    color: labelcolor ? '#DCDCDC' : '#696969'
+                  },
+                  data: scope.panel.isEN ? ['Redirect Time', 'Cache Time', 'DNS Time', 'Connection Time', 'Request Time', 'Response Time', 'Page Load Time', 'Event Load Time'] : ['HTTP重定向时间', '缓存时间', 'DNS查询时间', '建立连接时间', '请求连接时间', '服务器响应时间', '页面加载时间', '事务加载时间']
+                },
+                toolbox: {
+                  feature: {
+                    dataZoom: {
+                      yAxisIndex: 'none'
+                    },
+                    dataView: {readOnly: false},
+                    restore: {}
+                  }
+                },
+                xAxis: [
+                  {
+                    type: 'category',
+                    boundaryGap: false,
+                    axisLine: {onZero: true},
+                    axisLabel: {
+                      textStyle: {
+                        color: labelcolor ? '#DCDCDC' : '#696969'
+                      }
+                    },
+                    data: rs_timestamp
+                  }
+                ],
+                yAxis: [
+                  {
+                    type: 'value',
+                    name: scope.panel.isEN ? 'Time(ms)' : '时间(ms)',
+                    min: 0,
+                    nameTextStyle: {
+                      color: labelcolor ? '#DCDCDC' : '#696969'
+                    },
+                    axisLine: {
+                      lineStyle: {
+                        color: '#46474C'
+                      }
+                    },
+                    splitLine: {
+                      lineStyle: {
+                        color: ['#46474C']
+                      }
+                    },
+                    axisLabel: {
+                      textStyle: {
+                        color: labelcolor ? '#DCDCDC' : '#696969'
+                      }
+                    }
+                  }
+                ],
+                series: [
+                  {
+                    name: scope.panel.isEN ? 'HTTP Redirect Time' : 'HTTP重定向时间',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {
+                      normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                          offset: 0,
+                          color: '#8ec6ad'
+                        }, {
+                          offset: 1,
+                          color: '#ffe'
+                        }])
+                      }
+                    },
+                    smooth: true,
+                    data: redirectElapsed
+                  },
+                  {
+                    name: scope.panel.isEN ? 'Cache Time' : '缓存时间',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {normal: {opacity: 0.6}},
+                    smooth: true,
+                    data: cacheElapsed
+                  },
+                  {
+                    name: scope.panel.isEN ? 'DNS Time' : 'DNS查询时间',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {normal: {opacity: 0.6}},
+                    smooth: true,
+                    data: dnsElapsed
+                  },
+                  {
+                    name: scope.panel.isEN ? 'Connection Time' : '建立连接时间',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {normal: {opacity: 0.6}},
+                    smooth: true,
+                    data: tcpElapsed
+                  },
+                  {
+                    name: scope.panel.isEN ? 'Request Time' : '请求连接时间',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {normal: {opacity: 0.6}},
+                    smooth: true,
+                    data: requestElapsed
+                  },
+                  {
+                    name: scope.panel.isEN ? 'Response Time' : '服务器响应时间',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {normal: {opacity: 0.6}},
+                    smooth: true,
+                    data: responseElapsed
+                  },
+                  {
+                    name: scope.panel.isEN ? 'Page Load Time' : '页面加载时间',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {normal: {opacity: 0.6}},
+                    smooth: true,
+                    data: domElapsed
+                  },
+                  {
+                    name: scope.panel.isEN ? 'Event Load Time' : '事务加载时间',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {normal: {opacity: 0.6}},
+                    smooth: true,
+                    data: loadEventElapsed
+                  }
+                ]
+              },
+              media: [
+                {
+                  option: {
+                    grid: {
+                      left: '3%',
+                      right: '4%',
+                      bottom: '3%',
+                      containLabel: true
+                    },
+                    legend: {
+                      orient: 'horizontal'
+                    }
+                  }
+                },
+                {
+                  query: {
+                    maxWidth: 500
+                  },
+                  option: {
+                    grid: {
+                      left: '3%',
+                      right: '4%',
+                      bottom: '10%',
+                      containLabel: true
+                    },
+                    legend: {
+                      bottom: '0'
+                    }
+                  }
+                }
+              ]
 };
             // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
@@ -728,6 +771,8 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 							},
 							color:scope.panel.chartColors,
 							legend: {
+                type:'scroll',
+                pageIconColor:'#539aca',
 								left:'left',
 								textStyle:{
                                     fontSize:10,

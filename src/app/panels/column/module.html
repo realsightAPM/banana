@@ -1,4 +1,4 @@
-<div ng-controller="column" ng-init="init();">
+<div ng-controller="column" ng-init="init();" style="overflow-x:hidden;outline:0;" tabindex="-1" ng-keyup="zoomOut();">
   <div ng-style="{'display':panel.display}">
     <!-- Panels -->
     <div ng-repeat="(name, panel) in panel.panels" ng-hide="panel.height == '0px' || panel.hide" class="row-fluid panel" ng-style="{'display':panel.display}" style="min-height:{{panel.height}}; position:relative">
@@ -10,7 +10,7 @@
         </div>
       </div>
       <!-- Content Panel -->
-      <div class="row-fluid">
+      <div class="row-fluid" >
         <kibana-panel type="panel.type"></kibana-panel>
       </div>
     </div>

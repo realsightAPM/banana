@@ -1,0 +1,93 @@
+<div class="dd" id="nestable2">
+  <ol class="dd-list">
+    <li class="dd-item" data-id="1">
+      <div class="dd-handle">
+        <span class="label label-info"><i class="fa fa-users"></i></span> Cras ornare tristique.
+      </div>
+      <ol class="dd-list">
+        <li class="dd-item" data-id="2">
+          <div class="dd-handle">
+            <span class="pull-right"> 12:00 pm </span>
+            <span class="label label-info"><i class="fa fa-cog"></i></span> Vivamus vestibulum nulla nec ante.
+          </div>
+        </li>
+        <li class="dd-item" data-id="3">
+          <div class="dd-handle">
+            <span class="pull-right"> 11:00 pm </span>
+            <span class="label label-info"><i class="fa fa-bolt"></i></span> Nunc dignissim risus id metus.
+          </div>
+        </li>
+        <li class="dd-item" data-id="4">
+          <div class="dd-handle">
+            <span class="pull-right"> 11:00 pm </span>
+            <span class="label label-info"><i class="fa fa-laptop"></i></span> Vestibulum commodo
+          </div>
+        </li>
+      </ol>
+    </li>
+
+    <li class="dd-item" data-id="5">
+      <div class="dd-handle">
+        <span class="label label-warning"><i class="fa fa-users"></i></span> Integer vitae libero.
+      </div>
+      <ol class="dd-list">
+        <li class="dd-item" data-id="6">
+          <div class="dd-handle">
+            <span class="pull-right"> 15:00 pm </span>
+            <span class="label label-warning"><i class="fa fa-users"></i></span> Nam convallis pellentesque nisl.
+          </div>
+        </li>
+        <li class="dd-item" data-id="7">
+          <div class="dd-handle">
+            <span class="pull-right"> 16:00 pm </span>
+            <span class="label label-warning"><i class="fa fa-bomb"></i></span> Vivamus molestie gravida turpis
+          </div>
+        </li>
+        <li class="dd-item" data-id="8">
+          <div class="dd-handle">
+            <span class="pull-right"> 21:00 pm </span>
+            <span class="label label-warning"><i class="fa fa-child"></i></span> Ut aliquam sollicitudin leo.
+          </div>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</div>
+<script>
+  $(document).ready(function(){
+
+    var updateOutput = function (e) {
+      var list = e.length ? e : $(e.target),
+        output = list.data('output');
+      if (window.JSON) {
+        output.val(window.JSON.stringify(list.nestable('serialize')));//, null, 2));
+      } else {
+        output.val('JSON browser support required for this demo.');
+      }
+    };
+    // activate Nestable for list 1
+    $('#nestable').nestable({
+      group: 1
+    }).on('change', updateOutput);
+
+    // activate Nestable for list 2
+    $('#nestable2').nestable({
+      group: 1
+    }).on('change', updateOutput);
+
+    // output initial serialised data
+    updateOutput($('#nestable').data('output', $('#nestable-output')));
+    updateOutput($('#nestable2').data('output', $('#nestable2-output')));
+
+    $('#nestable-menu').on('click', function (e) {
+      var target = $(e.target),
+        action = target.data('action');
+      if (action === 'expand-all') {
+        $('.dd').nestable('expandAll');
+      }
+      if (action === 'collapse-all') {
+        $('.dd').nestable('collapseAll');
+      }
+    });
+  });
+</script>

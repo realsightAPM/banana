@@ -1,10 +1,19 @@
 define([
   'angular',
-  'underscore'
+  'underscore',
+    'jquery',
+    'toastr'
 ],
 function (angular, _) {
   'use strict';
-
+  var toastr = require('toastr');
+  toastr.options = {
+    closeButton: true,
+    progressBar: true,
+    showMethod: 'slideDown',
+    showEasing: "swing",
+    timeOut: 3000
+  };
   var module = angular.module('kibana.controllers');
 
   module.controller('dashLoader', function($scope, $http, timer, dashboard, alertSrv,$translate) {
@@ -49,48 +58,80 @@ function (angular, _) {
     };
     
     $scope.create_new = function(type) {
+
+
       $http.get('app/dashboards/' + type + '.json?' + new Date().getTime()).
-        success(function(data) {
-          data.solr.server = $scope.new.server;
-          data.solr.core_name = $scope.new.core_name;
-          // If time series dashboard, update all timefield references in the default dashboard
-          if (type === 'default-ts') {
-            data.services.filter.list[0].field = $scope.new.time_field;
-            // Iterate over panels and update timefield
-            for (var i = 0; i < data.rows.length; i++) {
-              for (var j = 0; j < data.rows[i].panels.length; j++) {
-                if (data.rows[i].panels[j].timefield) {
-                  data.rows[i].panels[j].timefield = $scope.new.time_field;
-                } else if (data.rows[i].panels[j].time_field) {
-                  data.rows[i].panels[j].time_field = $scope.new.time_field;
-                }
+      then(function successCallback(response) {
+        // 请求成功执行代码
+        var data = response.data;
+        data.solr.server = $scope.new.server;
+        data.solr.core_name = $scope.new.core_name;
+        // If time series dashboard, update all timefield references in the default dashboard
+        if (type === 'default-ts') {
+          data.services.filter.list[0].field = $scope.new.time_field;
+          // Iterate over panels and update timefield
+          for (var i = 0; i < data.rows.length; i++) {
+            for (var j = 0; j < data.rows[i].panels.length; j++) {
+              if (data.rows[i].panels[j].timefield) {
+                data.rows[i].panels[j].timefield = $scope.new.time_field;
+              } else if (data.rows[i].panels[j].time_field) {
+                data.rows[i].panels[j].time_field = $scope.new.time_field;
               }
             }
           }
+        }
 
-          dashboard.dash_load(data);
-          
-          // Reset new dashboard defaults
-          $scope.resetNewDefaults();
-        }).
-        error(function() {
-          alertSrv.set($translate.instant('Error'),$translate.instant('Unable to load default dashboard'),'error');
-        });
+        dashboard.dash_load(data);
+
+        // Reset new dashboard defaults
+        $scope.resetNewDefaults();
+      }, function errorCallback() {
+        // 请求失败执行代码
+        toastr.error($translate.instant('Unable to load default dashboard'), 'RealsightAPM');
+      });
+      //
+      // $http.get('app/dashboards/' + type + '.json?' + new Date().getTime()).
+      //   success(function(data) {
+      //     data.solr.server = $scope.new.server;
+      //     data.solr.core_name = $scope.new.core_name;
+      //     // If time series dashboard, update all timefield references in the default dashboard
+      //     if (type === 'default-ts') {
+      //       data.services.filter.list[0].field = $scope.new.time_field;
+      //       // Iterate over panels and update timefield
+      //       for (var i = 0; i < data.rows.length; i++) {
+      //         for (var j = 0; j < data.rows[i].panels.length; j++) {
+      //           if (data.rows[i].panels[j].timefield) {
+      //             data.rows[i].panels[j].timefield = $scope.new.time_field;
+      //           } else if (data.rows[i].panels[j].time_field) {
+      //             data.rows[i].panels[j].time_field = $scope.new.time_field;
+      //           }
+      //         }
+      //       }
+      //     }
+      //
+      //     dashboard.dash_load(data);
+      //
+      //     // Reset new dashboard defaults
+      //     $scope.resetNewDefaults();
+      //   }).
+      //   error(function() {
+      //   toastr.error($translate.instant('Unable to load default dashboard'), 'RealsightAPM');
+      //   });
     };
 
     $scope.set_default = function() {
       if(dashboard.set_default()) {
-        alertSrv.set($translate.instant('Local Default Set'),dashboard.current.title+$translate.instant('has been set as your local default'),'success',5000);
+        toastr.success($translate.instant('Local Default Set'), 'RealsightAPM');
       } else {
-        alertSrv.set($translate.instant('Incompatible Browser'),$translate.instant('Sorry, your browser is too old for this feature'),'error',5000);
+        toastr.warning($translate.instant('Incompatible Browser'), 'RealsightAPM');
       }
     };
 
     $scope.purge_default = function() {
       if(dashboard.purge_default()) {
-        alertSrv.set($translate.instant('Local Default Clear'),$translate.instant('Your local default dashboard has been cleared'),'success',5000);
+        toastr.success($translate.instant('Local Default Clear'), 'RealsightAPM');
       } else {
-        alertSrv.set($translate.instant('Incompatible Browser'),$translate.instant('Sorry, your browser is too old for this feature'),'error',5000);
+        toastr.warning($translate.instant('Incompatible Browser'), 'RealsightAPM');
       }
     };
 
@@ -103,14 +144,13 @@ function (angular, _) {
         function(result) {
         // Solr
         if(result.responseHeader.status === 0) {
-          alertSrv.set($translate.instant('Dashboard Saved'),$translate.instant('This dashboard has been saved to Solr as') +
-            ($scope.elasticsearch.title || dashboard.current.title),'success',5000);
+          toastr.success($translate.instant('Dashboard Saved'), 'RealsightAPM');
           if(type === 'temp') {
             $scope.share = dashboard.share_link(dashboard.current.title,'temp',result.response.docs[0].id);
           }
           $scope.elasticsearch.title = '';
         } else {
-          alertSrv.set($translate.instant('Save failed'),'Dashboard could not be saved to Solr','error',5000);
+          toastr.warning($translate.instant('Save failed'), 'RealsightAPM');
         }
       });
     };

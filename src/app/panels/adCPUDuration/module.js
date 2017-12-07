@@ -81,7 +81,8 @@ define([
                 },
               itemsByPage: 10,
               displayPage: 10,
-              max_rows : 1000
+              max_rows : 1000,
+              imgVar : true
             };
             _.defaults($scope.panel,_d);
 
@@ -225,6 +226,7 @@ define([
                   duration: cpu_durations[index].duration,
                   stack_trace: cpu_durations[index].stack_trace
                 };
+                $scope.panel.imgVar = false;
                 $scope.data.push(slice);
               }
               if (DEBUG) {console.log($scope.data);}

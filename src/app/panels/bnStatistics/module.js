@@ -37,6 +37,9 @@ define([
 
             // Set and populate defaults
             var _d = {
+              panelExpand:false,
+              fullHeight:'700%',
+              useInitHeight:true,
                 queries     : {
                     mode        : 'all',
                     ids         : [],
@@ -83,7 +86,19 @@ define([
             $scope.init = function () {
                 $scope.hits = 0;
                 //$scope.testMultivalued();
-
+              // $('.fullscreen-link').on('click', function () {
+              //   var ibox = $(this).closest('div.ibox1');
+              //   var button = $(this).find('i');
+              //
+              //   $('body').toggleClass('fullscreen-ibox1-mode');
+              //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+              //   ibox.toggleClass('fullscreen');
+              //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+              //
+              //
+              //   $(window).trigger('resize');
+              //
+              // });
                 // Start refresh timer if enabled
                 if ($scope.panel.refresh.enable) {
                     $scope.set_timer($scope.panel.refresh.interval);
@@ -112,6 +127,32 @@ define([
                     return;
                 }
             };
+
+          $scope.reSize=function() {
+
+            $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+            var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+            var button = $('#'+$scope.$id+'z').find('i');
+            //var aaa = '#'+$scope.$id+'z';
+            $('body').toggleClass('fullscreen-ibox1-mode');
+            button.toggleClass('fa-expand').toggleClass('fa-compress');
+            ibox.toggleClass('fullscreen');
+
+            $(window).trigger('resize');
+
+
+          };
+
+          //快捷键+控制放大缩小panel
+          $scope.zoomOut=function() {
+            if(window.event.keyCode===107){
+              $scope.reSize();
+            }
+
+
+          };
+
             $scope.display=function() {
                 if($scope.panel.display==='none'){
                     $scope.panel.display='block';

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>RealSight APM Dashboard</title>
+
+        <!-- CSS -->
+       <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">-->
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+		    <link rel="stylesheet" href="assets/css/form-elements.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+      <link rel="stylesheet" type="text/css" href="assets/css/normalize.css" />
+
+      <link rel="stylesheet" type="text/css" href="assets/css/cs-select.css" />
+      <link rel="stylesheet" type="text/css" href="assets/css/cs-skin-elastic.css" />
+      <link rel="stylesheet" type="text/css" href="assets/css/cs-skin-slide.css" />
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="assets/js/html5shiv.js"></script>
+            <script src="assets/js/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="assets/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+
+    </head>
+
+    <body>
+    <!--<select id="language">
+      <option value="zh-CN">中文简体</option>
+      <option value="zh-TW">中文繁體</option>
+      <option value="en">English</option>
+    </select>-->
+
+    <div style="float:right ">
+
+      <select id="language" class="cs-select cs-skin-slide">
+        <option  value="cn" data-class="icon-camera">简体中文</option>
+        <option  value="en" data-class="icon-money">English</option>
+
+      </select>
+    </div>
+        <!-- Top content -->
+        <div class="top-content">
+        	
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 text">
+                        <img src="img/rsapm_logo.png" >
+                        <h1><strong>Real-time</strong> Dashboards</h1>
+                        <!-- <div class="description">
+                            <p>
+                                This is a free responsive login form made with Bootstrap.
+                                Download it on <a href="http://azmind.com"><strong>AZMIND</strong></a>, customize and use it as you like!
+                            </p>
+                        </div>-->
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3><label id="button_login1"></label></h3>
+                            		<p><label id="sign_up"></label></p>
+                        		</div>
+                        		<div class="form-top-right">
+                        			<i class="fa fa-lock"></i>
+                        		</div>
+                            </div>
+                            <div class="form-bottom">
+			                    <div  class="login-form">
+			                    	<div class="form-group">
+			                    		<label  class="sr-only" for="form-username" >Username</label>
+
+                                <i class="fa fa-user"></i>
+			                        	<input type="text" name="form-username" placeholder="Username..." class="form-username form-control" id="form-username" onfocus="oFocus_2()">
+
+                            </div>
+			                        <div class="form-group">
+			                        	<label class="sr-only" for="form-password">Password</label>
+                                <i class="fa fa-lock"></i>
+                                    <input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password" onfocus="oFocus_2()">
+                                </div>
+                                    <p id="remind_2"></p>
+                                    <div id="change_margin_3">
+			                        <button  id="login" class="btn"><label id="button_login"></label></button>
+                                    </div>
+			                    </div>
+		                    </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                         <div class="col-sm-6 col-sm-offset-3 social-login">
+                             <h3>...or login with:</h3>
+                             <div class="social-login-buttons">
+                                 <a class="btn btn-link-2" href="#">
+                                     <i class="fa fa-facebook"></i> Facebook
+                                 </a>
+                                 <a class="btn btn-link-2" href="#">
+                                     <i class="fa fa-twitter"></i> Twitter
+                                 </a>
+                                 <a class="btn btn-link-2" href="#">
+                                     <i class="fa fa-google-plus"></i> Google Plus
+                                 </a>
+                             </div>
+                         </div>
+                     </div>-->
+                </div>
+            </div>
+            <div id="footContainer">
+                <div align="center">
+                    <div style="padding-top: 12px;">
+                        <table align="center" border="0">
+                            <tbody>
+                            <tr class="relatedlink" >
+                                <td></td>
+                                <td align="left">
+                                    <a class="content" href="http://aclome.neusoft.com/" target="_blank">
+                                      <label id="about_us"></label> |
+                                    </a>
+                                    <a class="divideleft content" href="http://www.neusoft.com/cn/0267/index.html" target="_blank">
+                                      <label id="terms_of_use"></label> |
+                                    </a>
+                                    <a class="divideleft content" href="http://www.neusoft.com/cn/0266/index.html" target="_blank">
+                                      <label id="privacy_treaty"></label> |
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr class="copyrightTr">
+                                <td align="center" style=" color:#fff;"></td>
+                                <td align="center" style=" color:#fff;"><label id="all_rights_reserved"></label></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Javascript -->
+        <script src="assets/js/jquery-1.11.1.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.backstretch.min.js"></script>
+        <script src="assets/js/scripts.js"></script>
+        <script src="assets/js/jquery.cookie.js"></script>
+        <script src="assets/js/jquery.json-2.3.min.js"></script>
+        <script src="assets/js/jquery.i18n.properties-min-1.0.91.js"></script>
+
+    <script src="assets/js/classie.js"></script>
+    <script src="assets/js/selectFx.js"></script>
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+    <script>
+      (function() {
+        [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
+          new SelectFx(el);
+        } );
+      })();
+    </script>
+    </body>
+
+</html>

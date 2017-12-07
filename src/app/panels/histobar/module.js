@@ -58,6 +58,9 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
     // Set and populate defaults
       _d = {
+        panelExpand:true,
+        fullHeight:'700%',
+        useInitHeight:true,
           mode: 'value',
           queries: {
               mode: 'all',
@@ -117,12 +120,51 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
     $scope.init = function() {
       // Hide view options by default
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //   $scope.$emit('render');
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
       $scope.options = false;
       $scope.$on('refresh',function(){
         $scope.get_data();
       });
 
       $scope.get_data();
+
+    };
+
+
+    $scope.reSize=function() {
+
+      $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+      $scope.$emit('render');
+      $(window).trigger('resize');
+
+
+    };
+    //快捷键+控制放大缩小panel
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        $scope.reSize();
+      }
+
 
     };
 
@@ -220,13 +262,12 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
         $scope.panel.queries.query = "";
         // Build the query
-        _.each($scope.panel.queries.ids, function (id) {
             var query = $scope.sjs.FilteredQuery(
-                querySrv.getEjsObj(id),
+                querySrv.getEjsObj(0),
                 filterSrv.getBoolFilter(filterSrv.ids)
             );
 
-            var facet = $scope.sjs.DateHistogramFacet(id);
+            var facet = $scope.sjs.DateHistogramFacet(0);
             if ($scope.panel.mode === 'count' || $scope.panel.mode === 'counts') {
                 facet = facet.field(filterSrv.getTimeField());
             } else {
@@ -239,7 +280,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
             facet = facet.interval(_interval).facetFilter($scope.sjs.QueryFilter(query));
             request = request.facet(facet).size(0);
 
-        });
+
 
         // Populate the inspector panel
         $scope.populate_modal(request);
@@ -440,9 +481,15 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
         function render_panel() {
           var chartData;
           var colors = [];
-
+          if(myChart) {
+            myChart.dispose();
+          }
           // IE doesn't work without this
-          elem.css({height:scope.panel.height||scope.row.height});
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
+          elem.css({height:divHeight});
 
           // Make a clone we can operate on.
 		  
@@ -467,46 +514,14 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           var sum_risk = 0;
           var sum_warning = 0;
 
+          //时间转换
 
-          Date.prototype.pattern = function (fmt) {
-                var o = {
-                    "M+" : this.getMonth() + 1, //月份
-                    "d+" : this.getDate(), //日
-                    "h+" : this.getHours(), //小时
-                    "H+" : this.getHours(), //小时
-                    "m+" : this.getMinutes(), //分
-                    "s+" : this.getSeconds(), //秒
-                    "q+" : Math.floor((this.getMonth() + 3) / 3), //季度
-                    "S" : this.getMilliseconds() //毫秒
-                };
-                var week = {
-                    "0" : "/u65e5",
-                    "1" : "/u4e00",
-                    "2" : "/u4e8c",
-                    "3" : "/u4e09",
-                    "4" : "/u56db",
-                    "5" : "/u4e94",
-                    "6" : "/u516d"
-                };
-                if (/(y+)/.test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-                }
-                if (/(E+)/.test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f" : "/u5468") : "") + week[this.getDay() + ""]);
-                }
-                for (var k in o) {
-                    if (new RegExp("(" + k + ")").test(fmt)) {
-                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-                    }
-                }
-                return fmt;
-            };
-
+          //数据处理
           for (var i =0;i<chartData[0].length;i++){
               sum_data++;
               selecttime[i] =Date.parse(chartData[0][i][scope.panel.value_sort]);
               secondtime = new Date(selecttime[i]);
-              rs_timestamp[i] = secondtime.pattern("yyyy-MM-dd hh:mm:ss");
+              rs_timestamp[i] = secondtime.pattern("yyyy-MM-dd HH:mm:ss");
               valuedata[i] = chartData[0][i][scope.panel.value_field];
               if(maxdata<valuedata[i]){
                  maxdata=chartData[0][i][scope.panel.value_field];
@@ -533,12 +548,13 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
 
           var idd = scope.$id;
+          //载入echarts
           var echarts = require('echarts');
 
 
 				  var labelcolor = false;
 				  var isspan = false;
-				  if (dashboard.current.style === 'dark'){
+          if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
 							labelcolor = true;
           }
           if (scope.panel.span <5){
@@ -546,134 +562,136 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           }
               // Add plot to scope so we can build out own legend
           if(scope.panel.chart === 'histobar') {
-            if(myChart) {
-              myChart.dispose();
-            }
+
             myChart = echarts.init(document.getElementById(idd));
             var option = {
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-          tooltip : {
-            trigger: 'axis'
-        },
-          legend: {
-            data:['aa']
-        },
-          toolbox: {
-            show : true,
-            top:'5%',
-            feature : {
-           dataZoom: {
-                    yAxisIndex: 'none'
+                grid: {
+                  left: '3%',
+                  right: '4%',
+                  bottom: '3%',
+                  containLabel: true
                 },
-                dataView : {show: true, readOnly: false},
-                magicType : {show: true, type: ['line', 'bar']}
+                tooltip: {
+                  trigger: 'axis'
+                },
+                legend: {
+                  data: ['aa']
+                },
+                toolbox: {
+                  show: true,
+                  top: '5%',
+                  feature: {
+                    dataZoom: {
+                      yAxisIndex: 'none'
+                    },
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar']}
 
 
-            }
-        },
-          visualMap: {
-                show:scope.panel.legend,
-                top: 'top',
-                padding:0,
-                textGap:1,
-                textStyle:{
-            color:labelcolor?'#DCDCDC':'#696969',
-                    fontSize:scope.panel.fontSize
-          },
-                itemWidth:10,
-                itemHeight:8,
-                orient:isspan?'vertical':'horizontal',
-                pieces: [{
+                  }
+                },
+                visualMap: {
+                  show: scope.panel.legend,
+                  top: 'top',
+                  padding: 0,
+                  textGap: 1,
+                  textStyle: {
+                    color: labelcolor ? '#DCDCDC' : '#696969',
+                    fontSize: scope.panel.fontSize
+                  },
+                  pieces: [{
                     gt: 0,
                     lte: scope.panel.threshold_first,
-            label:'Normal(0~'+scope.panel.threshold_first+"  "+sum_normal+'%)',
+                    label: window.innerWidth>500?'Normal(0~' + scope.panel.threshold_first + "  " + sum_normal + '%)':'Normal(0~' + scope.panel.threshold_first + ")\n" + sum_normal + '%',
                     color: '#1a93f9'
-                }, {
+                  }, {
                     gt: scope.panel.threshold_first,
                     lte: scope.panel.threshold_second,
-            label:'Warning('+scope.panel.threshold_first+'~'+scope.panel.threshold_second+"  "+sum_warning+'%)',
+                    label: window.innerWidth>500?'Warning\n(' + scope.panel.threshold_first + '~' + scope.panel.threshold_second + "  " + sum_warning + '%)':'Warning(' + scope.panel.threshold_first + '~' + scope.panel.threshold_second + ")\n" + sum_warning + '%',
                     color: '#f48a52'
-                }, {
+                  }, {
                     gt: scope.panel.threshold_second,
-            label:'Risk(>'+scope.panel.threshold_second+"  "+sum_risk+'%)',
+                    label: window.innerWidth>500?'Risk\n(>' + scope.panel.threshold_second + "  " + sum_risk + '%)':'Risk(>' + scope.panel.threshold_second + ")\n" + sum_risk + '%',
                     color: '#ec4653'
-                }],
-                outOfRange: {
+                  }],
+                  itemWidth: 10,
+                  itemHeight: 8,
+                  orient: isspan ? 'vertical' : 'horizontal',
+                  outOfRange: {
                     color: '#999'
-                }
-            },
-          calculable : true,
-          xAxis : [
-            {
-                type : 'category',
-           axisLine: {onZero: true},
-          axisLabel:{
-             textStyle:{
-               color:labelcolor?'#DCDCDC':'#696969'
-             }
-           },
-                data : rs_timestamp
-            }
-        ],
-          yAxis : [
-            {
-                type : 'value',
-          nameTextStyle:{
-            color:labelcolor?'#DCDCDC':'#696969'
-          },
-          axisLine:{
-            lineStyle:{
-              color:'#46474C'
-            }
-          },
-          splitLine:{
-            lineStyle:{
-              color:['#46474C']
-            }
-          },
-          axisLabel:{
-             textStyle:{
-               color:labelcolor?'#DCDCDC':'#696969'
-             }
-           }
-            }
-        ],
-          series : [
-            {
-                name:scope.panel.value_field,
-                type:scope.panel.bars?'bar':'line',
-                data:valuedata,
-                smooth: true,
-                areaStyle: scope.panel.area?{normal: {opacity:0.6}}:'',
-                markPoint : {
-                    data : [
-                        {type : 'max', name: scope.panel.isEN?'Max':'最大值'},
-                        {type : 'min', name: scope.panel.isEN?'Min':'最小值'}
-                    ]
+                  }
                 },
-                markLine : scope.panel.average?{
-                    label:{
-                        normal:{
-                            show:true,
-                            position:'start'
-                        }
+                calculable: true,
+                xAxis: [
+                  {
+                    type: 'category',
+                    axisLine: {onZero: true},
+                    axisLabel: {
+                      textStyle: {
+                        color: labelcolor ? '#DCDCDC' : '#696969'
+                      }
                     },
-                    lineStyle:{
-                        normal:{
-                            color:scope.panel.field_color
-                        }
+                    data: rs_timestamp
+                  }
+                ],
+                yAxis: [
+                  {
+                    type: 'value',
+                    nameTextStyle: {
+                      color: labelcolor ? '#DCDCDC' : '#696969'
                     },
-                    data : [
-                        {type : 'average', name:scope.panel.isEN?'Average':'平均值'}
-                    ]
-                }:''
-            }
-        ]
+                    axisLine: {
+                      lineStyle: {
+                        color: '#46474C'
+                      }
+                    },
+                    splitLine: {
+                      lineStyle: {
+                        color: ['#46474C']
+                      }
+                    },
+                    axisLabel: {
+                      textStyle: {
+                        color: labelcolor ? '#DCDCDC' : '#696969'
+                      }
+                    }
+                  }
+                ],
+                series: [
+                  {
+                    name: scope.panel.value_field,
+                    type: scope.panel.bars ? 'bar' : 'line',
+                    data: valuedata,
+                    smooth: true,
+                    areaStyle: scope.panel.area ? {normal: {opacity: 0.6}} : '',
+                    markPoint: {
+                      itemStyle: {
+                        normal: {color: '#6784c5'}
+                      },
+                      data: [
+                        {type: 'max', name: scope.panel.isEN ? 'Max' : '最大值'},
+                        {type: 'min', name: scope.panel.isEN ? 'Min' : '最小值'}
+                      ]
+                    },
+                    markLine: scope.panel.average ? {
+                      label: {
+                        normal: {
+                          show: true,
+                          position: 'start'
+                        }
+                      },
+                      lineStyle: {
+                        normal: {
+                          color: '#6784c5'
+                        }
+                      },
+                      data: [
+                        {type: 'average', name: scope.panel.isEN ? 'Average' : '平均值'}
+                      ]
+                    } : ''
+                  }
+                ]
+
         };
             myChart.setOption(option);
             myChart.on('datazoom', function (params) {

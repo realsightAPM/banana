@@ -37,65 +37,69 @@ define([
 
             // Set and populate defaults
             var _d = {
-                queries     : {
-                    mode        : 'all',
-                    ids         : [],
-                    query       : '*:*',
-                    custom      : ''
-                },
-                mode    : 'count', // mode to tell which number will be used to plot the chart.
-                field   : '',
-                stats_field : '',
-                decimal_points : 0, // The number of digits after the decimal point
-                exclude : [],
-                missing : false,
-                other   : false,
-                size    : 10000,
-                display:'block',
-                icon:"icon-caret-down",
-                sortBy  : 'count',
-                threshold_first:3000,
-                threshold_second:5000,
-                order   : 'descending',
-                style   : { "font-size": '10pt'},
-                fontsize:20,
-                linkage_id:'a',
-                donut   : false,
-                tilt    : false,
-                labels  : true,
-                logAxis : false,
-                arrangement : 'horizontal',
-                chart       : 'bar',
-                counter_pos : 'above',
-                exportSize : 10000,
-                lastColor : '',
-                spyable     : true,
-                show_queries:true,
-                error : '',
-                max_rows : 1000,
-                chartColors : querySrv.colors,
-                anomaly_th:0.7,
-                refresh: {
-                    enable: false,
-                    interval: 2
-                }
+              queries     : {
+                  mode        : 'all',
+                  ids         : [],
+                  query       : '*:*',
+                  custom      : ''
+              },
+              mode    : 'count', // mode to tell which number will be used to plot the chart.
+              field   : '',
+              stats_field : '',
+              decimal_points : 0, // The number of digits after the decimal point
+              exclude : [],
+              missing : false,
+              other   : false,
+              size    : 10000,
+              display:'block',
+              icon:"icon-caret-down",
+              sortBy  : 'count',
+              threshold_first:3000,
+              threshold_second:5000,
+              order   : 'descending',
+              style   : { "font-size": '10pt'},
+              fontsize:20,
+              linkage_id:'a',
+              donut   : false,
+              tilt    : false,
+              labels  : true,
+              logAxis : false,
+              arrangement : 'horizontal',
+              chart       : 'bar',
+              counter_pos : 'above',
+              exportSize : 10000,
+              lastColor : '',
+              spyable     : true,
+              show_queries:true,
+              error : '',
+              max_rows : 1000,
+              chartColors : querySrv.colors,
+              anomaly_th:0.8,
+              refresh: {
+                  enable: false,
+                  interval: 2
+              },
+              imgVar : true,
+              echartVar: false
             };
             _.defaults($scope.panel,_d);
 
             $scope.init = function () {
-                $scope.hits = 0;
-                //$scope.testMultivalued();
+              $scope.panel.imgVar = true;
+              $scope.panel.echartVar = false;
+              $scope.hits = 0;
+              //$scope.testMultivalued();
 
-                // Start refresh timer if enabled
-                if ($scope.panel.refresh.enable) {
-                    $scope.set_timer($scope.panel.refresh.interval);
-                }
+              // Start refresh timer if enabled
+              if ($scope.panel.refresh.enable) {
+                  $scope.set_timer($scope.panel.refresh.interval);
+              }
 
-                $scope.$on('refresh',function(){
-                    $scope.get_data();
-                });
+              $scope.$on('refresh',function(){
+                  $scope.get_data();
+              });
 
-                $scope.get_data();
+              $scope.get_data();
             };
 
             $scope.get_time_range = function () {
@@ -227,6 +231,10 @@ define([
                   //var slice = {label: facet_field, data: [[k, stats_obj['mean'], stats_obj['count'], stats_obj['max'], stats_obj['min'], stats_obj['stddev'], facet_field]], actions: true};
                   total.push(doc);
                 }
+                if (total[0].states_list) {
+                  $scope.panel.imgVar = false;
+                  $scope.panel.echartVar = true;
+                }
                 $scope.data = eval('('+total[0].states_list+')');
                 if (DEBUG) console.log($scope.data);
                 $scope.$emit('render');
@@ -327,6 +335,7 @@ define([
                       }
                     }
                     var duration = 1000;
+
                     data.push({
                       name: typeItem.name,
                       value: [

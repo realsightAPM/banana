@@ -144,23 +144,23 @@ function (Settings) {
       'facet_default_show',
       'statistics_only_count',
       'javastacking',
-      'group',
-      'topology',
-      'topologystacking',
+      'network',
       'topologybar',
+      'topologystacking',
       'topologypie',
       'topologyscatter',
+      'group',
       'fisheye',
       'topologyfisheye',
       'fisheyescatter',
-      'adTopology',
-      'adThreadStates',
-      'adCPUDuration',
+      'infoalarm',
+      'viz',
+      'pointcloud',
       'adThreadMetricalData',
-      'adMemoryMetricalData',
-      'adMemoryStacking',
-      'adStacking',
-      'apiaveguage'
+      'adCPUDuration',
+      'adThreadStates',
+      'adTopology',
+      'adStacking'
     ]
   });
 });

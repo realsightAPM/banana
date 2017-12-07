@@ -1,4 +1,4 @@
-<div ng-controller='adNumber' ng-init="init()">
+<div ng-controller='adNumber' ng-init="init()" style="overflow-x:hidden;overflow-y:hidden;outline:0;" tabindex="-1" ng-keyup="zoomOut();">
   <div ng-style="{'display':panel.display}">
   <div  ng-if="panel.counter_pos == 'above' && (panel.chart == 'bar' || panel.chart == 'pie')" id='{{$id}}-legend'>
     <!-- vertical legend -->

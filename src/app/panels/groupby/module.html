@@ -1,4 +1,4 @@
-<div ng-controller='groupby' ng-init="init()" style="min-height:{{panel.height || row.height}}">
+<div ng-controller='groupby' ng-init="init()" style="min-height:{{panel.height || row.height}}" style="overflow-x:hidden;outline:0;" tabindex="-1" ng-keyup="zoomOut();">
   <style>
     .histogram-legend {
       display:inline-block;

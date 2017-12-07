@@ -37,6 +37,9 @@ function (angular, app, _, $, kbn) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:true,
+      fullHeight:'700%',
+      useInitHeight:true,
       queries     : {
         mode        : 'all',
         ids         : [],
@@ -76,7 +79,19 @@ function (angular, app, _, $, kbn) {
     $scope.init = function () {
       $scope.hits = 0;
       //$scope.testMultivalued();
-
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //   $scope.$emit('render');
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
       // Start refresh timer if enabled
       if ($scope.panel.refresh.enable) {
         $scope.set_timer($scope.panel.refresh.interval);
@@ -89,6 +104,33 @@ function (angular, app, _, $, kbn) {
       $scope.get_data();
     };
 
+
+    $scope.reSize=function() {
+
+      $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+      $scope.$emit('render');
+      $(window).trigger('resize');
+
+
+    };
+
+    //快捷键+控制放大缩小panel
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        $scope.reSize();
+      }
+
+
+    };
+    
     $scope.testMultivalued = function() {
       if($scope.panel.field && $scope.fields.typeList[$scope.panel.field] && $scope.fields.typeList[$scope.panel.field].schema.indexOf("M") > -1) {
         $scope.panel.error = "Can't proceed with Multivalued field";
@@ -112,6 +154,8 @@ function (angular, app, _, $, kbn) {
               $scope.panel.icon="icon-caret-up";
           }
       };
+
+
 
     /**
      *
@@ -397,14 +441,21 @@ function (angular, app, _, $, kbn) {
 
         // Function for rendering panel
         function render_panel() {
-          var myChart;
           var  chartData;
           var renderBrushed =function(){};
           var colors = [];
 
           // IE doesn't work without this
-          elem.css({height:scope.panel.height||scope.row.height});
-
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
+          elem.css({height:divHeight});
+          if(window.localStorage.lang=='cn'){
+            scope.panel.isEN=false;
+          }else if(window.localStorage.lang=='en'){
+            scope.panel.isEN=true;
+          }
           // Make a clone we can operate on.
 		  
           chartData = _.clone(scope.data);
@@ -455,13 +506,13 @@ function (angular, app, _, $, kbn) {
 
         require(['echarts'], function(ec){
           var echarts = ec;
-          if(myChart) {
-            myChart.dispose();
+          if(scope.myChart) {
+            scope.myChart.dispose();
           }
             // Populate element
             try {
 				 var labelcolor = false;
-					if (dashboard.current.style === 'dark'){
+              if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
 							labelcolor = true;
 						}
               // Add plot to scope so we can build out own legend
@@ -564,7 +615,7 @@ function (angular, app, _, $, kbn) {
 
 	      if(scope.panel.chart === 'china_map'){
 		
-		 myChart = echarts.init(document.getElementById(idd));
+		 scope.myChart = echarts.init(document.getElementById(idd));
 		
 
 
@@ -682,8 +733,8 @@ var option7 = {
 };
 		
 		 if(arrlabel.length===0){
-				myChart.setOption(option_nodata);}else{
-					myChart.setOption(option7);
+				scope.myChart.setOption(option_nodata);}else{
+					scope.myChart.setOption(option7);
 				}
 		
 		
@@ -693,7 +744,7 @@ var option7 = {
 		    if(scope.panel.chart === 'bmap'){
 	
 	
-	 myChart = echarts.init(document.getElementById(idd));
+	 scope.myChart = echarts.init(document.getElementById(idd));
 	
 
 
@@ -1034,8 +1085,8 @@ var option8 = {
     ]
 };
 	 if(arrlabel.length===0){
-				myChart.setOption(option_nodata);}else{
-					myChart.setOption(option8);
+				scope.myChart.setOption(option_nodata);}else{
+					scope.myChart.setOption(option8);
 				}
 	
 		}		
@@ -1043,7 +1094,7 @@ var option8 = {
 
         if(scope.panel.chart === 'cmap'){
 
-             myChart= echarts.init(document.getElementById(idd));
+             scope.myChart= echarts.init(document.getElementById(idd));
 
 
             var data = arrdata;
@@ -1070,7 +1121,8 @@ var option8 = {
 
 
           var option = {
-              backgroundColor: labelcolor?'#404a59':'rgba(91, 192, 222, 0.0)',
+            baseOption: {
+              backgroundColor: labelcolor ? '#404a59' : 'rgba(91, 192, 222, 0.0)',
               animation: true,
               animationDuration: 1000,
               animationEasing: 'cubicInOut',
@@ -1078,173 +1130,221 @@ var option8 = {
               animationEasingUpdate: 'cubicInOut',
               title: [
 
-                  {
-                      id: 'statistic',
-                      right: 120,
-                      top: 40,
-                      width: 100,
-                      textStyle: {
-                          color: labelcolor?'#fff':'#363636',
-                          fontSize: 20
-                      }
+                {
+                  id: 'statistic',
+                  right: 120,
+                  top: 40,
+                  width: 100,
+                  textStyle: {
+                    color: labelcolor ? '#fff' : '#363636',
+                    fontSize: 20
                   }
+                }
               ],
               toolbox: {
-                  iconStyle: {
-                      normal: {
-                          borderColor: labelcolor?'#fff':'#9aa3b7'
-                      },
-                      emphasis: {
-                          borderColor: labelcolor?'#b1e4ff':'#102b37'
-                      }
+                iconStyle: {
+                  normal: {
+                    borderColor: labelcolor ? '#fff' : '#9aa3b7'
+                  },
+                  emphasis: {
+                    borderColor: labelcolor ? '#b1e4ff' : '#102b37'
                   }
+                }
               },
               brush: {
-                  outOfBrush: {
-                      color: labelcolor?'#abc':'#ddedfe'
-                  },
-                  brushStyle: {
-                      borderWidth: 2,
-                      color: 'rgba(0,0,0,0.2)',
-                      borderColor: 'rgba(0,0,0,0.5)',
-                  },
-                  seriesIndex: [0, 1],
-                  throttleType: 'debounce',
-                  throttleDelay: 300,
-                  geoIndex: 0
+                outOfBrush: {
+                  color: labelcolor ? '#abc' : '#ddedfe'
+                },
+                brushStyle: {
+                  borderWidth: 2,
+                  color: 'rgba(0,0,0,0.2)',
+                  borderColor: 'rgba(0,0,0,0.5)',
+                },
+                seriesIndex: [0, 1],
+                throttleType: 'debounce',
+                throttleDelay: 300,
+                geoIndex: 0
               },
               geo: {
-                  map: 'china',
-                  left: '5%',
-              top: '5%',
-                  bottom: '5%',
+                map: 'china',
 
-                  label: {
-                      emphasis: {
-                          show: false
-                      }
-                  },
-                  roam: true,
-                  itemStyle: {
-                      normal: {
-                          areaColor: labelcolor?'#323c48':'#9aa3b7',
-                          borderColor: '#111'
-                      },
-                      emphasis: {
-                          areaColor: labelcolor?'#2a333d':'#91949c'
-                      }
+                label: {
+                  emphasis: {
+                    show: false
                   }
-              },
-              tooltip : {
-                  trigger: 'item'
-              },
-            visualMap: {
-              show:false,
-                  min: 0,
-                  max: radarmax,
-                  calculable: false,
-                  inRange: {
-                      symbolSize: [5, 15],
-
-
+                },
+                roam: true,
+                itemStyle: {
+                  normal: {
+                    areaColor: labelcolor ? '#323c48' : '#9aa3b7',
+                    borderColor: '#111'
                   },
-                  textStyle: {
-                      color: '#fff'
+                  emphasis: {
+                    areaColor: labelcolor ? '#2a333d' : '#91949c'
                   }
+                }
+              },
+              tooltip: {
+                trigger: 'item'
+              },
+              visualMap: {
+                show: false,
+                min: 0,
+                max: radarmax,
+                calculable: false,
+                inRange: {
+                  symbolSize: [5, 15],
+
+
+                },
+                textStyle: {
+                  color: '#fff'
+                }
               },
 
-              grid: {
-                  right: '5%',
-                  top: 100,
-                  bottom: 40,
-                  width: '30%'
-              },
+
               xAxis: {
-                  type: 'value',
-                  scale: true,
-                  position: 'top',
-                  boundaryGap: false,
-                  splitLine: {show: false},
-                  axisLine: {show: false},
-                  axisTick: {show: false},
-                  axisLabel: {margin: 2, textStyle: {color: labelcolor?'#aaa':'#363636'}},
+                type: 'value',
+                scale: true,
+                position: 'top',
+                boundaryGap: false,
+                splitLine: {show: false},
+                axisLine: {show: false},
+                axisTick: {show: false},
+                axisLabel: {margin: 2, textStyle: {color: labelcolor ? '#aaa' : '#363636'}},
               },
               yAxis: {
-                  type: 'category',
+                type: 'category',
 
-                  nameGap: 16,
-                  axisLine: {show: false, lineStyle: {color: '#ddd'}},
-                  axisTick: {show: false, lineStyle: {color: '#ddd'}},
-                  axisLabel: {interval: 0, textStyle: {color: labelcolor?'#ddd':'#363636'}},
-                  data: []
+                nameGap: 16,
+                axisLine: {show: false, lineStyle: {color: '#ddd'}},
+                axisTick: {show: false, lineStyle: {color: '#ddd'}},
+                axisLabel: {interval: 0, textStyle: {color: labelcolor ? '#ddd' : '#363636'}},
+                data: []
               },
-              series : [
-                  {
+              series: [
+                {
 
-                      type: 'scatter',
-                      coordinateSystem: 'geo',
-                      data: convertedData[0],
-                      symbolSize: function (val) {
-                          return Math.max(val[2] / 10, 8);
-                      },
-                      label: {
-                          normal: {
-                              formatter: '{b}',
-                              position: 'right',
-                              show: false
-                          },
-                          emphasis: {
-                              show: true
-                          }
-                      },
-                      itemStyle: {
-                          normal: {
-                              color: '#347fef'
-                          }
-                      }
+                  type: 'scatter',
+                  coordinateSystem: 'geo',
+                  data: convertedData[0],
+                  symbolSize: function (val) {
+                    return Math.max(val[2] / 10, 8);
                   },
-                  {
-                      name: 'Top 5',
-                      type: 'effectScatter',
-                      coordinateSystem: 'geo',
-                      data: convertedData[1],
-                      symbolSize: function (val) {
-                          return Math.max(val[2] / 10, 8);
-                      },
-                      showEffectOn: 'render',
-                      rippleEffect: {
-                          brushType: 'stroke'
-                      },
-                      hoverAnimation: true,
-                      label: {
-                          normal: {
-                              formatter: '{b}',
-                              position: 'right',
-                              show: true
-                          }
-                      },
-                      itemStyle: {
-                          normal: {
-                              color: '#f4cf25',
-                              shadowBlur: 10,
-                              shadowColor: '#333'
-                          }
-                      },
-                      zlevel: 1
+                  label: {
+                    normal: {
+                      formatter: '{b}',
+                      position: 'right',
+                      show: false
+                    },
+                    emphasis: {
+                      show: true
+                    }
                   },
-                  {
-                      id: 'bar',
-                      zlevel: 2,
-                      type: 'bar',
-                      symbol: 'none',
-                      itemStyle: {
-                          normal: {
-                              color: '#347fef'
-                          }
-                      },
-                      data: []
+                  itemStyle: {
+                    normal: {
+                      color: '#347fef'
+                    }
                   }
+                },
+                {
+                  name: 'Top 5',
+                  type: 'effectScatter',
+                  coordinateSystem: 'geo',
+                  data: convertedData[1],
+                  symbolSize: function (val) {
+                    return Math.max(val[2] / 10, 8);
+                  },
+                  showEffectOn: 'render',
+                  rippleEffect: {
+                    brushType: 'stroke'
+                  },
+                  hoverAnimation: true,
+                  label: {
+                    normal: {
+                      formatter: '{b}',
+                      position: 'right',
+                      show: true
+                    }
+                  },
+                  itemStyle: {
+                    normal: {
+                      color: '#f4cf25',
+                      shadowBlur: 10,
+                      shadowColor: '#333'
+                    }
+                  },
+                  zlevel: 1
+                },
+                {
+                  id: 'bar',
+                  zlevel: 2,
+                  type: 'bar',
+                  symbol: 'none',
+                  itemStyle: {
+                    normal: {
+                      color: '#347fef'
+                    }
+                  },
+                  data: []
+                }
               ]
+            },
+            media: [
+              {
+                option: {
+                  title: {
+                    id: 'statistic',
+                    right:'15%'
+                  },
+                  geo:{
+                    left: '10%',
+                    top: '10%',
+                    bottom: 'auto'
+                  },
+                  grid: {
+                    right: '5%',
+                    top: 100,
+                    bottom: 40,
+                    width: '30%'
+                  },
+                  legend: {
+                    orient: 'horizontal'
+                  }
+                }
+              },
+              {
+                query: {
+                  maxWidth: 500
+                },
+                option: {
+                  title: {
+                    id: 'statistic',
+                    right:'45%',
+                    top:'45%',
+                    textStyle:{
+                      fontSize:12
+                    }
+
+                  },
+                  geo:{
+                    left: 'auto',
+                    top: 'auto',
+                    bottom: 'auto'
+                  },
+                  grid: {
+                    left: '13%',
+                    right: '13%',
+                    bottom: 0,
+                    top:'52%',
+                    width: '100%'
+                  },
+                  legend: {
+                    bottom: '0'
+                  }
+                }
+              }
+            ]
           };
           renderBrushed = function(params) {
               var mainSeries = params.batch[0].selected[0];
@@ -1285,7 +1385,6 @@ var option8 = {
                 },
                 title: {
                   id: 'statistic',
-                  right:'15%',
                   text: count ? (scope.panel.isEN?'Average Click: ':'平均点击量: ') + (sum / count).toFixed(0) : ''
                 },
                 series: {
@@ -1295,13 +1394,13 @@ var option8 = {
               });
             };
 
-          myChart.on('brushselected', renderBrushed);
+          scope.myChart.on('brushselected', renderBrushed);
 
-          myChart.setOption(option);
+          scope.myChart.setOption(option);
 
 
           setTimeout(function () {
-              myChart.dispatchAction({
+              scope.myChart.dispatchAction({
                   type: 'brush',
                   areas: [
                       {
@@ -1318,7 +1417,7 @@ var option8 = {
 
                 if(scope.panel.chart === 'zmap'){
 
-                     myChart= echarts.init(document.getElementById(idd));
+                     scope.myChart= echarts.init(document.getElementById(idd));
                     var data11 = arrdata;
                     convertData = function (data) {
                         var res = [];
@@ -1343,183 +1442,230 @@ var option8 = {
 
 
                     var option11 = {
-                        backgroundColor: labelcolor?'#2f3e50':'rgba(91, 192, 222, 0.0)',
-                        animation: true,
-                        animationDuration: 1000,
-                        animationEasing: 'cubicInOut',
-                        animationDurationUpdate: 1000,
-                        animationEasingUpdate: 'cubicInOut',
-                        title: [
+                      baseOption: {
+                      backgroundColor: labelcolor ? '#2f3e50' : 'rgba(91, 192, 222, 0.0)',
+                      animation: true,
+                      animationDuration: 1000,
+                      animationEasing: 'cubicInOut',
+                      animationDurationUpdate: 1000,
+                      animationEasingUpdate: 'cubicInOut',
+                      title: [
 
-                            {
-                                id: 'statistic',
-                                right: 120,
-                                top: 40,
-                                width: 100,
-                                textStyle: {
-                                    color: labelcolor?'#fff':'#363636',
-                                    fontSize: 20
-                                }
+                        {
+                          id: 'statistic',
+                          right: 120,
+                          top: 40,
+                          width: 100,
+                          textStyle: {
+                            color: labelcolor ? '#fff' : '#363636',
+                            fontSize: 20
+                          }
+                        }
+                      ],
+                      toolbox: {
+                        iconStyle: {
+                          normal: {
+                            borderColor: labelcolor ? '#fff' : '#9aa3b7'
+                          },
+                          emphasis: {
+                            borderColor: labelcolor ? '#b1e4ff' : '#102b37'
+                          }
+                        }
+                      },
+                      brush: {
+                        outOfBrush: {
+                          color: labelcolor ? '#abc' : '#ddedfe'
+                        },
+                        brushStyle: {
+                          borderWidth: 2,
+                          color: 'rgba(0,0,0,0.2)',
+                          borderColor: 'rgba(0,0,0,0.5)',
+                        },
+                        seriesIndex: [0, 1],
+                        throttleType: 'debounce',
+                        throttleDelay: 300,
+                        geoIndex: 0
+                      },
+                      geo: {
+                        map: 'china',
+                        label: {
+                          emphasis: {
+                            show: false
+                          }
+                        },
+                        roam: true,
+                        itemStyle: {
+                          normal: {
+                            areaColor: labelcolor ? '#323c48' : '#9aa3b7',
+                            borderColor: labelcolor ? '#202328' : '#111',
+                            borderWidth: 1
+                          },
+                          emphasis: {
+                            areaColor: labelcolor ? '#2a333d' : '#91949c'
+                          }
+                        }
+                      },
+                      tooltip: {
+                        trigger: 'item'
+                      },
+                      visualMap: {
+                        show: false,
+                        min: 0,
+                        max: radarmax,
+                        calculable: false,
+                        inRange: {
+                          symbolSize: [5, 15],
+
+
+                        },
+                        textStyle: {
+                          color: '#fff'
+                        }
+                      },
+
+
+                      xAxis: {
+                        type: 'value',
+                        scale: true,
+                        position: 'top',
+                        boundaryGap: false,
+                        splitLine: {show: false},
+                        axisLine: {show: false},
+                        axisTick: {show: false},
+                        axisLabel: {margin: 2, textStyle: {color: labelcolor ? '#aaa' : '#363636'}},
+                      },
+                      yAxis: {
+                        type: 'category',
+
+                        nameGap: 16,
+                        axisLine: {show: false, lineStyle: {color: '#ddd'}},
+                        axisTick: {show: false, lineStyle: {color: '#ddd'}},
+                        axisLabel: {interval: 0, textStyle: {color: labelcolor ? '#ddd' : '#363636'}},
+                        data: []
+                      },
+                      series: [
+                        {
+                          type: 'scatter',
+                          coordinateSystem: 'geo',
+                          data: convertedData[0],
+                          symbolSize: function (val) {
+                            return Math.max(val[2] / 10, 8);
+                          },
+                          label: {
+                            normal: {
+                              formatter: '{b}',
+                              position: 'right',
+                              show: false
+                            },
+                            emphasis: {
+                              show: true
                             }
-                        ],
-                        toolbox: {
-                            iconStyle: {
-                                normal: {
-                                    borderColor: labelcolor?'#fff':'#9aa3b7'
-                                },
-                                emphasis: {
-                                    borderColor: labelcolor?'#b1e4ff':'#102b37'
-                                }
+                          },
+                          itemStyle: {
+                            normal: {
+                              color: '#f4cf25'
                             }
+                          }
                         },
-                        brush: {
-                            outOfBrush: {
-                                color: labelcolor?'#abc':'#ddedfe'
-                            },
-                            brushStyle: {
-                                borderWidth: 2,
-                                color: 'rgba(0,0,0,0.2)',
-                                borderColor: 'rgba(0,0,0,0.5)',
-                            },
-                            seriesIndex: [0, 1],
-                            throttleType: 'debounce',
-                            throttleDelay: 300,
-                            geoIndex: 0
-                        },
-                        geo: {
-                            map: 'china',
-                            left: '0%',
-                            top: '18%',
-                            right:'40%',
-                            bottom: '18%',
-
-                            label: {
-                                emphasis: {
-                                    show: false
-                                }
-                            },
-                            roam: true,
-                            itemStyle: {
-                                normal: {
-                                    areaColor: labelcolor?'#323c48':'#9aa3b7',
-                                    borderColor: labelcolor?'#202328':'#111',
-                                    borderWidth:1
-                                },
-                                emphasis: {
-                                    areaColor: labelcolor?'#2a333d':'#91949c'
-                                }
+                        {
+                          name: 'Top 5',
+                          type: 'effectScatter',
+                          coordinateSystem: 'geo',
+                          data: convertedData[1],
+                          symbolSize: function (val) {
+                            return Math.max(val[2] / 10, 8);
+                          },
+                          showEffectOn: 'render',
+                          rippleEffect: {
+                            brushType: 'stroke'
+                          },
+                          hoverAnimation: true,
+                          label: {
+                            normal: {
+                              formatter: '{b}',
+                              position: 'right',
+                              show: true
                             }
-                        },
-                        tooltip : {
-                            trigger: 'item'
-                        },
-                        visualMap: {
-                            show:false,
-                            min: 0,
-                            max: radarmax,
-                            calculable: false,
-                            inRange: {
-                                symbolSize: [5, 15],
-
-
-                            },
-                            textStyle: {
-                                color: '#fff'
+                          },
+                          itemStyle: {
+                            normal: {
+                              color: '#f4cf25',
+                              shadowBlur: 10,
+                              shadowColor: '#333'
                             }
+                          },
+                          zlevel: 1
                         },
-
-                        grid: {
-                            right: '5%',
-                            top: 100,
-                            bottom: 40,
-                            width: '30%'
-                        },
-                        xAxis: {
-                            type: 'value',
-                            scale: true,
-                            position: 'top',
-                            boundaryGap: false,
-                            splitLine: {show: false},
-                            axisLine: {show: false},
-                            axisTick: {show: false},
-                            axisLabel: {margin: 2, textStyle: {color: labelcolor?'#aaa':'#363636'}},
-                        },
-                        yAxis: {
-                            type: 'category',
-
-                            nameGap: 16,
-                            axisLine: {show: false, lineStyle: {color: '#ddd'}},
-                            axisTick: {show: false, lineStyle: {color: '#ddd'}},
-                            axisLabel: {interval: 0, textStyle: {color: labelcolor?'#ddd':'#363636'}},
-                            data: []
-                        },
-                        series : [
-                            {
-
-                                type: 'scatter',
-                                coordinateSystem: 'geo',
-                                data: convertedData[0],
-                                symbolSize: function (val) {
-                                    return Math.max(val[2] / 10, 8);
-                                },
-                                label: {
-                                    normal: {
-                                        formatter: '{b}',
-                                        position: 'right',
-                                        show: false
-                                    },
-                                    emphasis: {
-                                        show: true
-                                    }
-                                },
-                                itemStyle: {
-                                    normal: {
-                                        color: '#f4cf25'
-                                    }
-                                }
-                            },
-                            {
-                                name: 'Top 5',
-                                type: 'effectScatter',
-                                coordinateSystem: 'geo',
-                                data: convertedData[1],
-                                symbolSize: function (val) {
-                                    return Math.max(val[2] / 10, 8);
-                                },
-                                showEffectOn: 'render',
-                                rippleEffect: {
-                                    brushType: 'stroke'
-                                },
-                                hoverAnimation: true,
-                                label: {
-                                    normal: {
-                                        formatter: '{b}',
-                                        position: 'right',
-                                        show: true
-                                    }
-                                },
-                                itemStyle: {
-                                    normal: {
-                                        color: '#f4cf25',
-                                        shadowBlur: 10,
-                                        shadowColor: '#333'
-                                    }
-                                },
-                                zlevel: 1
-                            },
-                            {
-                                id: 'bar',
-                                zlevel: 2,
-                                type: 'bar',
-                                symbol: 'none',
-                                itemStyle: {
-                                    normal: {
-                                        color: '#347fef'
-                                    }
-                                },
-                                data: []
+                        {
+                          id: 'bar',
+                          zlevel: 2,
+                          type: 'bar',
+                          symbol: 'none',
+                          itemStyle: {
+                            normal: {
+                              color: '#347fef'
                             }
-                        ]
+                          },
+                          data: []
+                        }
+                      ]
+                    },
+                      media: [
+                        {
+                          option: {
+                            title: {
+                              id: 'statistic',
+                              right:'15%'
+                            },
+                            geo:{
+                              left: '0%',
+                              top: '18%',
+                              right: '40%',
+                              bottom: '18%',
+                            },
+                            grid: {
+                              right: '5%',
+                              top: 100,
+                              bottom: 40,
+                              width: '30%'
+                            },
+                            legend: {
+                              orient: 'horizontal'
+                            }
+                          }
+                        },
+                        {
+                          query: {
+                            maxWidth: 500
+                          },
+                          option: {
+                            title: {
+                              id: 'statistic',
+                              right:'45%',
+                              top:'45%',
+                              textStyle:{
+                                fontSize:12
+                              }
+
+                            },
+                            geo:{
+                              left: 'auto',
+                              top: 'auto',
+                              bottom: 'auto'
+                            },
+                            grid: {
+                              left: '13%',
+                              right: '13%',
+                              bottom: 0,
+                              top:'52%',
+                              width: '100%'
+                            },
+                            legend: {
+                              bottom: '0'
+                            }
+                          }
+                        }
+                      ]
                     };
 
                   renderBrushed=function (params) {
@@ -1561,7 +1707,6 @@ var option8 = {
                       },
                       title: {
                         id: 'statistic',
-                        right:'15%',
                         text: count ? (scope.panel.isEN?'Average Click: ':'平均点击量: ') + (sum / count).toFixed(0) : ''
                       },
                       series: {
@@ -1571,20 +1716,20 @@ var option8 = {
                     });
                   };
 
-                    myChart.on('brushselected', renderBrushed);
+                    scope.myChart.on('brushselected', renderBrushed);
                   if(scope.panel.clickEnable){
-                    myChart.on('click', function () {
+                    scope.myChart.on('click', function () {
                       // 点击联动
                       dashboard.page_switch('App_Demo_User');
 
                     });
                   }
 
-                    myChart.setOption(option11);
+                    scope.myChart.setOption(option11);
 
 
                     setTimeout(function () {
-                        myChart.dispatchAction({
+                        scope.myChart.dispatchAction({
                             type: 'brush',
                             areas: [
                                 {
@@ -1602,14 +1747,14 @@ var option8 = {
 
 			  
               // Populate legend
-              if(elem.is(":visible")){
-                setTimeout(function(){
-                 // scope.legend = plot.getData();
-                  if(!scope.$$phase) {
-                    scope.$apply();
-                  }
-                });
-              }
+              // if(elem.is(":visible")){
+              //   setTimeout(function(){
+              //    // scope.legend = plot.getData();
+              //     if(!scope.$$phase) {
+              //       scope.$apply();
+              //     }
+              //   });
+              // }
 
             } catch(e) {
               elem.text(e);
@@ -1617,32 +1762,9 @@ var option8 = {
           });
         }
 
-        elem.bind("plotclick", function (event, pos, object) {
-          if(object) {
-            scope.build_search(scope.data[object.seriesIndex]);
-            scope.panel.lastColor = object.series.color;
-          }
-        });
 
-        var $tooltip = $('<div>');
-        elem.bind("plothover", function (event, pos, item) {
-          if (item) {
-            var value = scope.panel.chart === 'bar'  ? item.datapoint[1] : item.datapoint[1][0][1];
-            // if (scope.panel.mode === 'count') {
-            //   value = value.toFixed(0);
-            // } else {
-            //   value = value.toFixed(scope.panel.decimal_points);
-            // }
-            $tooltip
-              .html(
-                kbn.query_color_dot(item.series.color, 20) + ' ' +
-                item.series.label + " (" + dashboard.numberWithCommas(value.toFixed(scope.panel.decimal_points)) +")"
-              )
-              .place_tt(pos.pageX, pos.pageY);
-          } else {
-            $tooltip.remove();
-          }
-        });
+
+
 
       }
     };

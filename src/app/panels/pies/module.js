@@ -17,7 +17,7 @@ define([
   'jquery',
   'kbn',
   'echarts-liquidfill',
-    'echarts-wordcloud'
+   'echarts-wordcloud'
 
 ],
 function (angular, app, _, $, kbn) {
@@ -38,6 +38,7 @@ function (angular, app, _, $, kbn) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:true,
       queries     : {
         mode        : 'all',
         ids         : [],
@@ -58,7 +59,8 @@ function (angular, app, _, $, kbn) {
       donut   : false,
       tilt    : false,
       display:'block',
-
+     fullHeight:'700%',
+     useInitHeight:true,
       icon:"icon-caret-down",
       labels  : true,
 	  ylabels :true,
@@ -85,7 +87,19 @@ function (angular, app, _, $, kbn) {
 
     $scope.init = function () {
       $scope.hits = 0;
+
       //$scope.testMultivalued();
+
+
+      // $('.fullscreen-link').on('click', function () {
+      //
+      //
+      // });
+
+      // Fullscreen ibox function
+
+
+
 
       // Start refresh timer if enabled
       if ($scope.panel.refresh.enable) {
@@ -98,6 +112,34 @@ function (angular, app, _, $, kbn) {
       
       $scope.get_data();
     };
+    $scope.reSize=function() {
+
+      $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+      $scope.$emit('render');
+      $(window).trigger('resize');
+
+
+    };
+
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        //小键盘+放大缩小指定仪表盘
+        $scope.reSize();
+      }
+
+
+    };
+
+
+
 
     $scope.testMultivalued = function() {
       if($scope.panel.field && $scope.fields.typeList[$scope.panel.field] && $scope.fields.typeList[$scope.panel.field].schema.indexOf("M") > -1) {
@@ -121,6 +163,14 @@ function (angular, app, _, $, kbn) {
               $scope.panel.icon="icon-caret-up";
           }
       };
+
+    $scope.noNumbers = function (e){
+      var keynum;
+      var keychar;
+      keynum = window.event ? e.keyCode : e.which;
+      keychar = String.fromCharCode(keynum);
+      alert(keynum+':'+keychar);
+    };
     /**
      *
      *
@@ -206,6 +256,7 @@ function (angular, app, _, $, kbn) {
     };
 
     $scope.get_data = function() {
+      //$('#'+$scope.$id+'a').addClass('sk-loading');
         if(($scope.panel.linkage_id === dashboard.current.linkage_id)||dashboard.current.enable_linkage){
         // Make sure we have everything for the request to complete
         if (dashboard.indices.length === 0) {
@@ -240,7 +291,7 @@ function (angular, app, _, $, kbn) {
                 $scope.panel.error = $scope.parse_error(results.error.msg);
                 $scope.data = [];
                 $scope.label = [];
-                $scope.panelMeta.loading = false;
+                // $scope.panelMeta.loading = false;
                 $scope.$emit('render');
                 return;
             }
@@ -273,7 +324,7 @@ function (angular, app, _, $, kbn) {
             var sum = 0;
             var k = 0;
             var missing = 0;
-            $scope.panelMeta.loading = false;
+            // $scope.panelMeta.loading = false;
             $scope.hits = results.response.numFound;
             $scope.data = [];
             $scope.label = [];
@@ -384,6 +435,7 @@ function (angular, app, _, $, kbn) {
 
     $scope.close_edit = function() {
       // Start refresh timer if enabled
+      $scope.panel.init_height = $scope.panel.height;
       if ($scope.panel.refresh.enable) {
         $scope.set_timer($scope.panel.refresh.interval);
       }
@@ -422,19 +474,36 @@ function (angular, app, _, $, kbn) {
         });
 
         // Re-render if the window is resized
+        // $(window).resize(function() {
+        //   render_panel();
+        // });
         angular.element(window).bind('resize', function(){
+          if(window.innerWidth<500){
+            dashboard.current.mobile =true;
+          }else {
+            dashboard.current.mobile =false;
+          }
           render_panel();
         });
 
         // Function for rendering panel
         function render_panel() {
           var colors = [];
-
+          scope.panelMeta.loading = false;
           // IE doesn't work without this
-            elem.css({height:scope.panel.height||scope.row.height});
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
+            elem.css({height:divHeight});
 
           // Make a clone we can operate on.
-		  
+          var showLabel =  scope.panel.labels;
+          if(window.innerWidth<500){
+            showLabel = false;
+          }else{
+            showLabel = scope.panel.labels;
+          }
         
 
           if (filterSrv.idsByTypeAndField('pies',scope.panel.field).length > 0) {
@@ -476,7 +545,7 @@ function (angular, app, _, $, kbn) {
 		
           var idd = scope.$id;
           var labelcolor = false;
-          if (dashboard.current.style === 'dark'){
+          if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
               labelcolor = true;
           }
                 // Add plot to scope so we can build out own legend
@@ -484,7 +553,7 @@ function (angular, app, _, $, kbn) {
           if(myChart) {
             myChart.dispose();
           }
-
+          //$('#'+idd+'a').removeClass('sk-loading');
           if(scope.panel.chart === 'dashboard') {
 
             var AP_1 = 0.0;
@@ -634,74 +703,150 @@ function (angular, app, _, $, kbn) {
             myChart = echarts.init(document.getElementById(idd));
 
 
-            var option1 = {
-      title : {
-          show:false,
-          x:'center'
-      },
-      color:colors,
-      tooltip : {
-          trigger: 'item',
-          confine:true,
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
-      },
-      legend: {
-      show:scope.panel.eLegend,
-          orient: scope.panel.arrangement,
-          left: 'left',
-      top:'1%',
-      bottom:'1%',
+  var option1 = {
+   //baseOption: {
+     title: {
+       show: false,
+       x: 'center'
+     },
+     color: colors,
+     tooltip: {
+       trigger: 'item',
+       confine: true,
+       formatter: "{a} <br/>{b} : {c} ({d}%)"
+     },
+     legend: {
+       show: scope.panel.eLegend,
+       type: 'scroll',
+       pageIconColor: '#539aca',
+       orient: scope.panel.arrangement,
+       left: 'left',
+       top: '1%',
+       bottom: '1%',
 
-      textStyle:{
-        fontSize:scope.panel.fontsize,
-        color:'auto'
-      },
+       textStyle: {
+         fontSize: scope.panel.fontsize,
+         color: 'auto'
+       },
 
-          data: scope.data
-      },
-      series : [
-          {
-              name:scope.panel.title,
-              type: 'pie',
+       data: scope.data
+     },
+     series: [
+       {
+         name: scope.panel.title,
+         type: 'pie',
 
-              radius : scope.panel.donut ?['60%','90%']:'90%',
-        label :{
-          normal:{
-            show:scope.panel.donut ? false:scope.panel.labels,
-            position:scope.panel.donut ?'center':'inside',
-            textStyle:{
-              fontSize:scope.panel.fontsize
-            }
-          },
-          emphasis: {
-                      show: scope.panel.donut,
-                      textStyle: {
-                          fontSize: scope.panel.fontsize,
-                          fontWeight: 'bold'
-                      }
-                  }
+         radius: scope.panel.donut ? ['56%', '80%'] : '80%',
+         label: {
+           normal: {
+             show: scope.panel.donut ? false : showLabel,
+             position: scope.panel.donut ? 'center' : 'inside',
+             textStyle: {
+               fontSize: scope.panel.fontsize
+             }
+           },
+           emphasis: {
+             show: scope.panel.donut,
+             textStyle: {
+               fontSize: scope.panel.fontsize,
+               fontWeight: 'bold'
+             }
+           }
 
-        },
-              center: ['60%', '50%'],
-              data:scope.data,
-              itemStyle: {
-          normal: {
-            color: function(params) {
-              var colorList = colors;
-              return colorList[params.dataIndex];
-              },
-            shadowColor: '#fff',
-            barBorderRadius: 5
+         },
+         center: ['60%', '50%'],
+         data: scope.data,
+         itemStyle: {
+           normal: {
+             color: function (params) {
+               var colorList = colors;
+               return colorList[params.dataIndex];
+             },
+             shadowColor: '#fff',
+             barBorderRadius: 5
 
-              },
-                  emphasis: {
-                      shadowBlur: 10,
-                      shadowOffsetX: 0,
-                      shadowColor: 'rgba(0, 0, 0, 0.5)'
-                  }
-              }
-          }
-      ]
+           },
+           emphasis: {
+             shadowBlur: 10,
+             shadowOffsetX: 0,
+             shadowColor: 'rgba(0, 0, 0, 0.5)'
+           }
+         }
+       }
+     ]
+   //},
+    // media: [
+    //   {
+    //     option: {
+    //       legend: {
+    //         right: 'center',
+    //         bottom: 0,
+    //         orient: 'horizontal'
+    //       },
+    //       series: [
+    //         {
+    //           radius: [30, '50%'],
+    //           center: ['75%', '50%']
+    //         }
+    //       ]
+    //     }
+    //   },
+    //   {
+    //     query: {
+    //       minAspectRatio: 1
+    //     },
+    //     option: {
+    //       legend: {
+    //         right: 'center',
+    //         bottom: 0,
+    //         orient: 'horizontal'
+    //       },
+    //       series: [
+    //         {
+    //           radius: [30, '50%'],
+    //           center: ['75%', '50%']
+    //         }
+    //       ]
+    //     }
+    //   },
+    //   {
+    //     query: {
+    //       maxAspectRatio: 1
+    //     },
+    //     option: {
+    //       legend: {
+    //         right: 'center',
+    //         bottom: 0,
+    //         orient: 'horizontal'
+    //       },
+    //       series: [
+    //         {
+    //           radius: [30, '50%'],
+    //           center: ['50%', '70%']
+    //         }
+    //       ]
+    //     }
+    //   },
+    //   {
+    //     query: {
+    //       maxWidth: 500
+    //     },
+    //     option: {
+    //       legend: {
+    //         right: 10,
+    //         top: '15%',
+    //         orient: 'vertical'
+    //       },
+    //       series: [
+    //
+    //         {
+    //           radius: [30, '50%'],
+    //           center: ['50%', '75%']
+    //         }
+    //       ]
+    //     }
+    //   }
+    // ]
     };
 
 
@@ -730,11 +875,13 @@ function (angular, app, _, $, kbn) {
               color:colors,
               tooltip: {
                   trigger: "item",
-                                  confine:true,
+                  confine:true,
                   formatter: "{a} <br/>{b} : {c} ({d}%)"
                     },
               legend: {
                   show:scope.panel.eLegend,
+                type:'scroll',
+                pageIconColor:'#539aca',
                   x: "left",
                   orient: scope.panel.arrangement,
                   textStyle:{
@@ -746,7 +893,6 @@ function (angular, app, _, $, kbn) {
               label: {
                     normal: {
                       formatter: "{b} ({d}%)",
-
                       textStyle:{
                             fontSize:scope.panel.fontsize
                             }
@@ -766,10 +912,10 @@ function (angular, app, _, $, kbn) {
                 center: ['50%', '60%'],
                 label: {
                   normal: {
-                    show: scope.panel.labels
+                    show: showLabel
                       },
                   emphasis: {
-                    show: scope.panel.labels
+                    show: showLabel
                       }
                     },
                 lableLine: {
@@ -806,6 +952,7 @@ function (angular, app, _, $, kbn) {
           }
 
           if(scope.panel.chart === 'bar') {
+            scope.label.reverse();
             myChart = echarts.init(document.getElementById(idd));
             var option3 = {
             color:colors,
@@ -831,7 +978,7 @@ function (angular, app, _, $, kbn) {
                 show:false
                 },
               axisLabel:{
-                show:scope.panel.labels,
+                show:showLabel,
                 textStyle:{
                   color:labelcolor ? '#fff':'#4F4F4F',
                   fontSize:scope.panel.fontsize,
@@ -1134,6 +1281,7 @@ function (angular, app, _, $, kbn) {
           }
 
           if(scope.panel.chart === 'bars'){
+            scope.label.reverse();
             var islength = 0;
             if(scope.data.length>5){
               islength =1;
@@ -1168,7 +1316,7 @@ function (angular, app, _, $, kbn) {
               show: false
           },
           axisLabel: {
-        show:scope.panel.labels,
+        show:showLabel,
         textStyle:{
               color:'#24b2f9',
               fontSize:scope.panel.fontsize,
@@ -1328,6 +1476,7 @@ function (angular, app, _, $, kbn) {
           }
 
           if(scope.panel.chart === 'ebar') {
+            scope.label.reverse();
 
             myChart = echarts.init(document.getElementById(idd));
             var option7 = {
@@ -1463,7 +1612,7 @@ function (angular, app, _, $, kbn) {
 
                     color: ['#178ad9'],
                     center: [x, '50%'],
-                    radius: '65%',
+                    radius: window.innerWidth>500?'65%':'45%',
 
                     type: 'liquidFill',
                     shape:'path://M229.844,151.547v-166.75c0-11.92-9.662-21.582-21.58-21.582s-21.581,9.662-21.581,21.582v166.75c-9.088,6.654-14.993,17.397-14.993,29.524c0,20.2,16.374,36.575,36.574,36.575c20.199,0,36.574-16.375,36.574-36.575C244.838,168.944,238.932,158.201,229.844,151.547z',

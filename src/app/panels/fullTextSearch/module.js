@@ -49,6 +49,9 @@ define([
 
       // Set and populate defaults
       var _d = {
+        panelExpand:false,
+        fullHeight:'700%',
+        useInitHeight:true,
           display:'block',
           icon:"icon-caret-down",
         status: "Stable",
@@ -90,6 +93,8 @@ define([
       $scope.init = function() {
         $scope.Math = Math;
         // Solr
+
+
         $scope.sjs = $scope.sjs || sjsResource(dashboard.current.solr.server + dashboard.current.solr.core_name); // jshint ignore:line
 
         $scope.$on('refresh', function() {

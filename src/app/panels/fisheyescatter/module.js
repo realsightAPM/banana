@@ -38,6 +38,9 @@ define([
 
       // Set and populate defaults
       var _d = {
+        panelExpand:true,
+        fullHeight:'700',
+        useInitHeight:true,
         queries     : {
           mode        : 'all',
           ids         : [],
@@ -87,7 +90,19 @@ define([
       $scope.init = function () {
         $scope.hits = 0;
         //$scope.testMultivalued();
-
+        // $('.fullscreen-link').on('click', function () {
+        //   var ibox = $(this).closest('div.ibox1');
+        //   var button = $(this).find('i');
+        //
+        //   $('body').toggleClass('fullscreen-ibox1-mode');
+        //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+        //   ibox.toggleClass('fullscreen');
+        //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+        //   $scope.$emit('render');
+        //
+        //   $(window).trigger('resize');
+        //
+        // });
         // Start refresh timer if enabled
         if ($scope.panel.refresh.enable) {
           $scope.set_timer($scope.panel.refresh.interval);
@@ -111,6 +126,32 @@ define([
           return;
         }
       };
+      $scope.reSize=function() {
+
+        $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+        var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+        var button = $('#'+$scope.$id+'z').find('i');
+        //var aaa = '#'+$scope.$id+'z';
+        $('body').toggleClass('fullscreen-ibox1-mode');
+        button.toggleClass('fa-expand').toggleClass('fa-compress');
+        ibox.toggleClass('fullscreen');
+        $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+        $scope.$emit('render');
+        $(window).trigger('resize');
+
+
+      };
+
+      //快捷键+控制放大缩小panel
+      $scope.zoomOut=function() {
+        if(window.event.keyCode===107){
+          $scope.reSize();
+        }
+
+
+      };
+
       $scope.display=function() {
         if($scope.panel.display === 'none'){
           $scope.panel.display='block';
@@ -248,11 +289,11 @@ define([
 
     });
 
-    module.directive('fisheyescatterChart', function(querySrv,dashboard,filterSrv) {
+    module.directive('fisheyescatterChart', function(querySrv,dashboard,filterSrv,$translate) {
       return {
         restrict: 'A',
         link: function(scope, elem) {
-          var myChart;
+
           // Receive render events
           scope.$on('render',function(){
             render_panel();
@@ -268,7 +309,11 @@ define([
             var colors = [];
 
             // IE doesn't work without this
-            elem.css({height:scope.panel.height||scope.row.height});
+            var divHeight=scope.panel.height||scope.row.height;
+            if(!scope.panel.useInitHeight){
+              divHeight = scope.panel.fullHeight;
+            }
+            elem.css({height:divHeight});
 
             // Make a clone we can operate on.
 
@@ -282,10 +327,13 @@ define([
             }
             var cloneData = scope.data;
             cloneData.scatter.dotList.reverse();
-            var idd = scope.$id;
+
             var labelcolor = false;
+            var d3_label_color = "black";
             if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
               labelcolor = true;
+              var d3_label_color = "white";
+
             }
             var x;
             var y;
@@ -296,7 +344,7 @@ define([
 
             if(scope.panel.chart === 'network') {
 
-              var time ;
+
               var timeData = [];
               var max_data=0;
               // 获取fisheye图表数据
@@ -310,15 +358,15 @@ define([
                   max_data=cloneData.scatter.dotList[i1][1];
                 }
                 timeData[i1] = cloneData.scatter.dotList[i1][0]/60000;
-                fisheye_data[i1] = {name:"时间"+cloneData.scatter.dotList[i1][1]+"ms",time:cloneData.scatter.dotList[i1][0]/60000,value:cloneData.scatter.dotList[i1][1],status:cloneData.scatter.dotList[i1][4],radius:cloneData.scatter.dotList[i1][4]}
+                fisheye_data[i1] = {name:$translate.instant("Time")+cloneData.scatter.dotList[i1][1]+"ms",time:cloneData.scatter.dotList[i1][0]/60000,value:cloneData.scatter.dotList[i1][1],status:cloneData.scatter.dotList[i1][4],radius:cloneData.scatter.dotList[i1][4]}
 
               }
               //timeData.sort();
               //x轴为时间，y轴为对应值，radius函数返回点大小，color函数返回点颜色
-              x=function(d){return d.time;}
-              y=function(d){return d.value;}
-              radius=function(d){return d.radius;}
-              color=function(d){return d.status;}
+              x=function(d){return d.time;};
+              y=function(d){return d.value;};
+              radius=function(d){return d.radius;};
+              color=function(d){return d.status;};
               position=function(dot){
                 dot .attr("cx", function(d) { return xScale(x(d)); })
                   .attr("cy", function(d) { return yScale(y(d)); })
@@ -329,12 +377,12 @@ define([
               // Chart dimensions.
               var margin = {top: 5.5, right: 19.5, bottom: 12.5, left: 39.5},
                 width = 0.96*elem.parent().width(),
-                height = parseInt(scope.panel.height) - margin.top - margin.bottom;
+                height = parseInt(divHeight) - margin.top - margin.bottom;
 
               // Various scales and distortions.
               var xScale = d3.fisheye.scale(d3.scale.log).domain([time_from_to,timeData[0]]).range([0, width]),
                 yScale = d3.fisheye.scale(d3.scale.linear).domain([0, max_data]).range([height, 0]),
-                radiusScale = d3.scale.sqrt().domain([0, 80]).range([1, 40]),
+                radiusScale = d3.scale.sqrt().domain([0, 80]).range([1, 25]),
                 colorScale = d3.scale.category20c().domain([0, 1]);
 
               // The x & y axes.
@@ -357,31 +405,32 @@ define([
               // Add the x-axis.
               svg.append("g")
                 .attr("class", "x axis")
+                .attr("fill",d3_label_color)
                 .attr("transform", "translate(0," + height + ")")
                 .call(xAxis);
 
               // Add the y-axis.
               svg.append("g")
                 .attr("class", "y axis")
+                .attr("fill",d3_label_color)
                 .call(yAxis);
 
               // Add an x-axis label.
               svg.append("text")
-                .attr("class", "x label")
-                .attr("text-anchor", "end")
-                .attr("x", width - 6)
-                .attr("y", height - 6)
-                .attr("dy", ".35em")
-                .text("time");
+                .attr("fill",d3_label_color)
+                .attr("font-size", 20)
+                .attr("x", width-20 )
+                .attr("y", height+11)
+                .text($translate.instant("Interval")+"(min)");
 
               // Add a y-axis label.
               svg.append("text")
-                .attr("class", "y label")
+                .attr("fill",d3_label_color)
+                .attr("font-size", 20)
                 .attr("text-anchor", "end")
-
-                .attr("dy", ".75em")
-
-                .text("ms");
+                .attr("x",2)
+                .attr("y",2)
+                .text($translate.instant("Time")+"(ms)");
 
               // Load the data.
 

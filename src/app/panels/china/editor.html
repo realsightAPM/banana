@@ -39,9 +39,6 @@
     <label class="small">{{'Mode'|translate}}</label>
     <select ng-change="set_refresh(true)" class="input-small" ng-model="panel.mode" ng-options="f for f in ['count','min','mean','max','sum']"></select>
   </div>
-  <div class="span1" >
-    <label class="small">{{'EN'|translate}}</label><input type="checkbox" ng-model="panel.isEN" ng-checked="panel.isEN">
-  </div>
   <div class="span2" ng-if="panel.mode != 'count'">
     <label class="small">{{'Stats Field'|translate}}</label>
     <input type="text" class="input-small" bs-typeahead="fields.list" ng-model="panel.stats_field" ng-change="set_refresh(true)">

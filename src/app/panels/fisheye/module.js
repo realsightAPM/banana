@@ -49,6 +49,9 @@ function (angular, app, _, $, kbn) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:true,
+      fullHeight:'700',
+      useInitHeight:true,
       queries     : {
         mode        : 'all',
         ids         : [],
@@ -95,7 +98,19 @@ function (angular, app, _, $, kbn) {
     $scope.init = function () {
       $scope.hits = 0;
       //$scope.testMultivalued();
-
+      // $('.fullscreen-link').on('click', function () {
+      //   var ibox = $(this).closest('div.ibox1');
+      //   var button = $(this).find('i');
+      //
+      //   $('body').toggleClass('fullscreen-ibox1-mode');
+      //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+      //   ibox.toggleClass('fullscreen');
+      //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+      //   $scope.$emit('render');
+      //
+      //   $(window).trigger('resize');
+      //
+      // });
       // Start refresh timer if enabled
       if ($scope.panel.refresh.enable) {
         $scope.set_timer($scope.panel.refresh.interval);
@@ -106,6 +121,32 @@ function (angular, app, _, $, kbn) {
       });
       
       $scope.get_data();
+    };
+
+    $scope.reSize=function() {
+
+      $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
+      var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
+      var button = $('#'+$scope.$id+'z').find('i');
+      //var aaa = '#'+$scope.$id+'z';
+      $('body').toggleClass('fullscreen-ibox1-mode');
+      button.toggleClass('fa-expand').toggleClass('fa-compress');
+      ibox.toggleClass('fullscreen');
+      $scope.panel.fullHeight = ibox[0].offsetHeight-60;
+      $scope.$emit('render');
+      $(window).trigger('resize');
+
+
+    };
+
+    //快捷键+控制放大缩小panel
+    $scope.zoomOut=function() {
+      if(window.event.keyCode===107){
+        $scope.reSize();
+      }
+
+
     };
 
     $scope.testMultivalued = function() {
@@ -120,7 +161,7 @@ function (angular, app, _, $, kbn) {
       }
     };
       $scope.display=function() {
-          if($scope.panel.display=='none'){
+          if($scope.panel.display==='none'){
               $scope.panel.display='block';
               $scope.panel.icon="icon-caret-down";
 
@@ -211,7 +252,7 @@ function (angular, app, _, $, kbn) {
     };
 
     $scope.get_data = function() {
-        if(($scope.panel.linkage_id==dashboard.current.linkage_id)||dashboard.current.enable_linkage){
+        if(($scope.panel.linkage_id===dashboard.current.linkage_id)||dashboard.current.enable_linkage){
         // Make sure we have everything for the request to complete
         if (dashboard.indices.length === 0) {
             return;
@@ -398,7 +439,7 @@ function (angular, app, _, $, kbn) {
 
   });
 
-  module.directive('fisheyeChart', function(querySrv,dashboard,filterSrv) {
+  module.directive('fisheyeChart', function(querySrv,dashboard,filterSrv,$translate) {
     return {
       restrict: 'A',
       link: function(scope, elem) {
@@ -420,9 +461,14 @@ function (angular, app, _, $, kbn) {
 
             var el = elem[0];
 
+          var divHeight=scope.panel.height||scope.row.height;
+          if(!scope.panel.useInitHeight){
+            divHeight = scope.panel.fullHeight;
+          }
 
+          var height = parseInt(divHeight);
             var parent_width = elem.parent().width(),
-                height = parseInt(scope.panel.height),
+
                 padding = 50,
                 outerRadius = height / 2 - 30,
                 innerRadius = outerRadius / 3;
@@ -440,7 +486,7 @@ function (angular, app, _, $, kbn) {
             var colors = [];
 
             // IE doesn't work without this
-            elem.css({height: scope.panel.height || scope.row.height});
+          elem.css({height:divHeight});
 
             // Make a clone we can operate on.
 
@@ -466,21 +512,24 @@ function (angular, app, _, $, kbn) {
             try {
 
                 var labelcolor = false;
+              var d3_label_color = "black";
               if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
-                    labelcolor = true;
-                }
+                labelcolor = true;
+                var d3_label_color = "white";
+
+              }
                 // Add plot to scope so we can build out own legend
 
 
                 if (scope.panel.chart === 'fisheye') {
-                  x=function(d) { return d.income; }
-                  y=function(d) { return d.lifeExpectancy; }
-                  radius=function(d) { return d.population; }
-                  color=function(d) { return d.region; }
+                  x=function(d) { return d.income; };
+                  y=function(d) { return d.lifeExpectancy; };
+                  radius=function(d) { return d.population; };
+                  color=function(d) { return d.region; };
 
                   // Chart dimensions.
                   var margin = {top: 5.5, right: 19.5, bottom: 12.5, left: 39.5},
-                    width = 0.96*elem.parent().width(),
+                    width = 0.95*elem.parent().width(),
                     height = parseInt(scope.panel.height) - margin.top - margin.bottom;
 
                   // Various scales and distortions.
@@ -510,30 +559,31 @@ function (angular, app, _, $, kbn) {
                   svg.append("g")
                     .attr("class", "x axis")
                     .attr("transform", "translate(0," + height + ")")
+                    .attr("fill","white")
                     .call(xAxis);
 
                   // Add the y-axis.
                   svg.append("g")
                     .attr("class", "y axis")
+                    .attr("fill","white")
                     .call(yAxis);
 
                   // Add an x-axis label.
                   svg.append("text")
-                    .attr("class", "x label")
-                    .attr("text-anchor", "end")
-                    .attr("x", width - 6)
-                    .attr("y", height - 6)
-                    .text("income per capita, inflation-adjusted (dollars)");
+                    .attr("fill",d3_label_color)
+                    .attr("font-size", 20)
+                    .attr("x", width-37)
+                    .attr("y", height-5)
+                    .text($translate.instant("Interval")+"(s)");
 
                   // Add a y-axis label.
                   svg.append("text")
-                    .attr("class", "y label")
+                    .attr("fill",d3_label_color)
+                    .attr("font-size", 20)
                     .attr("text-anchor", "end")
-                    .attr("x", -6)
-                    .attr("y", 6)
-                    .attr("dy", ".75em")
-                    .attr("transform", "rotate(-90)")
-                    .text("life expectancy (years)");
+                    .attr("x",2)
+                    .attr("y",12)
+                    .text($translate.instant("Time")+"(ms)");
 
                   // Load the data.
                   d3.json("vendor/d3/fisheye/nations.json", function(nations) {

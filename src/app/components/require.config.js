@@ -25,7 +25,8 @@ require.config({
     'angular-smart-table':    '../../bower_components/angular-smart-table/dist/smart-table',
     'angular-translate':  '../vendor/angular/angular-translate',
     'angular-translate-loader-static-files':  '../vendor/angular/angular-translate-loader-static-files',
-
+    'angular-sweetalert':    '../../bower_components/ngSweetAlert/SweetAlert',
+    sweetalert:               '../../bower_components/sweetalert/dist/sweetalert.min',
     timepicker:               '../vendor/angular/timepicker',
     datepicker:               '../vendor/angular/datepicker',
 
@@ -33,8 +34,31 @@ require.config({
     'underscore-src':         '../vendor/underscore',
     bootstrap:                '../vendor/bootstrap/bootstrap',
 
-    jquery:                   '../vendor/jquery/jquery-1.12.1',
+
+    jquery:                   '../../bower_components/jquery/dist/jquery',
+    metisMenu:                '../../bower_components/metisMenu/dist/metisMenu',
+    slimscroll:               '../vendor/nav/plugins/slimscroll/jquery.slimscroll',
+    inspinia:                 '../vendor/nav/inspinia',
+    pace:                     '../vendor/nav/plugins/pace/pace',
+    toastr:                    '../vendor/nav/toastr.min',
+    confirm:                    '../../node_modules/jquery-confirm/js/jquery-confirm',
+
+    screenfull:                    '../../node_modules/screenfull/dist/screenfull',
+    // classie:                  '../vendor/nav/classie',
+    // selectFx:                  '../vendor/nav/selectFx',
+
+    //pointcloud
+    //three:             '../vendor/pointcloud/libs/three.js/build/three',
+    stats:             '../vendor/pointcloud/libs/other/stats',
+    binaryheap:             '../vendor/pointcloud/libs/other/BinaryHeap',
+    //tween:             '../vendor/pointcloud/libs/tween/tween.min',
+   // proj4:             '../vendor/pointcloud/libs/proj4/proj4',
+    //potree:             '../vendor/pointcloud/libs/potree/potree',
+    //pointcloud
     cookies:                   '../vendor/jquery/jquery.cookie',
+    golden:                    '../vendor/goldenlayout',
+    nestable:                 '../vendor/jquery/jquery.nestable',
+    datatable:                 '../../bower_components/datatables.net/js/jquery.dataTables',
     'jquery-ui':              '../vendor/jquery/jquery-ui-1.10.3',
 
     'extend-jquery':          'components/extend-jquery',
@@ -49,7 +73,7 @@ require.config({
     'showdown':               '../vendor/showdown',
 
     echarts:                  '../../node_modules/echarts/dist/echarts',
-    'echarts-gl':             '../vendor/echarts-gl',
+    'echarts-gl':     '../vendor/echarts-gl',
     'echarts-liquidfill':     '../../node_modules/echarts-liquidfill/dist/echarts-liquidfill',
     'echarts-wordcloud':     '../../node_modules/echarts-wordcloud/dist/echarts-wordcloud',
     'echarts-bmap':           '../../node_modules/echarts/dist/extension/bmap',
@@ -65,6 +89,9 @@ require.config({
     Donut3D:                  '../vendor/d3/Donut3D',
     html2canvas:              '../../bower_components/html2canvas/build/html2canvas',
     jspdf:                    '../../bower_components/jspdf/dist/jspdf.min',
+
+    vis:                    '../../node_modules/vis/dist/vis',
+    vizceral:                    '../../node_modules/vizceral/dist/vizceral',
     //gojs:                     '../../src/vendor/go',
     // d3transform:                    '../vendor/d3/d3-transform',
     // extarray:                     '../vendor/d3/extarray',
@@ -118,7 +145,25 @@ require.config({
     },
 
     // simple dependency declaration
-    'jquery-ui':            ['jquery'],
+    metisMenu:              ['jquery'],
+    slimscroll:             ['jquery'],
+    inspinia:               ['jquery','metisMenu','slimscroll'],
+    pace:                   ['jquery'],
+    classie:                  ['jquery'],
+    selectFx:                 ['jquery','classie'],
+    toastr:                   ['jquery'],
+    confirm:                   ['jquery'],
+    nestable:                 ['jquery'],
+    datatable:                ['jquery','bootstrap'],
+      //pointcloud
+    //three:              ['jquery'],
+    stats:             ['jquery'],
+    binaryheap:            ['jquery'],
+    //tween:             ['jquery'],
+    //proj4:              ['jquery'],
+   // potree:             ['jquery','stats','binaryheap'],
+    //pointcloud
+      'jquery-ui':            ['jquery'],
     'jquery.flot':          ['jquery'],
     'jquery.flot.pie':      ['jquery', 'jquery.flot'],
     'jquery.flot.selection':['jquery', 'jquery.flot'],
@@ -126,8 +171,9 @@ require.config({
     'jquery.flot.stackpercent':['jquery', 'jquery.flot'],
     'jquery.flot.time':     ['jquery', 'jquery.flot'],
     'jquery.flot.axislabels':['jquery', 'jquery.flot'],
-
-    'angular-sanitize':     ['angular'],
+    sweetalert: ['jquery'],
+    'angular-sweetalert':     ['angular'],
+      'angular-sanitize':     ['angular'],
     'angular-cookies':      ['angular'],
     'angular-dragdrop':     ['jquery','jquery-ui','angular'],
     'angular-loader':       ['angular'],
@@ -146,6 +192,7 @@ require.config({
     timepicker:             ['jquery', 'bootstrap'],
     datepicker:             ['jquery', 'bootstrap'],
 
+    golden:                 ['jquery'],
     elasticjs:              ['angular', '../vendor/elasticjs/elastic'],
     solrjs:                 ['angular', '../vendor/solrjs/solr'],
     Donut3D:                ['d3'],
@@ -154,8 +201,8 @@ require.config({
     bubble:                 ['d3'],
     lines:                  ['d3','bubble'],
     centralclick:           ['d3','bubble'],
-      'echarts-liquidfill':   ['echarts'],
-    'echarts-gl':   ['echarts'],
+    'echarts-liquidfill':   ['echarts'],
+    'echarts-gl':           ['echarts'],
     'viz':                  ['d3'],
   }
 });

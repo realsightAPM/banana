@@ -35,6 +35,7 @@ function (angular, app, _, moment, kbn, $) {
 
     // Set and populate defaults
     var _d = {
+      panelExpand:false,
       status: "Stable",
       mode: "relative",
       time_options: ['5m', '15m', '1h', '6h', '12h', '24h', '2d', '7d', '30d'],
@@ -53,6 +54,8 @@ function (angular, app, _, moment, kbn, $) {
     _.defaults($scope.panel,_d);
 
     $scope.init = function() {
+
+
       // Private refresh interval that we can use for view display without causing
       // unnecessary refreshes during changes
       $scope.refresh_interval = $scope.panel.refresh.interval;
@@ -310,8 +313,11 @@ function (angular, app, _, moment, kbn, $) {
             timeUnit = 'YEAR';
             break;
         }
+        dashboard.current.timefrom= Date.parse(filterTime.from.toDate());
+        dashboard.current.timeto= Date.parse(filterTime.to.toDate());
         filterTime.from = 'NOW/' + timeUnit + '-' + timeNumber + timeUnit;
         filterTime.to   = 'NOW/' + timeUnit + '%2B1' + timeUnit;
+
         // Add Date objects representation of from and to, for use with histogram panel
         // where it needs Date objects for plotting x-axis on a chart.
         filterTime.fromDateObj = moment().subtract(timeShorthand,timeNumber).toDate();
@@ -319,11 +325,15 @@ function (angular, app, _, moment, kbn, $) {
       } else if ($scope.panel.mode === 'since') {
         // Add Date objects representation of from and to, for use with histogram panel
         // where it needs Date objects for plotting x-axis on a chart.
+        dashboard.current.timefrom= Date.parse(filterTime.from.toDate());
+        dashboard.current.timeto= Date.parse(filterTime.to.toDate());
         filterTime.fromDateObj = filterTime.from.toDate();
         filterTime.toDateObj = new Date();
         filterTime.from = filterTime.from.toDate().toISOString() + '/SECOND';
         filterTime.to   = '*';
       } else if ($scope.panel.mode === 'absolute') {
+        dashboard.current.timefrom= Date.parse(filterTime.from.toDate());
+        dashboard.current.timeto= Date.parse(filterTime.to.toDate());
         filterTime.from = filterTime.from.toDate();
         filterTime.to   = filterTime.to.toDate();
       }

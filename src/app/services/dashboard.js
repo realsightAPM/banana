@@ -1,26 +1,51 @@
 define([
   'angular',
   'jquery',
+
   'kbn',
   'underscore',
   'config',
   'moment',
   'modernizr',
   'filesaver',
-  'html2canvas'
+  'html2canvas',
+  'cookies',
+  'toastr',
+    'confirm',
+  'sweetalert',
+  'screenfull'
 ],
 function (angular, $, kbn, _, config, moment, Modernizr) {
   'use strict';
+  var toastr = require('toastr');
+  toastr.options = {
+    closeButton: true,
+    progressBar: true,
+    showMethod: 'slideDown',
+    showEasing: "swing",
+    timeOut: 3000
+  };
 
+  // setTimeout(function() {
+  //   toastr.options = {
+  //     closeButton: true,
+  //     progressBar: true,
+  //     showMethod: 'slideDown',
+  //     timeOut: 5000
+  //   };
+  //   toastr.info('Responsive Admin Theme', 'Welcome to RealsightAPM');
+  //
+  // }, 1000);
   var DEBUG = false; // DEBUG mode
 
   var module = angular.module('kibana.services');
 
-  module.service('dashboard', function($routeParams, $http, $rootScope, $injector, $location,
+  module.service('dashboard', function($routeParams, $http, $rootScope, $injector, $location,$translate,
     sjsResource, timer, kbnIndex, alertSrv
   ) {
     // A hash of defaults to use when loading a dashboard
     var _dash = {
+      mobile:window.innerWidth>500?false:true,
       title: "",
       language:1,
       style: "dark",
@@ -35,12 +60,16 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       failover: false,
       en_cn:false,
       alarm:false,
+      network_app_name:'',
+      show_delete_template:false,
+      template_server:config.solr,
       switch:"App_Demo_Operate",
       panel_hints: true,
       hide_head: false,
-        load:true,
-        enable_linkage:true,
+      load:true,
+      enable_linkage:true,
       linkage_id:'a',
+      template:[],
       rows: [],
       services: {},
       loader: {
@@ -78,19 +107,93 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
     // Store a reference to this
     var self = this;
     var filterSrv,querySrv;
-
+    this.largeScreen=true;
+    this.isMobile= window.innerWidth>500?false:true;
     this.current = _.clone(_dash);
     this.last = {};
+    this.template=[];
+    this.topology = {
+      network_force_refresh:true,
+    };
 
     $rootScope.$on('$routeChangeSuccess',function(){
       // Clear the current dashboard to prevent reloading
       self.current = {};
       self.indices = [];
+      Date.prototype.pattern = function (fmt) {
+        var o = {
+          "M+" : this.getMonth() + 1, //月份
+          "d+" : this.getDate(), //日
+          "h+" : this.getHours() % 12 === 0 ? 12 : this.getHours() % 12, //小时
+          "H+" : this.getHours(), //小时
+          "m+" : this.getMinutes(), //分
+          "s+" : this.getSeconds(), //秒
+          "q+" : Math.floor((this.getMonth() + 3) / 3), //季度
+          "S" : this.getMilliseconds() //毫秒
+        };
+        var week = {
+          "0" : "/u65e5",
+          "1" : "/u4e00",
+          "2" : "/u4e8c",
+          "3" : "/u4e09",
+          "4" : "/u56db",
+          "5" : "/u4e94",
+          "6" : "/u516d"
+        };
+        if (/(y+)/.test(fmt)) {
+          fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
+        if (/(E+)/.test(fmt)) {
+          fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f" : "/u5468") : "") + week[this.getDay() + ""]);
+        }
+        for (var k in o) {
+          if (new RegExp("(" + k + ")").test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+          }
+        }
+        return fmt;
+      };
+      //快捷键设置
+      $(document).keydown(function(){
+
+        if(window.event.keyCode ===109){
+          //小键盘-删除下钻
+          if(self.current.filterids.length>1){
+            self.remove();
+          }
+          //$('#saveFile').click();
+        }
+        if(window.event.keyCode ===39){
+          //小键盘-删除下钻
+
+            self.screenFull();
+
+          //$('#saveFile').click();
+        }
+        // if(window.event.keyCode ===106){
+        //   //小键盘*刷新仪表盘
+        //   self.refresh();
+        // }
+        // if(window.event.keyCode ===111) {
+        //   //小键盘/大屏门户切换
+        //   //self.largeScreen = !self.largeScreen;
+        //  // self.refresh();
+        //   self.clear_cookie();
+        // }
+        console.log(window.event.keyCode);
+
+      });
       route();
+
     });
 
     var route = function() {
       // Is there a dashboard type and id in the URL?
+
+      // setTimeout(function() {
+      //   self.solr_list('*:*',100);
+      // }, 3000);
+
       if(!(_.isUndefined($routeParams.kbnType)) && !(_.isUndefined($routeParams.kbnId))) {
         var _type = $routeParams.kbnType;
         var _id = $routeParams.kbnId;
@@ -129,11 +232,22 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
           self.file_load('default.json');
         }
       }
+      //require(['toastr'], function(toastr){
+
+      //});
     };
+
+
 
     // Since the dashboard is responsible for index computation, we can compute and assign the indices
     // here before telling the panels to refresh
     this.refresh = function() {
+
+      if(window.innerWidth<500){
+        this.current.mobile =true;
+      }else {
+        this.current.mobile =false;
+      }
         self.current.filterids = filterSrv.ids;
       // Retrieve Solr collections for the dashboard
       kbnIndex.collections(self.current.solr.server).then(function (p) {
@@ -167,8 +281,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
               } else {
                 // Do not issue refresh if no indices match. This should be removed when panels
                 // properly understand when no indices are present
-                alertSrv.set('No results','There were no results because no indices were found that match your'+
-                  ' selected time span','info',5000);
+                toastr.info($translate.instant('No results'), 'RealsightAPM');
                 return false;
               }
             }
@@ -180,9 +293,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
             self.indices = [self.current.index.default];
             $rootScope.$broadcast('refresh');
           } else {
-            alertSrv.set("No time filter",
-              'Timestamped indices are configured without a failover. Waiting for time filter.',
-              'info',5000);
+            toastr.info($translate.instant('No time filter'), 'RealsightAPM');
           }
         }
       } else {
@@ -257,10 +368,19 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
               self.dash_load(dash_defaults(result.data));
               return true;
           }, function () {
-              alertSrv.set('Error', "Could not load <i>dashboards/" + "</i>. Please make sure it exists", 'error');
+            toastr.error($translate.instant('Could not load dashboards'), 'RealsightAPM');
               return false;
           });
       };
+
+    this.screenFull = function() {
+      const elem = document.getElementById('iframe1');
+      if (screenfull.enabled) {
+        screenfull.request(elem[0]);
+      } else {
+        // Ignore or do something else
+      }
+    };
 
     this.is_gist = function(string) {
       if(!_.isUndefined(string) && string !== '' && !_.isNull(string.match(gist_pattern))) {
@@ -271,12 +391,18 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
     };
     this.is_refresh = function(){
         if (self.current.style !== self.current.isstyle){
-        if(self.current.style === 'dark' || self.current.isstyle === 'dark'){
-            self.refresh();
-        }
-            self.current.isstyle = self.current.style;
+         self.refresh();
+         self.current.isstyle = self.current.style;
         }
     };
+
+    this.clear_cookie = function(){
+      $.cookie("rtd_username", null);
+      $.cookie("rtd_password", null);
+      location.reload();
+    };
+
+
       this.remove = function() {
           var ids = self.current.filterids;
           if(self.current.isSearch){
@@ -312,7 +438,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       this.color_change = function(){
         if(self.current.style === 'blue'){
             document.getElementById('setting').style.background='#f5f5f5';
-        }else if(self.current.style === 'dark'){
+        }else if(self.current.style === 'dark'||self.current.style === 'black'){
             document.getElementById('setting').style.background='#52575c';
         }else{
             document.getElementById('setting').style.background='#c1c1c1';
@@ -325,19 +451,30 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       if (Modernizr.localstorage) {
         window.localStorage['dashboard'] = angular.toJson(dashboard || self.current);
         $location.path('/dashboard');
-        alertSrv.set('Local Default Set',self.current.title+' has been set as your local default','success',5000);
+        toastr.options = {
+          closeButton: true,
+          progressBar: true,
+          showMethod: 'slideDown',
+          showEasing: "swing",
+          timeOut: 3000
+        };
+        toastr.success($translate.instant('Local default template set successfully'), 'RealsightAPM');
+        //alertSrv.set('Local Default Set',self.current.title+' has been set as your local default','success',5000);
       } else {
-        alertSrv.set('Incompatible Browser','Sorry, your browser is too old for this feature','error',5000);
+        toastr.error($translate.instant('Local default template set failed'), 'RealsightAPM');
+        //alertSrv.set('Incompatible Browser','Sorry, your browser is too old for this feature','error',5000);
       }
     };
 
     this.purge_default = function() {
       if (Modernizr.localstorage) {
         window.localStorage['dashboard'] = '';
-        alertSrv.set('Local Default Clear','Your local default dashboard has been cleared','success',5000);
+        toastr.success($translate.instant('Local default template clear successfully'), 'RealsightAPM');
+        //alertSrv.set('Local Default Clear','Your local default dashboard has been cleared','success',5000);
 
       } else {
-        alertSrv.set('Incompatible Browser','Sorry, your browser is too old for this feature','error',5000);
+        toastr.error($translate.instant('Local default template clear failed'), 'RealsightAPM');
+        //alertSrv.set('Incompatible Browser','Sorry, your browser is too old for this feature','error',5000);
       }
     };
 
@@ -380,7 +517,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         self.dash_load(dash_defaults(result.data));
         return true;
       },function() {
-        alertSrv.set('Error',"Could not load <i>dashboards/"+file+"</i>. Please make sure it exists" ,'error');
+        toastr.error($translate.instant('Could not load dashboards'), 'RealsightAPM');
         return false;
       });
     };
@@ -400,17 +537,35 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
           // return renderTemplate(JSON.stringify(source_json.dashboard), $routeParams);
           return renderTemplate(JSON.stringify(source_json), $routeParams);
         }
-      }).error(function(data, status) {
-        if(status === 0) {
-          alertSrv.set('Error',"Could not contact Solr at "+config.solr+
-            ". Please ensure that Solr is reachable from your system." ,'error');
-        } else {
-          alertSrv.set('Error','Could not find dashboard named "'+id+'". Please ensure that the dashboard name is correct or exists in the system.','error');
+      }).then(
+        function successCallback(data) {
+          // this callback will be called asynchronously
+          // when the response is available
+          self.dash_load(data.data);
+        },
+        function errorCallback(data, status) {
+          // called asynchronously if an error occurs
+          // or server returns response with an error status.
+          if(status === 0) {
+            alertSrv.set('Error',"Could not contact Solr at "+config.solr+
+              ". Please ensure that Solr is reachable from your system." ,'error');
+          } else {
+            alertSrv.set('Error','Could not find dashboard named "'+id+'". Please ensure that the dashboard name is correct or exists in the system.','error');
+          }
+          return false;
         }
-        return false;
-      }).success(function(data) {
-        self.dash_load(data);
-      });
+      );
+        // .error(function(data, status) {
+        // if(status === 0) {
+        //   alertSrv.set('Error',"Could not contact Solr at "+config.solr+
+        //     ". Please ensure that Solr is reachable from your system." ,'error');
+        // } else {
+        //   alertSrv.set('Error','Could not find dashboard named "'+id+'". Please ensure that the dashboard name is correct or exists in the system.','error');
+        // }
+        // return false;
+      // }).success(function(data) {
+      //   self.dash_load(data);
+      // });
     };
 
     this.script_load = function(file) {
@@ -468,6 +623,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         function(result) {
           if(type === 'dashboard') {
             // TODO
+            self.elasticsearch_load(type,id);
             $location.url('/dashboard/solr/'+title+'?server='+self.current.solr.server);
           }
           return result;
@@ -496,6 +652,206 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       );
     };
 
+    this.solr_delete = function(id) {
+      // Set sjs.client.server to use 'banana-int' for deleting dashboard
+      var solrserver = self.current.template_server + config.banana_index || config.solr + config.banana_index;
+      sjs.client.server(solrserver);
+
+      return sjs.Document(config.banana_index,'dashboard',id).doDelete(
+        // Success
+        function(result) {
+          toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            showEasing: "swing",
+            timeOut: 3000
+          };
+          toastr.success($translate.instant('Delete template successfully'), 'RealsightAPM');
+          //alertSrv.set($translate.instant('Delete template successfully'),self.current.title+' has been deleted','success',5000);
+          self.solr_list('*:*',100);
+          return result;
+        },
+        // Failure
+        function() {
+          toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            showEasing: "swing",
+            timeOut: 3000
+          };
+          toastr.error($translate.instant('Delete template failed'), 'RealsightAPM');
+          //alertSrv.set($translate.instant('Delete template failed'),self.current.title+' has been deleted','error',5000);
+          return false;
+        }
+      );
+    };
+    this.solr_list = function(query,count) {
+      // set indices and type
+      var solrserver = self.current.template_server + config.banana_index || config.solr + config.banana_index;
+      sjs.client.server(solrserver);
+
+      var request = sjs.Request().indices(config.banana_index).types('dashboard');
+
+      // Need to set sjs.client.server back to use 'logstash_logs' collection
+      // But cannot do it here, it will interrupt other modules.
+      // sjs.client.server(config.solr);
+
+      return request.query(
+        sjs.QueryStringQuery(query || '*:*')
+      ).size(count).doSearch(
+        // Success
+        function(result) {
+          var data =[];
+          for(var i=0;i<result.response.numFound;i++){
+            data[i] = result.response.docs[i].title;
+          }
+          self.template =data;
+          toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            showEasing: "swing",
+            timeOut: 3000
+          };
+          toastr.success($translate.instant('List template successfully'), 'RealsightAPM');
+          //alertSrv.set($translate.instant('List template successfully'),'Template has been listed','success',5000);
+          return data;
+        },
+        // Failure
+        function() {
+          toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            timeOut: 4000
+          };
+          toastr.warning($translate.instant('List template failed'), 'RealsightAPM');
+          //alertSrv.set($translate.instant('List template failed'),'Templates have been not listed','error',5000);
+          return false;
+        }
+      );
+
+    };
+    this.solr_load = function(type,id) {
+      var server =self.current.template_server;
+      return $http({
+        url: server + config.banana_index + '/select?wt=json&q=title:"' + id + '"',
+        method: "GET",
+        transformResponse: function(response) {
+          response = angular.fromJson(response);
+          var source_json = angular.fromJson(response.response.docs[0].dashboard);
+
+          if (DEBUG) { console.debug('dashboard: type=',type,' id=',id,' response=',response,' source_json=',source_json); }
+
+          // return renderTemplate(angular.fromJson(response)._source.dashboard, $routeParams);
+          // return renderTemplate(JSON.stringify(source_json.dashboard), $routeParams);
+          return renderTemplate(JSON.stringify(source_json), $routeParams);
+        }
+      }).then(
+        function successCallback(data) {
+          // this callback will be called asynchronously
+          // when the response is available
+          self.dash_load(data.data);
+        },
+        function errorCallback(data, status) {
+          // called asynchronously if an error occurs
+          // or server returns response with an error status.
+
+          toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            showEasing: "swing",
+            timeOut: 3000
+          };
+          toastr.error($translate.instant('Load template failed'), 'RealsightAPM');
+          // if(status === 0) {
+          //   alertSrv.set('Error:'+"Could not contact template system at "+self.current.template_server,
+          //     "Please ensure that Solr is reachable from your system." ,'error');
+          // } else {
+          //   alertSrv.set('Error:'+'Could not find dashboard named '+id,' Please ensure that the dashboard name is correct or exists in the system.','error');
+          // }
+          return false;
+        }
+      );
+      // .error(function(data, status) {
+      // if(status === 0) {
+      //   alertSrv.set('Error',"Could not contact Solr at "+config.solr+
+      //     ". Please ensure that Solr is reachable from your system." ,'error');
+      // } else {
+      //   alertSrv.set('Error','Could not find dashboard named "'+id+'". Please ensure that the dashboard name is correct or exists in the system.','error');
+      // }
+      // return false;
+      // }).success(function(data) {
+      //   self.dash_load(data);
+      // });
+    };
+    this.solr_save = function(type,title,ttl) {
+      // Clone object so we can modify it without influencing the existing obejct
+      var save = _.clone(self.current);
+      var id;
+
+      // Change title on object clone
+      if (type === 'dashboard') {
+        id = save.title = _.isUndefined(title) ? self.current.title : title;
+      }
+
+      // Create request with id as title. Rethink this.
+      // Use id instead of _id, because it is the default field of Solr schema-less.
+      var request = sjs.Document(config.banana_index,type,id).source({
+        // _id: id,
+        id: id,
+        user:  $.cookie('rtd_username'),
+        group: 'apm',
+        title: save.title,
+        dashboard: angular.toJson(save)
+      });
+
+      request = type === 'temp' && ttl ? request.ttl(ttl) : request;
+
+      // Solr: set sjs.client.server to use 'banana-int' for saving dashboard
+      var solrserver = self.current.template_server + config.banana_index || config.solr + config.banana_index;
+      sjs.client.server(solrserver);
+
+      return request.doIndex(
+        // Success
+        function(result) {
+          if(type === 'dashboard') {
+            // TODO
+            toastr.options = {
+              closeButton: true,
+              progressBar: true,
+              showMethod: 'slideDown',
+              showEasing: "swing",
+              timeOut: 3000
+            };
+            toastr.success($translate.instant('Store template successfully'), 'RealsightAPM');
+            self.solr_list('*:*',100);
+            //alertSrv.set($translate.instant('Store template successfully'),self.current.title+' has been store to solr','success',5000);
+            // self.elasticsearch_load(type,id);
+            //$location.url('/dashboard/solr/'+title+'?server='+self.current.solr.server);
+          }
+          return result;
+        },
+        // Failure
+        function() {
+          toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            showEasing: "swing",
+            timeOut: 3000
+          };
+          toastr.error($translate.instant('Store template failed'), 'RealsightAPM');
+         // alertSrv.set($translate.instant('Store template failed'),self.current.title+' has been store to solr','error',5000);
+          return false;
+        }
+      );
+    };
+
+
     this.elasticsearch_list = function(query,count) {
       // set indices and type
       var solrserver = self.current.solr.server + config.banana_index || config.solr + config.banana_index;
@@ -521,55 +877,110 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         );
 
     };
-      this.save_pdf = function() {
-        var background_color = '#272b30';
-          if(self.current.style === 'blue'){
-              background_color = '#5bc0de';
-          }else if(self.current.style === 'light'){
-              background_color = '#fff';
-          }
-              html2canvas(document.getElementById("bodyContent"), {
-              background:background_color,
+    this.save_pdf = function() {
 
-              // 渲染完成时调用，获得 canvas
-              onrendered: function(canvas) {
-                  var h =document.body.scrollHeight;
-                  // 从 canvas 提取图片数据
-                  var imgData = canvas.toDataURL('image/png');
-                  var doc = new jsPDF("p", "mm", "a3");
-                  //                               |
-                  // |—————————————————————————————|
-                  // A0 841×1189
-                  // A1 594×841
-                  // A2 420×594
-                  // A3 297×420
-                  // A4 210×297
-                  // A5 148×210
-                  // A6 105×148
-                  // A7 74×105
-                  // A8 52×74
-                  // A9 37×52
-                  // A10 26×37
-                  //     |——|———————————————————————————|
-                  //                                 |——|——|
-                  //                                 |     |
-                doc.addImage(imgData, 'PNG', 0, 0,297,h/5.5);
-                if(h>2340){
-                  doc.addPage();
-                  doc.addImage(imgData, 'PNG', 0, -425,297,h/5.5);
-                }
-                if(h>4680){
-                  doc.addPage();
-                  doc.addImage(imgData, 'PNG', 0, -850,297,h/5.5);
-                }
-                if(h>7020){
-                  doc.addPage();
-                  doc.addImage(imgData, 'PNG', 0, -1275,297,h/5.5);
-                }
-                doc.save('content.pdf');
-              }
-          });
-      };
+      $(".theme-config-box").toggleClass("show");
+
+      var background_color = '#272b30';
+      if(self.current.style === 'blue'){
+        background_color = '#5bc0de';
+      }else if(self.current.style === 'light'){
+        background_color = '#fff';
+      }
+      setTimeout(function () { html2canvas(document.body, {
+        background:background_color,
+
+        // 渲染完成时调用，获得 canvas
+        onrendered: function(canvas) {
+          var h =document.body.scrollHeight;
+          // 从 canvas 提取图片数据
+          var imgData = canvas.toDataURL('image/jpeg');
+          var doc = new jsPDF("p", "mm", "a3");
+          //                               |
+          // |—————————————————————————————|
+          // A0 841×1189
+          // A1 594×841
+          // A2 420×594
+          // A3 297×420
+          // A4 210×297
+          // A5 148×210
+          // A6 105×148
+          // A7 74×105
+          // A8 52×74
+          // A9 37×52
+          // A10 26×37
+          //     |——|———————————————————————————|
+          //                                 |——|——|
+          //                                 |     |
+          doc.addImage(imgData, 'JPEG', 0, 0,297,h/5.5);
+          if(h>2340){
+            doc.addPage();
+            doc.addImage(imgData, 'JPEG', 0, -425,297,h/5.5);
+          }
+          if(h>4680){
+            doc.addPage();
+            doc.addImage(imgData, 'JPEG', 0, -850,297,h/5.5);
+          }
+          if(h>7020){
+            doc.addPage();
+            doc.addImage(imgData, 'JPEG', 0, -1275,297,h/5.5);
+          }
+          doc.save('RealSight.pdf');
+        }
+      });}, 2000);
+    };
+
+    this.save_pdf_f2 = function() {
+
+      var background_color = '#272b30';
+      if(self.current.style === 'blue'){
+        background_color = '#5bc0de';
+      }else if(self.current.style === 'light'){
+        background_color = '#fff';
+      }
+      setTimeout(function () { html2canvas(document.body, {
+        background:background_color,
+
+        // 渲染完成时调用，获得 canvas
+        onrendered: function(canvas) {
+          var h =document.body.scrollHeight;
+          // 从 canvas 提取图片数据
+          var imgData = canvas.toDataURL('image/jpeg');
+          var doc = new jsPDF("p", "mm", "a3");
+          //                               |
+          // |—————————————————————————————|
+          // A0 841×1189
+          // A1 594×841
+          // A2 420×594
+          // A3 297×420
+          // A4 210×297
+          // A5 148×210
+          // A6 105×148
+          // A7 74×105
+          // A8 52×74
+          // A9 37×52
+          // A10 26×37
+          //     |——|———————————————————————————|
+          //                                 |——|——|
+          //                                 |     |
+          doc.addImage(imgData, 'JPEG', 0, 0,297,h/5.5);
+          if(h>2340){
+            doc.addPage();
+            doc.addImage(imgData, 'JPEG', 0, -425,297,h/5.5);
+          }
+          if(h>4680){
+            doc.addPage();
+            doc.addImage(imgData, 'JPEG', 0, -850,297,h/5.5);
+          }
+          if(h>7020){
+            doc.addPage();
+            doc.addImage(imgData, 'JPEG', 0, -1275,297,h/5.5);
+          }
+          doc.save('RealSight.pdf');
+        }
+      });}, 2000);
+
+    };
 
     this.save_gist = function(title,dashboard) {
       var save = _.clone(dashboard || self.current);
@@ -609,6 +1020,68 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       }, function() {
         return false;
       });
+    };
+    this.confirm = function(){
+      $.confirm({
+        boxWidth: '30%',
+        useBootstrap: false,
+        type:'blue',
+        theme:'material',
+        icon:'icon icon-cloud-upload',
+        title: $translate.instant('Save Template'),
+        content: $translate.instant('Are you sure to continue?'),
+        autoClose: 'NO|10000',
+        buttons: {
+          Yes: {
+            btnClass: 'btn-success custom-class',
+            action: function () {
+              self.solr_save('dashboard',self.current.title);
+            }
+          },
+          NO: {
+            text: 'cancel'
+          }
+        }
+      });
+    };
+
+    this.confirm_delete = function(id){
+      if(id!=null){
+        $.confirm({
+          boxWidth: '30%',
+          useBootstrap: false,
+          type:'blue',
+          theme:'material',
+          icon:'icon icon-minus',
+          title: $translate.instant('Template Delete'),
+          content: $translate.instant('Are you sure to delete?'),
+          autoClose: 'NO|10000',
+          buttons: {
+            Yes: {
+              btnClass: 'btn-success custom-class',
+              action: function () {
+                self.solr_delete(id);
+              }
+            },
+            NO: {
+              text: 'cancel'
+            }
+          }
+        });
+        // SweetAlert.swal({
+        //     title: "Are you sure?",
+        //     text: "Your will not be able to recover this imaginary file!",
+        //     type: "warning",
+        //     showCancelButton: true,
+        //     confirmButtonColor: "#DD6B55",
+        //     confirmButtonText: "Yes, delete it!",
+        //     closeOnConfirm: false},
+        //   function(){
+        //     SweetAlert.swal("Booyah!");
+        //   });
+
+      }
+
     };
 
     this.numberWithCommas = function(x) {

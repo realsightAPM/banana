@@ -36,6 +36,7 @@ define([
 
             // Set and populate defaults
             var _d = {
+              panelExpand:false,
                 queries     : {
                     mode        : 'all',
                     ids         : [],
