@@ -40,6 +40,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
   'use strict';
   var module = angular.module('kibana.panels.adBranch', []);
   app.useModule(module);
+
   var DEBUG = false;
   console.log('adBranch DEBUG : ' + DEBUG);
   module.controller('adBranch', function($scope, $q, $http, $routeParams, $location, querySrv, dashboard, filterSrv) {
@@ -458,16 +459,16 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                       if (flag === -1) {return;}
                     }
 
-                    if (data[date_index][metric] === undefined) {
-                      data[date_index][metric] = [];
+                    if (data[date_index][ad_name] === undefined) {
+                      data[date_index][ad_name] = [];
                     }
-                    if (metric2index[metric] === undefined) {
-                      metric2index[metric] = index;
-                      index2metric[index] = metric;
+                    if (metric2index[ad_name] === undefined) {
+                      metric2index[ad_name] = index;
+                      index2metric[index] = ad_name;
                       metric_names.push(metric);
                       index += 1;
                     }
-                    data[date_index][metric].push({
+                    data[date_index][ad_name].push({
                       date_index: date_index,
                       anomaly_date: dates[date_index],
                       anomaly_value: anomaly_value,

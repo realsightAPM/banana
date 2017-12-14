@@ -156,7 +156,11 @@ function (Settings) {
       'infoalarm',
       'viz',
       'pointcloud',
-      'bnStatistics'
+      'adThreadMetricalData',
+      'adCPUDuration',
+      'adThreadStates',
+      'adTopology',
+      'adStacking'
     ]
   });
 });

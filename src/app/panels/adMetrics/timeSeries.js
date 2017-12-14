@@ -169,7 +169,6 @@ function (_, Interval) {
     for(; times.length > i && next > expected_next; expected_next = this.interval.after(expected_next)) {
       result.push([expected_next, 0]);
     }
-
     return result;
   };
 

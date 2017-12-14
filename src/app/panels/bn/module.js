@@ -35,12 +35,14 @@ define([
     'kbn',
     'moment'
   ],
-  function (angular, app, $, _, kbn, moment, go, timeSeries) {
+  function (angular, app, $, _, kbn, moment, timeSeries) {
     'use strict';
     var module = angular.module('kibana.panels.bn', []);
     app.useModule(module);
 
-    module.controller('bn', function($scope, $q, $http,$translate, $routeParams, querySrv, dashboard, filterSrv, alertSrv) {
+    var DEBUG = false;
+    console.log('bn DEBUG : ' + DEBUG);
+    module.controller('bn', function($scope, $q, $http, $routeParams, querySrv, dashboard, filterSrv, alertSrv) {
       $scope.panelMeta = {
         modals : [
           {
@@ -52,7 +54,7 @@ define([
         ],
         editorTabs : [
           {
-            title:$translate.instant('Queries'),
+            title:'Queries',
             src:'app/partials/querySelect.html'
           }
         ],
@@ -114,11 +116,28 @@ define([
       _.defaults($scope.panel,_d);
 
       $scope.init = function() {
+        // Hide view options by default
+        // $('.fullscreen-link').on('click', function () {
+        //   var ibox = $(this).closest('div.ibox1');
+        //   var button = $(this).find('i');
+        //
+        //   $('body').toggleClass('fullscreen-ibox1-mode');
+        //   button.toggleClass('fa-expand').toggleClass('fa-compress');
+        //   ibox.toggleClass('fullscreen');
+        //   $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+        //   $scope.$emit('render');
+        //
+        //   $(window).trigger('resize');
+        //
+        // });
+        if (DEBUG) console.log('init');
         $scope.options = false;
         $scope.$on('refresh',function(){
           $scope.get_data();
         });
+
         $scope.get_data();
+
       };
 
       $scope.set_interval = function(interval) {
@@ -168,7 +187,9 @@ define([
       };
 
       $scope.reSize=function() {
+
         $scope.panel.useInitHeight=!$scope.panel.useInitHeight;
+
         var ibox = $('#'+$scope.$id+'z').closest('div.ibox1');
         var button = $('#'+$scope.$id+'z').find('i');
         //var aaa = '#'+$scope.$id+'z';
@@ -178,12 +199,17 @@ define([
         $scope.panel.fullHeight = ibox[0].offsetHeight-60;
         $scope.$emit('render');
         $(window).trigger('resize');
+
+
       };
 
+      //快捷键+控制放大缩小panel
       $scope.zoomOut=function() {
         if(window.event.keyCode===107){
           $scope.reSize();
         }
+
+
       };
 
       $scope.build_anomaly_query = function(filetype, isForExport) {
@@ -218,6 +244,7 @@ define([
        *                            this call is made recursively for more segments
        */
       $scope.get_data = function(segment, query_id) {
+        if (DEBUG) console.log('get data start.');
         if (_.isUndefined(segment)) {
           segment = 0;
         }
@@ -304,9 +331,12 @@ define([
         var temp_q2 =  $scope.build_anomaly_query('json', false);
         querys.push(temp_q);
         querys.push(temp_q2);
+        if(DEBUG) console.log(temp_q);
 
         for (var i = 0; i < querys.length; i++) {
+
           $scope.panel.queries.query += querys[i] + "\n";
+
           if ($scope.panel.queries.custom !== null) {
             request = request.setQuery(querys[i] + $scope.panel.queries.custom);
           } else {
@@ -318,6 +348,7 @@ define([
         $scope.data = [];
         if (dashboard.current.services.query.ids.length >= 1) {
           $q.all(mypromises).then(function(results) {
+            if (DEBUG) console.log(results);
             $scope.panelMeta.loading = false;
             // Convert facet ids to numbers
             // var facetIds = _.map(_.keys(results.facets),function(k){return parseInt(k, 10);});
@@ -333,6 +364,7 @@ define([
                 return;
               }
               $scope.data[i] = results[i].response.docs;
+              if (DEBUG) console.log($scope.data[i]);
             }
             // Tell the histogram directive to render.
             $scope.$emit('render');
@@ -376,30 +408,43 @@ define([
               _.without(chartData,_.findWhere(chartData,{meta:'missing'}));
             chartData = scope.panel.other ? chartData :
               _.without(chartData,_.findWhere(chartData,{meta:'other'}));
-
-            if (chartData[0].length == 0) {
-              return;
-            }
-
+            if(DEBUG) {console.log(chartData);}
+            if (chartData[0].length === 0) return;
             var nodeList = JSON.parse(chartData[0][0].nodes_s);
             var linkList = JSON.parse(chartData[0][0].edges_s);
-            console.log(nodeList);
-            console.log(linkList);
+            if (DEBUG) console.log(chartData[1][0]);
             var ad_list = [];
             for (var i = 0; i < chartData[1].length; i++) {
               ad_list.push(chartData[1][i].facet_name_s);
+              // alert(ad_list[i]);
             }
 
+            // ad_list.push("JAVAEE_Apdex");
+            // ad_list.push("JAVAEE_Http_4xx");
+            // ad_list.push("JAVAEE_Durations_sum");
 
+            // alert(ad_list);
 
+            if (DEBUG) console.log(ad_list);
+            //alert(nodeList[0].key);
+            if (DEBUG) console.log(chartData[0][0]);
             var query_list = chartData[0][0].query_list_s.split("^");
+            if(DEBUG) console.log(query_list);
+            if(DEBUG) console.log(ad_list);
             for (var i = 0; i < nodeList.length; i++) {
+
+              if (DEBUG) { console.log(nodeList[i]); }
+              if (DEBUG) { console.log(nodeList[i].key); }
               if (checkIn(query_list[parseInt(nodeList[i].key)], ad_list)) {
                 nodeList[i]["color"] = "#D24726";
               } else {
                 nodeList[i]["color"] = "lightgreen";
               }
             }
+
+
+            //alert(chartData);
+            //alert(linkList[0].to);
 
             //        begin to drow chart
 
@@ -413,7 +458,7 @@ define([
             }
 
             var graph_id = scope.$id;
-            // var go = require('gojs');
+            //var go = require('gojs');
             // var metric = scope.panel.metric_field;
             // var labelcolor = false;
 
@@ -513,6 +558,10 @@ define([
 
               // get tooltip text from the object's data
               function tooltipTextConverter(node) {
+                //var str = "right";
+                //str += "Born: " + person.birthYear;
+                //if (person.deathYear !== undefined) str += "\nDied: " + person.deathYear;
+                //if (person.reign !== undefined) str += "\nReign: " + person.reign;
                 return query_list[parseInt(node.key)];
               }
 
@@ -574,6 +623,8 @@ define([
             }
 
             function checkIn(x, list) {
+              if (DEBUG) { console.log(x); }
+              if (DEBUG) { console.log(list); }
               for (var i = 0; i < list.length; i++) {
                 if (x === list[i])
                   return true;
@@ -591,34 +642,17 @@ define([
             }
 
             function showMessage(s) {
+              //alert("klick: "+s+".");
               dashboard.current.bn_main_node = s;
               dashboard.refresh();
             }
 
-            var picList = ["computer", "disk", "cpu", "memory", "thread", "chrome", "dotnet", "java", "mysql", "php" , "tomcat"];
-
             function convertKeyImage(key) {
-              if (!key) key = "0";
+              if (!key) key = "dvi";
               key = query_list[parseInt(key)];
-              var pic_str = key.toLocaleLowerCase();
-              var flag = -1;
-              // alert(pic_str);
-              for (var i = 0; i < picList.length; i++) {
-                flag = pic_str.indexOf(picList[i]);
-                // alert(flag);
-                if (flag > -1) {
-                  pic_str = picList[i];
-                  break;
-                }
-              }
-              if (flag < 0) {
-                pic_str = picList[0];
-              }
-              // alert("./app/panels/bn/pic/" + pic_str  + ".png");
+              var pic_str = key.split("_")[0].toLocaleLowerCase();
               return "./app/panels/bn/pic/" + pic_str  + ".png";
-              // return "./app/panels/bn/pic/cpu.png";
             }
-
 
             drawGraph(nodeList, linkList, graph_id);
           }
