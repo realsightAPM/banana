@@ -63,6 +63,16 @@ define([
     // } );
 
      */
+    if (typeof String.prototype.startsWith != 'function') {
+      String.prototype.startsWith = function (prefix){
+        return this.slice(0, prefix.length) === prefix;
+      };
+    }
+    if (typeof String.prototype.endsWith != 'function') {
+      String.prototype.endsWith = function(suffix) {
+        return this.indexOf(suffix, this.length - suffix.length) !== -1;
+      };
+    }
     var app = angular.module('kibana', ['ngRoute', 'ngSanitize','pascalprecht.translate','oitozero.ngSweetAlert']),
       // we will keep a reference to each module defined before boot, so that we can
       // go back and allow it to define new features later. Once we boot, this will be false

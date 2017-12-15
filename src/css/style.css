@@ -105,6 +105,7 @@
   margin-right: -240px;
   position: relative;
   z-index: 2000;
+  float: right;
   transition-duration: 0.8s;
 }
 .theme-config-box.show {
