@@ -65,6 +65,7 @@ define([
 
       // Set and populate defaults
       var _d = {
+        coefficient:1,
         panelExpand:true,
         fullHeight:'700%',
         useInitHeight:true,
@@ -76,7 +77,7 @@ define([
           query       : '*:*',
           custom      : ''
         },
-        max_rows    : 100000,  // maximum number of rows returned from Solr (also use this for group.limit to simplify UI setting)
+        max_rows    : 50,  // maximum number of rows returned from Solr (also use this for group.limit to simplify UI setting)
         value_field : null,
         group_field : null,
         sum_value   : false,
@@ -142,7 +143,7 @@ define([
         }
       };
 
-      //展现
+    //展现
       $scope.display=function() {
         if($scope.panel.display === 'none'){
           $scope.panel.display='block';
@@ -245,7 +246,10 @@ define([
           $scope.sjs.client.server(dashboard.current.solr.server + dashboard.current.solr.core_name);
 
           var request = $scope.sjs.Request().indices(dashboard.indices[segment]);
-          $scope.panel.queries.ids = querySrv.idsByMode($scope.panel.queries);
+          // $scope.panel.queries.ids = querySrv.idsByMode($scope.panel.queries);
+
+          //只查询一次
+          $scope.panel.queries.ids = [0];
 
 
           $scope.panel.queries.query = "";
@@ -311,9 +315,9 @@ define([
             facet = '';
 
             // if Group By Field is specified
-            if ($scope.panel.group_field) {
+
               values_mode_query += '&group=true&group.field=' + $scope.panel.group_field + '&group.limit=' + $scope.panel.max_rows;
-            }
+
           }
 
           var mypromises = [];
@@ -556,13 +560,14 @@ define([
             var dataAll=[];
             var data = [];
             var legend_name =scope.panel.value_field.split(" ");
+            //console.log(aaa[0].doclist.docs[aaa[0].doclist.docs.length-1]);
             for(var i1=0;i1<aaa.length;i1++){
-              label[i1] = aaa[i1].doclist.docs[ aaa[i1].doclist.numFound-1][legend_name[1]];
-              for(var k=0; k<aaa[i1].doclist.numFound;k++ ){
+              label[i1] = aaa[i1].doclist.docs[ aaa[i1].doclist.docs.length-1][legend_name[1]];
+              for(var k=0; k<aaa[i1].doclist.docs.length;k++ ){
                 //var ccc = Date.parse(aaa[i1].doclist.docs[k][scope.time_field]);
                 timedata[y2]=new Date(Date.parse(aaa[i1].doclist.docs[k][scope.time_field])).pattern("yyyy-MM-dd HH:mm:ss");
                 //演示demo
-                dataAll[y3]=[timedata[y2],aaa[i1].doclist.docs[k][legend_name[0]]*100];
+                dataAll[y3]=[timedata[y2],aaa[i1].doclist.docs[k][legend_name[0]]*scope.panel.coefficient];
                 //dataAll[y3]=[timedata[y2],aaa[i1].doclist.docs[k][legend_name[0]]];
                 y2++;
                 y3++;
@@ -607,12 +612,15 @@ define([
                 },
                 color:scope.panel.chartColors,
                 legend: {
+                  type: 'scroll',
+                  top:0,
                   textStyle:{
                     color:labelcolor?'#DCDCDC':'#696969'
                   },
                   data:label
                 },
                 toolbox: {
+                  top:30,
                   feature: {
                     dataZoom: {
                       yAxisIndex: 'none'
@@ -623,9 +631,10 @@ define([
                 },
 
                 grid: {
+                  top:'16%',
                   left: '3%',
                   right: '4%',
-                  bottom: '3%',
+                  bottom: '1%',
                   containLabel: true
                 },
                 xAxis : [

@@ -17,6 +17,10 @@
       <label class="small">{{'Y-Name'|translate}}</label>
       <input type="text" class="input-small" ng-model="panel.yname" ng-checked="panel.yname">
     </div>
+    <div class="span2" >
+      <label class="small">{{'Coefficient'|translate}} </label>
+      <input ng-change="set_refresh(true)" placeholder="1" type="number" class="input-small" ng-model="panel.coefficient">
+    </div>
 
   </div>
   <!-- Row for Group By field when Mode is values -->

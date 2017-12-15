@@ -26,6 +26,10 @@
       <label class="small">{{'total_max'|translate}}</label>
       <input ng-change="set_refresh(true)" placeholder="Start typing" type="text" class="input-small" ng-model="panel.total_first">
     </div>
+    <div class="span2" >
+      <label class="small">{{'Coefficient'|translate}} </label>
+      <input ng-change="set_refresh(true)" placeholder="1" type="number" class="input-small" ng-model="panel.coefficient">
+    </div>
 	</div>
 	 <div class="row-fluid">
 	<div class="span2" ng-if="0">
@@ -48,6 +52,10 @@
       <label class="small">Color <tip>This color is used for second value.</tip></label>
       <input ng-change="set_refresh(true)" placeholder="Start typing" type="text" class="input-small" ng-model="panel.field_color">
     </div>
+     <div class="span2">
+       <label class="small">Unit <tip>This color is used for second value.</tip></label>
+       <input ng-change="set_refresh(true)" placeholder="Start typing" type="text" class="input-small" ng-model="panel.unit">
+     </div>
     <!-- <div class="span3">
       <label class="small">Max Rows/Group <tip>Specify the number of results to return for each group.</tip></label>
       <input ng-change="set_refresh(true)" placeholder="10" type="number" class="input-small" ng-model="panel.group_limit">
@@ -67,6 +75,7 @@
       <label class="small">Max Rows/Group <tip>Specify the number of results to return for each group.</tip></label>
       <input ng-change="set_refresh(true)" placeholder="10" type="number" class="input-small" ng-model="panel.group_limit">
     </div> -->
+
   </div>
 
   <h5>{{'Chart Settings'|translate}}</h5>

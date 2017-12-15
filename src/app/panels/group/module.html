@@ -1,4 +1,4 @@
-<div ng-controller='group' ng-init="init()" style="min-height:{{panel.height || row.height}};overflow-x:hidden;outline:0;"  tabindex="-1" ng-keyup="zoomOut();">
+<div ng-controller='group' ng-init="init()" style="min-height:{{panel.height || row.height}};overflow-x:hidden;outline:0"  tabindex="-1" ng-keyup="zoomOut();">
   <style>
     .histogram-legend {
       display:inline-block;
@@ -39,5 +39,7 @@
 
 
   <center><img ng-if='panel.loading && _.isUndefined(data)' src="img/load_big.gif"></center>
-  <div group-chart class="histogram-chart" params="{{panel}}" id='{{$id}}'></div>
+  <div ng-style="{'display':panel.display}">
+  <div group-chart class="histogram-chart"  params="{{panel}}" id='{{$id}}'></div>
+  </div>
 </div>

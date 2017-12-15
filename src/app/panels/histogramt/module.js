@@ -67,6 +67,8 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
     // Set and populate defaults
     var _d = {
+      coefficient:1,
+      unit:"MB",
       panelExpand:true,
       fullHeight:'700%',
       useInitHeight:true,
@@ -313,11 +315,11 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
             var arr_id = [0];
             if ($scope.panel.segment === 2) {
                 arr_id = [1, 0];
-                threshold_1 = String($scope.panel.threshold_first);
+                threshold_1 = String($scope.panel.threshold_first*$scope.panel.coefficient);
             } else if ($scope.panel.segment === 3) {
                 arr_id = [2, 1, 0];
-                threshold_1 = String($scope.panel.threshold_first);
-                threshold_2 = String($scope.panel.threshold_second);
+                threshold_1 = String($scope.panel.threshold_first*$scope.panel.coefficient);
+                threshold_2 = String($scope.panel.threshold_second*$scope.panel.coefficient);
             } else if ($scope.panel.segment === 4) {
                 arr_id = [4, 3, 2, 1, 0];
                 if ($scope.panel.reverse === 0) {
@@ -325,8 +327,8 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                 } else {
                     arr_id = [4, 3, 2, 1, 0];
                 }
-                threshold_1 = String($scope.panel.threshold_first);
-                threshold_2 = String($scope.panel.threshold_second);
+                threshold_1 = String($scope.panel.threshold_first*$scope.panel.coefficient);
+                threshold_2 = String($scope.panel.threshold_second*$scope.panel.coefficient);
                 // = String($scope.panel.threshold_third);
             }
             if ($scope.panel.reverse === 1) {
@@ -484,7 +486,8 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                             for (var j = 0; j < entries.length; j++) { // jshint ignore: line
                                 entry_time = new Date(entries[j][time_field]).getTime(); // convert to millisec
 
-                                entry_value = entries[j][$scope.panel.value_field];
+                                entry_value = entries[j][$scope.panel.value_field]/$scope.panel.coefficient;
+                                entry_value = entry_value.toFixed(2);
 
                                 time_series.addValue(entry_time, entry_value);
                                 hits += 1;
@@ -509,12 +512,13 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                         entries1 = results[3].response.docs;
                         entries2 = results[4].response.docs;
                         //bmw_total = entries2[entries2.length - 1][$scope.panel.value_field2][0];
-                        bmw_total = entries2[entries2.length - 1][$scope.panel.value_field2];
-                        if ($scope.panel.value_field === 'UsedMemery'||$scope.panel.value_field === 'UsedMemory') {
-                            bmw_total_memory = bmw_total;
-                        } else if ($scope.panel.value_field === 'FreeDiskSpace'||$scope.panel.value_field === 'UsedDisk') {
-                            bmw_total_disk = bmw_total;
-                        }
+                        bmw_total = entries2[entries2.length - 1][$scope.panel.value_field2]/$scope.panel.coefficient;
+
+                      bmw_total = bmw_total.toFixed(0);// if ($scope.panel.value_field === 'UsedMemery'||$scope.panel.value_field === 'UsedMemory') {
+                        //     bmw_total_memory = bmw_total;
+                        // } else if ($scope.panel.value_field === 'FreeDiskSpace'||$scope.panel.value_field === 'UsedDisk') {
+                        //     bmw_total_disk = bmw_total;
+                        // }
                         var time_series1 = new timeSeries.ZeroFilled({
                             interval: _interval,
                             start_date: _range && _range.from,
@@ -523,7 +527,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                         });
                         for (var j = 0; j < entries1.length; j++) { // jshint ignore: line
                             entry_time1 = new Date(entries1[j][time_field]).getTime(); // convert to millisec
-                            entry_value1 = entries1[j][$scope.panel.value_field1];
+                            entry_value1 = entries1[j][$scope.panel.value_field1]/$scope.panel.coefficient;
                             time_series1.addValue(entry_time1, entry_value1);
                             hits1 += 1;
 
@@ -673,16 +677,19 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 				series.color = series.info.color;
 				label_i++;
 				if (series.info.alias === scope.panel.value_field1 || series.info.alias ==="TotalMB" || series.info.alias ==="TotalGB"){
-					if(scope.panel.value_field === 'UsedMemery'||scope.panel.value_field === 'UsedMemory'){
-						series.info.alias = "TotalMB";
-						series.hits =bmw_total_memory;
-					}else if(scope.panel.value_field === 'FreeDiskSpace'||scope.panel.value_field === 'UsedDisk'){
-						series.info.alias = "TotalMB";
-						series.hits =bmw_total_disk;
-					}else{
-					series.info.alias = "Total ";
-					series.hits =bmw_total;
-					}
+					// if(scope.panel.value_field === 'UsedMemery'||scope.panel.value_field === 'UsedMemory'){
+					// 	series.info.alias = "TotalMB";
+					// 	series.hits =bmw_total_memory;
+					// }else if(scope.panel.value_field === 'FreeDiskSpace'||scope.panel.value_field === 'UsedDisk'){
+					// 	series.info.alias = "TotalMB";
+					// 	series.hits =bmw_total_disk;
+					// }else{
+					// series.info.alias = "Total ";
+					// series.hits =bmw_total;
+					// }
+          //以上为原始写法
+          series.info.alias = "Total"+scope.panel.unit;
+          series.hits=bmw_total;
 					//series.color = '';
 					//series.hits =bmw_total;
 				}else{
@@ -706,15 +713,15 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           var stack = scope.panel.stack ? true : null;
 			
 			var xLabel = "";
-			var xunit ='MB';
+			var xunit =scope.panel.unit;
 			
-			if(scope.panel.value_field === 'cpu'){
-				xunit ='%';
-			}else if(scope.panel.value_field === 'UsedMemery'){
-				xunit ='MB';
-			}else if(scope.panel.value_field === 'FreeDiskSpace'){
-				xunit ='GB';
-			}
+			// if(scope.panel.value_field === 'cpu'){
+			// 	xunit ='%';
+			// }else if(scope.panel.value_field === 'UsedMemery'){
+			// 	xunit ='MB';
+			// }else if(scope.panel.value_field === 'FreeDiskSpace'){
+			// 	xunit ='GB';
+			// }
 		   if(scope.panel.mode === 'value'){
 			   if (scope.panel.segment === 5){
 			   xLabel = "Threshold:"+' '+scope.panel.threshold_first+' and '+scope.panel.threshold_second+' and '+scope.panel.threshold_third; 

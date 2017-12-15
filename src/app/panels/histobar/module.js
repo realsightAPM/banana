@@ -58,6 +58,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
     // Set and populate defaults
       _d = {
+        coefficient:1,
         panelExpand:true,
         fullHeight:'700%',
         useInitHeight:true,
@@ -492,7 +493,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           elem.css({height:divHeight});
 
           // Make a clone we can operate on.
-		  
+
           chartData = _.clone(scope.data);
           chartData = scope.panel.missing ? chartData :
             _.without(chartData,_.findWhere(chartData,{meta:'missing'}));
@@ -522,15 +523,15 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
               selecttime[i] =Date.parse(chartData[0][i][scope.panel.value_sort]);
               secondtime = new Date(selecttime[i]);
               rs_timestamp[i] = secondtime.pattern("yyyy-MM-dd HH:mm:ss");
-              valuedata[i] = chartData[0][i][scope.panel.value_field];
+              valuedata[i] = chartData[0][i][scope.panel.value_field]*scope.panel.coefficient;
               if(maxdata<valuedata[i]){
-                 maxdata=chartData[0][i][scope.panel.value_field];
+                 maxdata=valuedata[i];
               }
 
-             if(chartData[0][i][scope.panel.value_field]>scope.panel.threshold_second){
+             if(valuedata[i]>scope.panel.threshold_second){
                sum_risk++;
               //  valuedata[i] ={name:"Risk",value:chartData[0][i][scope.panel.value_field],itemStyle:{normal:{color:'#c55249'}}};
-             }else if(chartData[0][i][scope.panel.value_field]<scope.panel.threshold_first){
+             }else if(valuedata[i]<scope.panel.threshold_first){
                sum_normal++;
             //	  valuedata[i] ={name:"Normal",value:chartData[0][i][scope.panel.value_field],itemStyle:{normal:{color:'#1a93f9'}}};
             }else{
@@ -557,7 +558,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           if (dashboard.current.style === 'dark'||dashboard.current.style === 'black'){
 							labelcolor = true;
           }
-          if (scope.panel.span <5){
+          if (scope.panel.span <3){
             isspan = true;
           }
               // Add plot to scope so we can build out own legend
@@ -602,16 +603,16 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                   pieces: [{
                     gt: 0,
                     lte: scope.panel.threshold_first,
-                    label: window.innerWidth>500?'Normal(0~' + scope.panel.threshold_first + "  " + sum_normal + '%)':'Normal(0~' + scope.panel.threshold_first + ")\n" + sum_normal + '%',
+                    label: 'Normal(0~' + scope.panel.threshold_first + "  " + sum_normal + '%)',
                     color: '#1a93f9'
                   }, {
                     gt: scope.panel.threshold_first,
                     lte: scope.panel.threshold_second,
-                    label: window.innerWidth>500?'Warning\n(' + scope.panel.threshold_first + '~' + scope.panel.threshold_second + "  " + sum_warning + '%)':'Warning(' + scope.panel.threshold_first + '~' + scope.panel.threshold_second + ")\n" + sum_warning + '%',
+                    label: 'Warning(' + scope.panel.threshold_first + '~' + scope.panel.threshold_second + "  " + sum_warning + '%)',
                     color: '#f48a52'
                   }, {
                     gt: scope.panel.threshold_second,
-                    label: window.innerWidth>500?'Risk\n(>' + scope.panel.threshold_second + "  " + sum_risk + '%)':'Risk(>' + scope.panel.threshold_second + ")\n" + sum_risk + '%',
+                    label: 'Risk(>' + scope.panel.threshold_second + "  " + sum_risk + '%)',
                     color: '#ec4653'
                   }],
                   itemWidth: 10,
