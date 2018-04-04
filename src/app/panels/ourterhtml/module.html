@@ -1,0 +1,12 @@
+<div ng-controller='ourterhtml' ng-init="init()" style="overflow-x:hidden;outline:0;" tabindex="-1"
+     ng-keyup="zoomOut();">
+
+  <style>
+
+  </style>
+  <!-- START IFRAME -->
+
+
+  <iframe  style="overflow:hidden;width: 100%" ng-style="{'display':panel.display}"  ourterhtml-chart params="{{panel}}" style="position:relative" class="pointer " ng-style="{'floatleft':panel.counter_pos == 'right'}" id='{{$id}}'   src='{{panel.iframeURL}}'> </iframe>
+
+</div>

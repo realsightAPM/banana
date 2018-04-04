@@ -160,7 +160,8 @@ function (Settings) {
       'adCPUDuration',
       'adThreadStates',
       'adTopology',
-      'adStacking'
+      'adStacking',
+      'ourterhtml'
     ]
   });
 });
